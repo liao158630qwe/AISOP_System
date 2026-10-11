@@ -1,0 +1,23 @@
+{
+  "title": "Weakly-Supervised Online Action Segmentation in Multi-View Instructional Videos",
+  "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Ghoddoosian_Weakly-Supervised_Online_Action_Segmentation_in_Multi-View_Instructional_Videos_CVPR_2022_paper.html",
+  "venue": "CVPR2022",
+  "canonical_title": "Weakly-Supervised Online Action Segmentation in Multi-View Instructional Videos",
+  "authors": [
+    "Ghoddoosian, Reza",
+    "Dwivedi, Isht",
+    "Agarwal, Nakul",
+    "Choi, Chiho",
+    "Dariush, Behzad"
+  ],
+  "publication_date": "2022",
+  "accessed_at": "2026-10-05T07:38:37.709619+00:00",
+  "fetched_url": "https://openaccess.thecvf.com/content/CVPR2022/html/Ghoddoosian_Weakly-Supervised_Online_Action_Segmentation_in_Multi-View_Instructional_Videos_CVPR_2022_paper.html",
+  "http_status": 200,
+  "abstract": "This paper addresses a new problem of weakly-supervised online action segmentation in instructional videos. We present a framework to segment streaming videos online at test time using Dynamic Programming and show its advantages over greedy sliding window approach. We improve our framework by introducing the Online-Offline Discrepancy Loss (OODL) to encourage the segmentation results to have a higher temporal consistency. Furthermore, only during training, we exploit frame-wise correspondence between multiple views as supervision for training weakly-labeled instructional videos. In particular, we investigate three different multi-view inference techniques to generate more accurate frame-wise pseudo ground-truth with no additional annotation cost. We present results and ablation studies on two benchmark multi-view datasets, Breakfast and IKEA ASM. Experimental results show efficacy of the proposed methods both qualitatively and quantitatively in two domains of cooking and assembly.",
+  "html_evidence": "source_evidence/weakly_supervised_online_action_segmentation_in_multi_view_instructional_videos_53f81b9a.html",
+  "json_evidence": "source_evidence/weakly_supervised_online_action_segmentation_in_multi_view_instructional_videos_53f81b9a.json",
+  "venue_evidence": [
+    "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition"
+  ]
+}

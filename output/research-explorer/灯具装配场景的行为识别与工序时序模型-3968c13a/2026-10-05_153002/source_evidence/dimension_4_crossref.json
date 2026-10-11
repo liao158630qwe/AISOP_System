@@ -1,0 +1,4074 @@
+{
+  "dimension": "基准",
+  "query": "IKEA ASM MECCANO HA4M industrial assembly dataset",
+  "url": "https://api.crossref.org/works?query=IKEA+ASM+MECCANO+HA4M+industrial+assembly+dataset&rows=8",
+  "accessed_at": "2026-10-05T07:32:39.837712+00:00",
+  "items": [
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2024,
+            9,
+            6
+          ]
+        ],
+        "date-time": "2024-09-06T14:28:14Z",
+        "timestamp": 1725632894369
+      },
+      "reference-count": 0,
+      "publisher": "SCITEPRESS - Science and Technology Publications",
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2023
+          ]
+        ]
+      },
+      "DOI": "10.5220/0011902300003417",
+      "type": "proceedings-article",
+      "created": {
+        "date-parts": [
+          [
+            2023,
+            3,
+            4
+          ]
+        ],
+        "date-time": "2023-03-04T05:14:16Z",
+        "timestamp": 1677906856000
+      },
+      "page": "906-914",
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "Human Motion Prediction on the IKEA-ASM Dataset"
+      ],
+      "prefix": "10.5220",
+      "author": [
+        {
+          "given": "Mattias",
+          "family": "Billast",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "University of Antwerp - imec, IDLab, Department of Computer Science, Sint-Pietersvliet 7, 2000 Antwerp, Belgium, --- Select a Country ---"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "Kevin",
+          "family": "Mets",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University of Antwerp - imec, IDLab, Faculty of Applied Engineering, Sint-Pietersvliet 7, 2000 Antwerp, Belgium, --- Select a Country ---"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "Tom",
+          "family": "De Schepper",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University of Antwerp - imec, IDLab, Department of Computer Science, Sint-Pietersvliet 7, 2000 Antwerp, Belgium, --- Select a Country ---"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "José",
+          "family": "Oramas",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University of Antwerp - imec, IDLab, Department of Computer Science, Sint-Pietersvliet 7, 2000 Antwerp, Belgium, --- Select a Country ---"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "Steven",
+          "family": "Latré",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University of Antwerp - imec, IDLab, Department of Computer Science, Sint-Pietersvliet 7, 2000 Antwerp, Belgium, --- Select a Country ---"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        }
+      ],
+      "member": "3171",
+      "event": {
+        "name": "18th International Conference on Computer Vision Theory and Applications",
+        "start": {
+          "date-parts": [
+            [
+              2023,
+              2,
+              19
+            ]
+          ]
+        },
+        "location": "Lisbon, Portugal",
+        "end": {
+          "date-parts": [
+            [
+              2023,
+              2,
+              21
+            ]
+          ]
+        }
+      },
+      "container-title": [
+        "Proceedings of the 18th International Joint Conference on Computer Vision, Imaging and Computer Graphics Theory and Applications"
+      ],
+      "original-title": [
+        "Human Motion Prediction on the IKEA-ASM Dataset"
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2023,
+            3,
+            7
+          ]
+        ],
+        "date-time": "2023-03-07T11:55:00Z",
+        "timestamp": 1678190100000
+      },
+      "score": 36.207695,
+      "resource": {
+        "primary": {
+          "URL": "https://www.scitepress.org/DigitalLibrary/Link.aspx?doi=10.5220/0011902300003417"
+        }
+      },
+      "subtitle": [
+        ""
+      ],
+      "issued": {
+        "date-parts": [
+          [
+            2023
+          ]
+        ]
+      },
+      "references-count": 0,
+      "URL": "https://doi.org/10.5220/0011902300003417",
+      "published": {
+        "date-parts": [
+          [
+            2023
+          ]
+        ]
+      }
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            10,
+            3
+          ]
+        ],
+        "date-time": "2026-10-03T20:38:39Z",
+        "timestamp": 1791059919691,
+        "version": "4.1.0"
+      },
+      "reference-count": 77,
+      "publisher": "IEEE",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2021,
+                1,
+                1
+              ]
+            ],
+            "date-time": "2021-01-01T00:00:00Z",
+            "timestamp": 1609459200000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-029"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2021,
+                1,
+                1
+              ]
+            ],
+            "date-time": "2021-01-01T00:00:00Z",
+            "timestamp": 1609459200000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-037"
+        }
+      ],
+      "funder": [
+        {
+          "DOI": "10.13039/501100000923",
+          "name": "Australian Research Council",
+          "doi-asserted-by": "publisher",
+          "id": [
+            {
+              "id": "10.13039/501100000923",
+              "id-type": "DOI",
+              "asserted-by": "publisher"
+            }
+          ]
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2021,
+            1
+          ]
+        ]
+      },
+      "DOI": "10.1109/wacv48630.2021.00089",
+      "type": "proceedings-article",
+      "created": {
+        "date-parts": [
+          [
+            2021,
+            6,
+            14
+          ]
+        ],
+        "date-time": "2021-06-14T16:34:13Z",
+        "timestamp": 1623688453000
+      },
+      "page": "846-858",
+      "source": "Crossref",
+      "is-referenced-by-count": 133,
+      "title": [
+        "The IKEA ASM Dataset: Understanding People Assembling Furniture through Actions, Objects and Pose"
+      ],
+      "prefix": "10.1109",
+      "author": [
+        {
+          "given": "Yizhak",
+          "family": "Ben-Shabat",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Australian National University"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Xin",
+          "family": "Yu",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University of Technology Sydney"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Fatemeh",
+          "family": "Saleh",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Australian National University"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Dylan",
+          "family": "Campbell",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Australian National University"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Cristian",
+          "family": "Rodriguez-Opazo",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Australian National University"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Hongdong",
+          "family": "Li",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Australian National University"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Stephen",
+          "family": "Gould",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Australian National University"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "263",
+      "reference": [
+        {
+          "key": "ref73",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2019.00409"
+        },
+        {
+          "key": "ref72",
+          "author": "wu",
+          "year": "2019",
+          "journal-title": "Detectron2"
+        },
+        {
+          "key": "ref71",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICIP.2017.8296962"
+        },
+        {
+          "key": "ref70",
+          "first-page": "4724",
+          "article-title": "Convolutional pose machines",
+          "author": "wei",
+          "year": "2016",
+          "journal-title": "Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition"
+        },
+        {
+          "key": "ref76",
+          "first-page": "4694",
+          "article-title": "Beyond short snippets: Deep networks for video classification",
+          "author": "ng",
+          "year": "2015",
+          "journal-title": "Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition"
+        },
+        {
+          "key": "ref77",
+          "article-title": "Towards automatic learning of procedures from web instructional videos",
+          "author": "zhou",
+          "year": "2018",
+          "journal-title": "Thirty-Second AAAI Conference on Artificial Intelligence"
+        },
+        {
+          "key": "ref74",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1609/aaai.v32i1.12328",
+          "article-title": "Spatial temporal graph convolutional networks for skeleton-based action recognition",
+          "author": "yan",
+          "year": "2018",
+          "journal-title": "Thirty-Second AAAI Conference on Artificial Intelligence"
+        },
+        {
+          "key": "ref39",
+          "first-page": "740",
+          "article-title": "Microsoft COCO: Common objects in context",
+          "author": "lin",
+          "year": "2014",
+          "journal-title": "Proceedings of the European Conference on Computer Vision"
+        },
+        {
+          "key": "ref75",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TPAMI.2012.261"
+        },
+        {
+          "key": "ref38",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2017.106"
+        },
+        {
+          "key": "ref33",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2011.6126543"
+        },
+        {
+          "key": "ref32",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2019.00463"
+        },
+        {
+          "key": "ref31",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR42600.2020.00530"
+        },
+        {
+          "key": "ref30",
+          "article-title": "Pointrend: Image segmentation as rendering",
+          "author": "kirillov",
+          "year": "2019",
+          "journal-title": "arXiv preprint arXiv 1912 08193"
+        },
+        {
+          "key": "ref37",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2017.472"
+        },
+        {
+          "key": "ref36",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.24963/ijcai.2018/109"
+        },
+        {
+          "key": "ref35",
+          "article-title": "Ikea furniture assembly environment for long-horizon complex manipulation tasks",
+          "author": "lee",
+          "year": "2019",
+          "journal-title": "arXiv preprint arXiv 1911 12945"
+        },
+        {
+          "key": "ref34",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2011.6126543"
+        },
+        {
+          "key": "ref60",
+          "article-title": "Artist: Autoregressive trajectory inpainting and scoring for tracking",
+          "author": "saleh",
+          "year": "2020",
+          "journal-title": "arXiv preprint arXiv 2004 06774"
+        },
+        {
+          "key": "ref62",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2016.115"
+        },
+        {
+          "key": "ref61",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.cviu.2016.09.002"
+        },
+        {
+          "key": "ref63",
+          "first-page": "510",
+          "article-title": "Hollywood in homes: Crowdsourcing data collection for activity understanding",
+          "author": "sigurdsson",
+          "year": "2016",
+          "journal-title": "European Conference on Computer Vision"
+        },
+        {
+          "key": "ref28",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-030-01237-3_13"
+        },
+        {
+          "key": "ref64",
+          "first-page": "568",
+          "article-title": "Two-stream convolutional networks for action recognition in videos",
+          "author": "simonyan",
+          "year": "2014",
+          "journal-title": "Advances in neural information processing systems"
+        },
+        {
+          "key": "ref27",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2017.486"
+        },
+        {
+          "key": "ref65",
+          "article-title": "Ucf101: A dataset of 101 human actions classes from videos in the wild",
+          "author": "soomro",
+          "year": "2012",
+          "journal-title": "arXiv preprint arXiv 1212 0402"
+        },
+        {
+          "key": "ref66",
+          "first-page": "3539",
+          "article-title": "Multiple people tracking by lifted multicut and person re-identification",
+          "author": "tang",
+          "year": "2017",
+          "journal-title": "Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition"
+        },
+        {
+          "key": "ref29",
+          "first-page": "5008",
+          "article-title": "Instance-cut: from edges to instances with multicut",
+          "author": "kirillov",
+          "year": "2017",
+          "journal-title": "Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition"
+        },
+        {
+          "key": "ref67",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2019.00130"
+        },
+        {
+          "key": "ref68",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/DICTA.2017.8227441"
+        },
+        {
+          "key": "ref69",
+          "first-page": "4489",
+          "article-title": "Learning spatiotemporal features with 3d convolutional networks",
+          "author": "tran",
+          "year": "2015",
+          "journal-title": "Proceedings of the IEEE International Conference on Computer Vision"
+        },
+        {
+          "key": "ref2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2017.100"
+        },
+        {
+          "key": "ref1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2014.471"
+        },
+        {
+          "key": "ref20",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2019.00630"
+        },
+        {
+          "key": "ref22",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2017.322"
+        },
+        {
+          "key": "ref21",
+          "first-page": "1440",
+          "article-title": "Fast r-cnn",
+          "author": "girshick",
+          "year": "2015",
+          "journal-title": "Proceedings of the IEEE International Conference on Computer Vision"
+        },
+        {
+          "key": "ref24",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TPAMI.2013.248"
+        },
+        {
+          "key": "ref23",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2016.90"
+        },
+        {
+          "key": "ref26",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2019.00576"
+        },
+        {
+          "key": "ref25",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2018.00744"
+        },
+        {
+          "key": "ref50",
+          "first-page": "1990",
+          "article-title": "Learning to segment object candidates",
+          "author": "pinheiro",
+          "year": "2015",
+          "journal-title": "Advances in neural information processing systems"
+        },
+        {
+          "key": "ref51",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2016.533"
+        },
+        {
+          "key": "ref59",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2017.41"
+        },
+        {
+          "key": "ref58",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/s11263-015-0851-8"
+        },
+        {
+          "key": "ref57",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2012.6247801"
+        },
+        {
+          "key": "ref56",
+          "first-page": "17",
+          "article-title": "Performance measures and a data set for multi-target, multi-camera tracking",
+          "author": "ristani",
+          "year": "2016",
+          "journal-title": "European Conference on Computer Vision"
+        },
+        {
+          "key": "ref55",
+          "first-page": "91",
+          "article-title": "Faster r-cnn: Towards real-time object detection with region proposal networks",
+          "author": "ren",
+          "year": "2015",
+          "journal-title": "Advances in neural information processing systems"
+        },
+        {
+          "key": "ref54",
+          "first-page": "779",
+          "article-title": "You only look once: Unified, real-time object detection",
+          "author": "redmon",
+          "year": "2016",
+          "journal-title": "Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition"
+        },
+        {
+          "key": "ref53",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2019.00475"
+        },
+        {
+          "key": "ref52",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2017.590"
+        },
+        {
+          "key": "ref10",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2018.00742"
+        },
+        {
+          "key": "ref11",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.cviu.2019.102897"
+        },
+        {
+          "key": "ref40",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TPAMI.2019.2916873"
+        },
+        {
+          "key": "ref12",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2019.00627"
+        },
+        {
+          "key": "ref13",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-319-46466-4_32"
+        },
+        {
+          "key": "ref14",
+          "first-page": "720",
+          "article-title": "Scaling egocentric vision: The epic-kitchens dataset",
+          "author": "damen",
+          "year": "2018",
+          "journal-title": "Proceedings of the European Conference on Computer Vision (ECCV)"
+        },
+        {
+          "key": "ref15",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2013.340"
+        },
+        {
+          "key": "ref16",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2015.7298878"
+        },
+        {
+          "key": "ref17",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ACPR.2015.7486569"
+        },
+        {
+          "key": "ref18",
+          "first-page": "961",
+          "article-title": "Activitynet: A large-scale video benchmark for human activity understanding",
+          "author": "fabian caba heilbron",
+          "year": "2015",
+          "journal-title": "Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition"
+        },
+        {
+          "key": "ref19",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2017.256"
+        },
+        {
+          "key": "ref4",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1155/2008/246309"
+        },
+        {
+          "key": "ref3",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2019.00103"
+        },
+        {
+          "key": "ref6",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TPAMI.2019.2929257"
+        },
+        {
+          "key": "ref5",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICIP.2016.7533003"
+        },
+        {
+          "key": "ref8",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2017.502"
+        },
+        {
+          "key": "ref7",
+          "first-page": "7291",
+          "article-title": "Realtime multi-person 2D pose estimation using part affinity fields",
+          "author": "cao",
+          "year": "2017",
+          "journal-title": "Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition"
+        },
+        {
+          "key": "ref49",
+          "first-page": "75",
+          "article-title": "Learning to refine object segments",
+          "author": "pinheiro",
+          "year": "2016",
+          "journal-title": "European Conference on Computer Vision"
+        },
+        {
+          "key": "ref9",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2019.00215"
+        },
+        {
+          "key": "ref46",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/3DV.2017.00064"
+        },
+        {
+          "key": "ref45",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2019.00289"
+        },
+        {
+          "key": "ref48",
+          "first-page": "7753",
+          "article-title": "3D human pose estima tion in video with temporal convolutions and semi-supervised training",
+          "author": "pavllo",
+          "year": "2019",
+          "journal-title": "Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition"
+        },
+        {
+          "key": "ref47",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2018.00763"
+        },
+        {
+          "key": "ref42",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2017.378"
+        },
+        {
+          "key": "ref41",
+          "first-page": "816",
+          "article-title": "Spatio-temporal lstm with trust gates for 3d human action recognition",
+          "author": "liu",
+          "year": "2016",
+          "journal-title": "European Conference on Computer Vision"
+        },
+        {
+          "key": "ref44",
+          "article-title": "Eliminating exposure bias and loss-evaluation mismatch in multiple object tracking",
+          "author": "maksai",
+          "year": "2018",
+          "journal-title": "arXiv preprint arXiv 1811 10984"
+        },
+        {
+          "key": "ref43",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/2816795.2818013"
+        }
+      ],
+      "event": {
+        "name": "2021 IEEE Winter Conference on Applications of Computer Vision (WACV)",
+        "location": "Waikoloa, HI, USA",
+        "start": {
+          "date-parts": [
+            [
+              2021,
+              1,
+              3
+            ]
+          ]
+        },
+        "end": {
+          "date-parts": [
+            [
+              2021,
+              1,
+              8
+            ]
+          ]
+        }
+      },
+      "container-title": [
+        "2021 IEEE Winter Conference on Applications of Computer Vision (WACV)"
+      ],
+      "link": [
+        {
+          "URL": "http://xplorestaging.ieee.org/ielx7/9423008/9423028/09423070.pdf?arnumber=9423070",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2022,
+            12,
+            30
+          ]
+        ],
+        "date-time": "2022-12-30T22:18:03Z",
+        "timestamp": 1672438683000
+      },
+      "score": 25.956917,
+      "resource": {
+        "primary": {
+          "URL": "https://ieeexplore.ieee.org/document/9423070/"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2021,
+            1
+          ]
+        ]
+      },
+      "references-count": 77,
+      "URL": "https://doi.org/10.1109/wacv48630.2021.00089",
+      "published": {
+        "date-parts": [
+          [
+            2021,
+            1
+          ]
+        ]
+      }
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            9,
+            27
+          ]
+        ],
+        "date-time": "2026-09-27T03:40:59Z",
+        "timestamp": 1790480459574,
+        "version": "4.1.0"
+      },
+      "reference-count": 44,
+      "publisher": "Springer Science and Business Media LLC",
+      "issue": "1",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2022,
+                12,
+                2
+              ]
+            ],
+            "date-time": "2022-12-02T00:00:00Z",
+            "timestamp": 1669939200000
+          },
+          "content-version": "tdm",
+          "delay-in-days": 0,
+          "URL": "https://creativecommons.org/licenses/by/4.0"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2022,
+                12,
+                2
+              ]
+            ],
+            "date-time": "2022-12-02T00:00:00Z",
+            "timestamp": 1669939200000
+          },
+          "content-version": "vor",
+          "delay-in-days": 0,
+          "URL": "https://creativecommons.org/licenses/by/4.0"
+        }
+      ],
+      "content-domain": {
+        "domain": [
+          "link.springer.com"
+        ],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [
+        "Sci Data"
+      ],
+      "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:p>This paper introduces the Human Action Multi-Modal Monitoring in Manufacturing (HA4M) dataset, a collection of multi-modal data relative to actions performed by different subjects building an Epicyclic Gear Train (EGT). In particular, 41 subjects executed several trials of the assembly task, which consists of 12 actions. Data were collected in a laboratory scenario using a Microsoft® Azure Kinect which integrates a depth camera, an RGB camera, and InfraRed (IR) emitters. To the best of authors’ knowledge, the HA4M dataset is the first multi-modal dataset about an assembly task containing six types of data: RGB images, Depth maps, IR images, RGB-to-Depth-Aligned images, Point Clouds and Skeleton data. These data represent a good foundation to develop and test advanced action recognition systems in several fields, including Computer Vision and Machine Learning, and application domains such as smart manufacturing and human-robot collaboration.</jats:p>",
+      "DOI": "10.1038/s41597-022-01843-z",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2022,
+            12,
+            2
+          ]
+        ],
+        "date-time": "2022-12-02T09:10:24Z",
+        "timestamp": 1669972224000
+      },
+      "update-policy": "https://doi.org/10.1007/springer_crossmark_policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 74,
+      "title": [
+        "The HA4M dataset: Multi-Modal Monitoring of an assembly task for Human Action recognition in Manufacturing"
+      ],
+      "prefix": "10.1038",
+      "volume": "9",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0003-1562-0467",
+          "authenticated-orcid": false,
+          "given": "Grazia",
+          "family": "Cicirelli",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Roberto",
+          "family": "Marani",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Laura",
+          "family": "Romeo",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Manuel García",
+          "family": "Domínguez",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Jónathan",
+          "family": "Heras",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0003-4949-987X",
+          "authenticated-orcid": false,
+          "given": "Anna G.",
+          "family": "Perri",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Tiziana",
+          "family": "D’Orazio",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "297",
+      "published-online": {
+        "date-parts": [
+          [
+            2022,
+            12,
+            2
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "key": "1843_CR1",
+          "doi-asserted-by": "publisher",
+          "first-page": "1",
+          "DOI": "10.1016/j.knosys.2021.106995",
+          "volume": "222",
+          "author": "T Özyer",
+          "year": "2021",
+          "unstructured": "Özyer, T., Ak, D. S. & Alhajj, R. Human action recognition approaches with video datasets — a survey. Knowledge-Based Systems 222, 1–36 (2021).",
+          "journal-title": "Knowledge-Based Systems"
+        },
+        {
+          "key": "1843_CR2",
+          "doi-asserted-by": "publisher",
+          "first-page": "186",
+          "DOI": "10.1016/j.patrec.2021.11.003",
+          "volume": "155",
+          "author": "U Mahbub",
+          "year": "2022",
+          "unstructured": "Mahbub, U. & Ahad, M. A. R. Advances in human action, activity and gesture recognition. Pattern Recognition Letters 155, 186–190 (2022).",
+          "journal-title": "Pattern Recognition Letters"
+        },
+        {
+          "key": "1843_CR3",
+          "doi-asserted-by": "crossref",
+          "first-page": "1",
+          "DOI": "10.1109/JSEN.2019.2912688",
+          "volume": "19",
+          "author": "HB Zhang",
+          "year": "2019",
+          "unstructured": "Zhang, H. B. et al. A Comprehensive Survey of Vision-Based Human Action Recognition Methods. Sensors 19, 1–20 (2019).",
+          "journal-title": "Sensors"
+        },
+        {
+          "key": "1843_CR4",
+          "doi-asserted-by": "publisher",
+          "first-page": "3",
+          "DOI": "10.1016/j.patrec.2018.02.010",
+          "volume": "119",
+          "author": "J Wang",
+          "year": "2019",
+          "unstructured": "Wang, J., Chen, Y., Hao, S., Peng, X. & Hu, L. Deep learning for sensor-based activity recognition: A survey. Pattern Recognition Letters 119, 3–11 (2019).",
+          "journal-title": "Pattern Recognition Letters"
+        },
+        {
+          "key": "1843_CR5",
+          "first-page": "1",
+          "volume": "32",
+          "author": "I Jegham",
+          "year": "2020",
+          "unstructured": "Jegham, I., Khalifa, A. B., Alouani, I. & Mahjoub, M. A. Vision-based human action recognition: An overview and real world challenges. Forensic Science International: Digital Investigation 32, 1–17 (2020).",
+          "journal-title": "Forensic Science International: Digital Investigation"
+        },
+        {
+          "key": "1843_CR6",
+          "doi-asserted-by": "publisher",
+          "first-page": "116424",
+          "DOI": "10.1016/j.eswa.2021.116424",
+          "volume": "193",
+          "author": "A Sarkar",
+          "year": "2022",
+          "unstructured": "Sarkar, A., Banerjee, A., Singh, P. & Sarkar, R. 3D Human Action Recognition: Through the eyes of researchers. Expert Systems With Applications 193, 116424 (2022).",
+          "journal-title": "Expert Systems With Applications"
+        },
+        {
+          "key": "1843_CR7",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Al-Amin, M. et al. An individualized system of skeletal data-based CNN classifiers for action recognition in manufacturing assembly. Journal of Intelligent Manufacturing July, https://doi.org/10.1007/s10845-021-01815-x (2021).",
+          "DOI": "10.1007/s10845-021-01815-x"
+        },
+        {
+          "key": "1843_CR8",
+          "doi-asserted-by": "publisher",
+          "first-page": "325",
+          "DOI": "10.1016/j.jmsy.2020.04.018",
+          "volume": "55",
+          "author": "C Chen",
+          "year": "2020",
+          "unstructured": "Chen, C., Wang, T., Li, D. & Hong, J. Repetitive assembly action recognition based on object detection and pose estimation. Journal of Manufacturing Systems 55, 325–333 (2020).",
+          "journal-title": "Journal of Manufacturing Systems"
+        },
+        {
+          "key": "1843_CR9",
+          "doi-asserted-by": "publisher",
+          "first-page": "1",
+          "DOI": "10.1016/j.compind.2021.103485",
+          "volume": "131",
+          "author": "MA Zamora-Hernandez",
+          "year": "2021",
+          "unstructured": "Zamora-Hernandez, M. A., Castro-Vergas, J. A., Azorin-Lopez, J. & Garcia-Rodriguez, J. Deep learning-based visual control assistant for assembly in industry 4.0. Computers in Industry 131, 1–15 (2021).",
+          "journal-title": "Computers in Industry"
+        },
+        {
+          "key": "1843_CR10",
+          "doi-asserted-by": "publisher",
+          "first-page": "701",
+          "DOI": "10.1016/j.cirp.2019.05.002",
+          "volume": "68",
+          "author": "L Wang",
+          "year": "2019",
+          "unstructured": "Wang, L. et al. Symbiotic human-robot collaborative assembly. CIRP Annals - Manufacturing Technology 68, 701–726 (2019).",
+          "journal-title": "CIRP Annals - Manufacturing Technology"
+        },
+        {
+          "key": "1843_CR11",
+          "doi-asserted-by": "publisher",
+          "first-page": "926",
+          "DOI": "10.1016/j.promfg.2020.05.131",
+          "volume": "48",
+          "author": "W Tao",
+          "year": "2020",
+          "unstructured": "Tao, W. et al. Real-Time Assembly Operation Recognition with Fog Computing and Transfer Learning for Human-Centered Intelligent Manufacturing. Procedia Manufacturing 48, 926–931 (2020).",
+          "journal-title": "Procedia Manufacturing"
+        },
+        {
+          "key": "1843_CR12",
+          "doi-asserted-by": "publisher",
+          "first-page": "1",
+          "DOI": "10.3390/electronics10232946",
+          "volume": "10",
+          "author": "J Patalas-Maliszewska",
+          "year": "2021",
+          "unstructured": "Patalas-Maliszewska, J., Halikowski, D. & Damaševičius, R. An Automated Recognition of Work Activity in Industrial Manufacturing Using Convolutional Neural Networks. Electronics 10, 1–17 (2021).",
+          "journal-title": "Electronics"
+        },
+        {
+          "key": "1843_CR13",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Kobayashi, T., Aoki, Y., Shimizu, S., Kusano, K. & Okumura, S. Fine-grained Action Recognition in Assembly Work Scenes by Drawing Attention to the Hands. In 15th International Conference on Signal-Image Technology & Internet-Based Systems (SITIS), 440–446 https://doi.org/10.1109/SITIS.2019.00077 (2019).",
+          "DOI": "10.1109/SITIS.2019.00077"
+        },
+        {
+          "key": "1843_CR14",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Nicora, M. L. et al. A human-driven control architecture for promoting good mental health in collaborative robot scenarios. In 2021 30th IEEE International Conference on Robot & Human Interactive Communication (RO-MAN), 285–291 https://doi.org/10.1109/RO-MAN50785.2021.9515315 (2021).",
+          "DOI": "10.1109/RO-MAN50785.2021.9515315"
+        },
+        {
+          "key": "1843_CR15",
+          "doi-asserted-by": "publisher",
+          "first-page": "86",
+          "DOI": "10.1016/j.patcog.2016.05.019",
+          "volume": "60",
+          "author": "J Zhang",
+          "year": "2016",
+          "unstructured": "Zhang, J., Li, W., Ogunbona, P. O., Wang, P. & Tang, C. RGB-D-based action recognition datasets: A survey. Pattern Recognition 60, 86–105 (2016).",
+          "journal-title": "Pattern Recognition"
+        },
+        {
+          "key": "1843_CR16",
+          "doi-asserted-by": "publisher",
+          "first-page": "118",
+          "DOI": "10.1016/j.cviu.2018.04.007",
+          "volume": "171",
+          "author": "P Wang",
+          "year": "2018",
+          "unstructured": "Wang, P., Li, W., Ogunbona, P., Wan, J. & Escalera, S. RGB-D-based human motion recognition with deep learning: A survey. Computer Vision and Image Understanding 171, 118–139 (2018).",
+          "journal-title": "Computer Vision and Image Understanding"
+        },
+        {
+          "key": "1843_CR17",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Lopes, A., Souza, R. & Pedrini, H. A Survey on RGB-D Datasets. Computer Vision and Image Understanding 222, 103489 (2022).",
+          "DOI": "10.1016/j.cviu.2022.103489"
+        },
+        {
+          "key": "1843_CR18",
+          "doi-asserted-by": "publisher",
+          "first-page": "102184",
+          "DOI": "10.1016/j.rcim.2021.102184",
+          "volume": "72",
+          "author": "J Zhang",
+          "year": "2021",
+          "unstructured": "Zhang, J., Wang, P. & Gao, R. X. Hybrid machine learning for human action recognition and prediction in assembly. Robotics and Computer-Integrated Manufacturing 72, 102184 (2021).",
+          "journal-title": "Robotics and Computer-Integrated Manufacturing"
+        },
+        {
+          "key": "1843_CR19",
+          "unstructured": "Microsoft. Azure Kinect DK documentation. https://docs.microsoft.com/en-us/azure/kinect-dk/, Accessed March 2022 (2021)."
+        },
+        {
+          "key": "1843_CR20",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Romeo, L., Marani, R., Malosio, M., Perri, A. G. & D’Orazio, T. Performance analysis of body tracking with the microsoft azure kinect. In 2021 29th Mediterranean Conference on Control and Automation (MED), 572–577 https://doi.org/10.1109/MED51440.2021.9480177 (2021).",
+          "DOI": "10.1109/MED51440.2021.9480177"
+        },
+        {
+          "key": "1843_CR21",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Albert, J. A., Owolabi, V., Gebel, A., Granacher, U. & Arnrich, B. Evaluation of the Pose Tracking Performance of the Azure Kinect and Kinect v2 for Gait Analysis in Comparison with a Gold Standard: A Pilot Study. Sensors 20, (2020).",
+          "DOI": "10.3390/s20185104"
+        },
+        {
+          "key": "1843_CR22",
+          "doi-asserted-by": "publisher",
+          "first-page": "104324",
+          "DOI": "10.1016/j.cmpb.2021.106324",
+          "volume": "209",
+          "author": "M Antico",
+          "year": "2021",
+          "unstructured": "Antico, M. et al. Postural control assessment via microsoft azure kinect dk: An evaluation study. Computer Methods and Programs in Biomedicine 209, 104324 (2021).",
+          "journal-title": "Computer Methods and Programs in Biomedicine"
+        },
+        {
+          "key": "1843_CR23",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Tölgyessy, M., Dekan, M., Chovanec, L. & Hubinský, P. Evaluation of the azure kinect and its comparison to kinect v1 and kinect v2. Sensors 413, (2021).",
+          "DOI": "10.3390/s21020413"
+        },
+        {
+          "key": "1843_CR24",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Kurillo, G., Hemingway, E., Cheng, M. & Cheng, L. Evaluating the accuracy of the azure kinect and kinect v2. Sensors 22(7) (2021).",
+          "DOI": "10.3390/s22072469"
+        },
+        {
+          "key": "1843_CR25",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.57760/sciencedb.01872",
+          "author": "G Cicirelli",
+          "year": "2022",
+          "unstructured": "Cicirelli, G. et al. The HA4M dataset: Multi-Modal Monitoring of an assembly task for Human Action recognition in Manufacturing. Science Data Bank https://doi.org/10.57760/sciencedb.01872 (2022)."
+        },
+        {
+          "key": "1843_CR26",
+          "doi-asserted-by": "publisher",
+          "first-page": "107824",
+          "DOI": "10.1016/j.cie.2021.107824",
+          "volume": "163",
+          "author": "F Longo",
+          "year": "2022",
+          "unstructured": "Longo, F., Nicoletti, L. & A, P. New perspectives and results for Smart Operators in industry 4.0: A human-centered approach. Computers & Industrial Engineering 163, 107824 (2022).",
+          "journal-title": "Computers & Industrial Engineering"
+        },
+        {
+          "key": "1843_CR27",
+          "doi-asserted-by": "publisher",
+          "first-page": "106970",
+          "DOI": "10.1016/j.knosys.2021.106970",
+          "volume": "223",
+          "author": "SK Yadav",
+          "year": "2021",
+          "unstructured": "Yadav, S. K., Tiwari, K., Pandey, H. M. & AliAkbar, S. A review of multimodal human activity recognition with special emphasis on classification, applications, challenges and future directions. Knowledge-Based Systems 223, 106970 (2021).",
+          "journal-title": "Knowledge-Based Systems"
+        },
+        {
+          "key": "1843_CR28",
+          "doi-asserted-by": "publisher",
+          "first-page": "373",
+          "DOI": "10.1016/j.neucom.2021.04.121",
+          "volume": "454",
+          "author": "Y Li",
+          "year": "2021",
+          "unstructured": "Li, Y. et al. Efficient Two-Step Networks for Temporal Action Segmentation. Neurocomputing 454, 373–381 (2021).",
+          "journal-title": "Neurocomputing"
+        },
+        {
+          "key": "1843_CR29",
+          "doi-asserted-by": "publisher",
+          "first-page": "5093",
+          "DOI": "10.1016/j.procs.2021.09.287",
+          "volume": "192",
+          "author": "O Moutik",
+          "year": "2021",
+          "unstructured": "Moutik, O., Tigani, S., Saadane, R. & Chehri, A. Hybrid Deep Learning Vision-based Models for Human Object Interaction Detection by Knowledge Distillation. Procedia Computer Science 192, 5093–5103 (2021).",
+          "journal-title": "Procedia Computer Science"
+        },
+        {
+          "key": "1843_CR30",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Shahroudy, A., Liu, J., Ng, T. T. & Wang, G. NTU RGB + D: A Large Scale Dataset for 3D Human Activity Analysis. In IEEE Computer Society Conference Computer Vision Pattern Recognition (CVPR), 1010–1019 (Los Alamitos, CA, USA, 2016).",
+          "DOI": "10.1109/CVPR.2016.115"
+        },
+        {
+          "key": "1843_CR31",
+          "doi-asserted-by": "publisher",
+          "first-page": "2684",
+          "DOI": "10.1109/TPAMI.2019.2916873",
+          "volume": "42",
+          "author": "J Liu",
+          "year": "2020",
+          "unstructured": "Liu, J. et al. NTU RGB + D 120: A Large-Scale Benchmark for 3D Human Activity Understanding. IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI) 42, 2684–2701 (2020).",
+          "journal-title": "IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI)"
+        },
+        {
+          "key": "1843_CR32",
+          "doi-asserted-by": "publisher",
+          "first-page": "2186",
+          "DOI": "10.1109/TPAMI.2016.2640292",
+          "volume": "39",
+          "author": "JF Hu",
+          "year": "2017",
+          "unstructured": "Hu, J. F., Zheng, W. S., Lai, J. & Zhang, J. Jointly learning heterogeneous features for RGB-D activity recognition. IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI) 39, 2186–2200 (2017).",
+          "journal-title": "IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI)"
+        },
+        {
+          "key": "1843_CR33",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Martin, M. et al. Drive&act: A multi-modal dataset for fine-grained driver behavior recognition in autonomous vehicles. In IEEE International Conference on Computer Vision (ICCV), 2801–2810 https://doi.org/10.1109/ICCV.2019.00289 (2019).",
+          "DOI": "10.1109/ICCV.2019.00289"
+        },
+        {
+          "key": "1843_CR34",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Youssef, A. B., Clavel, C., Essid, S., Bilac, M. & Chamoux, M. UE-HRI: a new dataset for the study of user engagement in spontaneous human-robot interactions. In ACM International Conference on Multimodal Interaction, 464–472 https://doi.org/10.1145/3136755.3136814 (2017).",
+          "DOI": "10.1145/3136755.3136814"
+        },
+        {
+          "key": "1843_CR35",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Nicora, E. et al. The MoCA dataset, kinematic and multi-view visual streams of fine-grained cooking actions. Scientific Data 7 https://doi.org/10.1038/s41597-020-0077 6-9 (2020).",
+          "DOI": "10.1038/s41597-020-0077"
+        },
+        {
+          "key": "1843_CR36",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Saudabayev, A., Rysbek, Z., Khassenova1, R. & Varol, H. A. Human grasping database for activities of daily living with depth, color and kinematic data streams. Scientific Data 5, https://doi.org/10.1038/sdata.2018.101 (2018).",
+          "DOI": "10.1038/sdata.2018.101"
+        },
+        {
+          "key": "1843_CR37",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Li, W., Zhang, Z. & Liu, Z. Action recognition based on a bag of 3D points. In IEEE Computer Society Conference on Computer Vision and Pattern Recognition - Workshops, 9–14 (San Francisco, CA, USA, 2010).",
+          "DOI": "10.1109/CVPRW.2010.5543273"
+        },
+        {
+          "key": "1843_CR38",
+          "unstructured": "Wang, J., Liu, Z., Wu, Y. & Yuan, J. Mining actionlet ensemble for action recognition with depth cameras. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR) (Providence, RI, USA, 2012)."
+        },
+        {
+          "key": "1843_CR39",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Xia, L., Chen, C. C. & Aggarwal, J. View invariant human action recognition using histograms of 3D joints. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR) (Providence, RI, USA, 2012).",
+          "DOI": "10.1109/CVPRW.2012.6239233"
+        },
+        {
+          "key": "1843_CR40",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Ni, B., Wang, G. & Moulin, P. RGBD-HuDaAct: A color-depth video database for human daily activity recognition. In IEEE Computer Society Conference on Computer Vision and Pattern Recognition - Workshops, 1147–1153 https://doi.org/10.1109/ICCVW.2011.6130379 (Barcelona, Spain, 2011).",
+          "DOI": "10.1109/ICCVW.2011.6130379"
+        },
+        {
+          "key": "1843_CR41",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Sener, F. et al. Assembly101: A large-scale multi-view video dataset for understanding procedural activities. Preprint at https://arxiv.org/pdf/2203.14712.pdf URL https://assembly-101.github.io (2022).",
+          "DOI": "10.1109/CVPR52688.2022.02042"
+        },
+        {
+          "key": "1843_CR42",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Ragusa, F., Furnari, A., Livatino, S. & Farinella, G. M. The MECCANO dataset: Understanding Human-Object Interactions from Egocentric Videos in an Industrial-like Domain. In IEEE/CVF Winter Conference on Applications of Computer Vision (WACV), 1569–1578 https://doi.org/10.1109/WACV48630.2021.00161 (2021).",
+          "DOI": "10.1109/WACV48630.2021.00161"
+        },
+        {
+          "key": "1843_CR43",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Ben-Shabat, Y. et al. The IKEA ASM dataset: Understanding people assem- bling furniture through actions, objects and pose. In IEEE/CVF Winter Conference on Applications of Computer Vision (WACV), 847–859 https://doi.org/10.48550/arXiv.2007.00394 (2021).",
+          "DOI": "10.48550/arXiv.2007.00394"
+        },
+        {
+          "key": "1843_CR44",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.5281/zenodo.5675810",
+          "author": "DF Redaelli",
+          "year": "2022",
+          "unstructured": "Redaelli, D. F., Storm, F. A. & Fioretta, G. MindBot Planetary Gearbox. Zenodo https://doi.org/10.5281/zenodo.5675810 (2021)."
+        }
+      ],
+      "container-title": [
+        "Scientific Data"
+      ],
+      "language": "en",
+      "link": [
+        {
+          "URL": "https://www.nature.com/articles/s41597-022-01843-z.pdf",
+          "content-type": "application/pdf",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        },
+        {
+          "URL": "https://www.nature.com/articles/s41597-022-01843-z",
+          "content-type": "text/html",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        },
+        {
+          "URL": "https://www.nature.com/articles/s41597-022-01843-z.pdf",
+          "content-type": "application/pdf",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2022,
+            12,
+            2
+          ]
+        ],
+        "date-time": "2022-12-02T09:16:56Z",
+        "timestamp": 1669972616000
+      },
+      "score": 25.600906,
+      "resource": {
+        "primary": {
+          "URL": "https://www.nature.com/articles/s41597-022-01843-z"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2022,
+            12,
+            2
+          ]
+        ]
+      },
+      "references-count": 44,
+      "journal-issue": {
+        "issue": "1",
+        "published-online": {
+          "date-parts": [
+            [
+              2022,
+              12
+            ]
+          ]
+        }
+      },
+      "alternative-id": [
+        "1843"
+      ],
+      "URL": "https://doi.org/10.1038/s41597-022-01843-z",
+      "relation": {
+        "references": [
+          {
+            "id-type": "doi",
+            "id": "10.57760/sciencedb.01872",
+            "asserted-by": "subject"
+          },
+          {
+            "id-type": "doi",
+            "id": "10.5281/zenodo.5675810",
+            "asserted-by": "subject"
+          }
+        ]
+      },
+      "ISSN": [
+        "2052-4463"
+      ],
+      "issn-type": [
+        {
+          "value": "2052-4463",
+          "type": "electronic"
+        }
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2022,
+            12,
+            2
+          ]
+        ]
+      },
+      "assertion": [
+        {
+          "value": "18 July 2022",
+          "order": 1,
+          "name": "received",
+          "label": "Received",
+          "group": {
+            "name": "ArticleHistory",
+            "label": "Article History"
+          }
+        },
+        {
+          "value": "11 November 2022",
+          "order": 2,
+          "name": "accepted",
+          "label": "Accepted",
+          "group": {
+            "name": "ArticleHistory",
+            "label": "Article History"
+          }
+        },
+        {
+          "value": "2 December 2022",
+          "order": 3,
+          "name": "first_online",
+          "label": "First Online",
+          "group": {
+            "name": "ArticleHistory",
+            "label": "Article History"
+          }
+        },
+        {
+          "value": "The authors declare no competing interests.",
+          "order": 1,
+          "name": "Ethics",
+          "group": {
+            "name": "EthicsHeading",
+            "label": "Competing interests"
+          }
+        }
+      ],
+      "article-number": "745"
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            9,
+            30
+          ]
+        ],
+        "date-time": "2026-09-30T09:48:00Z",
+        "timestamp": 1790761680278,
+        "version": "4.1.0"
+      },
+      "reference-count": 110,
+      "publisher": "Elsevier BV",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2023,
+                10,
+                1
+              ]
+            ],
+            "date-time": "2023-10-01T00:00:00Z",
+            "timestamp": 1696118400000
+          },
+          "content-version": "tdm",
+          "delay-in-days": 0,
+          "URL": "https://www.elsevier.com/tdm/userlicense/1.0/"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2023,
+                10,
+                1
+              ]
+            ],
+            "date-time": "2023-10-01T00:00:00Z",
+            "timestamp": 1696118400000
+          },
+          "content-version": "tdm",
+          "delay-in-days": 0,
+          "URL": "https://www.elsevier.com/legal/tdmrep-license"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2023,
+                9,
+                5
+              ]
+            ],
+            "date-time": "2023-09-05T00:00:00Z",
+            "timestamp": 1693872000000
+          },
+          "content-version": "vor",
+          "delay-in-days": 0,
+          "URL": "http://creativecommons.org/licenses/by/4.0/"
+        }
+      ],
+      "content-domain": {
+        "domain": [
+          "elsevier.com",
+          "sciencedirect.com"
+        ],
+        "crossmark-restriction": true
+      },
+      "short-container-title": [
+        "Computer Vision and Image Understanding"
+      ],
+      "published-print": {
+        "date-parts": [
+          [
+            2023,
+            10
+          ]
+        ]
+      },
+      "DOI": "10.1016/j.cviu.2023.103764",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2023,
+            6,
+            26
+          ]
+        ],
+        "date-time": "2023-06-26T01:55:37Z",
+        "timestamp": 1687744537000
+      },
+      "page": "103764",
+      "update-policy": "https://doi.org/10.1016/elsevier_cm_policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 38,
+      "special_numbering": "C",
+      "title": [
+        "MECCANO: A multimodal egocentric dataset for humans behavior understanding in the industrial-like domain"
+      ],
+      "prefix": "10.1016",
+      "volume": "235",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0002-6368-1910",
+          "authenticated-orcid": false,
+          "given": "Francesco",
+          "family": "Ragusa",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Antonino",
+          "family": "Furnari",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-6034-0432",
+          "authenticated-orcid": false,
+          "given": "Giovanni Maria",
+          "family": "Farinella",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "78",
+      "reference": [
+        {
+          "key": "10.1016/j.cviu.2023.103764_b1",
+          "series-title": "ICCV",
+          "first-page": "1949",
+          "article-title": "Lending a hand: Detecting hands and recognizing activities in complex egocentric interactions",
+          "author": "Bambach",
+          "year": "2015"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Bansal, S., Arora, C., Jawahar, C., 2022. My View is the Best View: Procedure Learning from Egocentric Videos. In: European Conference on Computer Vision (ECCV).",
+          "DOI": "10.1007/978-3-031-19778-9_38"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b3",
+          "series-title": "First person action-object detection with EgoNet",
+          "author": "Bertasius",
+          "year": "2017"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b4",
+          "series-title": "Robotics: Science and Systems",
+          "article-title": "Understanding hand-object manipulation with grasp types and object attributes",
+          "author": "Cai",
+          "year": "2016"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b5",
+          "series-title": "A short note on the kinetics-700 human action dataset",
+          "author": "Carreira",
+          "year": "2019"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b6",
+          "first-page": "4724",
+          "article-title": "Quo vadis, action recognition? A new model and the kinetics dataset",
+          "author": "Carreira",
+          "year": "2017",
+          "journal-title": "CVPR"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b7",
+          "first-page": "381",
+          "article-title": "Learning to detect human-object interactions",
+          "author": "Chao",
+          "year": "2018",
+          "journal-title": "WACV"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b8",
+          "series-title": "ICCV",
+          "first-page": "1017",
+          "article-title": "HICO: A benchmark for recognizing human-object interactions in images",
+          "author": "Chao",
+          "year": "2015"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b9",
+          "series-title": "2015 IEEE International Conference on Image Processing (ICIP)",
+          "first-page": "168",
+          "article-title": "UTD-MHAD: A multimodal dataset for human action recognition utilizing a depth camera and a wearable inertial sensor",
+          "author": "Chen",
+          "year": "2015"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b10",
+          "series-title": "ACM PETRA",
+          "article-title": "Deep vision shield: Assessing the use of HMD and wearable sensors in a smart safety device",
+          "author": "Colombo",
+          "year": "2019"
+        },
+        {
+          "issue": "1",
+          "key": "10.1016/j.cviu.2023.103764_b11",
+          "doi-asserted-by": "crossref",
+          "first-page": "74",
+          "DOI": "10.1109/MMUL.2014.19",
+          "article-title": "Visions for augmented cultural heritage experience",
+          "volume": "21",
+          "author": "Cucchiara",
+          "year": "2014",
+          "journal-title": "IEEE MultiMedia"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b12",
+          "series-title": "ECCV",
+          "first-page": "428",
+          "article-title": "Human detection using oriented histograms of flow and appearance",
+          "author": "Dalal",
+          "year": "2006"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b13",
+          "series-title": "ECCV",
+          "article-title": "Scaling egocentric vision: The EPIC-KITCHENS dataset",
+          "author": "Damen",
+          "year": "2018"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b14",
+          "article-title": "The EPIC-KITCHENS dataset: Collection, challenges and baselines",
+          "author": "Damen",
+          "year": "2020",
+          "journal-title": "IEEE TPAMI"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b15",
+          "series-title": "Rescaling egocentric vision",
+          "author": "Damen",
+          "year": "2020"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b16",
+          "series-title": "BMVC",
+          "article-title": "You-do, I-Learn: Discovering task relevant objects and their modes of interaction from multi-user egocentric video",
+          "author": "Damen",
+          "year": "2014"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b17",
+          "first-page": "1",
+          "article-title": "Forecasting action through contact representations from first person video",
+          "author": "Dessalene",
+          "year": "2021",
+          "journal-title": "IEEE Trans. Pattern Anal. Mach. Intell."
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b18",
+          "series-title": "IEEE/CVF International Conference on Computer Vision Workshops (ICCVW) - Visual Object Tracking Challenge",
+          "article-title": "Is first person vision challenging for object tracking?",
+          "author": "Dunnhofer",
+          "year": "2021"
+        },
+        {
+          "issue": "1",
+          "key": "10.1016/j.cviu.2023.103764_b19",
+          "doi-asserted-by": "crossref",
+          "first-page": "98",
+          "DOI": "10.1007/s11263-014-0733-5",
+          "article-title": "The pascal visual object classes challenge: A retrospective",
+          "volume": "111",
+          "author": "Everingham",
+          "year": "2015",
+          "journal-title": "Int. J. Comput. Vis."
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b20",
+          "series-title": "Forecasting hand and object locations in future frames",
+          "author": "Fan",
+          "year": "2017"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b21",
+          "series-title": "PySlowFast",
+          "author": "Fan",
+          "year": "2020"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b22",
+          "series-title": "CVPR",
+          "first-page": "2139",
+          "article-title": "Demo2Vec: Reasoning object affordances from online videos",
+          "author": "Fang",
+          "year": "2018"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b23",
+          "series-title": "ICIAP",
+          "article-title": "VEDI: Vision exploitation for data interpretation",
+          "author": "Farinella",
+          "year": "2019"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b24",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Feichtenhofer, C., 2020. X3D: Expanding Architectures for Efficient Video Recognition. In: 2020 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR). pp. 200–210.",
+          "DOI": "10.1109/CVPR42600.2020.00028"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b25",
+          "series-title": "ICCV",
+          "first-page": "6202",
+          "article-title": "SlowFast networks for video recognition",
+          "author": "Feichtenhofer",
+          "year": "2018"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b26",
+          "series-title": "NeurIPS",
+          "first-page": "3476",
+          "article-title": "Spatiotemporal residual networks for video action recognition",
+          "author": "Feichtenhofer",
+          "year": "2016"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b27",
+          "series-title": "CVPR",
+          "article-title": "Convolutional two-stream network fusion for video action recognition",
+          "author": "Feichtenhofer",
+          "year": "2016"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b28",
+          "series-title": "2017 IEEE International Conference on Computer Vision (ICCV)",
+          "first-page": "3362",
+          "article-title": "What will happen next? Forecasting player moves in sports videos",
+          "author": "Felsen",
+          "year": "2017"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b29",
+          "doi-asserted-by": "crossref",
+          "first-page": "401",
+          "DOI": "10.1016/j.jvcir.2017.10.004",
+          "article-title": "Next-active-object prediction from egocentric videos",
+          "volume": "49",
+          "author": "Furnari",
+          "year": "2017",
+          "journal-title": "J. Vis. Commun. Image Represent."
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b30",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Furnari, A., Farinella, G.M., 2019. What Would You Expect? Anticipating Egocentric Actions with Rolling-Unrolling LSTMs and Modality Attention. In: International Conference on Computer Vision (ICCV).",
+          "DOI": "10.1109/ICCV.2019.00635"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b31",
+          "article-title": "Rolling-unrolling LSTMs for action anticipation from first-person video",
+          "author": "Furnari",
+          "year": "2020",
+          "journal-title": "IEEE Trans. Pattern Anal. Mach. Intell. (PAMI)"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b32",
+          "series-title": "RED: Reinforced encoder-decoder networks for action anticipation",
+          "author": "Gao",
+          "year": "2017"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b33",
+          "series-title": "2018 IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+          "first-page": "409",
+          "article-title": "First-person hand action benchmark with RGB-D videos and 3D hand pose annotations",
+          "author": "Garcia-Hernando",
+          "year": "2018"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b34",
+          "series-title": "2021 IEEE/CVF International Conference on Computer Vision (ICCV)",
+          "first-page": "13485",
+          "article-title": "Anticipative video transformer",
+          "author": "Girdhar",
+          "year": "2021"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b35",
+          "series-title": "ICCV",
+          "article-title": "Fast R-CNN",
+          "author": "Girshick",
+          "year": "2015"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b36",
+          "series-title": "CVPR",
+          "article-title": "Rich feature hierarchies for accurate object detection and semantic segmentation",
+          "author": "Girshick",
+          "year": "2014"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b37",
+          "first-page": "8359",
+          "article-title": "Detecting and recognizing human-object interactions",
+          "author": "Gkioxari",
+          "year": "2018",
+          "journal-title": "CVPR"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b38",
+          "series-title": "ICCV",
+          "first-page": "5843",
+          "article-title": "The “Something Something” video database for learning and evaluating visual common sense",
+          "author": "Goyal",
+          "year": "2017"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b39",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Grauman, K., Westbury, A., Byrne, E., Chavis, Z., Furnari, A., Girdhar, R., Hamburger, J., Jiang, H., Liu, M., Liu, X., Martin, M., Nagarajan, T., Radosavovic, I., Ramakrishnan, S.K., Ryan, F., Sharma, J., Wray, M., Xu, M., Xu, E.Z., Zhao, C., Bansal, S., Batra, D., Cartillier, V., Crane, S., Do, T., Doulaty, M., Erapalli, A., Feichtenhofer, C., Fragomeni, A., Fu, Q., Fuegen, C., Gebreselasie, A., Gonzalez, C., Hillis, J., Huang, X., Huang, Y., Jia, W., Khoo, W., Kolar, J., Kottur, S., Kumar, A., Landini, F., Li, C., Li, Y., Li, Z., Mangalam, K., Modhugu, R., Munro, J., Murrell, T., Nishiyasu, T., Price, W., Puentes, P.R., Ramazanova, M., Sari, L., Somasundaram, K., Southerland, A., Sugano, Y., Tao, R., Vo, M., Wang, Y., Wu, X., Yagi, T., Zhu, Y., Arbelaez, P., Crandall, D., Damen, D., Farinella, G.M., Ghanem, B., Ithapu, V.K., Jawahar, C.V., Joo, H., Kitani, K., Li, H., Newcombe, R., Oliva, A., Park, H.S., Rehg, J.M., Sato, Y., Shi, J., Shou, M.Z., Torralba, A., Torresani, L., Yan, M., Malik, J., 2022. Ego4D: Around the World in 3,000 Hours of Egocentric Video. In: 2022 IEEE Conference on Computer Vision and Pattern Recognition (CVPR).",
+          "DOI": "10.1109/CVPR52688.2022.01842"
+        },
+        {
+          "issue": "10",
+          "key": "10.1016/j.cviu.2023.103764_b40",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1109/TPAMI.2009.83",
+          "article-title": "Observing human-object interactions: Using spatial and functional compatibility for recognition",
+          "volume": "31",
+          "author": "Gupta",
+          "year": "2009",
+          "journal-title": "IEEE TPAMI"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b41",
+          "series-title": "Visual semantic role labeling",
+          "author": "Gupta",
+          "year": "2015"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b42",
+          "series-title": "CVPR",
+          "first-page": "961",
+          "article-title": "ActivityNet: A large-scale video benchmark for human activity understanding",
+          "author": "Heilbron",
+          "year": "2015"
+        },
+        {
+          "issue": "11",
+          "key": "10.1016/j.cviu.2023.103764_b43",
+          "doi-asserted-by": "crossref",
+          "first-page": "2186",
+          "DOI": "10.1109/TPAMI.2016.2640292",
+          "article-title": "Jointly learning heterogeneous features for RGB-D activity recognition",
+          "volume": "39",
+          "author": "Hu",
+          "year": "2017",
+          "journal-title": "IEEE Trans. Pattern Anal. Mach. Intell."
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b44",
+          "series-title": "Predicting gaze in egocentric video by learning task-dependent attention transition",
+          "author": "Huang",
+          "year": "2018"
+        },
+        {
+          "issue": "4",
+          "key": "10.1016/j.cviu.2023.103764_b45",
+          "doi-asserted-by": "crossref",
+          "first-page": "306",
+          "DOI": "10.1109/THMS.2020.2965429",
+          "article-title": "An ego-vision system for discovering human joint attention",
+          "volume": "50",
+          "author": "Huang",
+          "year": "2020",
+          "journal-title": "IEEE Trans. Hum.-Mach. Syst."
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b46",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Hussein, N., Gavves, E., Smeulders, A.W.M., 2019. Timeception for Complex Action Recognition. In: 2019 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR). pp. 254–263.",
+          "DOI": "10.1109/CVPR.2019.00034"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b47",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Jia, W., Liu, M., Rehg, J.M., 2022. Generative Adversarial Network for Future Hand Segmentation from Egocentric Video. In: European Conference on Computer Vision.",
+          "DOI": "10.1007/978-3-031-19778-9_37"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b48",
+          "doi-asserted-by": "crossref",
+          "first-page": "212",
+          "DOI": "10.1016/j.neucom.2020.12.069",
+          "article-title": "Predicting short-term next-active-object through visual attention and hand position",
+          "volume": "433",
+          "author": "Jiang",
+          "year": "2021",
+          "journal-title": "Neurocomputing"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b49",
+          "series-title": "The kinetics human action video dataset",
+          "author": "Kay",
+          "year": "2017"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b50",
+          "series-title": "ICCV",
+          "article-title": "EPIC-fusion: Audio-visual temporal binding for egocentric action recognition",
+          "author": "Kazakos",
+          "year": "2019"
+        },
+        {
+          "issue": "8",
+          "key": "10.1016/j.cviu.2023.103764_b51",
+          "doi-asserted-by": "crossref",
+          "first-page": "951",
+          "DOI": "10.1177/0278364913478446",
+          "article-title": "Learning human activities and object affordances from RGB-D videos",
+          "volume": "32",
+          "author": "Koppula",
+          "year": "2013",
+          "journal-title": "Int. J. Robot. Res."
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b52",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1038/s41598-020-59251-5",
+          "article-title": "Gaze-in-wild: A dataset for studying eye and head coordination in everyday activities",
+          "volume": "10",
+          "author": "Kothari",
+          "year": "2020",
+          "journal-title": "Sci. Rep."
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b53",
+          "series-title": "NeurIPS",
+          "first-page": "1097",
+          "article-title": "ImageNet classification with deep convolutional neural networks",
+          "author": "Krizhevsky",
+          "year": "2012"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b54",
+          "series-title": "ICCV 2021",
+          "article-title": "H2O: Two hands manipulating objects for first person interaction recognition",
+          "author": "Kwon",
+          "year": "2021"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b55",
+          "series-title": "33rd British Machine Vision Conference 2022, BMVC 2022, London, UK, November 21-24, 2022",
+          "article-title": "In the eye of transformer: Global-local correlation for egocentric gaze estimation",
+          "author": "Lai",
+          "year": "2022"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b56",
+          "series-title": "A hierarchical representation for future action prediction",
+          "first-page": "689",
+          "author": "Lan",
+          "year": "2014"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b57",
+          "series-title": "CVPR",
+          "article-title": "Learning realistic human actions from movies",
+          "author": "Laptev",
+          "year": "2008"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b58",
+          "series-title": "ECCV",
+          "article-title": "In the eye of beholder: Joint learning of gaze and actions in first person video",
+          "author": "Li",
+          "year": "2018"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b59",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Li, W., Zhang, Z., Liu, Z., 2010. Action recognition based on a bag of 3D points. In: 2010 IEEE Computer Society Conference on Computer Vision and Pattern Recognition - Workshops. pp. 9–14.",
+          "DOI": "10.1109/CVPRW.2010.5543273"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b60",
+          "series-title": "CVPR",
+          "article-title": "Adaptive interaction modeling via graph operations search",
+          "author": "Li",
+          "year": "2020"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b61",
+          "series-title": "CVPR",
+          "article-title": "PPDM: Parallel point detection and matching for real-time human-object interaction detection",
+          "author": "Liao",
+          "year": "2020"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b62",
+          "series-title": "ICCV",
+          "first-page": "7082",
+          "article-title": "TSM: Temporal shift module for efficient video understanding",
+          "author": "Lin",
+          "year": "2019"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b63",
+          "series-title": "Microsoft COCO: Common objects in context",
+          "author": "Lin",
+          "year": "2014"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b64",
+          "doi-asserted-by": "crossref",
+          "first-page": "2684",
+          "DOI": "10.1109/TPAMI.2019.2916873",
+          "article-title": "NTU RGB+D 120: A large-scale benchmark for 3D human activity understanding",
+          "volume": "42",
+          "author": "Liu",
+          "year": "2020",
+          "journal-title": "IEEE Trans. Pattern Anal. Mach. Intell."
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b65",
+          "series-title": "Computer Vision – ECCV 2020",
+          "first-page": "704",
+          "article-title": "Forecasting human-object interaction: Joint prediction of motor attention and actions in first person video",
+          "author": "Liu",
+          "year": "2020"
+        },
+        {
+          "issue": "8",
+          "key": "10.1016/j.cviu.2023.103764_b66",
+          "doi-asserted-by": "crossref",
+          "first-page": "3703",
+          "DOI": "10.1109/TIP.2019.2901707",
+          "article-title": "Deep attention network for egocentric action recognition",
+          "volume": "28",
+          "author": "Lu",
+          "year": "2019",
+          "journal-title": "IEEE Trans. Image Process."
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b67",
+          "series-title": "2014 IEEE Conference on Computer Vision and Pattern Recognition Workshops",
+          "first-page": "611",
+          "article-title": "Experiments on an RGB-D wearable vision system for egocentric activity recognition",
+          "author": "Moghimi",
+          "year": "2014"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b68",
+          "series-title": "ICCV",
+          "first-page": "8687",
+          "article-title": "Grounded human-object interaction hotspots from video",
+          "author": "Nagarajan",
+          "year": "2019"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b69",
+          "series-title": "EGO-TOPO: Environment affordances from egocentric video",
+          "author": "Nagarajan",
+          "year": "2020"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b70",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1016/j.patcog.2017.07.010",
+          "article-title": "Organizing egocentric videos of daily living activities",
+          "volume": "72",
+          "author": "Ortis",
+          "year": "2017",
+          "journal-title": "Pattern Recognit."
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b71",
+          "series-title": "SlowFast rolling-unrolling LSTMs for action anticipation in egocentric videos",
+          "author": "Osman",
+          "year": "2021"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b72",
+          "series-title": "CVPR",
+          "article-title": "Detecting activities of daily living in first-person camera views",
+          "author": "Pirsiavash",
+          "year": "2012"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b73",
+          "series-title": "CVPR",
+          "first-page": "2847",
+          "article-title": "Detecting activities of daily living in first-person camera views",
+          "author": "Pirsiavash",
+          "year": "2012"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b74",
+          "series-title": "Learning human-object interactions by graph parsing neural networks",
+          "author": "Qi",
+          "year": "2018"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b75",
+          "series-title": "Learning spatio-temporal representation with pseudo-3D residual networks",
+          "first-page": "5534",
+          "author": "Qiu",
+          "year": "2017"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b76",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1016/j.patrec.2019.12.016",
+          "article-title": "EGO-CH: Dataset and fundamental tasks for visitors behavioral understanding using egocentric vision",
+          "author": "Ragusa",
+          "year": "2020",
+          "journal-title": "Pattern Recognit. Lett."
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b77",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Ragusa, F., Furnari, A., Livatino, S., Farinella, G.M., 2021. The MECCANO Dataset: Understanding Human-Object Interactions from Egocentric Videos in an Industrial-like Domain. In: IEEE Winter Conference on Application of Computer Vision (WACV).",
+          "DOI": "10.1109/WACV48630.2021.00161"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b78",
+          "doi-asserted-by": "crossref",
+          "first-page": "2430",
+          "DOI": "10.1109/TPAMI.2016.2533389",
+          "article-title": "Histogram of oriented principal components for cross-view action recognition",
+          "volume": "38",
+          "author": "Rahmani",
+          "year": "2016",
+          "journal-title": "IEEE Trans. Pattern Anal. Mach. Intell."
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b79",
+          "series-title": "YOLOv3: An incremental improvement",
+          "author": "Redmon",
+          "year": "2018"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b80",
+          "series-title": "NeurIPS",
+          "first-page": "91",
+          "article-title": "Faster R-CNN: Towards real-time object detection with region proposal networks",
+          "author": "Ren",
+          "year": "2015"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b81",
+          "series-title": "2015 IEEE International Conference on Computer Vision (ICCV)",
+          "first-page": "3889",
+          "article-title": "Understanding everyday hands in action from RGB-D images",
+          "author": "Rogez",
+          "year": "2015"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b82",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Roy, D., Fernando, B., 2022. Action Anticipation Using Latent Goal Learning. In: Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV). pp. 2745–2753.",
+          "DOI": "10.1109/WACV51458.2022.00088"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b83",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Ryoo, M.S., Fuchs, T.J., Xia, L., Aggarwal, J.K., Matthies, L., 2015. Robot-Centric Activity Prediction from First-Person Videos: What Will They Do to Me?. In: 2015 10th ACM/IEEE International Conference on Human-Robot Interaction (HRI). pp. 295–302.",
+          "DOI": "10.1145/2696454.2696462"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b84",
+          "series-title": "Assembly101: A large-scale multi-view video dataset for understanding procedural activities",
+          "author": "Sener",
+          "year": "2022"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b85",
+          "series-title": "CVPR",
+          "article-title": "Understanding human hands in contact at internet scale",
+          "author": "Shan",
+          "year": "2020"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b86",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Shi, Z., Liang, J., Li, Q., Zheng, H., Gu, Z., Dong, J., Zheng, B., 2021. Multi-Modal Multi-Action Video Recognition. In: Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV). pp. 13678–13687.",
+          "DOI": "10.1109/ICCV48922.2021.01342"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b87",
+          "first-page": "7396",
+          "article-title": "Actor and observer: Joint modeling of first and third-person videos",
+          "author": "Sigurdsson",
+          "year": "2018",
+          "journal-title": "CVPR"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b88",
+          "series-title": "NeurIPS",
+          "article-title": "Two-stream convolutional networks for action recognition in videos",
+          "author": "Simonyan",
+          "year": "2014"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b89",
+          "series-title": "2016 IEEE Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)",
+          "first-page": "378",
+          "article-title": "Multimodal multi-stream deep learning for egocentric activity recognition",
+          "author": "Song",
+          "year": "2016"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b90",
+          "series-title": "Generating notifications for missing actions: Don’t forget to turn the lights off!",
+          "first-page": "4669",
+          "author": "Soran",
+          "year": "2015"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b91",
+          "series-title": "Proceedings of the 2013 ACM International Joint Conference on Pervasive and Ubiquitous Computing",
+          "first-page": "729",
+          "article-title": "Combining embedded accelerometers with computer vision for recognizing food preparation activities",
+          "author": "Stein",
+          "year": "2013"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b92",
+          "series-title": "Proceedings of the 16th AAAI Conference on Plan, Activity, and Intent Recognition",
+          "first-page": "47",
+          "article-title": "Human activity detection from RGBD images",
+          "author": "Sung",
+          "year": "2011"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b93",
+          "series-title": "ICIP",
+          "first-page": "3410",
+          "article-title": "Action recognition in RGB-D egocentric videos",
+          "author": "Tang",
+          "year": "2017"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b94",
+          "series-title": "Background mixup data augmentation for hand and object-in-contact detection",
+          "author": "Tango",
+          "year": "2022"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b95",
+          "series-title": "ECCV",
+          "first-page": "140",
+          "article-title": "Convolutional learning of spatio-temporal features",
+          "author": "Taylor",
+          "year": "2010"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b96",
+          "series-title": "Proceedings of the 2021 International Conference on Multimodal Interaction",
+          "first-page": "717",
+          "article-title": "Predicting gaze from egocentric social interaction videos and IMU data",
+          "author": "Thakur",
+          "year": "2021"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b97",
+          "unstructured": "de la Torre, F., Hodgins, J.K., Montano, J., Valcarcel, S., 2009. Detailed Human Data Acquisition of Kitchen Activities: the CMU-Multimodal Activity Database (CMU-MMAC). In: CHI 2009 Workshop. Developing Shared Home Behavior Datasets to Advance HCI and Ubiquitous Computing Research."
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b98",
+          "series-title": "ICCV",
+          "first-page": "4489",
+          "article-title": "Learning spatiotemporal features with 3D convolutional networks",
+          "author": "Tran",
+          "year": "2015"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b99",
+          "series-title": "CVPR",
+          "first-page": "6450",
+          "article-title": "A closer look at spatiotemporal convolutions for action recognition",
+          "author": "Tran",
+          "year": "2018"
+        },
+        {
+          "issue": "6",
+          "key": "10.1016/j.cviu.2023.103764_b100",
+          "doi-asserted-by": "crossref",
+          "first-page": "1510",
+          "DOI": "10.1109/TPAMI.2017.2712608",
+          "article-title": "Long-term temporal convolutions for action recognition",
+          "volume": "40",
+          "author": "Varol",
+          "year": "2018",
+          "journal-title": "IEEE TPAMI"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b101",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Wang, J., Liu, Z., Wu, Y., Yuan, J., 2012. Mining actionlet ensemble for action recognition with depth cameras. In: 2012 IEEE Conference on Computer Vision and Pattern Recognition. pp. 1290–1297.",
+          "DOI": "10.1109/CVPR.2012.6247813"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b102",
+          "series-title": "Temporal segment networks: Towards good practices for deep action recognition",
+          "author": "Wang",
+          "year": "2016"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b103",
+          "series-title": "CVPR",
+          "article-title": "Learning human-object interaction detection using interaction points",
+          "author": "Wang",
+          "year": "2020"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b104",
+          "series-title": "Rethinking spatiotemporal feature learning for video understanding",
+          "author": "Xie",
+          "year": "2017"
+        },
+        {
+          "issue": "9",
+          "key": "10.1016/j.cviu.2023.103764_b105",
+          "doi-asserted-by": "crossref",
+          "first-page": "1691",
+          "DOI": "10.1109/TPAMI.2012.67",
+          "article-title": "Recognizing human-object interactions in still images by modeling the mutual context of objects and human poses",
+          "volume": "34",
+          "author": "Yao",
+          "year": "2012",
+          "journal-title": "IEEE TPAMI"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b106",
+          "series-title": "Privacy Protection Measures and Technologies in Business Organizations: Aspects and Standards",
+          "author": "Yee",
+          "year": "2011"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b107",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Zeng, K.-H., Shen, B.W., Huang, D.-A., Sun, M., Niebles, J.C., 2017. Visual Forecasting by Imitating Dynamics in Natural Sequences. In: 2017 IEEE International Conference on Computer Vision (ICCV). pp. 3018–3027.",
+          "DOI": "10.1109/ICCV.2017.326"
+        },
+        {
+          "issue": "2",
+          "key": "10.1016/j.cviu.2023.103764_b108",
+          "doi-asserted-by": "crossref",
+          "first-page": "4",
+          "DOI": "10.1109/MMUL.2012.24",
+          "article-title": "Microsoft kinect sensor and its effect",
+          "volume": "19",
+          "author": "Zhang",
+          "year": "2012",
+          "journal-title": "IEEE MultiMedia"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b109",
+          "series-title": "Temporal relational reasoning in videos",
+          "author": "Zhou",
+          "year": "2018"
+        },
+        {
+          "key": "10.1016/j.cviu.2023.103764_b110",
+          "series-title": "ICCV",
+          "first-page": "843",
+          "article-title": "Relation parsing neural network for human-object interaction detection",
+          "author": "Zhou",
+          "year": "2019"
+        }
+      ],
+      "container-title": [
+        "Computer Vision and Image Understanding"
+      ],
+      "language": "en",
+      "link": [
+        {
+          "URL": "https://api.elsevier.com/content/article/PII:S1077314223001443?httpAccept=text/xml",
+          "content-type": "text/xml",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        },
+        {
+          "URL": "https://api.elsevier.com/content/article/PII:S1077314223001443?httpAccept=text/plain",
+          "content-type": "text/plain",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2025,
+            10,
+            21
+          ]
+        ],
+        "date-time": "2025-10-21T09:29:52Z",
+        "timestamp": 1761038992000
+      },
+      "score": 25.03677,
+      "resource": {
+        "primary": {
+          "URL": "https://linkinghub.elsevier.com/retrieve/pii/S1077314223001443"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2023,
+            10
+          ]
+        ]
+      },
+      "references-count": 110,
+      "alternative-id": [
+        "S1077314223001443"
+      ],
+      "URL": "https://doi.org/10.1016/j.cviu.2023.103764",
+      "relation": {
+        "is-supplemented-by": [
+          {
+            "id-type": "uri",
+            "id": "https://iplab.dmi.unict.it/MECCANO/",
+            "asserted-by": "subject"
+          }
+        ]
+      },
+      "ISSN": [
+        "1077-3142"
+      ],
+      "issn-type": [
+        {
+          "value": "1077-3142",
+          "type": "print"
+        }
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2023,
+            10
+          ]
+        ]
+      },
+      "assertion": [
+        {
+          "value": "Elsevier",
+          "name": "publisher",
+          "label": "This article is maintained by"
+        },
+        {
+          "value": "MECCANO: A multimodal egocentric dataset for humans behavior understanding in the industrial-like domain",
+          "name": "articletitle",
+          "label": "Article Title"
+        },
+        {
+          "value": "Computer Vision and Image Understanding",
+          "name": "journaltitle",
+          "label": "Journal Title"
+        },
+        {
+          "value": "https://doi.org/10.1016/j.cviu.2023.103764",
+          "name": "articlelink",
+          "label": "CrossRef DOI link to publisher maintained version"
+        },
+        {
+          "value": "article",
+          "name": "content_type",
+          "label": "Content Type"
+        },
+        {
+          "value": "© 2023 The Authors. Published by Elsevier Inc.",
+          "name": "copyright",
+          "label": "Copyright"
+        }
+      ],
+      "article-number": "103764"
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            9,
+            26
+          ]
+        ],
+        "date-time": "2026-09-26T12:19:23Z",
+        "timestamp": 1790425163295,
+        "version": "4.1.0"
+      },
+      "reference-count": 67,
+      "publisher": "IEEE",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2021,
+                1,
+                1
+              ]
+            ],
+            "date-time": "2021-01-01T00:00:00Z",
+            "timestamp": 1609459200000
+          },
+          "content-version": "vor",
+          "delay-in-days": 0,
+          "URL": "https://ieeexplore.ieee.org/Xplorehelp/downloads/license-information/IEEE.html"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2021,
+                1,
+                1
+              ]
+            ],
+            "date-time": "2021-01-01T00:00:00Z",
+            "timestamp": 1609459200000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-029"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2021,
+                1,
+                1
+              ]
+            ],
+            "date-time": "2021-01-01T00:00:00Z",
+            "timestamp": 1609459200000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-037"
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2021,
+            1
+          ]
+        ]
+      },
+      "DOI": "10.1109/wacv48630.2021.00161",
+      "type": "proceedings-article",
+      "created": {
+        "date-parts": [
+          [
+            2021,
+            6,
+            14
+          ]
+        ],
+        "date-time": "2021-06-14T20:34:13Z",
+        "timestamp": 1623702853000
+      },
+      "page": "1568-1577",
+      "source": "Crossref",
+      "is-referenced-by-count": 98,
+      "title": [
+        "The MECCANO Dataset: Understanding Human-Object Interactions from Egocentric Videos in an Industrial-like Domain"
+      ],
+      "prefix": "10.1109",
+      "author": [
+        {
+          "given": "Francesco",
+          "family": "Ragusa",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Antonino",
+          "family": "Furnari",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Salvatore",
+          "family": "Livatino",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Giovanni Maria",
+          "family": "Farinella",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "263",
+      "reference": [
+        {
+          "key": "ref39",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2019.00718"
+        },
+        {
+          "key": "ref38",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR42600.2020.00056"
+        },
+        {
+          "key": "ref33",
+          "volume": "abs 1705 6950",
+          "author": "kay",
+          "year": "2017",
+          "journal-title": "The kinetics human action video dataset"
+        },
+        {
+          "key": "ref32",
+          "article-title": "Deep residual learning for image recognition",
+          "author": "he",
+          "year": "2015"
+        },
+        {
+          "key": "ref31",
+          "article-title": "Visual semantic role labeling",
+          "author": "gupta",
+          "year": "2015"
+        },
+        {
+          "key": "ref30",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TPAMI.2009.83"
+        },
+        {
+          "key": "ref37",
+          "article-title": "In the eye of beholder: Joint learning of gaze and actions in first person video",
+          "author": "li",
+          "year": "2018",
+          "journal-title": "ECCV"
+        },
+        {
+          "key": "ref36",
+          "author": "laptev",
+          "year": "2008",
+          "journal-title": "CVPR"
+        },
+        {
+          "key": "ref35",
+          "first-page": "1097",
+          "article-title": "Imagenet classification with deep convolutional neural networks",
+          "author": "krizhevsky",
+          "year": "2012",
+          "journal-title": "NeurIPS"
+        },
+        {
+          "key": "ref34",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2019.00559"
+        },
+        {
+          "key": "ref60",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2018.00675"
+        },
+        {
+          "key": "ref62",
+          "volume": "9912",
+          "author": "wang",
+          "year": "2016",
+          "journal-title": "Temporal segment networks towards good practices for deep action recognition"
+        },
+        {
+          "key": "ref61",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TPAMI.2017.2712608"
+        },
+        {
+          "key": "ref63",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR42600.2020.00417"
+        },
+        {
+          "key": "ref28",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2018.00872"
+        },
+        {
+          "key": "ref64",
+          "article-title": "Rethinking spatiotemporal feature learning for video understanding",
+          "volume": "abs 1712 4851",
+          "author": "xie",
+          "year": "2017",
+          "journal-title": "CoRR"
+        },
+        {
+          "key": "ref27",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2014.81"
+        },
+        {
+          "key": "ref65",
+          "doi-asserted-by": "crossref",
+          "first-page": "1691",
+          "DOI": "10.1109/TPAMI.2012.67",
+          "article-title": "Recognizing human-object interactions in still images by modeling the mutual context of objects and human poses",
+          "volume": "34",
+          "author": "yao",
+          "year": "2012",
+          "journal-title": "IEEE TPAMI"
+        },
+        {
+          "key": "ref66",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1007/978-3-030-01246-5_49",
+          "article-title": "Temporal relational reasoning in videos",
+          "author": "zhou",
+          "year": "2018"
+        },
+        {
+          "key": "ref29",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2017.622"
+        },
+        {
+          "key": "ref67",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2019.00093"
+        },
+        {
+          "key": "ref2",
+          "year": "0",
+          "journal-title": "Microsoft Hololens 2"
+        },
+        {
+          "key": "ref1",
+          "year": "0",
+          "journal-title": "Epson Moverio BT-300"
+        },
+        {
+          "key": "ref20",
+          "author": "fan",
+          "year": "2020",
+          "journal-title": "Pyslowfast"
+        },
+        {
+          "key": "ref22",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-030-30645-8_68"
+        },
+        {
+          "key": "ref21",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2018.00228"
+        },
+        {
+          "key": "ref24",
+          "first-page": "3476",
+          "article-title": "Spatiotemporal residual networks for video action recognition",
+          "author": "feichtenhofer",
+          "year": "2016",
+          "journal-title": "NeurIPS NIPS&#x2019;16"
+        },
+        {
+          "key": "ref23",
+          "first-page": "6202",
+          "author": "feichtenhofer",
+          "year": "2018",
+          "journal-title": "Slowfast networks for video recognition"
+        },
+        {
+          "key": "ref26",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2015.169"
+        },
+        {
+          "key": "ref25",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2016.213"
+        },
+        {
+          "key": "ref50",
+          "article-title": "Yolov3: An incremental improvement",
+          "volume": "abs 1804 2767",
+          "author": "redmon",
+          "year": "2018",
+          "journal-title": "CoRR"
+        },
+        {
+          "key": "ref51",
+          "author": "ren",
+          "year": "0",
+          "journal-title": "Faster r-cnn Towards real-time object detection with region proposal networks"
+        },
+        {
+          "key": "ref59",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2015.510"
+        },
+        {
+          "key": "ref58",
+          "first-page": "140",
+          "article-title": "Convolutional learning of spatiotemporal features",
+          "author": "taylor",
+          "year": "2010",
+          "journal-title": "ECCV"
+        },
+        {
+          "key": "ref57",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICIP.2017.8296915"
+        },
+        {
+          "key": "ref56",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2019.01019"
+        },
+        {
+          "key": "ref55",
+          "first-page": "4669",
+          "author": "soran",
+          "year": "2015",
+          "journal-title": "Generating notifications for missing actions Don&#x2019;t forget to turn the lights off!"
+        },
+        {
+          "key": "ref54",
+          "article-title": "Two-stream convolutional networks for action recognition in videos",
+          "author": "simonyan",
+          "year": "2014",
+          "journal-title": "NeurIPS"
+        },
+        {
+          "key": "ref53",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2018.00772"
+        },
+        {
+          "key": "ref52",
+          "author": "shan",
+          "year": "2020",
+          "journal-title": "Understanding human hands in contact at internet scale"
+        },
+        {
+          "key": "ref10",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/3316782.3322754"
+        },
+        {
+          "key": "ref11",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/MMUL.2014.19"
+        },
+        {
+          "key": "ref40",
+          "author": "lin",
+          "year": "0",
+          "journal-title": "Microsoft coco Common objects in context 2014 cite arxiv 1405 0312Comment 1) updated annotation pipeline description and figures 2) added new section describing datasets splits 3) updated author list"
+        },
+        {
+          "key": "ref12",
+          "first-page": "428",
+          "article-title": "Human detection using oriented histograms of flow and appearance",
+          "author": "dalal",
+          "year": "2006",
+          "journal-title": "ECCV"
+        },
+        {
+          "key": "ref13",
+          "article-title": "Scaling egocentric vision: The epic-kitchens dataset",
+          "author": "damen",
+          "year": "2018",
+          "journal-title": "ECCV"
+        },
+        {
+          "key": "ref14",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TPAMI.2020.2991965"
+        },
+        {
+          "key": "ref15",
+          "article-title": "Rescaling egocentric vision",
+          "volume": "abs 2006 13256",
+          "author": "damen",
+          "year": "2020",
+          "journal-title": "CoRR"
+        },
+        {
+          "key": "ref16",
+          "article-title": "You-do, i-learn: Discovering task relevant objects and their modes of interaction from multi-user ego-centric video",
+          "author": "damen",
+          "year": "2014",
+          "journal-title": "BMVC"
+        },
+        {
+          "key": "ref17",
+          "article-title": "Detailed human data acquisition of kitchen activities: the cmumultimodal activity database (cmummac)",
+          "author": "de la torre",
+          "year": "2009",
+          "journal-title": "CHI 2009 Workshop Developing Shared Home Behavior Datasets to Advance HCI and Ubiquitous Computing Research"
+        },
+        {
+          "key": "ref18",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/s11263-014-0733-5"
+        },
+        {
+          "key": "ref19",
+          "first-page": "961",
+          "article-title": "Activitynet: A large-scale video benchmark for human activity understanding",
+          "author": "ghanem",
+          "year": "2015",
+          "journal-title": "CVPR"
+        },
+        {
+          "key": "ref4",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2015.226"
+        },
+        {
+          "key": "ref3",
+          "year": "0",
+          "journal-title": "Vuzix blade"
+        },
+        {
+          "key": "ref6",
+          "author": "carreira",
+          "year": "2019",
+          "journal-title": "A short note on the kinetics-700 human action dataset"
+        },
+        {
+          "key": "ref5",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.15607/RSS.2016.XII.034"
+        },
+        {
+          "key": "ref8",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2015.122"
+        },
+        {
+          "key": "ref7",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2017.502"
+        },
+        {
+          "key": "ref49",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.patrec.2019.12.016"
+        },
+        {
+          "key": "ref9",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/WACV.2018.00048"
+        },
+        {
+          "key": "ref46",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2012.6248010"
+        },
+        {
+          "key": "ref45",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2012.6248010"
+        },
+        {
+          "key": "ref48",
+          "first-page": "5534",
+          "author": "qiu",
+          "year": "2017",
+          "journal-title": "Learning spatiotemporal representation with pseudo-3d residual networks"
+        },
+        {
+          "key": "ref47",
+          "volume": "abs 1808 7962",
+          "author": "qi",
+          "year": "2018",
+          "journal-title": "Learning human-object interactions by graph parsing neural networks"
+        },
+        {
+          "key": "ref42",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2019.00878"
+        },
+        {
+          "key": "ref41",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2016.209"
+        },
+        {
+          "key": "ref44",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.patcog.2017.07.010"
+        },
+        {
+          "key": "ref43",
+          "volume": "abs 2001 4583",
+          "author": "nagarajan",
+          "year": "2020",
+          "journal-title": "Ego-topo Environment affordances from egocentric video"
+        }
+      ],
+      "event": {
+        "name": "2021 IEEE Winter Conference on Applications of Computer Vision (WACV)",
+        "location": "Waikoloa, HI, USA",
+        "start": {
+          "date-parts": [
+            [
+              2021,
+              1,
+              3
+            ]
+          ]
+        },
+        "end": {
+          "date-parts": [
+            [
+              2021,
+              1,
+              8
+            ]
+          ]
+        }
+      },
+      "container-title": [
+        "2021 IEEE Winter Conference on Applications of Computer Vision (WACV)"
+      ],
+      "link": [
+        {
+          "URL": "http://xplorestaging.ieee.org/ielx7/9423008/9423028/09423132.pdf?arnumber=9423132",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2022,
+            5,
+            10
+          ]
+        ],
+        "date-time": "2022-05-10T15:41:31Z",
+        "timestamp": 1652197291000
+      },
+      "score": 24.742487,
+      "resource": {
+        "primary": {
+          "URL": "https://ieeexplore.ieee.org/document/9423132/"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2021,
+            1
+          ]
+        ]
+      },
+      "references-count": 67,
+      "URL": "https://doi.org/10.1109/wacv48630.2021.00161",
+      "published": {
+        "date-parts": [
+          [
+            2021,
+            1
+          ]
+        ]
+      }
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            3,
+            5
+          ]
+        ],
+        "date-time": "2026-03-05T14:52:03Z",
+        "timestamp": 1772722323888,
+        "version": "3.50.1"
+      },
+      "posted": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "group-title": "SSRN",
+      "reference-count": 0,
+      "publisher": "Elsevier BV",
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "abstract": "<jats:p>The augmented assembly language @Asm is proposed in order to transcend the fragmentation of architecture-specific dialects, to provide a unified framework for diverse processing paradigms as a universal assembly language and to function as a self-compiling bootstrap instrument adaptable to any processor system. The language augmentations include: flexible machine-language descriptions, general memory and data management directives, custom lexical identification through regular expressions, parsing facilities, generalized macroprocessing, flexible assembly control instructions, customizable encoding and code generation features, compiler-oriented abstraction mechanisms at the language level. The native abstraction augmentations enable expressive and concise high-level descriptions within assembly language for any present, emerging, or future systems.</jats:p>",
+      "DOI": "10.2139/ssrn.6147906",
+      "type": "posted-content",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            3,
+            5
+          ]
+        ],
+        "date-time": "2026-03-05T13:48:52Z",
+        "timestamp": 1772718532000
+      },
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "@Asm: Augmented Assembly Language"
+      ],
+      "prefix": "10.2139",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0003-1219-8184",
+          "authenticated-orcid": true,
+          "given": "Iosif Iulian",
+          "family": "Petrila",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        }
+      ],
+      "member": "78",
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            3,
+            5
+          ]
+        ],
+        "date-time": "2026-03-05T13:48:52Z",
+        "timestamp": 1772718532000
+      },
+      "score": 24.126585,
+      "resource": {
+        "primary": {
+          "URL": "https://www.ssrn.com/abstract=6147906"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "references-count": 0,
+      "URL": "https://doi.org/10.2139/ssrn.6147906",
+      "published": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "subtype": "preprint"
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            8,
+            18
+          ]
+        ],
+        "date-time": "2026-08-18T00:39:26Z",
+        "timestamp": 1787013566462,
+        "version": "build-2736575974"
+      },
+      "reference-count": 47,
+      "publisher": "IEEE",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2024,
+                1,
+                3
+              ]
+            ],
+            "date-time": "2024-01-03T00:00:00Z",
+            "timestamp": 1704240000000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-029"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2024,
+                1,
+                3
+              ]
+            ],
+            "date-time": "2024-01-03T00:00:00Z",
+            "timestamp": 1704240000000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-037"
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2024,
+            1,
+            3
+          ]
+        ]
+      },
+      "DOI": "10.1109/wacv57701.2024.00430",
+      "type": "proceedings-article",
+      "created": {
+        "date-parts": [
+          [
+            2024,
+            4,
+            9
+          ]
+        ],
+        "date-time": "2024-04-09T13:36:09Z",
+        "timestamp": 1712669769000
+      },
+      "page": "4343-4352",
+      "source": "Crossref",
+      "is-referenced-by-count": 4,
+      "title": [
+        "IKEA Ego 3D Dataset: Understanding furniture assembly actions from ego-view 3D Point Clouds"
+      ],
+      "prefix": "10.1109",
+      "author": [
+        {
+          "given": "Yizhak",
+          "family": "Ben-Shabat",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Australian National University"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Jonathan",
+          "family": "Paul",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Technion, Israel Institute of Technology"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Eviatar",
+          "family": "Segev",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Technion, Israel Institute of Technology"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Oren",
+          "family": "Shrout",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Technion, Israel Institute of Technology"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Stephen",
+          "family": "Gould",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Australian National University"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "263",
+      "reference": [
+        {
+          "key": "ref1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/LRA.2018.2850061"
+        },
+        {
+          "key": "ref2",
+          "article-title": "3di-naction: Understanding human actions in 3d point clouds",
+          "author": "Ben-Shabat",
+          "year": "2023"
+        },
+        {
+          "key": "ref3",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/WACV48630.2021.00089"
+        },
+        {
+          "key": "ref4",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2017.591"
+        },
+        {
+          "key": "ref5",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2015.7298698"
+        },
+        {
+          "key": "ref6",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2017.502"
+        },
+        {
+          "key": "ref7",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2019.00319"
+        },
+        {
+          "key": "ref8",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/s11263-021-01531-2"
+        },
+        {
+          "key": "ref9",
+          "first-page": "720",
+          "article-title": "Scaling egocentric vision: The epic-kitchens dataset",
+          "volume-title": "Proceedings of the European Conference on Computer Vision (ECCV)",
+          "author": "Damen"
+        },
+        {
+          "key": "ref10",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2013.340"
+        },
+        {
+          "key": "ref11",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52688.2022.00298"
+        },
+        {
+          "key": "ref12",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR46437.2021.01398"
+        },
+        {
+          "key": "ref13",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TPAMI.2022.3161735"
+        },
+        {
+          "key": "ref14",
+          "article-title": "Pstnet: Point spatio-temporal convolution on point cloud sequences",
+          "volume-title": "International Conference on Learning Representations",
+          "author": "Fan"
+        },
+        {
+          "key": "ref15",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TPAMI.2021.3135117"
+        },
+        {
+          "key": "ref16",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2019.00630"
+        },
+        {
+          "key": "ref17",
+          "first-page": "3809",
+          "article-title": "Revisiting point cloud shape classification with a simple and effective baseline",
+          "volume-title": "International Conference on Machine Learning",
+          "author": "Goyal"
+        },
+        {
+          "key": "ref18",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52688.2022.01842"
+        },
+        {
+          "key": "ref19",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/tpami.2020.3005434"
+        },
+        {
+          "key": "ref20",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2017.99"
+        },
+        {
+          "key": "ref21",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1177/0278364913478446"
+        },
+        {
+          "key": "ref22",
+          "first-page": "3744",
+          "article-title": "Set transformer: A framework for attention-based permutation-invariant neural networks",
+          "volume-title": "International conference on machine learning",
+          "author": "Lee"
+        },
+        {
+          "key": "ref23",
+          "first-page": "3744",
+          "article-title": "Set transformer: A framework for attention-based permutation-invariant neural networks",
+          "volume-title": "International conference on machine learning",
+          "author": "Lee"
+        },
+        {
+          "key": "ref24",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPRW.2010.5543273"
+        },
+        {
+          "key": "ref25",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TPAMI.2019.2916873"
+        },
+        {
+          "key": "ref26",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/iccv.2019.00934"
+        },
+        {
+          "key": "ref27",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2019.00289"
+        },
+        {
+          "key": "ref28",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/IROS.2015.7353481"
+        },
+        {
+          "key": "ref29",
+          "first-page": "652",
+          "article-title": "Pointnet: Deep learning on point sets for 3d classification and segmentation",
+          "volume-title": "CVPR",
+          "author": "Qi"
+        },
+        {
+          "key": "ref30",
+          "article-title": "Pointnet++: Deep hierarchical feature learning on point sets in a metric space",
+          "volume": "30",
+          "author": "Qi",
+          "year": "2017",
+          "journal-title": "NeurIPS"
+        },
+        {
+          "key": "ref31",
+          "article-title": "Pointnext: Revisiting pointnet++ with improved training and scaling strategies",
+          "author": "Qian",
+          "year": "2022"
+        },
+        {
+          "key": "ref32",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2012.6247801"
+        },
+        {
+          "key": "ref33",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/s11263-015-0851-8"
+        },
+        {
+          "key": "ref34",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2016.115"
+        },
+        {
+          "key": "ref35",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2018.00478"
+        },
+        {
+          "key": "ref36",
+          "author": "Su",
+          "year": "2021",
+          "journal-title": "Ikea object state dataset: A 6dof object pose estimation dataset and benchmark for multi-state assembly objects"
+        },
+        {
+          "key": "ref37",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICRA.2012.6224591"
+        },
+        {
+          "key": "ref38",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2019.00130"
+        },
+        {
+          "key": "ref39",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/DICTA.2017.8227441"
+        },
+        {
+          "key": "ref40",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/3326362"
+        },
+        {
+          "key": "ref41",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR42600.2020.00059"
+        },
+        {
+          "key": "ref42",
+          "article-title": "Pvt: Point-voxel transformer for 3d deep learning",
+          "author": "Zhang",
+          "year": "2021"
+        },
+        {
+          "key": "ref43",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52729.2023.00245"
+        },
+        {
+          "key": "ref44",
+          "volume-title": "Vidat—ANU CVML video annotation tool",
+          "author": "Zhang",
+          "year": "2020"
+        },
+        {
+          "key": "ref45",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV48922.2021.01595"
+        },
+        {
+          "key": "ref46",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52688.2022.00832"
+        },
+        {
+          "key": "ref47",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1609/aaai.v32i1.12342"
+        }
+      ],
+      "event": {
+        "name": "2024 IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)",
+        "location": "Waikoloa, HI, USA",
+        "start": {
+          "date-parts": [
+            [
+              2024,
+              1,
+              3
+            ]
+          ]
+        },
+        "end": {
+          "date-parts": [
+            [
+              2024,
+              1,
+              8
+            ]
+          ]
+        }
+      },
+      "container-title": [
+        "2024 IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)"
+      ],
+      "link": [
+        {
+          "URL": "http://xplorestaging.ieee.org/ielx7/10483279/10483282/10484319.pdf?arnumber=10484319",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2024,
+            4,
+            10
+          ]
+        ],
+        "date-time": "2024-04-10T01:56:13Z",
+        "timestamp": 1712714173000
+      },
+      "score": 23.756498,
+      "resource": {
+        "primary": {
+          "URL": "https://ieeexplore.ieee.org/document/10484319/"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2024,
+            1,
+            3
+          ]
+        ]
+      },
+      "references-count": 47,
+      "URL": "https://doi.org/10.1109/wacv57701.2024.00430",
+      "published": {
+        "date-parts": [
+          [
+            2024,
+            1,
+            3
+          ]
+        ]
+      }
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            2,
+            2
+          ]
+        ],
+        "date-time": "2026-02-02T15:57:38Z",
+        "timestamp": 1770047858668,
+        "version": "3.49.0"
+      },
+      "posted": {
+        "date-parts": [
+          [
+            2026,
+            1,
+            30
+          ]
+        ]
+      },
+      "group-title": "Computer Science and Mathematics",
+      "reference-count": 0,
+      "publisher": "MDPI AG",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                1,
+                30
+              ]
+            ],
+            "date-time": "2026-01-30T00:00:00Z",
+            "timestamp": 1769731200000
+          },
+          "content-version": "unspecified",
+          "delay-in-days": 0,
+          "URL": "http://creativecommons.org/licenses/by/4.0"
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "accepted": {
+        "date-parts": [
+          [
+            2026,
+            1,
+            29
+          ]
+        ]
+      },
+      "abstract": "<jats:p>The augmented assembly language @Asm is proposed in order to transcend the fragmentation of architecture-specific dialects, to provide a unified framework for diverse processing paradigms as a universal assembly language and to function as a self-compiling bootstrap instrument adaptable to any processor system. The language augmentations include: flexible machine-language descriptions, general memory and data management directives, custom lexical identification through regular expressions, parsing facilities, generalized macroprocessing, flexible assembly control instructions, customizable encoding and code generation features, compiler-oriented abstraction mechanisms at the language level. The native abstraction augmentations enable expressive and concise high-level descriptions within assembly language for any present, emerging, or future systems.</jats:p>",
+      "DOI": "10.20944/preprints202601.2364.v1",
+      "type": "posted-content",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            2,
+            2
+          ]
+        ],
+        "date-time": "2026-02-02T05:09:43Z",
+        "timestamp": 1770008983000
+      },
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "@Asm: Augmented Assembly Language"
+      ],
+      "prefix": "10.20944",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0003-1219-8184",
+          "authenticated-orcid": false,
+          "given": "Iosif Iulian",
+          "family": "Petrila",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        }
+      ],
+      "member": "1968",
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            2,
+            2
+          ]
+        ],
+        "date-time": "2026-02-02T05:10:05Z",
+        "timestamp": 1770009005000
+      },
+      "score": 22.828407,
+      "resource": {
+        "primary": {
+          "URL": "https://www.preprints.org/manuscript/202601.2364/v1"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2026,
+            1,
+            30
+          ]
+        ]
+      },
+      "references-count": 0,
+      "URL": "https://doi.org/10.20944/preprints202601.2364.v1",
+      "published": {
+        "date-parts": [
+          [
+            2026,
+            1,
+            30
+          ]
+        ]
+      },
+      "subtype": "preprint"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "title": "IndustReal: A Dataset for Procedure Step Recognition Handling Execution Errors in Egocentric Videos in an Industrial-Like Setting",
+  "url": "https://openaccess.thecvf.com/content/WACV2024/html/Schoonbeek_IndustReal_A_Dataset_for_Procedure_Step_Recognition_Handling_Execution_Errors_WACV_2024_paper.html",
+  "venue": "WACV2024",
+  "canonical_title": "IndustReal: A Dataset for Procedure Step Recognition Handling Execution Errors in Egocentric Videos in an Industrial-Like Setting",
+  "authors": [
+    "Schoonbeek, Tim J.",
+    "Houben, Tim",
+    "Onvlee, Hans",
+    "de With, Peter H.N.",
+    "van der Sommen, Fons"
+  ],
+  "publication_date": "2024",
+  "accessed_at": "2026-10-05T07:38:37.630691+00:00",
+  "fetched_url": "https://openaccess.thecvf.com/content/WACV2024/html/Schoonbeek_IndustReal_A_Dataset_for_Procedure_Step_Recognition_Handling_Execution_Errors_WACV_2024_paper.html",
+  "http_status": 200,
+  "abstract": "Although action recognition for procedural tasks has received notable attention, it has a fundamental flaw in that no measure of success for actions is provided. This limits the applicability of such systems especially within the industrial domain, since the outcome of procedural actions is often significantly more important than the mere execution. To address this limitation, we define the novel task of procedure step recognition (PSR), focusing on recognizing the correct completion and order of procedural steps. Alongside the new task, we also present the multi-modal IndustReal dataset. Unlike currently available datasets, IndustReal contains procedural errors (such as omissions) as well as execution errors. A significant part of these errors are exclusively present in the validation and test sets, making IndustReal suitable to evaluate robustness of algorithms to new, unseen mistakes. Additionally, to encourage reproducibility and allow for scalable approaches trained on synthetic data, the 3D models of all parts are publicly available. Annotations and benchmark performance are provided for action recognition and assembly state detection, as well as the new PSR task. IndustReal, along with the code and model weights, is available at https://github.com/TimSchoonbeek/IndustReal.",
+  "html_evidence": "source_evidence/industreal_a_dataset_for_procedure_step_recognition_handling_execution_errors_in_egocentri_dfc930bf.html",
+  "json_evidence": "source_evidence/industreal_a_dataset_for_procedure_step_recognition_handling_execution_errors_in_egocentri_dfc930bf.json",
+  "venue_evidence": [
+    "Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision"
+  ]
+}

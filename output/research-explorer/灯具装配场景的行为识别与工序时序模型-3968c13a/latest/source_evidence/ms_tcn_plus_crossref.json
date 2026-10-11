@@ -1,0 +1,950 @@
+{
+  "status": "ok",
+  "message-type": "work-list",
+  "message-version": "1.0.0",
+  "message": {
+    "facets": {},
+    "total-results": 3722610,
+    "items": [
+      {
+        "indexed": {
+          "date-parts": [
+            [
+              2026,
+              9,
+              30
+            ]
+          ],
+          "date-time": "2026-09-30T21:09:07Z",
+          "timestamp": 1790802547308,
+          "version": "4.1.0"
+        },
+        "reference-count": 49,
+        "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+        "issue": "6",
+        "license": [
+          {
+            "start": {
+              "date-parts": [
+                [
+                  2023,
+                  6,
+                  1
+                ]
+              ],
+              "date-time": "2023-06-01T00:00:00Z",
+              "timestamp": 1685577600000
+            },
+            "content-version": "vor",
+            "delay-in-days": 0,
+            "URL": "https://ieeexplore.ieee.org/Xplorehelp/downloads/license-information/IEEE.html"
+          },
+          {
+            "start": {
+              "date-parts": [
+                [
+                  2023,
+                  6,
+                  1
+                ]
+              ],
+              "date-time": "2023-06-01T00:00:00Z",
+              "timestamp": 1685577600000
+            },
+            "content-version": "stm-asf",
+            "delay-in-days": 0,
+            "URL": "https://doi.org/10.15223/policy-029"
+          },
+          {
+            "start": {
+              "date-parts": [
+                [
+                  2023,
+                  6,
+                  1
+                ]
+              ],
+              "date-time": "2023-06-01T00:00:00Z",
+              "timestamp": 1685577600000
+            },
+            "content-version": "stm-asf",
+            "delay-in-days": 0,
+            "URL": "https://doi.org/10.15223/policy-037"
+          }
+        ],
+        "funder": [
+          {
+            "DOI": "10.13039/501100001659",
+            "name": "Deutsche Forschungsgemeinschaft",
+            "doi-asserted-by": "publisher",
+            "award": [
+              "GA 1927/4-1"
+            ],
+            "award-info": [
+              {
+                "award-number": [
+                  "GA 1927/4-1"
+                ]
+              }
+            ],
+            "id": [
+              {
+                "id": "10.13039/501100001659",
+                "id-type": "DOI",
+                "asserted-by": "publisher"
+              }
+            ]
+          },
+          {
+            "name": "ERC Starting",
+            "award": [
+              "677650"
+            ],
+            "award-info": [
+              {
+                "award-number": [
+                  "677650"
+                ]
+              }
+            ]
+          }
+        ],
+        "content-domain": {
+          "domain": [],
+          "crossmark-restriction": false
+        },
+        "short-container-title": [
+          "IEEE Trans. Pattern Anal. Mach. Intell."
+        ],
+        "published-print": {
+          "date-parts": [
+            [
+              2023,
+              6,
+              1
+            ]
+          ]
+        },
+        "DOI": "10.1109/tpami.2020.3021756",
+        "type": "journal-article",
+        "created": {
+          "date-parts": [
+            [
+              2020,
+              9,
+              4
+            ]
+          ],
+          "date-time": "2020-09-04T17:28:35Z",
+          "timestamp": 1599240515000
+        },
+        "page": "6647-6658",
+        "source": "Crossref",
+        "is-referenced-by-count": 260,
+        "title": [
+          "MS-TCN++: Multi-Stage Temporal Convolutional Network for Action Segmentation"
+        ],
+        "prefix": "10.1109",
+        "volume": "45",
+        "author": [
+          {
+            "ORCID": "https://orcid.org/0000-0001-6288-6984",
+            "authenticated-orcid": false,
+            "given": "Shijie",
+            "family": "Li",
+            "sequence": "first",
+            "affiliation": [
+              {
+                "name": "University of Bonn, Bonn, Germany"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0003-2185-4809",
+            "authenticated-orcid": false,
+            "given": "Yazan Abu",
+            "family": "Farha",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "University of Bonn, Bonn, Germany"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0001-6143-0264",
+            "authenticated-orcid": false,
+            "given": "Yun",
+            "family": "Liu",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "Nankai University, Tianjin, China"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0001-5550-8758",
+            "authenticated-orcid": false,
+            "given": "Ming-Ming",
+            "family": "Cheng",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "Nankai University, Tianjin, China"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0002-9447-3399",
+            "authenticated-orcid": false,
+            "given": "Juergen",
+            "family": "Gall",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "University of Bonn, Bonn, Germany"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          }
+        ],
+        "member": "263",
+        "reference": [
+          {
+            "key": "ref13",
+            "first-page": "6508",
+            "article-title": "Weakly-supervised action segmentation with iterative soft boundary assignment",
+            "author": "ding",
+            "year": "2018",
+            "journal-title": "Proc IEEE Conf Comput Vis Pattern Recognit"
+          },
+          {
+            "key": "ref12",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2018.00705"
+          },
+          {
+            "key": "ref15",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1145/2493432.2493482"
+          },
+          {
+            "key": "ref14",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2019.00369"
+          },
+          {
+            "key": "ref11",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2017.113"
+          },
+          {
+            "key": "ref10",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2017.140"
+          },
+          {
+            "key": "ref17",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2014.105"
+          },
+          {
+            "key": "ref16",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2011.5995444"
+          },
+          {
+            "key": "ref19",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV.2011.6126269"
+          },
+          {
+            "key": "ref18",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2013.333"
+          },
+          {
+            "key": "ref46",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/TPAMI.2014.2318702"
+          },
+          {
+            "key": "ref45",
+            "first-page": "483",
+            "article-title": "Stacked hourglass networks for human pose estimation",
+            "author": "newell",
+            "year": "2016",
+            "journal-title": "Proc Eur Conf Comput Vis"
+          },
+          {
+            "key": "ref48",
+            "first-page": "234",
+            "article-title": "U-net: Convolutional networks for biomedical image segmentation",
+            "author": "ronneberger",
+            "year": "2015",
+            "journal-title": "Proc Int Conf Med Image Comput Comput -Assisted Intervention"
+          },
+          {
+            "key": "ref47",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2017.106"
+          },
+          {
+            "key": "ref42",
+            "first-page": "93.1",
+            "article-title": "End-to-end, single-stream temporal action detection in untrimmed videos",
+            "author": "buch",
+            "year": "2017",
+            "journal-title": "Proc British Mach Vis Conf"
+          },
+          {
+            "key": "ref41",
+            "first-page": "2678",
+            "article-title": "End-to-end learning of action detection from frame glimpses in videos",
+            "author": "yeung",
+            "year": "2016",
+            "journal-title": "Proc IEEE Conf Comput Vis Pattern Recognit"
+          },
+          {
+            "key": "ref44",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2016.511"
+          },
+          {
+            "key": "ref43",
+            "first-page": "344",
+            "article-title": "Gaussian temporal awareness networks for action localization",
+            "author": "long",
+            "year": "2019",
+            "journal-title": "Proc IEEE Conf Comput Vis Pattern Recognit"
+          },
+          {
+            "key": "ref49",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2016.90"
+          },
+          {
+            "key": "ref8",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/WACV.2016.7477701"
+          },
+          {
+            "key": "ref7",
+            "article-title": "The lear submission at THUMOS 2014",
+            "author": "oneata",
+            "year": "2014"
+          },
+          {
+            "key": "ref9",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1007/978-3-319-46487-9_3"
+          },
+          {
+            "key": "ref4",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV.2019.00630"
+          },
+          {
+            "key": "ref3",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2017.502"
+          },
+          {
+            "key": "ref6",
+            "article-title": "Fast saliency based pooling of fisher encoded dense trajectories",
+            "author": "karaman",
+            "year": "2014",
+            "journal-title": "Proc Eur Conf Comput Vis THUMOS Workshop"
+          },
+          {
+            "key": "ref5",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2012.6247801"
+          },
+          {
+            "key": "ref40",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV.2019.00399"
+          },
+          {
+            "key": "ref35",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2018.00124"
+          },
+          {
+            "key": "ref34",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV.2017.317"
+          },
+          {
+            "key": "ref37",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV.2017.392"
+          },
+          {
+            "key": "ref36",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV.2019.00719"
+          },
+          {
+            "key": "ref31",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV.2019.00638"
+          },
+          {
+            "key": "ref30",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/TPAMI.2019.2938758"
+          },
+          {
+            "key": "ref33",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV.2017.617"
+          },
+          {
+            "key": "ref32",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2016.119"
+          },
+          {
+            "key": "ref2",
+            "first-page": "3468",
+            "article-title": "Spatiotemporal residual networks for video action recognition",
+            "author": "feichtenhofer",
+            "year": "2016",
+            "journal-title": "Proc Advances Neural Inf Process Syst"
+          },
+          {
+            "key": "ref1",
+            "first-page": "568",
+            "article-title": "Two-stream convolutional networks for action recognition in videos",
+            "author": "simonyan",
+            "year": "2014",
+            "journal-title": "Proc Advances Neural Inf Process Syst"
+          },
+          {
+            "key": "ref39",
+            "article-title": "Cascaded boundary regression for temporal action detection",
+            "author": "gao",
+            "year": "2017",
+            "journal-title": "Proc British Mach Vis Conf"
+          },
+          {
+            "key": "ref38",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2017.675"
+          },
+          {
+            "key": "ref24",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2012.6247808"
+          },
+          {
+            "key": "ref23",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/TPAMI.2018.2884469"
+          },
+          {
+            "key": "ref26",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2016.341"
+          },
+          {
+            "key": "ref25",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2014.338"
+          },
+          {
+            "key": "ref20",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2014.287"
+          },
+          {
+            "key": "ref22",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1016/j.cviu.2017.06.004"
+          },
+          {
+            "key": "ref21",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2014.286"
+          },
+          {
+            "key": "ref28",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2016.287"
+          },
+          {
+            "key": "ref27",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2016.216"
+          },
+          {
+            "key": "ref29",
+            "article-title": "Wavenet: A generative model for raw audio",
+            "author": "van den oord",
+            "year": "2016",
+            "journal-title": "Proc ISCA Speech Synthesis Workshop"
+          }
+        ],
+        "container-title": [
+          "IEEE Transactions on Pattern Analysis and Machine Intelligence"
+        ],
+        "link": [
+          {
+            "URL": "http://xplorestaging.ieee.org/ielx7/34/10120646/09186840.pdf?arnumber=9186840",
+            "content-type": "unspecified",
+            "content-version": "vor",
+            "intended-application": "similarity-checking"
+          }
+        ],
+        "deposited": {
+          "date-parts": [
+            [
+              2023,
+              5,
+              29
+            ]
+          ],
+          "date-time": "2023-05-29T13:37:22Z",
+          "timestamp": 1685367442000
+        },
+        "score": 64.297676,
+        "resource": {
+          "primary": {
+            "URL": "https://ieeexplore.ieee.org/document/9186840/"
+          }
+        },
+        "issued": {
+          "date-parts": [
+            [
+              2023,
+              6,
+              1
+            ]
+          ]
+        },
+        "references-count": 49,
+        "journal-issue": {
+          "issue": "6"
+        },
+        "URL": "https://doi.org/10.1109/tpami.2020.3021756",
+        "ISSN": [
+          "0162-8828",
+          "2160-9292",
+          "1939-3539"
+        ],
+        "issn-type": [
+          {
+            "value": "0162-8828",
+            "type": "print"
+          },
+          {
+            "value": "2160-9292",
+            "type": "electronic"
+          },
+          {
+            "value": "1939-3539",
+            "type": "electronic"
+          }
+        ],
+        "published": {
+          "date-parts": [
+            [
+              2023,
+              6,
+              1
+            ]
+          ]
+        }
+      },
+      {
+        "indexed": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              2
+            ]
+          ],
+          "date-time": "2026-10-02T19:32:05Z",
+          "timestamp": 1790969525126,
+          "version": "4.1.0"
+        },
+        "reference-count": 29,
+        "publisher": "IEEE",
+        "license": [
+          {
+            "start": {
+              "date-parts": [
+                [
+                  2019,
+                  6,
+                  1
+                ]
+              ],
+              "date-time": "2019-06-01T00:00:00Z",
+              "timestamp": 1559347200000
+            },
+            "content-version": "stm-asf",
+            "delay-in-days": 0,
+            "URL": "https://doi.org/10.15223/policy-029"
+          },
+          {
+            "start": {
+              "date-parts": [
+                [
+                  2019,
+                  6,
+                  1
+                ]
+              ],
+              "date-time": "2019-06-01T00:00:00Z",
+              "timestamp": 1559347200000
+            },
+            "content-version": "stm-asf",
+            "delay-in-days": 0,
+            "URL": "https://doi.org/10.15223/policy-037"
+          }
+        ],
+        "content-domain": {
+          "domain": [],
+          "crossmark-restriction": false
+        },
+        "published-print": {
+          "date-parts": [
+            [
+              2019,
+              6
+            ]
+          ]
+        },
+        "DOI": "10.1109/cvpr.2019.00369",
+        "type": "proceedings-article",
+        "created": {
+          "date-parts": [
+            [
+              2020,
+              1,
+              9
+            ]
+          ],
+          "date-time": "2020-01-09T21:06:13Z",
+          "timestamp": 1578603973000
+        },
+        "page": "3570-3579",
+        "source": "Crossref",
+        "is-referenced-by-count": 650,
+        "title": [
+          "MS-TCN: Multi-Stage Temporal Convolutional Network for Action Segmentation"
+        ],
+        "prefix": "10.1109",
+        "author": [
+          {
+            "given": "Yazan Abu",
+            "family": "Farha",
+            "sequence": "first",
+            "affiliation": [
+              {
+                "name": "Univ. of Bonn"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Jürgen",
+            "family": "Gall",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "Univ. of Bonn"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          }
+        ],
+        "member": "263",
+        "reference": [
+          {
+            "key": "ref10",
+            "first-page": "137",
+            "article-title": "Connectionist temporal modeling for weakly supervised action labeling",
+            "author": "huang",
+            "year": "2016",
+            "journal-title": "European Conference on Computer Vision (ECCV)"
+          },
+          {
+            "key": "ref11",
+            "article-title": "Fast saliency based pooling of fisher encoded dense trajectories",
+            "author": "karaman",
+            "year": "2014",
+            "journal-title": "European Conference on Computer Vision (ECCV) THUMOS Workshop"
+          },
+          {
+            "key": "ref12",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2014.105"
+          },
+          {
+            "key": "ref13",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/WACV.2016.7477701"
+          },
+          {
+            "key": "ref14",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1016/j.cviu.2017.06.004"
+          },
+          {
+            "key": "ref15",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2017.113"
+          },
+          {
+            "key": "ref16",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1007/978-3-319-46487-9_3"
+          },
+          {
+            "key": "ref17",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2018.00705"
+          },
+          {
+            "key": "ref18",
+            "first-page": "483",
+            "article-title": "Stacked hourglass networks for human pose estimation",
+            "author": "newell",
+            "year": "2016",
+            "journal-title": "European Conference on Computer Vision (ECCV)"
+          },
+          {
+            "key": "ref19",
+            "author": "oneata",
+            "year": "2014",
+            "journal-title": "The LEAR submission at Thumos 2014"
+          },
+          {
+            "key": "ref28",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2014.338"
+          },
+          {
+            "key": "ref4",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2014.286"
+          },
+          {
+            "key": "ref27",
+            "article-title": "Wavenet: A generative model for raw audio",
+            "author": "den oord",
+            "year": "2016",
+            "journal-title": "ISCA Speech Synthesis Workshop (SSW)"
+          },
+          {
+            "key": "ref3",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2017.502"
+          },
+          {
+            "key": "ref6",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV.2011.6126269"
+          },
+          {
+            "key": "ref29",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2016.511"
+          },
+          {
+            "key": "ref5",
+            "first-page": "6508",
+            "article-title": "Weakly-supervised action segmentation with iterative soft boundary assignment",
+            "author": "ding",
+            "year": "2018",
+            "journal-title": "IEEE Conference on Computer Vision and Pattern Recognition (CVPR)"
+          },
+          {
+            "key": "ref8",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2011.5995444"
+          },
+          {
+            "key": "ref7",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2013.333"
+          },
+          {
+            "key": "ref2",
+            "first-page": "628",
+            "article-title": "Weakly supervised action labeling in videos under ordering constraints",
+            "author": "bojanowski",
+            "year": "2014",
+            "journal-title": "European Conference on Computer Vision (ECCV)"
+          },
+          {
+            "key": "ref9",
+            "first-page": "3468",
+            "article-title": "Spatiotemporal residual networks for video action recognition",
+            "author": "feichtenhofer",
+            "year": "2016",
+            "journal-title": "Advances in Neural Information Processing Systems (NIPS)"
+          },
+          {
+            "key": "ref1",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2014.287"
+          },
+          {
+            "key": "ref20",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2016.341"
+          },
+          {
+            "key": "ref22",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2012.6247801"
+          },
+          {
+            "key": "ref21",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2017.140"
+          },
+          {
+            "key": "ref24",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2016.287"
+          },
+          {
+            "key": "ref23",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2016.216"
+          },
+          {
+            "key": "ref26",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2012.6247808"
+          },
+          {
+            "key": "ref25",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1145/2493432.2493482"
+          }
+        ],
+        "event": {
+          "name": "2019 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+          "location": "Long Beach, CA, USA",
+          "start": {
+            "date-parts": [
+              [
+                2019,
+                6,
+                15
+              ]
+            ]
+          },
+          "end": {
+            "date-parts": [
+              [
+                2019,
+                6,
+                20
+              ]
+            ]
+          }
+        },
+        "container-title": [
+          "2019 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)"
+        ],
+        "link": [
+          {
+            "URL": "http://xplorestaging.ieee.org/ielx7/8938205/8953184/08953830.pdf?arnumber=8953830",
+            "content-type": "unspecified",
+            "content-version": "vor",
+            "intended-application": "similarity-checking"
+          }
+        ],
+        "deposited": {
+          "date-parts": [
+            [
+              2025,
+              9,
+              1
+            ]
+          ],
+          "date-time": "2025-09-01T19:21:00Z",
+          "timestamp": 1756754460000
+        },
+        "score": 63.968853,
+        "resource": {
+          "primary": {
+            "URL": "https://ieeexplore.ieee.org/document/8953830/"
+          }
+        },
+        "issued": {
+          "date-parts": [
+            [
+              2019,
+              6
+            ]
+          ]
+        },
+        "references-count": 29,
+        "URL": "https://doi.org/10.1109/cvpr.2019.00369",
+        "published": {
+          "date-parts": [
+            [
+              2019,
+              6
+            ]
+          ]
+        }
+      }
+    ],
+    "items-per-page": 2,
+    "query": {
+      "start-index": 0,
+      "search-terms": null
+    }
+  }
+}

@@ -1,0 +1,1751 @@
+[
+  {
+    "url": "https://api.crossref.org/works/10.1109/TPAMI.2023.3327284",
+    "accessed_at": "2026-10-05T07:41:31.693296+00:00",
+    "data": {
+      "status": "ok",
+      "message-type": "work",
+      "message-version": "1.0.0",
+      "message": {
+        "indexed": {
+          "date-parts": [
+            [
+              2026,
+              9,
+              30
+            ]
+          ],
+          "date-time": "2026-09-30T19:25:56Z",
+          "timestamp": 1790796356547,
+          "version": "4.1.0"
+        },
+        "reference-count": 168,
+        "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+        "issue": "2",
+        "license": [
+          {
+            "start": {
+              "date-parts": [
+                [
+                  2024,
+                  2,
+                  1
+                ]
+              ],
+              "date-time": "2024-02-01T00:00:00Z",
+              "timestamp": 1706745600000
+            },
+            "content-version": "vor",
+            "delay-in-days": 0,
+            "URL": "https://ieeexplore.ieee.org/Xplorehelp/downloads/license-information/IEEE.html"
+          },
+          {
+            "start": {
+              "date-parts": [
+                [
+                  2024,
+                  2,
+                  1
+                ]
+              ],
+              "date-time": "2024-02-01T00:00:00Z",
+              "timestamp": 1706745600000
+            },
+            "content-version": "stm-asf",
+            "delay-in-days": 0,
+            "URL": "https://doi.org/10.15223/policy-029"
+          },
+          {
+            "start": {
+              "date-parts": [
+                [
+                  2024,
+                  2,
+                  1
+                ]
+              ],
+              "date-time": "2024-02-01T00:00:00Z",
+              "timestamp": 1706745600000
+            },
+            "content-version": "stm-asf",
+            "delay-in-days": 0,
+            "URL": "https://doi.org/10.15223/policy-037"
+          }
+        ],
+        "funder": [
+          {
+            "DOI": "10.13039/501100001381",
+            "name": "National Research Foundation Singapore",
+            "doi-asserted-by": "publisher",
+            "id": [
+              {
+                "id": "10.13039/501100001381",
+                "id-type": "DOI",
+                "asserted-by": "publisher"
+              }
+            ]
+          },
+          {
+            "name": "NRF Fellowship for AI",
+            "award": [
+              "NRF-NRFFAI1-2019-0001"
+            ],
+            "award-info": [
+              {
+                "award-number": [
+                  "NRF-NRFFAI1-2019-0001"
+                ]
+              }
+            ]
+          }
+        ],
+        "content-domain": {
+          "domain": [],
+          "crossmark-restriction": false
+        },
+        "short-container-title": [
+          "IEEE Trans. Pattern Anal. Mach. Intell."
+        ],
+        "published-print": {
+          "date-parts": [
+            [
+              2024,
+              2
+            ]
+          ]
+        },
+        "DOI": "10.1109/tpami.2023.3327284",
+        "type": "journal-article",
+        "created": {
+          "date-parts": [
+            [
+              2023,
+              10,
+              24
+            ]
+          ],
+          "date-time": "2023-10-24T17:51:51Z",
+          "timestamp": 1698169911000
+        },
+        "page": "1011-1030",
+        "source": "Crossref",
+        "is-referenced-by-count": 103,
+        "title": [
+          "Temporal Action Segmentation: An Analysis of Modern Techniques"
+        ],
+        "prefix": "10.1109",
+        "volume": "46",
+        "author": [
+          {
+            "ORCID": "https://orcid.org/0000-0001-6080-5220",
+            "authenticated-orcid": false,
+            "given": "Guodong",
+            "family": "Ding",
+            "sequence": "first",
+            "affiliation": [
+              {
+                "name": "School of Computing, National University of Singapore, Singapore"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0001-5004-6005",
+            "authenticated-orcid": false,
+            "given": "Fadime",
+            "family": "Sener",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "Meta Reality Labs, Burlingame, CA, USA"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0001-7418-6141",
+            "authenticated-orcid": false,
+            "given": "Angela",
+            "family": "Yao",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "School of Computing, National University of Singapore, Singapore"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          }
+        ],
+        "member": "263",
+        "reference": [
+          {
+            "key": "ref1",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/TPAMI.2021.3059968"
+          },
+          {
+            "key": "ref2",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV.2019.00630"
+          },
+          {
+            "key": "ref3",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV.2019.00718"
+          },
+          {
+            "key": "ref4",
+            "first-page": "12493",
+            "article-title": "Keeping your eye on the ball: Trajectory attention in video transformers",
+            "volume-title": "Proc. Adv. Neural Inf. Process. Syst.",
+            "author": "Patrick"
+          },
+          {
+            "key": "ref5",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.3390/s19051005"
+          },
+          {
+            "key": "ref6",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1007/s11263-022-01594-9"
+          },
+          {
+            "key": "ref7",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ACCESS.2020.2986861"
+          },
+          {
+            "key": "ref8",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1007/s00521-022-07102-x"
+          },
+          {
+            "key": "ref9",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1007/978-3-319-62392-4_30"
+          },
+          {
+            "key": "ref10",
+            "article-title": "Deep learning for vision-based prediction: A survey",
+            "author": "Rasouli",
+            "year": "2020"
+          },
+          {
+            "key": "ref11",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2017.140"
+          },
+          {
+            "key": "ref12",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2018.00771"
+          },
+          {
+            "key": "ref13",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2018.00627"
+          },
+          {
+            "key": "ref14",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2019.00369"
+          },
+          {
+            "key": "ref15",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2016.119"
+          },
+          {
+            "key": "ref16",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV.2019.00399"
+          },
+          {
+            "key": "ref17",
+            "article-title": "THUMOS challenge: Action recognition with a large number of classes",
+            "author": "Jiang",
+            "year": "2014"
+          },
+          {
+            "key": "ref18",
+            "first-page": "185",
+            "article-title": "Segmenting motion capture data into distinct behaviors",
+            "volume-title": "Proc. Graph. Interface",
+            "author": "Barbič"
+          },
+          {
+            "key": "ref19",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/AFGR.2008.4813468"
+          },
+          {
+            "key": "ref20",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/TPAMI.2012.137"
+          },
+          {
+            "key": "ref21",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/TMM.2016.2635030"
+          },
+          {
+            "key": "ref22",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.3390/electronics10070827"
+          },
+          {
+            "key": "ref23",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1214/14-AOAS742"
+          },
+          {
+            "key": "ref24",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2019.00365"
+          },
+          {
+            "key": "ref25",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1007/978-3-319-46478-7_47"
+          },
+          {
+            "key": "ref26",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1007/978-3-030-58520-4_33"
+          },
+          {
+            "key": "ref27",
+            "article-title": "Procedure completion by learning from partial summaries",
+            "volume-title": "Proc. Brit. Mach. Vis. Conf.",
+            "author": "Naing"
+          },
+          {
+            "key": "ref28",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2011.5995444"
+          },
+          {
+            "key": "ref29",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1145/2493432.2493482"
+          },
+          {
+            "key": "ref30",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2014.105"
+          },
+          {
+            "key": "ref31",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2016.495"
+          },
+          {
+            "key": "ref32",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR52688.2022.02042"
+          },
+          {
+            "key": "ref33",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1609/aaai.v32i1.12342"
+          },
+          {
+            "key": "ref34",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2019.00130"
+          },
+          {
+            "key": "ref35",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1007/s11263-021-01531-2"
+          },
+          {
+            "key": "ref36",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/WACV48630.2021.00089"
+          },
+          {
+            "key": "ref37",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/WACV48630.2021.00161"
+          },
+          {
+            "key": "ref38",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2019.00034"
+          },
+          {
+            "key": "ref39",
+            "article-title": "PIC: Permutation invariant convolution for recognizing long-range activities",
+            "author": "Hussein",
+            "year": "2020"
+          },
+          {
+            "key": "ref40",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV48922.2021.00797"
+          },
+          {
+            "key": "ref41",
+            "first-page": "753",
+            "article-title": "Scaling egocentric vision: The epic-kitchens dataset",
+            "volume-title": "Proc. Eur. Conf. Comput. Vis.",
+            "author": "Damen"
+          },
+          {
+            "key": "ref42",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV48922.2021.00798"
+          },
+          {
+            "key": "ref43",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR52688.2022.01928"
+          },
+          {
+            "key": "ref44",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1007/978-3-030-01228-1_38"
+          },
+          {
+            "key": "ref45",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.3115/v1/N15-1015"
+          },
+          {
+            "key": "ref46",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV.2019.00095"
+          },
+          {
+            "key": "ref47",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV.2019.00272"
+          },
+          {
+            "key": "ref48",
+            "first-page": "7575",
+            "article-title": "Egocentric video-language pretraining",
+            "volume-title": "Proc. Adv. Neural Inf. Process. Syst.",
+            "author": "Lin"
+          },
+          {
+            "key": "ref49",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR42600.2020.00990"
+          },
+          {
+            "key": "ref50",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2019.00264"
+          },
+          {
+            "key": "ref51",
+            "article-title": "Decoupling representation and classifier for long-tailed recognition",
+            "author": "Kang",
+            "year": "2019"
+          },
+          {
+            "key": "ref52",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2017.113"
+          },
+          {
+            "key": "ref53",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2019.01015"
+          },
+          {
+            "key": "ref54",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1609/aaai.v36i2.20124"
+          },
+          {
+            "key": "ref55",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1007/978-3-031-19833-5_2"
+          },
+          {
+            "key": "ref56",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR46437.2021.01244"
+          },
+          {
+            "key": "ref57",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1007/978-3-031-19772-7_17"
+          },
+          {
+            "key": "ref58",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV.2019.00634"
+          },
+          {
+            "key": "ref59",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR42600.2020.00058"
+          },
+          {
+            "key": "ref60",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR42600.2020.01083"
+          },
+          {
+            "key": "ref61",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/TMM.2022.3231099"
+          },
+          {
+            "key": "ref62",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2018.00873"
+          },
+          {
+            "key": "ref63",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR46437.2021.01107"
+          },
+          {
+            "key": "ref64",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR52688.2022.00332"
+          },
+          {
+            "key": "ref65",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1007/978-3-319-46487-9_3"
+          },
+          {
+            "key": "ref66",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1002/nav.3800020109"
+          },
+          {
+            "key": "ref67",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICDM.2006.160"
+          },
+          {
+            "key": "ref68",
+            "article-title": "Deep discriminative clustering analysis",
+            "author": "Chang",
+            "year": "2019"
+          },
+          {
+            "key": "ref69",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2019.00129"
+          },
+          {
+            "key": "ref70",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2019.01234"
+          },
+          {
+            "key": "ref71",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/WACV48630.2021.00128"
+          },
+          {
+            "key": "ref72",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2011.5995407"
+          },
+          {
+            "key": "ref73",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV.2013.441"
+          },
+          {
+            "key": "ref74",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1007/978-3-642-15561-1_11"
+          },
+          {
+            "key": "ref75",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2017.502"
+          },
+          {
+            "key": "ref76",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1007/s13398-014-0173-7.2"
+          },
+          {
+            "key": "ref77",
+            "article-title": "The kinetics human action video dataset",
+            "author": "Kay",
+            "year": "2017"
+          },
+          {
+            "key": "ref78",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1007/978-3-540-74936-3_22"
+          },
+          {
+            "key": "ref79",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR42600.2020.01404"
+          },
+          {
+            "key": "ref80",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.3115/v1/d14-1179"
+          },
+          {
+            "key": "ref81",
+            "first-page": "6508",
+            "article-title": "Weakly-supervised action segmentation with iterative soft boundary assignment",
+            "volume-title": "Proc. IEEE/CVF Conf. Comput. Vis. Pattern Recognit.",
+            "author": "Ding"
+          },
+          {
+            "key": "ref82",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2018.00705"
+          },
+          {
+            "key": "ref83",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/TPAMI.2023.3284080"
+          },
+          {
+            "key": "ref84",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1007/978-3-319-24574-4_28"
+          },
+          {
+            "key": "ref85",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/TPAMI.2020.3021756"
+          },
+          {
+            "key": "ref86",
+            "first-page": "6000",
+            "article-title": "Attention is all you need",
+            "volume-title": "Proc. Adv. Neural Inf. Process. Syst.",
+            "author": "Vaswani"
+          },
+          {
+            "key": "ref87",
+            "article-title": "Vision transformers for action recognition: A survey",
+            "author": "Ulhaq",
+            "year": "2022"
+          },
+          {
+            "key": "ref88",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1007/978-3-030-58517-4_10"
+          },
+          {
+            "key": "ref89",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1007/978-3-030-11018-5_20"
+          },
+          {
+            "key": "ref90",
+            "article-title": "ASFormer: Transformer for action segmentation",
+            "volume-title": "Proc. Brit. Mach. Vis. Conf.",
+            "author": "Yi"
+          },
+          {
+            "key": "ref91",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1007/978-3-031-19833-5_4"
+          },
+          {
+            "key": "ref92",
+            "article-title": "Deformable DETR: Deformable transformers for end-to-end object detection",
+            "volume-title": "Proc. Int. Conf. Learn. Representations",
+            "author": "Zhu"
+          },
+          {
+            "key": "ref93",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1007/978-94-015-8330-5_4"
+          },
+          {
+            "key": "ref94",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/TIT.1967.1054010"
+          },
+          {
+            "key": "ref95",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1007/978-3-030-92659-5_18"
+          },
+          {
+            "key": "ref96",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1007/978-3-030-58595-2_3"
+          },
+          {
+            "key": "ref97",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/WACV48630.2021.00237"
+          },
+          {
+            "key": "ref98",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2016.216"
+          },
+          {
+            "key": "ref99",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV.2019.00638"
+          },
+          {
+            "key": "ref100",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/WACV.2019.00027"
+          },
+          {
+            "key": "ref101",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV48922.2021.01599"
+          },
+          {
+            "key": "ref102",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICIP46576.2022.9897444"
+          },
+          {
+            "key": "ref103",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR52688.2022.01926"
+          },
+          {
+            "key": "ref104",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/WACV.2016.7477701"
+          },
+          {
+            "key": "ref105",
+            "article-title": "TricorNet: A hybrid temporal convolutional and recurrent network for video action segmentation",
+            "author": "Ding",
+            "year": "2017"
+          },
+          {
+            "key": "ref106",
+            "article-title": "Frontal low-rank random tensors for fine-grained action segmentation",
+            "author": "Zhang",
+            "year": "2019"
+          },
+          {
+            "key": "ref107",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1016/j.neucom.2020.03.066"
+          },
+          {
+            "key": "ref108",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1016/j.imavis.2022.104567"
+          },
+          {
+            "key": "ref109",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1007/s11063-022-11133-9"
+          },
+          {
+            "key": "ref110",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/WACV45572.2020.9093535"
+          },
+          {
+            "key": "ref111",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR42600.2020.00947"
+          },
+          {
+            "key": "ref112",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR46437.2021.01653"
+          },
+          {
+            "key": "ref113",
+            "first-page": "14890",
+            "article-title": "Dont pour cereal into coffee: Differentiable temporal logic for temporal action segmentation",
+            "volume-title": "Proc. Adv. Neural Inf. Process. Syst.",
+            "author": "Xu"
+          },
+          {
+            "key": "ref114",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1016/j.patcog.2022.108764"
+          },
+          {
+            "key": "ref115",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.24963/ijcai.2022/115"
+          },
+          {
+            "key": "ref116",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1049/ell2.12678"
+          },
+          {
+            "key": "ref117",
+            "doi-asserted-by": "crossref",
+            "DOI": "10.1109/ICCV51070.2023.00930",
+            "article-title": "Diffusion action segmentation",
+            "author": "Liu",
+            "year": "2023"
+          },
+          {
+            "key": "ref118",
+            "article-title": "Fast saliency based pooling of fisher encoded dense trajectories",
+            "volume-title": "Proc. ECCV THUMOS Workshop",
+            "author": "Karaman"
+          },
+          {
+            "key": "ref119",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2012.6247801"
+          },
+          {
+            "key": "ref120",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2014.286"
+          },
+          {
+            "key": "ref121",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV.2011.6126269"
+          },
+          {
+            "key": "ref122",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2013.333"
+          },
+          {
+            "key": "ref123",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2014.338"
+          },
+          {
+            "key": "ref124",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2014.85"
+          },
+          {
+            "key": "ref125",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2016.341"
+          },
+          {
+            "key": "ref126",
+            "first-page": "568",
+            "article-title": "Two-stream convolutional networks for action recognition in videos",
+            "volume-title": "Proc. Adv. Neural Inf. Process. Syst.",
+            "author": "Simonyan"
+          },
+          {
+            "key": "ref127",
+            "article-title": "An image is worth 16x16 words: Transformers for image recognition at scale",
+            "volume-title": "Proc. Int. Conf. Learn. Representations",
+            "author": "Dosovitskiy"
+          },
+          {
+            "key": "ref128",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1016/j.cviu.2017.06.004"
+          },
+          {
+            "key": "ref129",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/TPAMI.2018.2884469"
+          },
+          {
+            "key": "ref130",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1007/978-3-319-46493-0_9"
+          },
+          {
+            "key": "ref131",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1145/1143844.1143891"
+          },
+          {
+            "key": "ref132",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2019.00366"
+          },
+          {
+            "key": "ref133",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/TPAMI.2021.3089127"
+          },
+          {
+            "key": "ref134",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR46437.2021.00829"
+          },
+          {
+            "key": "ref135",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR46437.2021.00968"
+          },
+          {
+            "key": "ref136",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR46437.2021.00826"
+          },
+          {
+            "key": "ref137",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/IROS47612.2022.9981351"
+          },
+          {
+            "key": "ref138",
+            "article-title": "Robust action segmentation from timestamp supervision",
+            "volume-title": "Proc. Brit. Mach. Vis. Conf.",
+            "author": "Souri"
+          },
+          {
+            "key": "ref139",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1111/j.2517-6161.1986.tb01420.x"
+          },
+          {
+            "key": "ref140",
+            "article-title": "Learning procedural abstractions and evaluating discrete latent temporal structure",
+            "volume-title": "Proc. Int. Conf. Learn. Representations",
+            "author": "Goel"
+          },
+          {
+            "key": "ref141",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/WACV51458.2022.00025"
+          },
+          {
+            "key": "ref142",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR42600.2020.00994"
+          },
+          {
+            "key": "ref143",
+            "article-title": "TAEC: Unsupervised action segmentation with temporal-aware embedding and clustering",
+            "author": "Lin",
+            "year": "2023"
+          },
+          {
+            "key": "ref144",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICIP42928.2021.9506759"
+          },
+          {
+            "key": "ref145",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR52688.2022.01954"
+          },
+          {
+            "key": "ref146",
+            "article-title": "Permutation-aware action segmentation via unsupervised frame-to-segment alignment",
+            "author": "Tran",
+            "year": "2023"
+          },
+          {
+            "key": "ref147",
+            "article-title": "Very deep convolutional networks for large-scale image recognition",
+            "volume-title": "Proc. Int. Conf. Learn. Representations",
+            "author": "Simonyan"
+          },
+          {
+            "key": "ref148",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPRW59228.2023.00520"
+          },
+          {
+            "key": "ref149",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV.2015.507"
+          },
+          {
+            "key": "ref150",
+            "first-page": "8748",
+            "article-title": "Learning transferable visual models from natural language supervision",
+            "volume-title": "Proc. 38th Int. Conf. Mach. Learn.",
+            "author": "Radford"
+          },
+          {
+            "key": "ref151",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR46437.2021.00553"
+          },
+          {
+            "key": "ref152",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR52688.2022.01939"
+          },
+          {
+            "key": "ref153",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV.2015.509"
+          },
+          {
+            "key": "ref154",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.18653/v1/2020.acl-main.231"
+          },
+          {
+            "key": "ref155",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR52688.2022.00292"
+          },
+          {
+            "key": "ref156",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICASSP.2009.4959921"
+          },
+          {
+            "key": "ref157",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1145/1273496.1273629"
+          },
+          {
+            "key": "ref158",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2001.990935"
+          },
+          {
+            "key": "ref159",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2018.00560"
+          },
+          {
+            "key": "ref160",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPRW.2019.00351"
+          },
+          {
+            "key": "ref161",
+            "article-title": "Why cant i dance in the mall? Learning to mitigate scene bias in action recognition",
+            "volume-title": "Proc. Adv. Neural Inf. Process. Syst.",
+            "author": "Choi"
+          },
+          {
+            "key": "ref162",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2018.00769"
+          },
+          {
+            "key": "ref163",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV.2015.530"
+          },
+          {
+            "key": "ref164",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1007/978-3-030-32695-1_4"
+          },
+          {
+            "key": "ref165",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2019.01016"
+          },
+          {
+            "key": "ref166",
+            "article-title": "Forecasting future action sequences with neural memory networks",
+            "volume-title": "Proc. Brit. Mach. Vis. Conf.",
+            "author": "Gammulle"
+          },
+          {
+            "key": "ref167",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/JPROC.2021.3117472"
+          },
+          {
+            "key": "ref168",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR52688.2022.01341"
+          }
+        ],
+        "container-title": [
+          "IEEE Transactions on Pattern Analysis and Machine Intelligence"
+        ],
+        "original-title": [],
+        "link": [
+          {
+            "URL": "http://xplorestaging.ieee.org/ielx7/34/10384454/10294187.pdf?arnumber=10294187",
+            "content-type": "unspecified",
+            "content-version": "vor",
+            "intended-application": "similarity-checking"
+          }
+        ],
+        "deposited": {
+          "date-parts": [
+            [
+              2024,
+              10,
+              31
+            ]
+          ],
+          "date-time": "2024-10-31T19:09:26Z",
+          "timestamp": 1730401766000
+        },
+        "score": 1,
+        "resource": {
+          "primary": {
+            "URL": "https://ieeexplore.ieee.org/document/10294187/"
+          }
+        },
+        "subtitle": [],
+        "short-title": [],
+        "issued": {
+          "date-parts": [
+            [
+              2024,
+              2
+            ]
+          ]
+        },
+        "references-count": 168,
+        "journal-issue": {
+          "issue": "2"
+        },
+        "URL": "https://doi.org/10.1109/tpami.2023.3327284",
+        "relation": {},
+        "ISSN": [
+          "0162-8828",
+          "2160-9292",
+          "1939-3539"
+        ],
+        "issn-type": [
+          {
+            "value": "0162-8828",
+            "type": "print"
+          },
+          {
+            "value": "2160-9292",
+            "type": "electronic"
+          },
+          {
+            "value": "1939-3539",
+            "type": "electronic"
+          }
+        ],
+        "subject": [],
+        "published": {
+          "date-parts": [
+            [
+              2024,
+              2
+            ]
+          ]
+        }
+      }
+    }
+  },
+  {
+    "url": "https://api.crossref.org/works/10.1109/TPAMI.2020.3021756",
+    "accessed_at": "2026-10-05T07:41:33.253195+00:00",
+    "data": {
+      "status": "ok",
+      "message-type": "work",
+      "message-version": "1.0.0",
+      "message": {
+        "indexed": {
+          "date-parts": [
+            [
+              2026,
+              9,
+              30
+            ]
+          ],
+          "date-time": "2026-09-30T21:09:07Z",
+          "timestamp": 1790802547308,
+          "version": "4.1.0"
+        },
+        "reference-count": 49,
+        "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+        "issue": "6",
+        "license": [
+          {
+            "start": {
+              "date-parts": [
+                [
+                  2023,
+                  6,
+                  1
+                ]
+              ],
+              "date-time": "2023-06-01T00:00:00Z",
+              "timestamp": 1685577600000
+            },
+            "content-version": "vor",
+            "delay-in-days": 0,
+            "URL": "https://ieeexplore.ieee.org/Xplorehelp/downloads/license-information/IEEE.html"
+          },
+          {
+            "start": {
+              "date-parts": [
+                [
+                  2023,
+                  6,
+                  1
+                ]
+              ],
+              "date-time": "2023-06-01T00:00:00Z",
+              "timestamp": 1685577600000
+            },
+            "content-version": "stm-asf",
+            "delay-in-days": 0,
+            "URL": "https://doi.org/10.15223/policy-029"
+          },
+          {
+            "start": {
+              "date-parts": [
+                [
+                  2023,
+                  6,
+                  1
+                ]
+              ],
+              "date-time": "2023-06-01T00:00:00Z",
+              "timestamp": 1685577600000
+            },
+            "content-version": "stm-asf",
+            "delay-in-days": 0,
+            "URL": "https://doi.org/10.15223/policy-037"
+          }
+        ],
+        "funder": [
+          {
+            "DOI": "10.13039/501100001659",
+            "name": "Deutsche Forschungsgemeinschaft",
+            "doi-asserted-by": "publisher",
+            "award": [
+              "GA 1927/4-1"
+            ],
+            "award-info": [
+              {
+                "award-number": [
+                  "GA 1927/4-1"
+                ]
+              }
+            ],
+            "id": [
+              {
+                "id": "10.13039/501100001659",
+                "id-type": "DOI",
+                "asserted-by": "publisher"
+              }
+            ]
+          },
+          {
+            "name": "ERC Starting",
+            "award": [
+              "677650"
+            ],
+            "award-info": [
+              {
+                "award-number": [
+                  "677650"
+                ]
+              }
+            ]
+          }
+        ],
+        "content-domain": {
+          "domain": [],
+          "crossmark-restriction": false
+        },
+        "short-container-title": [
+          "IEEE Trans. Pattern Anal. Mach. Intell."
+        ],
+        "published-print": {
+          "date-parts": [
+            [
+              2023,
+              6,
+              1
+            ]
+          ]
+        },
+        "DOI": "10.1109/tpami.2020.3021756",
+        "type": "journal-article",
+        "created": {
+          "date-parts": [
+            [
+              2020,
+              9,
+              4
+            ]
+          ],
+          "date-time": "2020-09-04T17:28:35Z",
+          "timestamp": 1599240515000
+        },
+        "page": "6647-6658",
+        "source": "Crossref",
+        "is-referenced-by-count": 260,
+        "title": [
+          "MS-TCN++: Multi-Stage Temporal Convolutional Network for Action Segmentation"
+        ],
+        "prefix": "10.1109",
+        "volume": "45",
+        "author": [
+          {
+            "ORCID": "https://orcid.org/0000-0001-6288-6984",
+            "authenticated-orcid": false,
+            "given": "Shijie",
+            "family": "Li",
+            "sequence": "first",
+            "affiliation": [
+              {
+                "name": "University of Bonn, Bonn, Germany"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0003-2185-4809",
+            "authenticated-orcid": false,
+            "given": "Yazan Abu",
+            "family": "Farha",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "University of Bonn, Bonn, Germany"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0001-6143-0264",
+            "authenticated-orcid": false,
+            "given": "Yun",
+            "family": "Liu",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "Nankai University, Tianjin, China"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0001-5550-8758",
+            "authenticated-orcid": false,
+            "given": "Ming-Ming",
+            "family": "Cheng",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "Nankai University, Tianjin, China"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0002-9447-3399",
+            "authenticated-orcid": false,
+            "given": "Juergen",
+            "family": "Gall",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "University of Bonn, Bonn, Germany"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          }
+        ],
+        "member": "263",
+        "reference": [
+          {
+            "key": "ref13",
+            "first-page": "6508",
+            "article-title": "Weakly-supervised action segmentation with iterative soft boundary assignment",
+            "author": "ding",
+            "year": "2018",
+            "journal-title": "Proc IEEE Conf Comput Vis Pattern Recognit"
+          },
+          {
+            "key": "ref12",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2018.00705"
+          },
+          {
+            "key": "ref15",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1145/2493432.2493482"
+          },
+          {
+            "key": "ref14",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2019.00369"
+          },
+          {
+            "key": "ref11",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2017.113"
+          },
+          {
+            "key": "ref10",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2017.140"
+          },
+          {
+            "key": "ref17",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2014.105"
+          },
+          {
+            "key": "ref16",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2011.5995444"
+          },
+          {
+            "key": "ref19",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV.2011.6126269"
+          },
+          {
+            "key": "ref18",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2013.333"
+          },
+          {
+            "key": "ref46",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/TPAMI.2014.2318702"
+          },
+          {
+            "key": "ref45",
+            "first-page": "483",
+            "article-title": "Stacked hourglass networks for human pose estimation",
+            "author": "newell",
+            "year": "2016",
+            "journal-title": "Proc Eur Conf Comput Vis"
+          },
+          {
+            "key": "ref48",
+            "first-page": "234",
+            "article-title": "U-net: Convolutional networks for biomedical image segmentation",
+            "author": "ronneberger",
+            "year": "2015",
+            "journal-title": "Proc Int Conf Med Image Comput Comput -Assisted Intervention"
+          },
+          {
+            "key": "ref47",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2017.106"
+          },
+          {
+            "key": "ref42",
+            "first-page": "93.1",
+            "article-title": "End-to-end, single-stream temporal action detection in untrimmed videos",
+            "author": "buch",
+            "year": "2017",
+            "journal-title": "Proc British Mach Vis Conf"
+          },
+          {
+            "key": "ref41",
+            "first-page": "2678",
+            "article-title": "End-to-end learning of action detection from frame glimpses in videos",
+            "author": "yeung",
+            "year": "2016",
+            "journal-title": "Proc IEEE Conf Comput Vis Pattern Recognit"
+          },
+          {
+            "key": "ref44",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2016.511"
+          },
+          {
+            "key": "ref43",
+            "first-page": "344",
+            "article-title": "Gaussian temporal awareness networks for action localization",
+            "author": "long",
+            "year": "2019",
+            "journal-title": "Proc IEEE Conf Comput Vis Pattern Recognit"
+          },
+          {
+            "key": "ref49",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2016.90"
+          },
+          {
+            "key": "ref8",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/WACV.2016.7477701"
+          },
+          {
+            "key": "ref7",
+            "article-title": "The lear submission at THUMOS 2014",
+            "author": "oneata",
+            "year": "2014"
+          },
+          {
+            "key": "ref9",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1007/978-3-319-46487-9_3"
+          },
+          {
+            "key": "ref4",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV.2019.00630"
+          },
+          {
+            "key": "ref3",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2017.502"
+          },
+          {
+            "key": "ref6",
+            "article-title": "Fast saliency based pooling of fisher encoded dense trajectories",
+            "author": "karaman",
+            "year": "2014",
+            "journal-title": "Proc Eur Conf Comput Vis THUMOS Workshop"
+          },
+          {
+            "key": "ref5",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2012.6247801"
+          },
+          {
+            "key": "ref40",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV.2019.00399"
+          },
+          {
+            "key": "ref35",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2018.00124"
+          },
+          {
+            "key": "ref34",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV.2017.317"
+          },
+          {
+            "key": "ref37",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV.2017.392"
+          },
+          {
+            "key": "ref36",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV.2019.00719"
+          },
+          {
+            "key": "ref31",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV.2019.00638"
+          },
+          {
+            "key": "ref30",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/TPAMI.2019.2938758"
+          },
+          {
+            "key": "ref33",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/ICCV.2017.617"
+          },
+          {
+            "key": "ref32",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2016.119"
+          },
+          {
+            "key": "ref2",
+            "first-page": "3468",
+            "article-title": "Spatiotemporal residual networks for video action recognition",
+            "author": "feichtenhofer",
+            "year": "2016",
+            "journal-title": "Proc Advances Neural Inf Process Syst"
+          },
+          {
+            "key": "ref1",
+            "first-page": "568",
+            "article-title": "Two-stream convolutional networks for action recognition in videos",
+            "author": "simonyan",
+            "year": "2014",
+            "journal-title": "Proc Advances Neural Inf Process Syst"
+          },
+          {
+            "key": "ref39",
+            "article-title": "Cascaded boundary regression for temporal action detection",
+            "author": "gao",
+            "year": "2017",
+            "journal-title": "Proc British Mach Vis Conf"
+          },
+          {
+            "key": "ref38",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2017.675"
+          },
+          {
+            "key": "ref24",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2012.6247808"
+          },
+          {
+            "key": "ref23",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/TPAMI.2018.2884469"
+          },
+          {
+            "key": "ref26",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2016.341"
+          },
+          {
+            "key": "ref25",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2014.338"
+          },
+          {
+            "key": "ref20",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2014.287"
+          },
+          {
+            "key": "ref22",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1016/j.cviu.2017.06.004"
+          },
+          {
+            "key": "ref21",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2014.286"
+          },
+          {
+            "key": "ref28",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2016.287"
+          },
+          {
+            "key": "ref27",
+            "doi-asserted-by": "publisher",
+            "DOI": "10.1109/CVPR.2016.216"
+          },
+          {
+            "key": "ref29",
+            "article-title": "Wavenet: A generative model for raw audio",
+            "author": "van den oord",
+            "year": "2016",
+            "journal-title": "Proc ISCA Speech Synthesis Workshop"
+          }
+        ],
+        "container-title": [
+          "IEEE Transactions on Pattern Analysis and Machine Intelligence"
+        ],
+        "original-title": [],
+        "link": [
+          {
+            "URL": "http://xplorestaging.ieee.org/ielx7/34/10120646/09186840.pdf?arnumber=9186840",
+            "content-type": "unspecified",
+            "content-version": "vor",
+            "intended-application": "similarity-checking"
+          }
+        ],
+        "deposited": {
+          "date-parts": [
+            [
+              2023,
+              5,
+              29
+            ]
+          ],
+          "date-time": "2023-05-29T13:37:22Z",
+          "timestamp": 1685367442000
+        },
+        "score": 1,
+        "resource": {
+          "primary": {
+            "URL": "https://ieeexplore.ieee.org/document/9186840/"
+          }
+        },
+        "subtitle": [],
+        "short-title": [],
+        "issued": {
+          "date-parts": [
+            [
+              2023,
+              6,
+              1
+            ]
+          ]
+        },
+        "references-count": 49,
+        "journal-issue": {
+          "issue": "6"
+        },
+        "URL": "https://doi.org/10.1109/tpami.2020.3021756",
+        "relation": {},
+        "ISSN": [
+          "0162-8828",
+          "2160-9292",
+          "1939-3539"
+        ],
+        "issn-type": [
+          {
+            "value": "0162-8828",
+            "type": "print"
+          },
+          {
+            "value": "2160-9292",
+            "type": "electronic"
+          },
+          {
+            "value": "1939-3539",
+            "type": "electronic"
+          }
+        ],
+        "subject": [],
+        "published": {
+          "date-parts": [
+            [
+              2023,
+              6,
+              1
+            ]
+          ]
+        }
+      }
+    }
+  }
+]

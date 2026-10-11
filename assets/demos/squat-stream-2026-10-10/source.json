@@ -1,0 +1,16 @@
+{
+  "title": "深蹲视频 · 实时检测实测回放",
+  "publisher": "Ultralytics 公开视频",
+  "source_url": "https://github.com/ultralytics/assets/releases/download/v0.0.0/Squats.demo.video.mp4",
+  "source_page": "https://github.com/ultralytics/assets/releases/tag/v0.0.0",
+  "retrieved_date": "2026-10-10",
+  "filename": "squats.mp4",
+  "bytes": 3522807,
+  "sha256": "d2946cf4855bdb8e4f0158828a98ab8455193b56d1fd2d6a637711790c6ae6c3",
+  "width": 1920,
+  "height": 1080,
+  "fps": 30.0,
+  "frames": 222,
+  "duration_seconds": 7.4,
+  "description": "Public squat exercise clip used to demonstrate pose detection, not an assembly validation sample."
+}

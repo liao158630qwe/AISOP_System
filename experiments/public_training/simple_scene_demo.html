@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>桌面装配收尾 · SOP 时序回放</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,"Microsoft YaHei",sans-serif;background:#0c1423;color:#e3eaf5}*{box-sizing:border-box}body{max-width:1280px;margin:auto;padding:32px}h1{font-size:28px;margin:0 0 10px}p{color:#a9b9d1;line-height:1.7}.tag{color:#65dac4;font-size:13px;letter-spacing:2px}section{background:#142137;border:1px solid #293a52;border-radius:14px;padding:22px;margin:20px 0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}button,select{background:#253953;color:white;border:1px solid #476180;border-radius:7px;padding:10px;margin-right:10px;font-size:14px}button{cursor:pointer}input{width:100%;margin:18px 0}canvas{display:block;width:100%;border-radius:8px}#pose{background:#0b1729;height:auto;aspect-ratio:540/350}.metric{font-size:25px;color:#65dac4}.small{font-size:13px;color:#9fb0c9}.legend{display:flex;flex-wrap:wrap;gap:15px;margin:12px 0;font-size:13px}.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px}#events{height:160px;overflow:auto;font-size:13px;line-height:1.8}.step{padding:10px;border-left:4px solid #48617e;margin:10px 0}#timeline{height:110px}strong{color:#fff}@media(max-width:760px){.grid{grid-template-columns:1fr}body{padding:16px}}
+</style>
+<div class="tag">HA4M · 真实骨架数据 · 人员隔离测试集（已用于此前评估）</div>
+<h1>桌面装配收尾：看见阶段，检查顺序</h1>
+<p>合拢组件 → 放置盖板 → 放置螺丝 → 使用工具操作并归位。因果 TCN 使用过去 6.4 秒骨架观测；规则记录识别证据，不代表装配质量合格。</p>
+<section><div class="grid"><div><span class="small">所选模型 · 测试帧准确率（原始）</span><div id="accuracy" class="metric"></div></div><div><span class="small">测试阶段序列完全一致</span><div id="exact" class="metric"></div></div></div></section>
+<section><select id="record" aria-label="选择测试录制"></select><button id="play">播放</button><button id="reset">从头开始</button><select id="speed" aria-label="播放速度"><option value="1">1 倍速</option><option value="2">2 倍速</option><option value="4">4 倍速</option></select><span id="time"></span><input id="seek" type="range" min="0" value="0" aria-label="回放进度">
+<div class="grid"><div><canvas id="pose" width="540" height="350"></canvas><p class="small">COCO17 身体归一化投影；没有手指、工具或零件画面。可用骨架与标注范围独立显示。</p></div><div><div class="step">人工标注 <strong id="truth"></strong></div><div class="step">原始预测 <strong id="raw"></strong></div><div class="step">稳定阶段 <strong id="prediction"></strong></div><div class="small" id="confidence"></div><p id="status"></p><div id="events"></div></div></div></section>
+<section><strong>整段时序对照</strong><div id="legend" class="legend"></div><canvas id="timeline" width="1160" height="110"></canvas><p class="small">从上到下：人工标注、原始预测、稳定预测。灰色为未知／未确认；白线为当前时刻。稳定化不会把后来的证据回填到过去。</p></section>
+<p class="small">全部 14 段测试录制均可回放，默认按录制编号排序。SOP 事件显示疑似乱序或重复，结束后列出未观察到的步骤；真实数据未提供异常质量标签。来源：<a href="https://www.nature.com/articles/s41597-022-01843-z">HA4M / Cicirelli 等 / CC BY 4.0</a>。</p>
+<script>
+/*PAYLOAD*/
+const $=id=>document.getElementById(id), names=DATA.workflow.labels_zh, colors=['#74849b','#4ac7b1','#67a8f3','#d8ae59','#b58cf0'], hz=DATA.workflow.sample_hz;
+let current=DATA.records[0],frame=0,playing=false,previous=0,accumulator=0,eventCount=-1;
+const timelineImage=document.createElement('canvas');timelineImage.width=1160;timelineImage.height=110;
+const label=n=>n<0?'未知 / 未确认':names[n], color=n=>n<0?'#354153':colors[n];
+$('accuracy').textContent=(DATA.metrics.raw_test.accuracy*100).toFixed(2)+'%';
+$('exact').textContent=DATA.metrics.exact_stage_sequence_matches+' / '+DATA.records.length+' 段';
+DATA.records.forEach((r,i)=>{const o=document.createElement('option');o.value=i;o.textContent=r.name+' · '+((r.truth.length-1)/hz).toFixed(1)+' 秒';$('record').append(o)});
+names.forEach((n,i)=>{const s=document.createElement('span');s.innerHTML='<i class="dot" style="background:'+colors[i]+'"></i>'+n;$('legend').append(s)});
+const edges=[[5,6],[5,7],[7,9],[6,8],[8,10],[5,11],[6,12],[11,12],[11,13],[13,15],[12,14],[14,16],[0,1],[0,2],[1,3],[2,4]];
+function prepareTimeline(){
+ const c=timelineImage.getContext('2d'),w=timelineImage.width;c.clearRect(0,0,w,110);
+ ['truth','raw','prediction'].forEach((key,row)=>{let start=0;for(let i=1;i<=current[key].length;i++){if(i===current[key].length||current[key][i]!==current[key][start]){c.fillStyle=color(current[key][start]);c.fillRect(start/current[key].length*w,row*36,(i-start)/current[key].length*w+1,26);start=i}}});
+ eventCount=-1;
+}
+function pause(){playing=false;accumulator=0;previous=performance.now();$('play').textContent='播放'}
+function draw(){
+ $('seek').max=current.truth.length-1;$('seek').value=frame;
+ $('time').textContent=(frame/hz).toFixed(1)+' / '+((current.truth.length-1)/hz).toFixed(1)+' 秒';
+ ['truth','raw','prediction'].forEach(k=>{$(k).textContent=label(current[k][frame]);$(k).style.color=current[k][frame]<0?'#9fb0c9':color(current[k][frame])});
+ $('confidence').textContent='原始预测置信度 '+(current.confidence[frame]*100).toFixed(1)+'% · 骨架'+(current.valid[frame]?'有效':'无效');
+ const ctx=$('pose').getContext('2d');ctx.clearRect(0,0,540,350);const joints=current.joints[frame];
+ const point=j=>[270+j[0]*85,240+j[1]*85];
+ ctx.strokeStyle=current.valid[frame]?'#65dac4':'#637086';ctx.lineWidth=4;
+ edges.forEach(([a,b])=>{if(joints[a][3]&&joints[b][3]){ctx.beginPath();ctx.moveTo(...point(joints[a]));ctx.lineTo(...point(joints[b]));ctx.stroke()}});
+ joints.forEach(j=>{if(j[3]){ctx.beginPath();ctx.arc(...point(j),4,0,Math.PI*2);ctx.fillStyle='#e1eefa';ctx.fill()}});
+ const events=current.sop.events.filter(e=>e.frame<=frame), statuses={in_order:'顺序匹配',out_of_order:'疑似乱序',repeat:'重复阶段',unexpected:'未配置阶段'};
+ if(events.length!==eventCount){$('events').replaceChildren();events.forEach(e=>{const div=document.createElement('div');div.textContent=e.seconds.toFixed(1)+'s · '+label(e.stage)+' · '+statuses[e.status];div.style.color=e.status==='in_order'?'#65dac4':'#f0b56c';$('events').append(div)});eventCount=events.length;$('events').scrollTop=$('events').scrollHeight;}
+ const observed=new Set(events.map(e=>e.stage)),missing=DATA.workflow.steps.filter(s=>!observed.has(s));
+ $('status').textContent=frame===current.truth.length-1?'回放结束 · '+(missing.length?'未观察到：'+missing.map(label).join('、'):current.sop.observed_in_order?'全部阶段按配置顺序出现；不代表装配质量合格':'全部阶段均已观察到；请核查顺序事件'):'已观察到 '+DATA.workflow.steps.filter(s=>observed.has(s)).length+' / '+DATA.workflow.steps.length+' 个阶段';
+ const c=$('timeline').getContext('2d'),w=1160;c.clearRect(0,0,w,110);
+ c.drawImage(timelineImage,0,0);
+ c.strokeStyle='#fff';c.lineWidth=2;c.beginPath();c.moveTo(frame/current.truth.length*w,0);c.lineTo(frame/current.truth.length*w,108);c.stroke();
+}
+$('record').onchange=()=>{pause();current=DATA.records[Number($('record').value)];frame=0;prepareTimeline();draw()};
+$('seek').oninput=()=>{pause();frame=Number($('seek').value);draw()};
+$('reset').onclick=()=>{pause();frame=0;draw()};
+$('play').onclick=()=>{if(playing){pause();return}if(frame===current.truth.length-1)frame=0;accumulator=0;previous=performance.now();playing=true;$('play').textContent='暂停';draw()};
+function tick(now){const interval=1000/hz;if(playing){accumulator+=Math.min(now-previous,250)*Number($('speed').value);if(accumulator>=interval){frame=Math.min(frame+Math.floor(accumulator/interval),current.truth.length-1);accumulator%=interval;draw();if(frame===current.truth.length-1)pause()}}previous=now;requestAnimationFrame(tick)}
+prepareTimeline();draw();requestAnimationFrame(tick);
+</script></html>

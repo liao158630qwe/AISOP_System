@@ -1,0 +1,23 @@
+{
+  "title": "Polyphony: Diffusion-based Dual-Hand Action Segmentation with Alternating Vision Transformer and Semantic Conditioning",
+  "url": "https://openaccess.thecvf.com/content/CVPR2026/html/Zheng_Polyphony_Diffusion-based_Dual-Hand_Action_Segmentation_with_Alternating_Vision_Transformer_and_CVPR_2026_paper.html",
+  "venue": "CVPR2026",
+  "canonical_title": "Polyphony: Diffusion-based Dual-Hand Action Segmentation with Alternating Vision Transformer and Semantic Conditioning",
+  "authors": [
+    "Zheng, Hao",
+    "Wang, Hu",
+    "Zheng, Tiantian",
+    "Bhattarai, Prajjwal",
+    "Alhanai, Tuka"
+  ],
+  "publication_date": "2026",
+  "accessed_at": "2026-10-05T07:38:38.376437+00:00",
+  "fetched_url": "https://openaccess.thecvf.com/content/CVPR2026/html/Zheng_Polyphony_Diffusion-based_Dual-Hand_Action_Segmentation_with_Alternating_Vision_Transformer_and_CVPR_2026_paper.html",
+  "http_status": 200,
+  "abstract": "Dual-hand action segmentation, densely predicting actions for both hands from untrimmed videos, is essential for understanding complex bimanual activities. However, it poses several unique challenges: complex inter-hand dependencies, visual asymmetry between hands, representation conflicts where the dominant hand monopolizes gradients, and semantic ambiguity in fine-grained actions. We propose Polyphony, a three-stage method to address these challenges through: (1) an Alternating Dual-Hand Vision Transformer that alternates training between left- and right-hand mini-batches to ensure balanced gradient contributions from both hands while sharing a spatio-temporal encoder; (2) Semantic Feature Conditioning that aligns visual features with structured, compositional action descriptions to enhance discrimination of semantically similar actions; and (3) Diffusion-Based Segmentation with cross-hand feature fusion for inter-hand coordination and adaptive loss weighting for balancing performance. Polyphony achieves state-of-the-art on both dual-hand datasets (HA-ViD, ATTACH) with improvements up to 16.8 points, and on the single-stream Breakfast dataset (82.5%), outperforming the prior best method that uses a 12x larger backbone. Notably, our unified model with a single shared backbone surpasses baselines requiring separate per-hand models. Code is at https://github.com/x-labs-xyz/Polyphony-Dual-hand-Action-Segmentation.",
+  "html_evidence": "source_evidence/polyphony_diffusion_based_dual_hand_action_segmentation_with_alternating_vision_transforme_907418c9.html",
+  "json_evidence": "source_evidence/polyphony_diffusion_based_dual_hand_action_segmentation_with_alternating_vision_transforme_907418c9.json",
+  "venue_evidence": [
+    "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition"
+  ]
+}

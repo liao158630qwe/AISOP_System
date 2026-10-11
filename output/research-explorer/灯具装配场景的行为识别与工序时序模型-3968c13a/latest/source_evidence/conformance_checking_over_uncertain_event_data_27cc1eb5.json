@@ -1,0 +1,19 @@
+{
+  "title": "Conformance checking over uncertain event data",
+  "venue": "Information Systems",
+  "url": "https://arxiv.org/abs/2009.14452",
+  "canonical_title": "Conformance Checking over Uncertain Event Data",
+  "authors": [
+    "Pegoraro, Marco",
+    "Uysal, Merih Seran",
+    "van der Aalst, Wil M. P."
+  ],
+  "publication_date": "2020/09/29",
+  "accessed_at": "2026-10-05T07:38:39.241379+00:00",
+  "fetched_url": "https://arxiv.org/abs/2009.14452",
+  "http_status": 200,
+  "abstract": "Abstract: The strong impulse to digitize processes and operations in companies and enterprises have resulted in the creation and automatic recording of an increasingly large amount of process data in information systems. These are made available in the form of event logs. Process mining techniques enable the process-centric analysis of data, including automatically discovering process models and checking if event data conform to a given model. In this paper, we analyze the previously unexplored setting of uncertain event logs. In such event logs uncertainty is recorded explicitly, i.e., the time, activity and case of an event may be unclear or imprecise. In this work, we define a taxonomy of uncertain event logs and models, and we examine the challenges that uncertainty poses on process discovery and conformance checking. Finally, we show how upper and lower bounds for conformance can be obtained by aligning an uncertain trace onto a regular process model.",
+  "html_evidence": "source_evidence/conformance_checking_over_uncertain_event_data_27cc1eb5.html",
+  "json_evidence": "source_evidence/conformance_checking_over_uncertain_event_data_27cc1eb5.json",
+  "venue_evidence": "Comments: 39 pages, 12 figures, 10 tables, 44 references. arXiv admin note: text overlap with arXiv:1910.00089 Subjects: Artificial Intelligence (cs.AI) Cite as: arXiv:2009.14452 [cs.AI] (or arXiv:2009.14452v3 [cs.AI] for this version) https://doi.org/10.48550/arXiv.2009.14452 Focus to learn more arXiv-issued DOI via DataCite Journal reference: Information Systems 102 (2021) 101810 Related DOI : https://doi.org/10.1016/j.is.2021.101810 Focus to learn more DOI(s) linking to related resources"
+}

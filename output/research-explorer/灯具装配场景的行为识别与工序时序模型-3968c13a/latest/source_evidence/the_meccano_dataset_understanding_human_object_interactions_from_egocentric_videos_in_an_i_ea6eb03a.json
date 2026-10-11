@@ -1,0 +1,22 @@
+{
+  "title": "The MECCANO Dataset: Understanding Human-Object Interactions From Egocentric Videos in an Industrial-Like Domain",
+  "url": "https://openaccess.thecvf.com/content/WACV2021/html/Ragusa_The_MECCANO_Dataset_Understanding_Human-Object_Interactions_From_Egocentric_Videos_in_WACV_2021_paper.html",
+  "venue": "WACV2021",
+  "canonical_title": "The MECCANO Dataset: Understanding Human-Object Interactions From Egocentric Videos in an Industrial-Like Domain",
+  "authors": [
+    "Ragusa, Francesco",
+    "Furnari, Antonino",
+    "Livatino, Salvatore",
+    "Farinella, Giovanni Maria"
+  ],
+  "publication_date": "2021",
+  "accessed_at": "2026-10-05T07:38:37.351661+00:00",
+  "fetched_url": "https://openaccess.thecvf.com/content/WACV2021/html/Ragusa_The_MECCANO_Dataset_Understanding_Human-Object_Interactions_From_Egocentric_Videos_in_WACV_2021_paper.html",
+  "http_status": 200,
+  "abstract": "Wearable cameras allow to collect images and videos of humans interacting with the world. While human-object interactions have been thoroughly investigated in third person vision, the problem has been understudied in egocentric settings and in industrial scenarios. To fill this gap, we introduce MECCANO, the first dataset of egocentric videos to study human-object interactions in industrial-like settings. MECCANO has been acquired by 20 participants who were asked to build a motorbike model, for which they had to interact with tiny objects and tools. The dataset has been explicitly labeled for the task of recognizing human-object interactions from an egocentric perspective. Specifically, each interaction has been labeled both temporally (with action segments) and spatially (with active object bounding boxes). With the proposed dataset, we investigate four different tasks including 1) action recognition, 2) active object detection, 3) active object recognition and 4) egocentric human-object interaction detection, which is a revisited version of the standard human-object interaction detection task. Baseline results show that the MECCANO dataset is a challenging benchmark to study egocentric human-object interactions in industrial-like scenarios. We publicy release the dataset at https://iplab.dmi.unict.it/MECCANO/.",
+  "html_evidence": "source_evidence/the_meccano_dataset_understanding_human_object_interactions_from_egocentric_videos_in_an_i_ea6eb03a.html",
+  "json_evidence": "source_evidence/the_meccano_dataset_understanding_human_object_interactions_from_egocentric_videos_in_an_i_ea6eb03a.json",
+  "venue_evidence": [
+    "Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision"
+  ]
+}

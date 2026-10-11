@@ -1,0 +1,1344 @@
+{
+  "dimension": "开放问题",
+  "query": "industrial assembly online mistake detection occlusion uncertainty",
+  "url": "https://api.crossref.org/works?query=industrial+assembly+online+mistake+detection+occlusion+uncertainty&rows=8",
+  "accessed_at": "2026-10-05T07:32:38.649684+00:00",
+  "items": [
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2022,
+            8,
+            3
+          ]
+        ],
+        "date-time": "2022-08-03T04:47:31Z",
+        "timestamp": 1659502051026
+      },
+      "reference-count": 0,
+      "publisher": "Oxford University Press",
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2018,
+            10,
+            18
+          ]
+        ]
+      },
+      "abstract": "<p>Chapter 39 concerns the effect of mistake in contract law. Traditionally, contract law has recognized four categories of mistake: misunderstanding, unilateral mistake, mutual mistake, and mistranscription. The names of these categories fail to describe contractual mistakes according to their functional characteristics, and many of the rules that govern these categories turn on elements that are of only limited functional significance, easy to manipulate, or both. The first step in developing a functional analysis of mistake is to analyze contractual mistakes on the basis of their character. The second step is to analyze the rules that should govern each type of mistake based on policy, morality, and experience. This chapter sets out the general parameter of these analyses.</p>",
+      "DOI": "10.1093/oso/9780199731404.003.0039",
+      "type": "book",
+      "created": {
+        "date-parts": [
+          [
+            2018,
+            10,
+            17
+          ]
+        ],
+        "date-time": "2018-10-17T06:36:46Z",
+        "timestamp": 1539758206000
+      },
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "Introduction to Mistake in Contract Law"
+      ],
+      "prefix": "10.1093",
+      "author": [
+        {
+          "given": "Melvin A.",
+          "family": "Eisenberg",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        }
+      ],
+      "member": "286",
+      "container-title": [
+        "Oxford Scholarship Online"
+      ],
+      "original-title": [
+        "Introduction to Mistake in Contract Law"
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2022,
+            8,
+            3
+          ]
+        ],
+        "date-time": "2022-08-03T00:47:46Z",
+        "timestamp": 1659487666000
+      },
+      "score": 23.953947,
+      "resource": {
+        "primary": {
+          "URL": "https://academic.oup.com/book/11597/chapter/160483276"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2018,
+            10,
+            18
+          ]
+        ]
+      },
+      "references-count": 0,
+      "URL": "https://doi.org/10.1093/oso/9780199731404.003.0039",
+      "published": {
+        "date-parts": [
+          [
+            2018,
+            10,
+            18
+          ]
+        ]
+      }
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2024,
+            9,
+            9
+          ]
+        ],
+        "date-time": "2024-09-09T21:59:20Z",
+        "timestamp": 1725919160723
+      },
+      "edition-number": "0",
+      "reference-count": 0,
+      "publisher": "Informa Law from Routledge",
+      "isbn-type": [
+        {
+          "type": "electronic",
+          "value": "9781315756615"
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2015,
+            5,
+            22
+          ]
+        ]
+      },
+      "DOI": "10.4324/9781315756615-25",
+      "type": "book-chapter",
+      "created": {
+        "date-parts": [
+          [
+            2020,
+            12,
+            1
+          ]
+        ],
+        "date-time": "2020-12-01T21:55:03Z",
+        "timestamp": 1606859703000
+      },
+      "page": "571-590",
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "MISTAKE, MISREPRESENTATION, UNCERTAINTY AND OTHER ISSUES"
+      ],
+      "prefix": "10.4324",
+      "member": "301",
+      "container-title": [
+        "Chern on Dispute Boards"
+      ],
+      "language": "en",
+      "deposited": {
+        "date-parts": [
+          [
+            2020,
+            12,
+            1
+          ]
+        ],
+        "date-time": "2020-12-01T21:55:17Z",
+        "timestamp": 1606859717000
+      },
+      "score": 23.575035,
+      "resource": {
+        "primary": {
+          "URL": "https://www.taylorfrancis.com/books/9781317630708/chapters/10.4324/9781315756615-25"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2015,
+            5,
+            22
+          ]
+        ]
+      },
+      "ISBN": [
+        "9781315756615"
+      ],
+      "references-count": 0,
+      "URL": "https://doi.org/10.4324/9781315756615-25",
+      "published": {
+        "date-parts": [
+          [
+            2015,
+            5,
+            22
+          ]
+        ]
+      }
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            2,
+            27
+          ]
+        ],
+        "date-time": "2026-02-27T03:06:36Z",
+        "timestamp": 1772161596806,
+        "version": "3.50.1"
+      },
+      "description": "Conference presentation video: PACE OCI short-wave infrared detection assembly frequency-dependent linearity characterization and uncertainty analysis",
+      "reference-count": 0,
+      "publisher": "SPIE-Intl Soc Optical Eng",
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "DOI": "10.1117/12.2633617.6312678666112",
+      "type": "component",
+      "created": {
+        "date-parts": [
+          [
+            2022,
+            9,
+            30
+          ]
+        ],
+        "date-time": "2022-09-30T17:40:35Z",
+        "timestamp": 1664559635000
+      },
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "prefix": "10.1117",
+      "member": "189",
+      "deposited": {
+        "date-parts": [
+          [
+            2022,
+            10,
+            7
+          ]
+        ],
+        "date-time": "2022-10-07T18:26:35Z",
+        "timestamp": 1665167195000
+      },
+      "score": 22.784374,
+      "resource": {
+        "primary": {
+          "URL": "https://www.spiedigitallibrary.org/conference-presentations/12232/1223212/PACE-OCI-short-wave-infrared-detection-assembly-frequency-dependent-linearity/10.1117/12.2633617.6312678666112"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            null
+          ]
+        ]
+      },
+      "references-count": 0,
+      "URL": "https://doi.org/10.1117/12.2633617.6312678666112",
+      "relation": {
+        "is-component-of": [
+          {
+            "id-type": "doi",
+            "id": "10.1117/12.2633617",
+            "asserted-by": "object"
+          }
+        ]
+      }
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            8,
+            5
+          ]
+        ],
+        "date-time": "2026-08-05T00:58:35Z",
+        "timestamp": 1785891515814,
+        "version": "3.56.0"
+      },
+      "reference-count": 29,
+      "publisher": "Informa UK Limited",
+      "issue": "7",
+      "content-domain": {
+        "domain": [
+          "www.tandfonline.com"
+        ],
+        "crossmark-restriction": true
+      },
+      "short-container-title": [
+        "RMLE Online"
+      ],
+      "published-print": {
+        "date-parts": [
+          [
+            2025,
+            8,
+            9
+          ]
+        ]
+      },
+      "DOI": "10.1080/19404476.2025.2542672",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2025,
+            9,
+            15
+          ]
+        ],
+        "date-time": "2025-09-15T09:46:30Z",
+        "timestamp": 1757929590000
+      },
+      "page": "1-19",
+      "update-policy": "https://doi.org/10.1080/tandf_crossmark_01",
+      "source": "Crossref",
+      "is-referenced-by-count": 1,
+      "title": [
+        "Learning by Mistake: Constructing the Conceptual Framework of Mistake Literacy"
+      ],
+      "prefix": "10.1080",
+      "volume": "48",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0001-7412-3319",
+          "authenticated-orcid": false,
+          "given": "Mary Jean",
+          "family": "Tecce DeCarlo",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Drexel University",
+              "place": [
+                "Philadelphia, United States"
+              ]
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Zachary",
+          "family": "Cohen",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "American International School Chennai",
+              "place": [
+                "Chennai, India"
+              ]
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "301",
+      "published-online": {
+        "date-parts": [
+          [
+            2025,
+            9,
+            15
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "key": "e_1_3_2_2_1",
+          "volume-title": "Self-efficacy: the exercise of control",
+          "author": "Bandura A.",
+          "year": "1997",
+          "unstructured": "Bandura, A. (1997). Self-efficacy: the exercise of control. W H Freeman/Times Books/Henry Holt & Co."
+        },
+        {
+          "key": "e_1_3_2_3_1",
+          "volume-title": "Personalized learning in the middle grades: a guide for classroom teachers and school leaders",
+          "author": "Bishop P. A.",
+          "year": "2021",
+          "unstructured": "Bishop, P. A., Downes, J. M., & Farber, K. (2021). Personalized learning in the middle grades: a guide for classroom teachers and school leaders. Harvard Education Press."
+        },
+        {
+          "key": "e_1_3_2_4_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.4159/9780674028845"
+        },
+        {
+          "issue": "1",
+          "key": "e_1_3_2_5_1",
+          "first-page": "9",
+          "article-title": "The benefits of student mistakes in the classroom",
+          "volume": "49",
+          "author": "DeBrincat D.",
+          "year": "2015",
+          "unstructured": "DeBrincat, D. (2015). The benefits of student mistakes in the classroom. The History Teacher, 49(1), 9–34. http://www.societyforhistoryeducation.org/pdfs/N15_DeBrincat.pdf",
+          "journal-title": "The History Teacher"
+        },
+        {
+          "key": "e_1_3_2_6_1",
+          "volume-title": "The manifestation of self-efficacy through learner agency in personalized learning environments",
+          "author": "Degen D.",
+          "year": "2019",
+          "unstructured": "Degen, D. (2019). The manifestation of self-efficacy through learner agency in personalized learning environments [Ed.D. University of South Dakota]. ProQuest Dissertations & Theses Global."
+        },
+        {
+          "key": "e_1_3_2_7_1",
+          "volume-title": "Mindset",
+          "author": "Dweck C. S.",
+          "year": "2017",
+          "unstructured": "Dweck, C. S. (2017). Mindset. Ballantine Books."
+        },
+        {
+          "key": "e_1_3_2_8_1",
+          "volume-title": "Bronfenbrenner’s ecological systems theory",
+          "author": "Guy-Evans O.",
+          "year": "2020",
+          "unstructured": "Guy-Evans, O. (2020). Bronfenbrenner’s ecological systems theory. Simply Psychology. https://www.simplypsychology.org/Bronfenbrenner.html"
+        },
+        {
+          "key": "e_1_3_2_9_1",
+          "volume-title": "21 lessons for the 21st century (first)",
+          "author": "Harari Y. N.",
+          "year": "2018",
+          "unstructured": "Harari, Y. N. (2018). 21 lessons for the 21st century (first). Spiegel & Grau."
+        },
+        {
+          "key": "e_1_3_2_10_1",
+          "volume-title": "Visible learning : a synthesis of over 800 meta-analyses relating to achievement",
+          "author": "Hattie J.",
+          "year": "2010",
+          "unstructured": "Hattie, J. (2010). Visible learning : a synthesis of over 800 meta-analyses relating to achievement. Routledge."
+        },
+        {
+          "key": "e_1_3_2_11_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1080/00208825.1980.11656300"
+        },
+        {
+          "key": "e_1_3_2_12_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1080/19404476.2015.11641184"
+        },
+        {
+          "key": "e_1_3_2_13_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1177/001316447003000308"
+        },
+        {
+          "key": "e_1_3_2_14_1",
+          "volume-title": "Focus groups: a practical guide for applied research",
+          "author": "Krueger R. A.",
+          "year": "2015",
+          "unstructured": "Krueger, R. A., & Casey, M. A. (2015). Focus groups: a practical guide for applied research (5th ed.). SAGE Publications.",
+          "edition": "5"
+        },
+        {
+          "key": "e_1_3_2_15_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.learninstruc.2019.03.002"
+        },
+        {
+          "key": "e_1_3_2_16_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1177/016146811611800205"
+        },
+        {
+          "key": "e_1_3_2_17_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1146/annurev-psych-010416-044022"
+        },
+        {
+          "issue": "1",
+          "key": "e_1_3_2_18_1",
+          "first-page": "35",
+          "article-title": "Role of parental support for learning, autonomous/control motivation, and forms of self-regulation on academic attainment in high school students: A path analysis",
+          "volume": "17",
+          "author": "Mih V.",
+          "year": "2013",
+          "unstructured": "Mih, V. (2013). Role of parental support for learning, autonomous/control motivation, and forms of self-regulation on academic attainment in high school students: A path analysis. Cognition, Brain, Behavior, 17(1), 35–59. https://psycnet.apa.org/record/2013-14772-003",
+          "journal-title": "Cognition, Brain, Behavior"
+        },
+        {
+          "key": "e_1_3_2_19_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.14689/ejer.2017.71.4"
+        },
+        {
+          "key": "e_1_3_2_20_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/s11846-019-00339-2"
+        },
+        {
+          "key": "e_1_3_2_21_1",
+          "volume-title": "Tapping the power of personalized learning: a roadmap for school leaders",
+          "author": "Rickabaugh J.",
+          "year": "2016",
+          "unstructured": "Rickabaugh, J. (2016). Tapping the power of personalized learning: a roadmap for school leaders. ASCD."
+        },
+        {
+          "key": "e_1_3_2_22_1",
+          "volume-title": "Learning independence continuum",
+          "author": "Rickabaugh J. R.",
+          "year": "2012",
+          "unstructured": "Rickabaugh, J. R. (2012). Learning independence continuum. ASCD."
+        },
+        {
+          "key": "e_1_3_2_23_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1901/jeab.1963.6-1"
+        },
+        {
+          "key": "e_1_3_2_24_1",
+          "volume-title": "The coding manual for qualitative researchers",
+          "author": "Saldaña J.",
+          "year": "2016",
+          "unstructured": "Saldaña, J. (2016). The coding manual for qualitative researchers (3e ed.). Sage.",
+          "edition": "3"
+        },
+        {
+          "key": "e_1_3_2_25_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1111/ssm.12410"
+        },
+        {
+          "key": "e_1_3_2_26_1",
+          "volume-title": "Quality principles for competency-based education",
+          "author": "Sturgis C.",
+          "year": "2018",
+          "unstructured": "Sturgis, C. (2018). Quality principles for competency-based education. INACOL. https://aurora-institute.org/wp-content/uploads/Quality-Principles-Book.pdf"
+        },
+        {
+          "key": "e_1_3_2_27_1",
+          "first-page": "On",
+          "volume-title": "Avian visual cognition",
+          "author": "Terrace H.",
+          "year": "2001",
+          "unstructured": "Terrace, H. (2001). Chunking and serially organized behavior in pigeons, monkeys and humans. In R. G. Cook (Ed.), Avian visual cognition (On–line). https://pigeon.psy.tufts.edu/avc/terrace/"
+        },
+        {
+          "key": "e_1_3_2_28_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1111/cdev.13560"
+        },
+        {
+          "key": "e_1_3_2_29_1",
+          "volume-title": "Neuroteach: Brain science and the future of education",
+          "author": "Whitman G. A. K.",
+          "year": "2016",
+          "unstructured": "Whitman, G. A. K., & Ian, I. (2016). Neuroteach: Brain science and the future of education. Rowman & Littlefield Publisher."
+        },
+        {
+          "key": "e_1_3_2_30_1",
+          "article-title": "Response process validity: 2013-2016 write-in response analysis",
+          "author": "Yuhas B.",
+          "year": "2018",
+          "unstructured": "Yuhas, B., & BrckaLorenz, A. (2018). Response process validity: 2013-2016 write-in response analysis. FSSE Psychometric Portfolio. https://hdl.handle.net/2022/24489",
+          "journal-title": "FSSE Psychometric Portfolio"
+        }
+      ],
+      "container-title": [
+        "RMLE Online"
+      ],
+      "language": "en",
+      "link": [
+        {
+          "URL": "https://www.tandfonline.com/doi/pdf/10.1080/19404476.2025.2542672",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2025,
+            9,
+            15
+          ]
+        ],
+        "date-time": "2025-09-15T09:46:33Z",
+        "timestamp": 1757929593000
+      },
+      "score": 22.769783,
+      "resource": {
+        "primary": {
+          "URL": "https://www.tandfonline.com/doi/full/10.1080/19404476.2025.2542672"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2025,
+            8,
+            9
+          ]
+        ]
+      },
+      "references-count": 29,
+      "journal-issue": {
+        "issue": "7",
+        "published-print": {
+          "date-parts": [
+            [
+              2025,
+              8,
+              9
+            ]
+          ]
+        }
+      },
+      "alternative-id": [
+        "10.1080/19404476.2025.2542672"
+      ],
+      "URL": "https://doi.org/10.1080/19404476.2025.2542672",
+      "ISSN": [
+        "1940-4476"
+      ],
+      "issn-type": [
+        {
+          "value": "1940-4476",
+          "type": "electronic"
+        }
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2025,
+            8,
+            9
+          ]
+        ]
+      },
+      "assertion": [
+        {
+          "value": "The publishing and review policy for this title is described in its Aims & Scope.",
+          "order": 1,
+          "name": "peerreview_statement",
+          "label": "Peer Review Statement"
+        },
+        {
+          "value": "http://www.tandfonline.com/action/journalInformation?show=aimsScope&journalCode=umle20",
+          "URL": "http://www.tandfonline.com/action/journalInformation?show=aimsScope&journalCode=umle20",
+          "order": 2,
+          "name": "aims_and_scope_url",
+          "label": "Aim & Scope"
+        },
+        {
+          "value": "2025-09-15",
+          "order": 3,
+          "name": "published",
+          "label": "Published",
+          "group": {
+            "name": "publication_history",
+            "label": "Publication History"
+          }
+        }
+      ]
+    },
+    {
+      "institution": [
+        {
+          "name": "Koninklijke Brill NV",
+          "acronym": [
+            "BRILL"
+          ]
+        }
+      ],
+      "indexed": {
+        "date-parts": [
+          [
+            2025,
+            3,
+            7
+          ]
+        ],
+        "date-time": "2025-03-07T00:20:33Z",
+        "timestamp": 1741306833162,
+        "version": "3.38.0"
+      },
+      "reference-count": 0,
+      "publisher": "Walter de Gruyter GmbH",
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "DOI": "10.1163/2589-4021_ieco_com_071102",
+      "type": "dataset",
+      "created": {
+        "date-parts": [
+          [
+            2018,
+            9,
+            5
+          ]
+        ],
+        "date-time": "2018-09-05T12:03:55Z",
+        "timestamp": 1536149035000
+      },
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "II. Mistake"
+      ],
+      "prefix": "10.1163",
+      "member": "374",
+      "container-title": [
+        "International Encyclopedia of Comparative Law Online"
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2024,
+            3,
+            25
+          ]
+        ],
+        "date-time": "2024-03-25T23:18:57Z",
+        "timestamp": 1711408737000
+      },
+      "score": 22.615557,
+      "resource": {
+        "primary": {
+          "URL": "https://referenceworks.brill.com/doi/10.1163/2589-4021_IECO_COM_071102"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            null
+          ]
+        ]
+      },
+      "references-count": 0,
+      "URL": "https://doi.org/10.1163/2589-4021_ieco_com_071102"
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            8,
+            17
+          ]
+        ],
+        "date-time": "2026-08-17T17:27:21Z",
+        "timestamp": 1786987641912,
+        "version": "build-2736575974"
+      },
+      "reference-count": 20,
+      "publisher": "Elsevier BV",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2025,
+                3,
+                1
+              ]
+            ],
+            "date-time": "2025-03-01T00:00:00Z",
+            "timestamp": 1740787200000
+          },
+          "content-version": "tdm",
+          "delay-in-days": 0,
+          "URL": "https://www.elsevier.com/tdm/userlicense/1.0/"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2025,
+                3,
+                1
+              ]
+            ],
+            "date-time": "2025-03-01T00:00:00Z",
+            "timestamp": 1740787200000
+          },
+          "content-version": "tdm",
+          "delay-in-days": 0,
+          "URL": "https://www.elsevier.com/legal/tdmrep-license"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2025,
+                3,
+                4
+              ]
+            ],
+            "date-time": "2025-03-04T00:00:00Z",
+            "timestamp": 1741046400000
+          },
+          "content-version": "vor",
+          "delay-in-days": 3,
+          "URL": "http://creativecommons.org/licenses/by/4.0/"
+        }
+      ],
+      "content-domain": {
+        "domain": [
+          "elsevier.com",
+          "sciencedirect.com"
+        ],
+        "crossmark-restriction": true
+      },
+      "short-container-title": [
+        "Computer Vision and Image Understanding"
+      ],
+      "published-print": {
+        "date-parts": [
+          [
+            2025,
+            3
+          ]
+        ]
+      },
+      "DOI": "10.1016/j.cviu.2025.104338",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2025,
+            3,
+            7
+          ]
+        ],
+        "date-time": "2025-03-07T03:05:15Z",
+        "timestamp": 1741316715000
+      },
+      "page": "104338",
+      "update-policy": "https://doi.org/10.1016/elsevier_cm_policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 3,
+      "special_numbering": "C",
+      "title": [
+        "Spatial and temporal beliefs for mistake detection in assembly tasks"
+      ],
+      "prefix": "10.1016",
+      "volume": "254",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0001-6080-5220",
+          "authenticated-orcid": false,
+          "given": "Guodong",
+          "family": "Ding",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Fadime",
+          "family": "Sener",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Shugao",
+          "family": "Ma",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Angela",
+          "family": "Yao",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "78",
+      "reference": [
+        {
+          "key": "10.1016/j.cviu.2025.104338_b1",
+          "series-title": "WACV",
+          "article-title": "The ikea asm dataset: Understanding people assembling furniture through actions, objects and pose",
+          "author": "Ben-Shabat",
+          "year": "2021"
+        },
+        {
+          "key": "10.1016/j.cviu.2025.104338_b2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Chakravarthy, A., Fang, Z., Yang, Y., 2022. Tragedy plus time: Capturing unintended human activities from weakly-labeled videos. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. pp. 3405–3415.",
+          "DOI": "10.1109/CVPRW56347.2022.00384"
+        },
+        {
+          "key": "10.1016/j.cviu.2025.104338_b3",
+          "doi-asserted-by": "crossref",
+          "first-page": "745",
+          "DOI": "10.1038/s41597-022-01843-z",
+          "article-title": "The ha4 m dataset: Multi-modal monitoring of an assembly task for human action recognition in manufacturing",
+          "volume": "9",
+          "author": "Cicirelli",
+          "year": "2022",
+          "journal-title": "Sci. Data"
+        },
+        {
+          "key": "10.1016/j.cviu.2025.104338_b4",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Epstein, D., Chen, B., Vondrick, C., 2020. Oops! predicting unintentional action in video. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition.",
+          "DOI": "10.1109/CVPR42600.2020.00100"
+        },
+        {
+          "key": "10.1016/j.cviu.2025.104338_b5",
+          "doi-asserted-by": "crossref",
+          "first-page": "1735",
+          "DOI": "10.1162/neco.1997.9.8.1735",
+          "article-title": "Long short-term memory",
+          "volume": "9",
+          "author": "Hochreiter",
+          "year": "1997",
+          "journal-title": "Neural Comput."
+        },
+        {
+          "key": "10.1016/j.cviu.2025.104338_b6",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Huang, D.A., Nair, S., Xu, D., Zhu, Y., Garg, A., Fei-Fei, L., Savarese, S., Niebles, J.C., 2019. Neural task graphs: Generalizing to unseen tasks from a single video demonstration. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. pp. 8565–8574.",
+          "DOI": "10.1109/CVPR.2019.00876"
+        },
+        {
+          "key": "10.1016/j.cviu.2025.104338_b7",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Kuehne, H., Arslan, A., Serre, T., 2014. The language of actions: Recovering the syntax and semantics of goal-directed human activities. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition.",
+          "DOI": "10.1109/CVPR.2014.105"
+        },
+        {
+          "key": "10.1016/j.cviu.2025.104338_b8",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Kumar, S., Haresh, S., Ahmed, A., Konin, A., Zia, M.Z., Tran, Q.H., 2022. Unsupervised action segmentation by joint representation learning and online clustering. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. pp. 20174–20185.",
+          "DOI": "10.1109/CVPR52688.2022.01954"
+        },
+        {
+          "key": "10.1016/j.cviu.2025.104338_b9",
+          "series-title": "ICCV",
+          "article-title": "Tsm: Temporal shift module for efficient video understanding",
+          "author": "Lin",
+          "year": "2019"
+        },
+        {
+          "key": "10.1016/j.cviu.2025.104338_b10",
+          "series-title": "ACL",
+          "article-title": "Unsupervised task graph generation from instructional video transcripts",
+          "author": "Logeswaran",
+          "year": "2023"
+        },
+        {
+          "key": "10.1016/j.cviu.2025.104338_b11",
+          "series-title": "An explorative study in the user experience of augmented reality enhanced manuals",
+          "author": "Mattsson",
+          "year": "2018"
+        },
+        {
+          "key": "10.1016/j.cviu.2025.104338_b12",
+          "series-title": "WACV",
+          "article-title": "The meccano dataset: Understanding human-object interactions from egocentric videos in an industrial-like domain",
+          "author": "Ragusa",
+          "year": "2021"
+        },
+        {
+          "key": "10.1016/j.cviu.2025.104338_b13",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Sener, F., Chatterjee, D., Shelepov, D., He, K., Singhania, D., Wang, R., Yao, A., 2022. Assembly101: A large-scale multi-view video dataset for understanding procedural activities. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition.",
+          "DOI": "10.1109/CVPR52688.2022.02042"
+        },
+        {
+          "key": "10.1016/j.cviu.2025.104338_b14",
+          "series-title": "ECCV",
+          "article-title": "Temporal aggregate representations for long-range video understanding",
+          "author": "Sener",
+          "year": "2020"
+        },
+        {
+          "key": "10.1016/j.cviu.2025.104338_b15",
+          "series-title": "Meta reinforcement learning with autonomous inference of subtask dependencies",
+          "author": "Sohn",
+          "year": "2020"
+        },
+        {
+          "key": "10.1016/j.cviu.2025.104338_b16",
+          "series-title": "Generating notifications for missing actions: Don’t forget to turn the lights off! ICCV",
+          "author": "Soran",
+          "year": "2015"
+        },
+        {
+          "key": "10.1016/j.cviu.2025.104338_b17",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Sultani, W., Chen, C., Shah, M., 2018. Real-world anomaly detection in surveillance videos. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition.",
+          "DOI": "10.1109/CVPR.2018.00678"
+        },
+        {
+          "key": "10.1016/j.cviu.2025.104338_b18",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Tang, Y., Ding, D., Rao, Y., Zheng, Y., Zhang, D., Zhao, L., Lu, J., Zhou, J., 2019. Coin: A large-scale dataset for comprehensive instructional video analysis. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition.",
+          "DOI": "10.1109/CVPR.2019.00130"
+        },
+        {
+          "key": "10.1016/j.cviu.2025.104338_b19",
+          "series-title": "DAGM German Conference on Pattern Recognition",
+          "first-page": "429",
+          "article-title": "Self-supervised learning for unintentional action prediction",
+          "author": "Zatsarynna",
+          "year": "2022"
+        },
+        {
+          "key": "10.1016/j.cviu.2025.104338_b20",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Zhukov, D., Alayrac, J.B., Cinbis, R.G., Fouhey, D., Laptev, I., Sivic, J., 2019. Cross-task weakly supervised learning from instructional videos. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition.",
+          "DOI": "10.1109/CVPR.2019.00365"
+        }
+      ],
+      "container-title": [
+        "Computer Vision and Image Understanding"
+      ],
+      "language": "en",
+      "link": [
+        {
+          "URL": "https://api.elsevier.com/content/article/PII:S107731422500061X?httpAccept=text/xml",
+          "content-type": "text/xml",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        },
+        {
+          "URL": "https://api.elsevier.com/content/article/PII:S107731422500061X?httpAccept=text/plain",
+          "content-type": "text/plain",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2025,
+            3,
+            14
+          ]
+        ],
+        "date-time": "2025-03-14T11:46:00Z",
+        "timestamp": 1741952760000
+      },
+      "score": 22.173159,
+      "resource": {
+        "primary": {
+          "URL": "https://linkinghub.elsevier.com/retrieve/pii/S107731422500061X"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2025,
+            3
+          ]
+        ]
+      },
+      "references-count": 20,
+      "alternative-id": [
+        "S107731422500061X"
+      ],
+      "URL": "https://doi.org/10.1016/j.cviu.2025.104338",
+      "ISSN": [
+        "1077-3142"
+      ],
+      "issn-type": [
+        {
+          "value": "1077-3142",
+          "type": "print"
+        }
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2025,
+            3
+          ]
+        ]
+      },
+      "assertion": [
+        {
+          "value": "Elsevier",
+          "name": "publisher",
+          "label": "This article is maintained by"
+        },
+        {
+          "value": "Spatial and temporal beliefs for mistake detection in assembly tasks",
+          "name": "articletitle",
+          "label": "Article Title"
+        },
+        {
+          "value": "Computer Vision and Image Understanding",
+          "name": "journaltitle",
+          "label": "Journal Title"
+        },
+        {
+          "value": "https://doi.org/10.1016/j.cviu.2025.104338",
+          "name": "articlelink",
+          "label": "CrossRef DOI link to publisher maintained version"
+        },
+        {
+          "value": "article",
+          "name": "content_type",
+          "label": "Content Type"
+        },
+        {
+          "value": "© 2025 The Author(s). Published by Elsevier Inc.",
+          "name": "copyright",
+          "label": "Copyright"
+        }
+      ],
+      "article-number": "104338"
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2022,
+            8,
+            3
+          ]
+        ],
+        "date-time": "2022-08-03T04:43:31Z",
+        "timestamp": 1659501811851
+      },
+      "reference-count": 0,
+      "publisher": "Oxford University Press",
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2018,
+            1,
+            18
+          ]
+        ]
+      },
+      "abstract": "<p>Focusing on Montaigne’s adaptation of Cicero’s <italic>De amicitia</italic> within his own essay “On Friendship,” this chapter reveals Montaigne’s complex reception of the “Roman error” of putting friendship before the needs of the state. Drawn to such matters in part by his friendship with Étienne de La Boétie, Montaigne, in effect, disagrees with Cicero over how to react to this error. Cicero (through his Laelius) opts to condemn it, while Montaigne finds in it support for his view of friendship, one that in turn sustains Montaigne’s moderation amid the political extremism of the French Wars of Religion. Montaigne’s rejection of Roman friendship as error on the one hand reflects his questioning of the value of ancient models for understanding the present. On the other hand, however, his characterization of ideal friendship as autotelic and autonomous can also be seen as a tacit acknowledgment that friendship among the elite is inherently political.</p>",
+      "DOI": "10.1093/oso/9780198803034.003.0003",
+      "type": "book",
+      "created": {
+        "date-parts": [
+          [
+            2018,
+            1,
+            18
+          ]
+        ],
+        "date-time": "2018-01-18T17:48:27Z",
+        "timestamp": 1516297707000
+      },
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "Whose Mistake? The Errors of Friendship in Cicero, La Boétie, and Montaigne"
+      ],
+      "prefix": "10.1093",
+      "author": [
+        {
+          "given": "Marc",
+          "family": "Bizer",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        }
+      ],
+      "member": "286",
+      "container-title": [
+        "Oxford Scholarship Online"
+      ],
+      "original-title": [
+        "Whose Mistake? The Errors of Friendship in Cicero, La Boétie, and Montaigne"
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2022,
+            8,
+            2
+          ]
+        ],
+        "date-time": "2022-08-02T23:49:14Z",
+        "timestamp": 1659484154000
+      },
+      "score": 22.046223,
+      "resource": {
+        "primary": {
+          "URL": "https://academic.oup.com/book/8199/chapter/153730559"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2018,
+            1,
+            18
+          ]
+        ]
+      },
+      "references-count": 0,
+      "URL": "https://doi.org/10.1093/oso/9780198803034.003.0003",
+      "published": {
+        "date-parts": [
+          [
+            2018,
+            1,
+            18
+          ]
+        ]
+      }
+    },
+    {
+      "institution": [
+        {
+          "name": "Koninklijke Brill NV",
+          "acronym": [
+            "BRILL"
+          ]
+        }
+      ],
+      "indexed": {
+        "date-parts": [
+          [
+            2025,
+            3,
+            7
+          ]
+        ],
+        "date-time": "2025-03-07T00:21:00Z",
+        "timestamp": 1741306860350,
+        "version": "3.38.0"
+      },
+      "reference-count": 0,
+      "publisher": "Walter de Gruyter GmbH",
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "DOI": "10.1163/2589-4021_ieco_com_101004",
+      "type": "dataset",
+      "created": {
+        "date-parts": [
+          [
+            2018,
+            9,
+            5
+          ]
+        ],
+        "date-time": "2018-09-05T12:03:55Z",
+        "timestamp": 1536149035000
+      },
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "IV. Payment Under Mistake"
+      ],
+      "prefix": "10.1163",
+      "member": "374",
+      "container-title": [
+        "International Encyclopedia of Comparative Law Online"
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2024,
+            3,
+            25
+          ]
+        ],
+        "date-time": "2024-03-25T23:22:26Z",
+        "timestamp": 1711408946000
+      },
+      "score": 22.010998,
+      "resource": {
+        "primary": {
+          "URL": "https://referenceworks.brill.com/doi/10.1163/2589-4021_IECO_COM_101004"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            null
+          ]
+        ]
+      },
+      "references-count": 0,
+      "URL": "https://doi.org/10.1163/2589-4021_ieco_com_101004"
+    }
+  ]
+}

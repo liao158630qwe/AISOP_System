@@ -1,0 +1,25 @@
+{
+  "title": "Streaming VideoLLMs for Real-Time Procedural Video Understanding",
+  "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Chatterjee_Streaming_VideoLLMs_for_Real-Time_Procedural_Video_Understanding_ICCV_2025_paper.html",
+  "venue": "ICCV2025",
+  "canonical_title": "Streaming VideoLLMs for Real-Time Procedural Video Understanding",
+  "authors": [
+    "Chatterjee, Dibyadip",
+    "Remelli, Edoardo",
+    "Song, Yale",
+    "Tekin, Bugra",
+    "Mittal, Abhay",
+    "Bhatnagar, Bharat",
+    "Camgoz, Necati Cihan",
+    "Hampali, Shreyas",
+    "Sauser, Eric",
+    "Ma, Shugao",
+    "Yao, Angela",
+    "Sener, Fadime"
+  ],
+  "publication_date": "2025",
+  "accessed_at": "2026-10-05T07:33:43.506872+00:00",
+  "fetched_url": "https://openaccess.thecvf.com/content/ICCV2025/html/Chatterjee_Streaming_VideoLLMs_for_Real-Time_Procedural_Video_Understanding_ICCV_2025_paper.html",
+  "http_status": 200,
+  "abstract": "We introduce ProVideLLM, an end-to-end framework for real-time procedural video understanding. ProVideLLM integrates a multimodal cache configured to store two types of tokens -- verbalized text tokens, which provide compressed textual summaries of long-term observations, and visual tokens, encoded with DETR-QFormer to capture fine-grained details from short-term observations. This design reduces token count by 22xover existing methods when representing one hour of long-term observations while effectively encoding fine-granularity of the present. By interleaving these tokens in our multimodal cache, ProVideLLM achieves sub-linear scaling of memory and compute with video length, ensuring per-frame streaming inference at 10 FPS and streaming dialogue at 25 FPS, with a minimal 2GB GPU memory footprint. ProVideLLM also sets new state-of-the-art results on six procedural tasks across four datasets."
+}

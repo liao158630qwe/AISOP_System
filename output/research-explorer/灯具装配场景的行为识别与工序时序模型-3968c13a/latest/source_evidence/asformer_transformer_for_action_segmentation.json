@@ -1,0 +1,16 @@
+{
+  "title": "ASFormer: Transformer for Action Segmentation",
+  "venue": "BMVC2021",
+  "url": "https://arxiv.org/abs/2110.08568",
+  "canonical_title": "ASFormer: Transformer for Action Segmentation",
+  "authors": [
+    "Yi, Fangqiu",
+    "Wen, Hongyu",
+    "Jiang, Tingting"
+  ],
+  "publication_date": "2021/10/16",
+  "accessed_at": "2026-10-05T07:33:44.359773+00:00",
+  "fetched_url": "https://arxiv.org/abs/2110.08568",
+  "http_status": 200,
+  "abstract": "Abstract: Algorithms for the action segmentation task typically use temporal models to predict what action is occurring at each frame for a minute-long daily activity. Recent studies have shown the potential of Transformer in modeling the relations among elements in sequential data. However, there are several major concerns when directly applying the Transformer to the action segmentation task, such as the lack of inductive biases with small training sets, the deficit in processing long input sequence, and the limitation of the decoder architecture to utilize temporal relations among multiple action segments to refine the initial predictions. To address these concerns, we design an efficient Transformer-based model for action segmentation task, named ASFormer, with three distinctive characteristics: (i) We explicitly bring in the local connectivity inductive priors because of the high locality of features. It constrains the hypothesis space within a reliable scope, and is beneficial for the action segmentation task to learn a proper target function with small training sets. (ii) We apply a pre-defined hierarchical representation pattern that efficiently handles long input sequences. (iii) We carefully design the decoder to refine the initial predictions from the encoder. Extensive experiments on three public datasets demonstrate that effectiveness of our methods. Code is available at \\url{ this https URL }."
+}

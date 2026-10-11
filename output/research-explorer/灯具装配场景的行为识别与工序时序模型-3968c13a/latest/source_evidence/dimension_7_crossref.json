@@ -1,0 +1,1105 @@
+{
+  "dimension": "最近6–12个月",
+  "query": "procedural mistake detection temporal action segmentation 2026",
+  "url": "https://api.crossref.org/works?query=procedural+mistake+detection+temporal+action+segmentation+2026&rows=8&filter=from-pub-date%3A2025-10-05%2Cuntil-pub-date%3A2026-10-05",
+  "accessed_at": "2026-10-05T07:32:41.845347+00:00",
+  "items": [
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            23
+          ]
+        ],
+        "date-time": "2026-07-23T20:02:20Z",
+        "timestamp": 1784836940854,
+        "version": "3.55.0"
+      },
+      "reference-count": 0,
+      "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                1,
+                1
+              ]
+            ],
+            "date-time": "2026-01-01T00:00:00Z",
+            "timestamp": 1767225600000
+          },
+          "content-version": "vor",
+          "delay-in-days": 0,
+          "URL": "https://ieeexplore.ieee.org/Xplorehelp/downloads/license-information/IEEE.html"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                1,
+                1
+              ]
+            ],
+            "date-time": "2026-01-01T00:00:00Z",
+            "timestamp": 1767225600000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-029"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                1,
+                1
+              ]
+            ],
+            "date-time": "2026-01-01T00:00:00Z",
+            "timestamp": 1767225600000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-037"
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [
+        "IEEE Trans. Multimedia"
+      ],
+      "published-print": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "DOI": "10.1109/tmm.2026.3716085",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            22
+          ]
+        ],
+        "date-time": "2026-07-22T19:03:27Z",
+        "timestamp": 1784747007000
+      },
+      "page": "1-11",
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "Mistake Detection in Egocentric Procedural Videos Via CoT-Based Action Anticipation"
+      ],
+      "prefix": "10.1109",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0009-0006-8450-0388",
+          "authenticated-orcid": false,
+          "given": "Yishan",
+          "family": "Zou",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Shandong Jianzhu University",
+              "place": [
+                "Jinan, China"
+              ]
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0003-0882-7902",
+          "authenticated-orcid": false,
+          "given": "Chris",
+          "family": "Nugent",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Ulster University",
+              "place": [
+                "Belfast, U. K."
+              ]
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-8931-2454",
+          "authenticated-orcid": false,
+          "given": "Matthew",
+          "family": "Burns",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Ulster University",
+              "place": [
+                "Belfast, U. K."
+              ]
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0003-2008-1736",
+          "authenticated-orcid": false,
+          "given": "Shengli",
+          "family": "Wu",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Ulster University",
+              "place": [
+                "Belfast, U. K."
+              ]
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-8013-5188",
+          "authenticated-orcid": false,
+          "given": "Tianshi",
+          "family": "Wang",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Tongji University",
+              "place": [
+                "Shanghai, China"
+              ]
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-1582-5764",
+          "authenticated-orcid": false,
+          "given": "Meng",
+          "family": "Liu",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Shandong Jianzhu University",
+              "place": [
+                "Jinan, China"
+              ]
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "263",
+      "container-title": [
+        "IEEE Transactions on Multimedia"
+      ],
+      "link": [
+        {
+          "URL": "http://xplorestaging.ieee.org/ielx8/6046/4456689/11617354.pdf?arnumber=11617354",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            23
+          ]
+        ],
+        "date-time": "2026-07-23T19:08:49Z",
+        "timestamp": 1784833729000
+      },
+      "score": 32.86554,
+      "resource": {
+        "primary": {
+          "URL": "https://ieeexplore.ieee.org/document/11617354/"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "references-count": 0,
+      "URL": "https://doi.org/10.1109/tmm.2026.3716085",
+      "ISSN": [
+        "1520-9210",
+        "1941-0077"
+      ],
+      "issn-type": [
+        {
+          "value": "1520-9210",
+          "type": "print"
+        },
+        {
+          "value": "1941-0077",
+          "type": "electronic"
+        }
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      }
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            21
+          ]
+        ],
+        "date-time": "2026-05-21T19:33:34Z",
+        "timestamp": 1779392014765,
+        "version": "3.53.1"
+      },
+      "reference-count": 0,
+      "publisher": "IOP Publishing",
+      "content-domain": {
+        "domain": []
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            2,
+            19
+          ]
+        ]
+      },
+      "DOI": "10.1088/2631-8695/ae68d8/v1/review1",
+      "type": "peer-review",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            6
+          ]
+        ],
+        "date-time": "2026-05-06T21:05:33Z",
+        "timestamp": 1778101533000
+      },
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "Review for \"A video action segmentation method based on multi-scale temporal features\""
+      ],
+      "prefix": "10.1088",
+      "member": "266",
+      "review": {
+        "type": "referee-report",
+        "running-number": "PR1V1",
+        "revision-round": "1",
+        "stage": "pre-publication"
+      },
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            6
+          ]
+        ],
+        "date-time": "2026-05-06T21:05:35Z",
+        "timestamp": 1778101535000
+      },
+      "score": 29.425642,
+      "resource": {
+        "primary": {
+          "URL": "https://www.webofscience.com/api/gateway/wos/peer-review/10.1088/2631-8695/AE68D8"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2026,
+            2,
+            19
+          ]
+        ]
+      },
+      "references-count": 0,
+      "URL": "https://doi.org/10.1088/2631-8695/ae68d8/v1/review1",
+      "relation": {
+        "is-review-of": [
+          {
+            "id-type": "doi",
+            "id": "10.1088/2631-8695/AE68D8",
+            "asserted-by": "subject"
+          }
+        ]
+      },
+      "published": {
+        "date-parts": [
+          [
+            2026,
+            2,
+            19
+          ]
+        ]
+      }
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            21
+          ]
+        ],
+        "date-time": "2026-05-21T17:22:14Z",
+        "timestamp": 1779384134130,
+        "version": "3.53.1"
+      },
+      "reference-count": 0,
+      "publisher": "IOP Publishing",
+      "content-domain": {
+        "domain": []
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            4,
+            9
+          ]
+        ]
+      },
+      "DOI": "10.1088/2631-8695/ae68d8/v2/review1",
+      "type": "peer-review",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            6
+          ]
+        ],
+        "date-time": "2026-05-06T21:05:33Z",
+        "timestamp": 1778101533000
+      },
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "Review for \"A video action segmentation method based on multi-scale temporal features\""
+      ],
+      "prefix": "10.1088",
+      "member": "266",
+      "review": {
+        "type": "referee-report",
+        "running-number": "PR3V2",
+        "revision-round": "2",
+        "stage": "pre-publication"
+      },
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            6
+          ]
+        ],
+        "date-time": "2026-05-06T21:05:34Z",
+        "timestamp": 1778101534000
+      },
+      "score": 29.411482,
+      "resource": {
+        "primary": {
+          "URL": "https://www.webofscience.com/api/gateway/wos/peer-review/10.1088/2631-8695/AE68D8"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2026,
+            4,
+            9
+          ]
+        ]
+      },
+      "references-count": 0,
+      "URL": "https://doi.org/10.1088/2631-8695/ae68d8/v2/review1",
+      "relation": {
+        "is-review-of": [
+          {
+            "id-type": "doi",
+            "id": "10.1088/2631-8695/AE68D8",
+            "asserted-by": "subject"
+          }
+        ]
+      },
+      "published": {
+        "date-parts": [
+          [
+            2026,
+            4,
+            9
+          ]
+        ]
+      }
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            21
+          ]
+        ],
+        "date-time": "2026-05-21T17:27:34Z",
+        "timestamp": 1779384454464,
+        "version": "3.53.1"
+      },
+      "reference-count": 0,
+      "publisher": "IOP Publishing",
+      "content-domain": {
+        "domain": []
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            4,
+            16
+          ]
+        ]
+      },
+      "DOI": "10.1088/2631-8695/ae68d8/v2/review2",
+      "type": "peer-review",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            6
+          ]
+        ],
+        "date-time": "2026-05-06T21:05:33Z",
+        "timestamp": 1778101533000
+      },
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "Review for \"A video action segmentation method based on multi-scale temporal features\""
+      ],
+      "prefix": "10.1088",
+      "member": "266",
+      "review": {
+        "type": "referee-report",
+        "running-number": "PR4V2",
+        "revision-round": "2",
+        "stage": "pre-publication"
+      },
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            6
+          ]
+        ],
+        "date-time": "2026-05-06T21:05:33Z",
+        "timestamp": 1778101533000
+      },
+      "score": 29.39299,
+      "resource": {
+        "primary": {
+          "URL": "https://www.webofscience.com/api/gateway/wos/peer-review/10.1088/2631-8695/AE68D8"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2026,
+            4,
+            16
+          ]
+        ]
+      },
+      "references-count": 0,
+      "URL": "https://doi.org/10.1088/2631-8695/ae68d8/v2/review2",
+      "relation": {
+        "is-review-of": [
+          {
+            "id-type": "doi",
+            "id": "10.1088/2631-8695/AE68D8",
+            "asserted-by": "subject"
+          }
+        ]
+      },
+      "published": {
+        "date-parts": [
+          [
+            2026,
+            4,
+            16
+          ]
+        ]
+      }
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            23
+          ]
+        ],
+        "date-time": "2026-05-23T16:04:30Z",
+        "timestamp": 1779552270752,
+        "version": "3.53.1"
+      },
+      "reference-count": 0,
+      "publisher": "SCITEPRESS - Science and Technology Publications",
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "DOI": "10.5220/0014464500004084",
+      "type": "proceedings-article",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            3,
+            18
+          ]
+        ],
+        "date-time": "2026-03-18T21:20:11Z",
+        "timestamp": 1773868811000
+      },
+      "page": "255-264",
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "Ego-Exo Temporal Action Segmentation in Industrial Environments"
+      ],
+      "prefix": "10.5220",
+      "author": [
+        {
+          "given": "Alessandro",
+          "family": "Passanisi",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Department of Mathematics and Computer Science, University of Catania, Catania, Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Giovanni",
+          "family": "Farinella",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Mathematics and Computer Science, University of Catania, Catania, Italy"
+            },
+            {
+              "name": "Next Vision s.r.l. - Spin-off of the University of Catania, Catania, Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Francesco",
+          "family": "Ragusa",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Mathematics and Computer Science, University of Catania, Catania, Italy"
+            },
+            {
+              "name": "Next Vision s.r.l. - Spin-off of the University of Catania, Catania, Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "3171",
+      "event": {
+        "name": "21st International Conference on Computer Vision Theory and Applications",
+        "location": "Marbella, Spain",
+        "start": {
+          "date-parts": [
+            [
+              2026,
+              3,
+              9
+            ]
+          ]
+        },
+        "end": {
+          "date-parts": [
+            [
+              2026,
+              3,
+              11
+            ]
+          ]
+        }
+      },
+      "container-title": [
+        "Proceedings of the 21st International Conference on Computer Vision Theory and Applications"
+      ],
+      "original-title": [
+        "Ego-Exo Temporal Action Segmentation in Industrial Environments"
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            23
+          ]
+        ],
+        "date-time": "2026-05-23T15:07:53Z",
+        "timestamp": 1779548873000
+      },
+      "score": 28.941355,
+      "resource": {
+        "primary": {
+          "URL": "https://www.scitepress.org/DigitalLibrary/Link.aspx?doi=10.5220/0014464500004084"
+        }
+      },
+      "subtitle": [
+        ""
+      ],
+      "issued": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "references-count": 0,
+      "URL": "https://doi.org/10.5220/0014464500004084",
+      "published": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      }
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            9,
+            4
+          ]
+        ],
+        "date-time": "2026-09-04T19:13:16Z",
+        "timestamp": 1788549196924,
+        "version": "build-2803163510"
+      },
+      "posted": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "group-title": "SSRN",
+      "reference-count": 0,
+      "publisher": "Elsevier BV",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                1,
+                1
+              ]
+            ],
+            "date-time": "2026-01-01T00:00:00Z",
+            "timestamp": 1767225600000
+          },
+          "content-version": "unspecified",
+          "delay-in-days": 0,
+          "URL": "https://www.uspto.gov/ip-policy/copyright-policy/copyright-basics"
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "abstract": "<jats:p>Online temporal action segmentation (TAS) labels each time step without future inputs, yet standard evaluation assumes fresh visual features always arrive. We evaluate feature non-arrival using a strictly causal paired protocol that controls missing fraction and burst duration with Bernoulli and two-state Markov processes. Six causal architectures are tested on GTEA, 50Salads, and Breakfast using last-observation hold and a paired zero-fill control. Of 270 non-clean conditions, 102 met a descriptive metric-inversion rule, but only three survived paired bootstrap and multiplicity-corrected sign-flip tests. In the largest supported case, Accuracy decreased by 0.54 points while F1@50 increased by 5.84 points and transition delay rose by 0.25 steps. At 50% missingness and expected burst length 32, mean Accuracy fell by 6.69 points and delay increased by 8.52 steps. Favorable segmental scores can therefore conceal slower causal reaction. Online TAS evaluation should jointly report frame, segment, and transition-latency metrics under burst-shaped outages.p=0.5</jats:p>",
+      "DOI": "10.2139/ssrn.7412282",
+      "type": "posted-content",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            9,
+            4
+          ]
+        ],
+        "date-time": "2026-09-04T18:52:27Z",
+        "timestamp": 1788547947000
+      },
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "Causal Stress Testing of Online Temporal Action Segmentation under Missing Visual Features"
+      ],
+      "prefix": "10.2139",
+      "author": [
+        {
+          "given": "Zhiyuan",
+          "family": "Yan",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "78",
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            9,
+            4
+          ]
+        ],
+        "date-time": "2026-09-04T18:52:27Z",
+        "timestamp": 1788547947000
+      },
+      "score": 28.58112,
+      "resource": {
+        "primary": {
+          "URL": "https://www.ssrn.com/abstract=7412282"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "references-count": 0,
+      "URL": "https://doi.org/10.2139/ssrn.7412282",
+      "published": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "subtype": "preprint"
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            21
+          ]
+        ],
+        "date-time": "2026-05-21T21:27:26Z",
+        "timestamp": 1779398846966,
+        "version": "3.53.1"
+      },
+      "reference-count": 0,
+      "publisher": "IOP Publishing",
+      "content-domain": {
+        "domain": []
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            3,
+            13
+          ]
+        ]
+      },
+      "DOI": "10.1088/2631-8695/ae68d8/v1/review2",
+      "type": "peer-review",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            6
+          ]
+        ],
+        "date-time": "2026-05-06T21:05:33Z",
+        "timestamp": 1778101533000
+      },
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "Review for \"A video action segmentation method based on multi-scale temporal features\""
+      ],
+      "prefix": "10.1088",
+      "member": "266",
+      "review": {
+        "type": "referee-report",
+        "running-number": "PR2V1",
+        "revision-round": "1",
+        "stage": "pre-publication"
+      },
+      "contributor": [
+        {
+          "given": "Bonian",
+          "family": "Chen",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "reviewer"
+            }
+          ]
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            6
+          ]
+        ],
+        "date-time": "2026-05-06T21:05:35Z",
+        "timestamp": 1778101535000
+      },
+      "score": 28.561619,
+      "resource": {
+        "primary": {
+          "URL": "https://www.webofscience.com/api/gateway/wos/peer-review/10.1088/2631-8695/AE68D8"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2026,
+            3,
+            13
+          ]
+        ]
+      },
+      "references-count": 0,
+      "URL": "https://doi.org/10.1088/2631-8695/ae68d8/v1/review2",
+      "relation": {
+        "is-review-of": [
+          {
+            "id-type": "doi",
+            "id": "10.1088/2631-8695/AE68D8",
+            "asserted-by": "subject"
+          }
+        ]
+      },
+      "published": {
+        "date-parts": [
+          [
+            2026,
+            3,
+            13
+          ]
+        ]
+      }
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            21
+          ]
+        ],
+        "date-time": "2026-05-21T20:09:52Z",
+        "timestamp": 1779394192004,
+        "version": "3.53.1"
+      },
+      "reference-count": 0,
+      "publisher": "IOP Publishing",
+      "content-domain": {
+        "domain": []
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            5
+          ]
+        ]
+      },
+      "DOI": "10.1088/2631-8695/ae68d8/v2/decision1",
+      "type": "peer-review",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            6
+          ]
+        ],
+        "date-time": "2026-05-06T21:05:33Z",
+        "timestamp": 1778101533000
+      },
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "Decision letter for \"A video action segmentation method based on multi-scale temporal features\""
+      ],
+      "prefix": "10.1088",
+      "member": "266",
+      "review": {
+        "type": "editor-report",
+        "running-number": "E1V2",
+        "revision-round": "2",
+        "stage": "pre-publication"
+      },
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            6
+          ]
+        ],
+        "date-time": "2026-05-06T21:05:33Z",
+        "timestamp": 1778101533000
+      },
+      "score": 28.143997,
+      "resource": {
+        "primary": {
+          "URL": "https://www.webofscience.com/api/gateway/wos/peer-review/10.1088/2631-8695/AE68D8"
+        }
+      },
+      "editor": [
+        {
+          "family": "Becky Hallam",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "editor"
+            }
+          ]
+        }
+      ],
+      "issued": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            5
+          ]
+        ]
+      },
+      "references-count": 0,
+      "URL": "https://doi.org/10.1088/2631-8695/ae68d8/v2/decision1",
+      "relation": {
+        "is-review-of": [
+          {
+            "id-type": "doi",
+            "id": "10.1088/2631-8695/AE68D8",
+            "asserted-by": "subject"
+          }
+        ]
+      },
+      "published": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            5
+          ]
+        ]
+      }
+    }
+  ]
+}

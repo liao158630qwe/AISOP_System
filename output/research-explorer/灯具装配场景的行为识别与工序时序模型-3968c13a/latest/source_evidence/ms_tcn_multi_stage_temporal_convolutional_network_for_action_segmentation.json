@@ -1,0 +1,18 @@
+{
+  "title": "MS-TCN++: Multi-Stage Temporal Convolutional Network for Action Segmentation",
+  "venue": "IEEE TPAMI",
+  "url": "https://arxiv.org/abs/2006.09220",
+  "canonical_title": "MS-TCN++: Multi-Stage Temporal Convolutional Network for Action Segmentation",
+  "authors": [
+    "Li, Shijie",
+    "Farha, Yazan Abu",
+    "Liu, Yun",
+    "Cheng, Ming-Ming",
+    "Gall, Juergen"
+  ],
+  "publication_date": "2020/06/16",
+  "accessed_at": "2026-10-05T07:33:44.570100+00:00",
+  "fetched_url": "https://arxiv.org/abs/2006.09220",
+  "http_status": 200,
+  "abstract": "Abstract: With the success of deep learning in classifying short trimmed videos, more attention has been focused on temporally segmenting and classifying activities in long untrimmed videos. State-of-the-art approaches for action segmentation utilize several layers of temporal convolution and temporal pooling. Despite the capabilities of these approaches in capturing temporal dependencies, their predictions suffer from over-segmentation errors. In this paper, we propose a multi-stage architecture for the temporal action segmentation task that overcomes the limitations of the previous approaches. The first stage generates an initial prediction that is refined by the next ones. In each stage we stack several layers of dilated temporal convolutions covering a large receptive field with few parameters. While this architecture already performs well, lower layers still suffer from a small receptive field. To address this limitation, we propose a dual dilated layer that combines both large and small receptive fields. We further decouple the design of the first stage from the refining stages to address the different requirements of these stages. Extensive evaluation shows the effectiveness of the proposed model in capturing long-range dependencies and recognizing action segments. Our models achieve state-of-the-art results on three datasets: 50Salads, Georgia Tech Egocentric Activities (GTEA), and the Breakfast dataset."
+}

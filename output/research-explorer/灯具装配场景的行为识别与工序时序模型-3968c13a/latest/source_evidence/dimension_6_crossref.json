@@ -1,0 +1,2255 @@
+{
+  "dimension": "交叉领域",
+  "query": "runtime verification LTL three valued semantics Declare conformance checking",
+  "url": "https://api.crossref.org/works?query=runtime+verification+LTL+three+valued+semantics+Declare+conformance+checking&rows=8",
+  "accessed_at": "2026-10-05T07:32:41.145863+00:00",
+  "items": [
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            4,
+            1
+          ]
+        ],
+        "date-time": "2026-04-01T14:42:22Z",
+        "timestamp": 1775054542159,
+        "version": "3.50.1"
+      },
+      "publisher-location": "Cham",
+      "reference-count": 20,
+      "publisher": "Springer International Publishing",
+      "isbn-type": [
+        {
+          "value": "9783319469812",
+          "type": "print"
+        },
+        {
+          "value": "9783319469829",
+          "type": "electronic"
+        }
+      ],
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2016,
+                1,
+                1
+              ]
+            ],
+            "date-time": "2016-01-01T00:00:00Z",
+            "timestamp": 1451606400000
+          },
+          "content-version": "unspecified",
+          "delay-in-days": 0,
+          "URL": "http://www.springer.com/tdm"
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2016
+          ]
+        ]
+      },
+      "DOI": "10.1007/978-3-319-46982-9_16",
+      "type": "book-chapter",
+      "created": {
+        "date-parts": [
+          [
+            2016,
+            9,
+            19
+          ]
+        ],
+        "date-time": "2016-09-19T11:41:08Z",
+        "timestamp": 1474285268000
+      },
+      "page": "251-267",
+      "source": "Crossref",
+      "is-referenced-by-count": 6,
+      "title": [
+        "Accelerated Runtime Verification of LTL Specifications with Counting Semantics"
+      ],
+      "prefix": "10.1007",
+      "author": [
+        {
+          "given": "Ramy",
+          "family": "Medhat",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "Borzoo",
+          "family": "Bonakdarpour",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "Sebastian",
+          "family": "Fischmeister",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "Yogi",
+          "family": "Joshi",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        }
+      ],
+      "member": "297",
+      "published-online": {
+        "date-parts": [
+          [
+            2016,
+            9,
+            20
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "key": "16_CR1",
+          "series-title": "Lecture Notes in Computer Science",
+          "doi-asserted-by": "publisher",
+          "first-page": "184",
+          "DOI": "10.1007/978-3-642-35632-2_20",
+          "volume-title": "Runtime Verification",
+          "author": "B Barre",
+          "year": "2013",
+          "unstructured": "Barre, B., Klein, M., Soucy-Boivin, M., Ollivier, P.-A., Hallé, S.: MapReduce for Parallel trace validation of LTL properties. In: Qadeer, S., Tasiran, S. (eds.) RV 2012. LNCS, vol. 7687, pp. 184–198. Springer, Heidelberg (2013). doi: 10.1007/978-3-642-35632-2_20"
+        },
+        {
+          "key": "16_CR2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Barringer, H., Goldberg, A., Havelund, K., Sen, K.: Program monitoring with LTL in eagle. In: 2004 Proceedings of the 18th International Parallel and Distributed Processing Symposium, p. 264. IEEE (2004)",
+          "DOI": "10.1109/IPDPS.2004.1303336"
+        },
+        {
+          "key": "16_CR3",
+          "series-title": "Lecture Notes in Computer Science",
+          "doi-asserted-by": "publisher",
+          "first-page": "31",
+          "DOI": "10.1007/978-3-319-11164-3_4",
+          "volume-title": "Runtime Verification",
+          "author": "D Basin",
+          "year": "2014",
+          "unstructured": "Basin, D., Caronni, G., Ereth, S., Harvan, M., Klaedtke, F., Mantel, H.: Scalable offline monitoring. In: Bonakdarpour, B., Smolka, S.A. (eds.) RV 2014. LNCS, vol. 8734, pp. 31–47. Springer, Heidelberg (2014). doi: 10.1007/978-3-319-11164-3_4"
+        },
+        {
+          "issue": "3",
+          "key": "16_CR4",
+          "doi-asserted-by": "crossref",
+          "first-page": "262",
+          "DOI": "10.1007/s10703-015-0222-7",
+          "volume": "46",
+          "author": "D Basin",
+          "year": "2015",
+          "unstructured": "Basin, D., Klaedtke, F., Marinovic, S., Zălinescu, E.: Monitoring of temporal first-order properties with aggregations. Formal Methods Syst. Des. 46(3), 262–285 (2015)",
+          "journal-title": "Formal Methods Syst. Des."
+        },
+        {
+          "key": "16_CR5",
+          "series-title": "Lecture Notes in Computer Science",
+          "doi-asserted-by": "crossref",
+          "first-page": "59",
+          "DOI": "10.1007/978-3-642-40787-1_4",
+          "volume-title": "Runtime Verification",
+          "author": "A Bauer",
+          "year": "2013",
+          "unstructured": "Bauer, A., Küster, J.-C., Vegliach, G.: From propositional to first-order monitoring. In: Legay, A., Bensalem, S. (eds.) RV 2013. LNCS, vol. 8174, pp. 59–75. Springer, Heidelberg (2013)"
+        },
+        {
+          "issue": "3",
+          "key": "16_CR6",
+          "doi-asserted-by": "crossref",
+          "first-page": "651",
+          "DOI": "10.1093/logcom/exn075",
+          "volume": "20",
+          "author": "A Bauer",
+          "year": "2010",
+          "unstructured": "Bauer, A., Leucker, M., Schallhart, C.: Comparing LTL semantics for runtime verification. J. Logic Comput. 20(3), 651–674 (2010)",
+          "journal-title": "J. Logic Comput."
+        },
+        {
+          "key": "16_CR7",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Berkovich, S., Bonakdarpour, B., Fischmeister, S.: GPU-based runtime verification. In: IEEE International Parallel and Distributed Processing Symposium (IPDPS), pp. 1025–1036 (2013)",
+          "DOI": "10.1109/IPDPS.2013.105"
+        },
+        {
+          "issue": "3",
+          "key": "16_CR8",
+          "doi-asserted-by": "crossref",
+          "first-page": "317",
+          "DOI": "10.1007/s10703-015-0226-3",
+          "volume": "46",
+          "author": "S Berkovich",
+          "year": "2015",
+          "unstructured": "Berkovich, S., Bonakdarpour, B., Fischmeister, S.: Runtime verification with minimal intrusion through parallelism. Formal Methods Syst. Des. 46(3), 317–348 (2015)",
+          "journal-title": "Formal Methods Syst. Des."
+        },
+        {
+          "key": "16_CR9",
+          "series-title": "Lecture Notes in Computer Science",
+          "doi-asserted-by": "crossref",
+          "first-page": "246",
+          "DOI": "10.1007/978-3-642-00768-2_23",
+          "volume-title": "Tools and Algorithms for the Construction and Analysis of Systems",
+          "author": "F Chen",
+          "year": "2009",
+          "unstructured": "Chen, F., Roşu, G.: Parametric trace slicing and monitoring. In: Kowalewski, S., Philippou, A. (eds.) TACAS 2009. LNCS, vol. 5505, pp. 246–261. Springer, Heidelberg (2009)"
+        },
+        {
+          "key": "16_CR10",
+          "doi-asserted-by": "crossref",
+          "unstructured": "d’Angelo, B., Sankaranarayanan, S., Sánchez, C., Robinson, W., Finkbeiner, B., Sipma, H.B., Mehrotra, S., Manna, Z.: LOLA: runtime monitoring of synchronous systems. In: 12th International Symposium on Temporal Representation and Reasoning (TIME 2005), pp. 166–174. IEEE (2005)",
+          "DOI": "10.1109/TIME.2005.26"
+        },
+        {
+          "key": "16_CR11",
+          "series-title": "Lecture Notes in Computer Science",
+          "doi-asserted-by": "crossref",
+          "first-page": "341",
+          "DOI": "10.1007/978-3-642-54862-8_23",
+          "volume-title": "Tools and Algorithms for the Construction and Analysis of Systems",
+          "author": "N Decker",
+          "year": "2014",
+          "unstructured": "Decker, N., Leucker, M., Thoma, D.: Monitoring modulo theories. In: Ábrahám, E., Havelund, K. (eds.) TACAS 2014 (ETAPS). LNCS, vol. 8413, pp. 341–356. Springer, Heidelberg (2014)"
+        },
+        {
+          "key": "16_CR12",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Drago, I., Mellia, M., Munafo, M.M., Sperotto, A., Sadre, R., Pras, A.: Inside dropbox: understanding personal cloud storage services. In: Proceedings of the 2012 ACM Conference on Internet Measurement Conference, pp. 481–494. ACM (2012)",
+          "DOI": "10.1145/2398776.2398827"
+        },
+        {
+          "key": "16_CR13",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Jin, D., Meredith, P.O., Lee, C., Rosu, G.: JavaMOP: efficient parametric runtime monitoring framework. In: 2012 34th International Conference on Software Engineering (ICSE), pp. 1427–1430, June 2012",
+          "DOI": "10.1109/ICSE.2012.6227231"
+        },
+        {
+          "key": "16_CR14",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Laroussinie, F., Meyer, A., Petonnet, E.: Counting LTL. In; Proceedings of the 2010 17th International Symposium on Temporal Representation and Reasoning, TIME 2010, pp. 51–58. IEEE Computer Society, Washington, DC (2010)",
+          "DOI": "10.1109/TIME.2010.20"
+        },
+        {
+          "key": "16_CR15",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1007/978-3-662-07003-1",
+          "volume-title": "Elements of Finite Model Theory",
+          "author": "L Libkin",
+          "year": "2004",
+          "unstructured": "Libkin, L.: Elements of Finite Model Theory. Springer, New York (2004)"
+        },
+        {
+          "key": "16_CR16",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Meredith, P., Rosu, G.: Efficient parametric runtime verification with deterministic string rewriting. In: 2013 IEEE/ACM 28th International Conference on Automated Software Engineering (ASE), pp. 70–80. IEEE (2013)",
+          "DOI": "10.1109/ASE.2013.6693067"
+        },
+        {
+          "key": "16_CR17",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Navabpour, S., Joshi, Y., Wu, W., Berkovich, S., Medhat, R., Bonakdarpour, B., Fischmeister, S.: RiTHM: a tool for enabling time-triggered runtime verification for C programs. In: ACM Symposium on the Foundations of Software Engineering (FSE), pp. 603–606 (2013)",
+          "DOI": "10.1145/2491411.2494596"
+        },
+        {
+          "issue": "4",
+          "key": "16_CR18",
+          "doi-asserted-by": "crossref",
+          "first-page": "91",
+          "DOI": "10.1016/j.entcs.2006.02.006",
+          "volume": "144",
+          "author": "O Sokolsky",
+          "year": "2006",
+          "unstructured": "Sokolsky, O., Sammapun, U., Lee, I., Kim, J.: Run-time checking of dynamic properties. Electron. Notes Theoret. Comput. Sci. 144(4), 91–108 (2006)",
+          "journal-title": "Electron. Notes Theoret. Comput. Sci."
+        },
+        {
+          "key": "16_CR19",
+          "unstructured": "Williams, M.: Scaling Web Applications with NGINX, Part II: Caching and Monitoring (2015). https://www.nginx.com/blog/ . Accessed 27 May 2016"
+        },
+        {
+          "key": "16_CR20",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Zink, M., Suh, K., Gu, Y., Kurose, J.: Watch global, cache local: Youtube network traffic at a campus network: measurements and implications. In: Electronic Imaging 2008, p. 681805. International Society for Optics and Photonics (2008)",
+          "DOI": "10.1117/12.774903"
+        }
+      ],
+      "container-title": [
+        "Lecture Notes in Computer Science",
+        "Runtime Verification"
+      ],
+      "link": [
+        {
+          "URL": "http://link.springer.com/content/pdf/10.1007/978-3-319-46982-9_16",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2017,
+            6,
+            24
+          ]
+        ],
+        "date-time": "2017-06-24T19:09:28Z",
+        "timestamp": 1498331368000
+      },
+      "score": 43.955307,
+      "resource": {
+        "primary": {
+          "URL": "http://link.springer.com/10.1007/978-3-319-46982-9_16"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2016
+          ]
+        ]
+      },
+      "ISBN": [
+        "9783319469812",
+        "9783319469829"
+      ],
+      "references-count": 20,
+      "URL": "https://doi.org/10.1007/978-3-319-46982-9_16",
+      "ISSN": [
+        "0302-9743",
+        "1611-3349"
+      ],
+      "issn-type": [
+        {
+          "value": "0302-9743",
+          "type": "print"
+        },
+        {
+          "value": "1611-3349",
+          "type": "electronic"
+        }
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2016
+          ]
+        ]
+      }
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2024,
+            9,
+            4
+          ]
+        ],
+        "date-time": "2024-09-04T23:16:46Z",
+        "timestamp": 1725491806238
+      },
+      "reference-count": 8,
+      "publisher": "IEEE",
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2012,
+            8
+          ]
+        ]
+      },
+      "DOI": "10.1109/csip.2012.6308917",
+      "type": "proceedings-article",
+      "created": {
+        "date-parts": [
+          [
+            2012,
+            10,
+            2
+          ]
+        ],
+        "date-time": "2012-10-02T11:06:30Z",
+        "timestamp": 1349175990000
+      },
+      "page": "567-570",
+      "source": "Crossref",
+      "is-referenced-by-count": 1,
+      "title": [
+        "Runtime verification based on 4-valued past time LTL"
+      ],
+      "prefix": "10.1109",
+      "author": [
+        {
+          "given": "Ming",
+          "family": "Chai",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "Lin",
+          "family": "Zhao",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "Xian",
+          "family": "Li",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        }
+      ],
+      "member": "263",
+      "reference": [
+        {
+          "key": "3",
+          "first-page": "529",
+          "article-title": "Safety monitoring of communication session for ctcs-3",
+          "author": "chai",
+          "year": "2010",
+          "journal-title": "Proceedings of 2010 Cross-Strait Conference on Information Science and Technology"
+        },
+        {
+          "key": "2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-540-77395-5_10"
+        },
+        {
+          "key": "1",
+          "first-page": "569",
+          "article-title": "Mop: An efficient and g eneric runtime verification framework",
+          "author": "chen",
+          "year": "2007",
+          "journal-title": "Proc Conf Object-Oriented Programming Systems Languages and Applications"
+        },
+        {
+          "key": "7",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ASWEC.2006.36"
+        },
+        {
+          "key": "6",
+          "first-page": "18",
+          "article-title": "Bounded model checking for past ltl",
+          "author": "benedetti",
+          "year": "2003",
+          "journal-title": "TACAS'03 volume 2619 of LNCS"
+        },
+        {
+          "key": "5",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TIME.2005.26"
+        },
+        {
+          "key": "4",
+          "doi-asserted-by": "crossref",
+          "first-page": "44",
+          "DOI": "10.1007/978-3-540-24622-0_5",
+          "article-title": "Rule-based runtime verificatio",
+          "author": "barringer",
+          "year": "2004",
+          "journal-title": "Verification Model Checking and Abstract Interpretation"
+        },
+        {
+          "key": "8",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TASE.2010.13"
+        }
+      ],
+      "event": {
+        "name": "2012 International Conference on Computer Science and Information Processing (CSIP)",
+        "start": {
+          "date-parts": [
+            [
+              2012,
+              8,
+              24
+            ]
+          ]
+        },
+        "location": "Xian, Shaanxi, China",
+        "end": {
+          "date-parts": [
+            [
+              2012,
+              8,
+              26
+            ]
+          ]
+        }
+      },
+      "container-title": [
+        "2012 International Conference on Computer Science and Information Processing (CSIP)"
+      ],
+      "link": [
+        {
+          "URL": "http://xplorestaging.ieee.org/ielx5/6297597/6308775/06308917.pdf?arnumber=6308917",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2017,
+            6,
+            20
+          ]
+        ],
+        "date-time": "2017-06-20T20:55:14Z",
+        "timestamp": 1497992114000
+      },
+      "score": 40.372356,
+      "resource": {
+        "primary": {
+          "URL": "http://ieeexplore.ieee.org/document/6308917/"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2012,
+            8
+          ]
+        ]
+      },
+      "references-count": 8,
+      "URL": "https://doi.org/10.1109/csip.2012.6308917",
+      "published": {
+        "date-parts": [
+          [
+            2012,
+            8
+          ]
+        ]
+      }
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2025,
+            10,
+            27
+          ]
+        ],
+        "date-time": "2025-10-27T20:31:56Z",
+        "timestamp": 1761597116046
+      },
+      "publisher-location": "Berlin, Heidelberg",
+      "reference-count": 22,
+      "publisher": "Springer Berlin Heidelberg",
+      "isbn-type": [
+        {
+          "type": "print",
+          "value": "9783540892465"
+        },
+        {
+          "type": "electronic",
+          "value": "9783540892472"
+        }
+      ],
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2008,
+                1,
+                1
+              ]
+            ],
+            "date-time": "2008-01-01T00:00:00Z",
+            "timestamp": 1199145600000
+          },
+          "content-version": "unspecified",
+          "delay-in-days": 0,
+          "URL": "http://www.springer.com/tdm"
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2008
+          ]
+        ]
+      },
+      "DOI": "10.1007/978-3-540-89247-2_6",
+      "type": "book-chapter",
+      "created": {
+        "date-parts": [
+          [
+            2008,
+            10,
+            17
+          ]
+        ],
+        "date-time": "2008-10-17T08:00:30Z",
+        "timestamp": 1224230430000
+      },
+      "page": "86-103",
+      "source": "Crossref",
+      "is-referenced-by-count": 19,
+      "title": [
+        "Checking Traces for Regulatory Conformance"
+      ],
+      "prefix": "10.1007",
+      "author": [
+        {
+          "given": "Nikhil",
+          "family": "Dinesh",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "Aravind",
+          "family": "Joshi",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "Insup",
+          "family": "Lee",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "Oleg",
+          "family": "Sokolsky",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        }
+      ],
+      "member": "297",
+      "reference": [
+        {
+          "key": "6_CR1",
+          "unstructured": "Abrahams, A.: Developing and Executing Electronic Commerce Applications with Occurrences. PhD thesis, Univeristy of Cambridge (2002)"
+        },
+        {
+          "key": "6_CR2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Breaux, T.D., Vail, M.W., Anton, A.I.: Towards regulatory compliance: Extracting rights and obligations to align requirements with regulations. In: Proceedings of the 14th IEEE International Requirements Engineering Conference (2006)",
+          "DOI": "10.1109/RE.2006.68"
+        },
+        {
+          "key": "6_CR3",
+          "unstructured": "Giblin, C., Liu, A., Muller, S., Pfitzmann, B., Zhou, X.: Regulations Expressed as Logical Models (REALM). In: Moens, M.-F., Spyns, P. (eds.) Legal Knowledge and Information Systems (2005)"
+        },
+        {
+          "key": "6_CR4",
+          "unstructured": "U.S. Food and Drug Administration: Code of Federal Regulations, http://www.gpoaccess.gov/cfr/index.html"
+        },
+        {
+          "key": "6_CR5",
+          "series-title": "Lecture Notes in Computer Science",
+          "doi-asserted-by": "publisher",
+          "first-page": "44",
+          "DOI": "10.1007/978-3-540-24622-0_5",
+          "volume-title": "Verification, Model Checking, and Abstract Interpretation",
+          "author": "H. Barringer",
+          "year": "2004",
+          "unstructured": "Barringer, H., Goldberg, A., Havelund, K., Sen, K.: Rule-based runtime verification. In: Steffen, B., Levi, G. (eds.) VMCAI 2004. LNCS, vol. 2937, pp. 44–57. Springer, Heidelberg (2004)"
+        },
+        {
+          "key": "6_CR6",
+          "doi-asserted-by": "crossref",
+          "unstructured": "McCarty, L.T.: A language for legal discourse - i. basic features. In: Proceedings of ICAIL (1989)",
+          "DOI": "10.1145/74014.74037"
+        },
+        {
+          "issue": "5",
+          "key": "6_CR7",
+          "doi-asserted-by": "publisher",
+          "first-page": "370",
+          "DOI": "10.1145/5689.5920",
+          "volume": "29",
+          "author": "M. Sergot",
+          "year": "1986",
+          "unstructured": "Sergot, M., Sadri, F., Kowalski, R., Kriwaczek, F., Hammond, P., Cory, H.: The british nationality act as a logic program. Communications of the ACM 29(5), 370–386 (1986)",
+          "journal-title": "Communications of the ACM"
+        },
+        {
+          "key": "6_CR8",
+          "unstructured": "Ross, A.: Directives and Norms. Routlege and Kegan Paul (1968)"
+        },
+        {
+          "key": "6_CR9",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Marcus, R.B.: Iterated deontic modalities. Mind 75(300) (1966)",
+          "DOI": "10.1093/mind/LXXV.300.580"
+        },
+        {
+          "key": "6_CR10",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Dinesh, N., Joshi, A., Lee, I., Sokolsky, O.: Reasoning about conditions and exceptions to laws in regulatory conformance checking (in submission, 2008), http://www.cis.upenn.edu/ nikhild/reasoning.pdf (2008)",
+          "DOI": "10.1007/978-3-540-70525-3_10"
+        },
+        {
+          "key": "6_CR11",
+          "first-page": "68",
+          "volume-title": "Readings in nonmonotonic reasoning",
+          "author": "R. Reiter",
+          "year": "1987",
+          "unstructured": "Reiter, R.: A logic for default reasoning. In: Readings in nonmonotonic reasoning, pp. 68–93. Morgan Kaufmann Publishers Inc., San Francisco (1987)"
+        },
+        {
+          "key": "6_CR12",
+          "doi-asserted-by": "publisher",
+          "first-page": "733",
+          "DOI": "10.1145/3828.3837",
+          "volume": "32",
+          "author": "A.P. Sistla",
+          "year": "1985",
+          "unstructured": "Sistla, A.P., Clarke, E.M.: The complexity of propositional linear temporal logic. ACM 32, 733–749 (1985)",
+          "journal-title": "ACM"
+        },
+        {
+          "key": "6_CR13",
+          "series-title": "Lecture Notes in Computer Science",
+          "volume-title": "FSTTCS 2006: Foundations of Software Technology and Theoretical Computer Science",
+          "author": "A. Bauer",
+          "year": "2006",
+          "unstructured": "Bauer, A., Leucker, M., Schallhart, C.: Monitoring of real-time properties. In: Arun-Kumar, S., Garg, N. (eds.) FSTTCS 2006. LNCS, vol. 4337. Springer, Heidelberg (2006)"
+        },
+        {
+          "key": "6_CR14",
+          "unstructured": "Dinesh, N., Joshi, A.K., Lee, I., Webber, B.: Extracting formal specifications from natural language regulatory documents. In: Proceedings of the Fifth International Workshop on Inference in Computational Semantics (2006)"
+        },
+        {
+          "key": "6_CR15",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Dinesh, N., Joshi, A., Lee, I., Sokolsky, O.: Logic-based regulatory conformance checking. In: Proceedings of the 14th Monterey Workshop (2007)",
+          "DOI": "10.1007/978-3-540-89778-1_12"
+        },
+        {
+          "key": "6_CR16",
+          "doi-asserted-by": "publisher",
+          "first-page": "1",
+          "DOI": "10.1093/mind/LX.237.1",
+          "volume": "60",
+          "author": "G.H. Wright von",
+          "year": "1951",
+          "unstructured": "von Wright, G.H.: Deontic logic. Mind 60, 1–15 (1951)",
+          "journal-title": "Mind"
+        },
+        {
+          "key": "6_CR17",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Aqvist, L.: Deontic logic. In: Gabbay, D., Guenthner, F. (eds.) Handbook of Philosophical Logic, Extensions of Classical Logic, vol. II, pp. 605–614 (1984)",
+          "DOI": "10.1007/978-94-009-6259-0_11"
+        },
+        {
+          "key": "6_CR18",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Bench-Capon, T.J., Robinson, G., Routen, T., Sergot, M.: Logic programming for large scale applications in law: A formalisation of supplementary benefit legislation. In: Proceedings of the 1st International Conference on AI and Law (1987)",
+          "DOI": "10.1145/41735.41757"
+        },
+        {
+          "key": "6_CR19",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Alchourron, C., Makinson, D.: Hierarchies of regulation and their logic. In: Hilpinen, R. (ed.) New Studies in Deontic Logic (1981)",
+          "DOI": "10.1007/978-94-009-8484-4_5"
+        },
+        {
+          "key": "6_CR20",
+          "doi-asserted-by": "publisher",
+          "first-page": "383",
+          "DOI": "10.1023/A:1004748624537",
+          "volume": "29",
+          "author": "D. Makinson",
+          "year": "2000",
+          "unstructured": "Makinson, D., van der Torre, L.: Input/output logics. Journal of Philosophical Logic 29, 383–408 (2000)",
+          "journal-title": "Journal of Philosophical Logic"
+        },
+        {
+          "key": "6_CR21",
+          "unstructured": "Glasse, E., Engers, T.V., Jacobs, A.: Power: An integrated method for legislation and regulations from their design to their use in e-government services and law enforcement. In: Moens, M.-F. (ed.) Digitale Wetgeving, Digital Legislation, pp. 175–204 (2003)"
+        },
+        {
+          "key": "6_CR22",
+          "series-title": "Lecture Notes in Computer Science",
+          "doi-asserted-by": "publisher",
+          "first-page": "111",
+          "DOI": "10.1007/978-3-540-77395-5_10",
+          "volume-title": "Runtime Verification",
+          "author": "H. Barringer",
+          "year": "2007",
+          "unstructured": "Barringer, H., Rydeheard, D., Havelund, K.: Rule systems for run-time monitoring: From Eagle to RuleR. In: Sokolsky, O., Taşıran, S. (eds.) RV 2007. LNCS, vol. 4839, pp. 111–125. Springer, Heidelberg (2007)"
+        }
+      ],
+      "container-title": [
+        "Lecture Notes in Computer Science",
+        "Runtime Verification"
+      ],
+      "link": [
+        {
+          "URL": "http://link.springer.com/content/pdf/10.1007/978-3-540-89247-2_6",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2019,
+            5,
+            14
+          ]
+        ],
+        "date-time": "2019-05-14T15:05:02Z",
+        "timestamp": 1557846302000
+      },
+      "score": 39.48299,
+      "resource": {
+        "primary": {
+          "URL": "http://link.springer.com/10.1007/978-3-540-89247-2_6"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2008
+          ]
+        ]
+      },
+      "ISBN": [
+        "9783540892465",
+        "9783540892472"
+      ],
+      "references-count": 22,
+      "URL": "https://doi.org/10.1007/978-3-540-89247-2_6",
+      "ISSN": [
+        "0302-9743",
+        "1611-3349"
+      ],
+      "issn-type": [
+        {
+          "type": "print",
+          "value": "0302-9743"
+        },
+        {
+          "type": "electronic",
+          "value": "1611-3349"
+        }
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2008
+          ]
+        ]
+      }
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            10,
+            2
+          ]
+        ],
+        "date-time": "2026-10-02T22:28:34Z",
+        "timestamp": 1790980114830,
+        "version": "4.1.0"
+      },
+      "reference-count": 2,
+      "publisher": "Oxford University Press (OUP)",
+      "issue": "3",
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [
+        "Journal of Logic and Computation"
+      ],
+      "published-print": {
+        "date-parts": [
+          [
+            2010,
+            6,
+            1
+          ]
+        ]
+      },
+      "DOI": "10.1093/logcom/exn075",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2009,
+            2,
+            26
+          ]
+        ],
+        "date-time": "2009-02-26T21:05:11Z",
+        "timestamp": 1235682311000
+      },
+      "page": "651-674",
+      "source": "Crossref",
+      "is-referenced-by-count": 185,
+      "title": [
+        "Comparing LTL Semantics for Runtime Verification"
+      ],
+      "prefix": "10.1093",
+      "volume": "20",
+      "author": [
+        {
+          "given": "A.",
+          "family": "Bauer",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "M.",
+          "family": "Leucker",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "C.",
+          "family": "Schallhart",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "286",
+      "published-online": {
+        "date-parts": [
+          [
+            2009,
+            2,
+            26
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "key": "12_34145614",
+          "doi-asserted-by": "crossref",
+          "first-page": "200",
+          "DOI": "10.1016/S1571-0661(04)00253-1",
+          "volume": "55",
+          "year": "2001",
+          "journal-title": "ELECTRONIC NOTES IN THEORETICAL COMPUTER SCIENCE"
+        },
+        {
+          "key": "16_34145615",
+          "doi-asserted-by": "crossref",
+          "first-page": "291",
+          "DOI": "10.1023/A:1011254632723",
+          "volume": "19",
+          "year": "2001",
+          "journal-title": "FORMAL METHODS IN SYSTEM DESIGN"
+        }
+      ],
+      "container-title": [
+        "Journal of Logic and Computation"
+      ],
+      "language": "en",
+      "link": [
+        {
+          "URL": "http://academic.oup.com/logcom/article-pdf/20/3/651/6293000/exn075.pdf",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2019,
+            2,
+            17
+          ]
+        ],
+        "date-time": "2019-02-17T18:44:29Z",
+        "timestamp": 1550429069000
+      },
+      "score": 37.958504,
+      "resource": {
+        "primary": {
+          "URL": "https://academic.oup.com/logcom/article-lookup/doi/10.1093/logcom/exn075"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2009,
+            2,
+            26
+          ]
+        ]
+      },
+      "references-count": 2,
+      "journal-issue": {
+        "issue": "3",
+        "published-online": {
+          "date-parts": [
+            [
+              2010,
+              5,
+              21
+            ]
+          ]
+        },
+        "published-print": {
+          "date-parts": [
+            [
+              2010,
+              6,
+              1
+            ]
+          ]
+        }
+      },
+      "URL": "https://doi.org/10.1093/logcom/exn075",
+      "ISSN": [
+        "0955-792X",
+        "1465-363X"
+      ],
+      "issn-type": [
+        {
+          "value": "0955-792X",
+          "type": "print"
+        },
+        {
+          "value": "1465-363X",
+          "type": "electronic"
+        }
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2009,
+            2,
+            26
+          ]
+        ]
+      }
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            10,
+            4
+          ]
+        ],
+        "date-time": "2026-10-04T19:15:36Z",
+        "timestamp": 1791141336226,
+        "version": "4.1.0"
+      },
+      "publisher-location": "Berlin, Heidelberg",
+      "reference-count": 43,
+      "publisher": "Springer Berlin Heidelberg",
+      "isbn-type": [
+        {
+          "value": "9783540773948",
+          "type": "print"
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "DOI": "10.1007/978-3-540-77395-5_17",
+      "type": "book-chapter",
+      "created": {
+        "date-parts": [
+          [
+            2007,
+            12,
+            6
+          ]
+        ],
+        "date-time": "2007-12-06T11:25:53Z",
+        "timestamp": 1196940353000
+      },
+      "page": "202-213",
+      "source": "Crossref",
+      "is-referenced-by-count": 11,
+      "title": [
+        "Runtime Checking for Program Verification"
+      ],
+      "prefix": "10.1007",
+      "author": [
+        {
+          "given": "Karen",
+          "family": "Zee",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Viktor",
+          "family": "Kuncak",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Michael",
+          "family": "Taylor",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Martin",
+          "family": "Rinard",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "297",
+      "reference": [
+        {
+          "key": "17_CR1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Allan, C., Avgustinov, P., Christensen, A.S., Hendren, L., Kuzins, S., Lhotak, O., de Moor, O., Sereni, D., Sittampalam, G., Tibble, J.: Adding trace matching with free variables to AspectJ. In: Proc. 20th Annual ACM Conference on Object-Oriented Programming, Systems, Languages, and Applications, pp. 345–364 (2005)",
+          "DOI": "10.1145/1094811.1094839"
+        },
+        {
+          "key": "17_CR2",
+          "unstructured": "Arkoudas, K., Rinard, M.: Deductive runtime certification. In: RV 2004. Proceedings of the 2004 Workshop on Runtime Verification, Barcelona, Spain (April 2004)"
+        },
+        {
+          "key": "17_CR3",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Barnett, M., Leino, K.R.M., Schulte, W.: The Spec# programming system: An overview. In: CASSIS: Int. Workshop on Construction and Analysis of Safe, Secure and Interoperable Smart devices (2004)",
+          "DOI": "10.1007/978-3-540-30569-9_3"
+        },
+        {
+          "key": "17_CR4",
+          "series-title": "Lecture Notes in Computer Science",
+          "doi-asserted-by": "crossref",
+          "first-page": "515",
+          "DOI": "10.1007/978-3-540-27813-9_49",
+          "volume-title": "Computer Aided Verification",
+          "author": "C. Barrett",
+          "year": "2004",
+          "unstructured": "Barrett, C., Berezin, S.: CVC Lite: A new implementation of the cooperating validity checker. In: Alur, R., Peled, D.A. (eds.) CAV 2004. LNCS, vol. 3114, pp. 515–518. Springer, Heidelberg (2004)"
+        },
+        {
+          "key": "17_CR5",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Bartetzko, D., Fischer, C., Möller, M., Wehrheim, H.: Jass–Java with assertions. In: RV 2001. ENTCS, vol. 55, pp. 103–117 (2001)",
+          "DOI": "10.1016/S1571-0661(04)00247-6"
+        },
+        {
+          "key": "17_CR6",
+          "doi-asserted-by": "publisher",
+          "first-page": "39",
+          "DOI": "10.1145/582353.582361",
+          "volume-title": "Proceedings of the 1982 ACM SIGMOD international conference on Management of data",
+          "author": "P.A. Bernstein",
+          "year": "1982",
+          "unstructured": "Bernstein, P.A., Blaustein, B.T.: Fast methods for testing quantified relational calculus assertions. In: Proceedings of the 1982 ACM SIGMOD international conference on Management of data, pp. 39–50. ACM Press, New York (1982)"
+        },
+        {
+          "issue": "2",
+          "key": "17_CR7",
+          "doi-asserted-by": "publisher",
+          "first-page": "137",
+          "DOI": "10.1109/TSE.2005.23",
+          "volume": "31",
+          "author": "D. Beyer",
+          "year": "2005",
+          "unstructured": "Beyer, D., Noack, A., Lewerentz, C.: Efficient relational calculation for software analysis. IEEE Trans. Software Eng. 31(2), 137–149 (2005)",
+          "journal-title": "IEEE Trans. Software Eng."
+        },
+        {
+          "key": "17_CR8",
+          "series-title": "Lecture Notes in Computer Science",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-540-69738-1_5",
+          "volume-title": "Verification, Model Checking, and Abstract Interpretation",
+          "author": "C. Bouillaguet",
+          "year": "2007",
+          "unstructured": "Bouillaguet, C., Kuncak, V., Wies, T., Zee, K., Rinard, M.: Using first-order theorem provers in a data structure verification system. In: Cook, B., Podelski, A. (eds.) VMCAI 2007. LNCS, vol. 4349, Springer, Heidelberg (2007)"
+        },
+        {
+          "key": "17_CR9",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Boyapati, C., Khurshid, S., Marinov, D.: Korat: Automated testing based on Java predicates. In: Proc. International Symposium on Software Testing and Analysis, pp. 123–133 (July 2002)",
+          "DOI": "10.1145/566171.566191"
+        },
+        {
+          "issue": "4",
+          "key": "17_CR10",
+          "doi-asserted-by": "publisher",
+          "first-page": "3",
+          "DOI": "10.1016/j.entcs.2006.02.002",
+          "volume": "144",
+          "author": "F. Chen",
+          "year": "2006",
+          "unstructured": "Chen, F., d’Amorim, M., Rosu, G.: Checking and correcting behaviors of java programs at runtime with java-mop. Electr. Notes Theor. Comput. Sci. 144(4), 3–20 (2006)",
+          "journal-title": "Electr. Notes Theor. Comput. Sci."
+        },
+        {
+          "key": "17_CR11",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Chen, F., Roşu, G.: MOP: An Efficient and Generic Runtime Verification Framework. In: OOPSLA 2007. Object-Oriented Programming, Systems, Languages and Applications (2007)",
+          "DOI": "10.1145/1297027.1297069"
+        },
+        {
+          "key": "17_CR12",
+          "unstructured": "Cheon, Y.: A Runtime Assertion Checker for the Java Modeling Language. PhD thesis, Iowa State University, April (2003)"
+        },
+        {
+          "issue": "3",
+          "key": "17_CR13",
+          "doi-asserted-by": "publisher",
+          "first-page": "25",
+          "DOI": "10.1145/1127878.1127900",
+          "volume": "31",
+          "author": "L.A. Clarke",
+          "year": "2006",
+          "unstructured": "Clarke, L.A., Rosenblum, D.S.: A historical perspective on runtime assertion checking in software development. SIGSOFT Softw. Eng. Notes 31(3), 25–37 (2006)",
+          "journal-title": "SIGSOFT Softw. Eng. Notes"
+        },
+        {
+          "key": "17_CR14",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Cok, D.R., Kiniry, J.R.: Esc/java2: Uniting ESC/Java and JML. In: CASSIS: Construction and Analysis of Safe, Secure and Interoperable Smart devices (2004)",
+          "DOI": "10.1007/978-3-540-30569-9_6"
+        },
+        {
+          "key": "17_CR15",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Demsky, B., Cadar, C., Roy, D., Rinard, M.C.: Efficient specification-assisted error localization. In: Second International Workshop on Dynamic Analysis (2004)",
+          "DOI": "10.1049/ic:20040301"
+        },
+        {
+          "key": "17_CR16",
+          "volume-title": "Finite Model Theory",
+          "author": "H.D. Ebbinghaus",
+          "year": "1995",
+          "unstructured": "Ebbinghaus, H.D., Flum, J.: Finite Model Theory. Springer, Heidelberg (1995)"
+        },
+        {
+          "key": "17_CR17",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Flanagan, C.: Hybrid type checking. In: POPL, pp. 245–256 (2006)",
+          "DOI": "10.1145/1111320.1111059"
+        },
+        {
+          "key": "17_CR18",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Flanagan, C., Leino, K.R.M., Lilibridge, M., Nelson, G., Saxe, J.B., Stata, R.: Extended Static Checking for Java. In: ACM Conf. Programming Language Design and Implementation (PLDI) (2002)",
+          "DOI": "10.1145/512557.512558"
+        },
+        {
+          "issue": "3",
+          "key": "17_CR19",
+          "doi-asserted-by": "publisher",
+          "first-page": "508",
+          "DOI": "10.1109/69.599937",
+          "volume": "9",
+          "author": "T. Griffin",
+          "year": "1997",
+          "unstructured": "Griffin, T., Libkin, L., Trickey, H.: An improved algorithm for incremental recomputation of active relational expressions. IEEE Transactions on Knowledge and Data Engineering 9(3), 508–511 (1997)",
+          "journal-title": "IEEE Transactions on Knowledge and Data Engineering"
+        },
+        {
+          "key": "17_CR20",
+          "unstructured": "Henschen, L.J., McCune, W., Naqvi, S.A.: Compiling constraint-checking programs from first-order formulas. In: Gallaire, H., Nicolas, J.-M., Minker, J. (eds.) Advances in Data Base Theory, Proceedings of the Workshop on Logical Data Bases, 2nd edn, pp. 145–169 (1984). ISBN 0-306-41636-0."
+        },
+        {
+          "key": "17_CR21",
+          "series-title": "Lecture Notes in Computer Science",
+          "doi-asserted-by": "publisher",
+          "first-page": "171",
+          "DOI": "10.1007/BFb0029359",
+          "volume-title": "Proc. Intl. Sym. on Operating Systems",
+          "author": "J.J. Horning",
+          "year": "1974",
+          "unstructured": "Horning, J.J., Lauer, H.C., Melliar-Smith, P.M., Randell, B.: A program structure for error detection and recovery. In: Gelenbe, E., Kaiser, C. (eds.) Operating Systems. LNCS, vol. 16, pp. 171–187. Springer, Heidelberg (1974)"
+        },
+        {
+          "key": "17_CR22",
+          "volume-title": "Descriptive Complexity",
+          "author": "N. Immerman",
+          "year": "1998",
+          "unstructured": "Immerman, N.: Descriptive Complexity. Springer, Heidelberg (1998)"
+        },
+        {
+          "key": "17_CR23",
+          "volume-title": "Software Abstractions: Logic, Language, & Analysis",
+          "author": "D. Jackson",
+          "year": "2006",
+          "unstructured": "Jackson, D.: Software Abstractions: Logic, Language, & Analysis. MIT Press, Cambridge (2006)"
+        },
+        {
+          "key": "17_CR24",
+          "volume-title": "Proceedings of the 18th Conference on Very Large Databases",
+          "author": "H.V. Jagadish",
+          "year": "1992",
+          "unstructured": "Jagadish, H.V., Qian, X.: Integrity maintenance in object-oriented databases. In: Proceedings of the 18th Conference on Very Large Databases, Los Altos CA, Vancouver, Morgan Kaufmann pubs, San Francisco (1992)"
+        },
+        {
+          "key": "17_CR25",
+          "first-page": "1",
+          "volume-title": "Proceedings of the Fifth Annual IEEE Symposium on Logic in Computer Science",
+          "author": "J.R. Burch",
+          "year": "1990",
+          "unstructured": "Burch, J.R., Clarke, E.M., McMillan, K.L., Dill, D.L., Hwang, L.J.: Symbolic Model Checking: 1020 States and Beyond. In: Proceedings of the Fifth Annual IEEE Symposium on Logic in Computer Science, pp. 1–33. IEEE Computer Society Press, Washington (1990)"
+        },
+        {
+          "issue": "4",
+          "key": "17_CR26",
+          "doi-asserted-by": "publisher",
+          "first-page": "403",
+          "DOI": "10.1023/B:AUSE.0000038938.10589.b9",
+          "volume": "11",
+          "author": "S. Khurshid",
+          "year": "2004",
+          "unstructured": "Khurshid, S., Marinov, D.: TestEra: Specification-based testing of java programs using SAT. Autom. Softw. Eng. 11(4), 403–434 (2004)",
+          "journal-title": "Autom. Softw. Eng."
+        },
+        {
+          "key": "17_CR27",
+          "series-title": "Lecture Notes in Computer Science",
+          "volume-title": "Proc. 5th International Conference on Implementation and Application of Automata",
+          "author": "N. Klarlund",
+          "year": "2000",
+          "unstructured": "Klarlund, N., Møller, A., Schwartzbach, M.I.: MONA implementation secrets. In: Wilhelm, R. (ed.) Proc. 5th International Conference on Implementation and Application of Automata. LNCS, Springer, Heidelberg (2000)"
+        },
+        {
+          "key": "17_CR28",
+          "series-title": "Lecture Notes in Computer Science",
+          "doi-asserted-by": "publisher",
+          "first-page": "293",
+          "DOI": "10.1007/978-3-540-70952-7_19",
+          "volume-title": "Formal Methods: Applications and Technology",
+          "author": "B. Krause",
+          "year": "2007",
+          "unstructured": "Krause, B., Wahls, T.: jmle: A tool for executing JML specifications via constraint programming. In: Brim, L., Haverkort, B., Leucker, M., van de Pol, J. (eds.) FMICS 2006 and PDMC 2006. LNCS, vol. 4346, pp. 293–296. Springer, Heidelberg (2007)"
+        },
+        {
+          "key": "17_CR29",
+          "unstructured": "Kuncak, V.: Modular Data Structure Verification. PhD thesis, EECS Department, Massachusetts Institute of Technology (February 2007)"
+        },
+        {
+          "key": "17_CR30",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Kuncak, V., Nguyen, H.H., Rinard, M.: Deciding Boolean Algebra with Presburger Arithmetic. In: J. of Automated Reasoning (2006), http://dx.doi.org/10.1007/s10817-006-9042-1 .",
+          "DOI": "10.1007/s10817-006-9042-1"
+        },
+        {
+          "key": "17_CR31",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Kuncak, V., Rinard, M.: An overview of the Jahob analysis system: Project goals and current status. In: NSF Next Generation Software Workshop (2006)",
+          "DOI": "10.1109/IPDPS.2006.1639580"
+        },
+        {
+          "key": "17_CR32",
+          "unstructured": "Kuncak, V., Rinard, M.: Towards efficient satisfiability checking for boolean algebra with presburger arithmetic. In: Conference on Automateded Deduction (CADE-21) (2007)"
+        },
+        {
+          "key": "17_CR33",
+          "unstructured": "Leavens, G.T., Poll, E., Clifton, C., Cheon, Y., Ruby, C., Cok, D., Müller, P., Kiniry, J., Chalin, P.: JML Reference Manual. February (2007)"
+        },
+        {
+          "key": "17_CR34",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Martin, M., Livshits, B., Lam, M.S.: Finding application errors and security flaws using PQL: a Program Query Language. In: Proc. 20th Annual ACM Conference on Object-Oriented Programming, Systems, Languages, and Applications (2005)",
+          "DOI": "10.1145/1094811.1094840"
+        },
+        {
+          "key": "17_CR35",
+          "series-title": "Lecture Notes in Computer Science",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1007/3-540-45949-9",
+          "volume-title": "Isabelle/HOL",
+          "author": "T. Nipkow",
+          "year": "2002",
+          "unstructured": "Nipkow, T., Paulson, L.C., Wenzel, M.: Isabelle/HOL: A Proof Assistant for Higher-Order Logic. In: Isabelle/HOL. LNCS, vol. 2283, Springer, Heidelberg (2002)"
+        },
+        {
+          "key": "17_CR36",
+          "unstructured": "Paige, R.: Applications of finite differencing to database integrity control and query/transaction optimization. In: Gallaire, H., Nicolas, J.-M., Minker, J. (eds.) Advances in Data Base Theory, Proceedings of the Workshop on Logical Data Bases, 2nd edn, pp. 171–209 (1984). ISBN 0-306-41636-0."
+        },
+        {
+          "key": "17_CR37",
+          "first-page": "3",
+          "volume-title": "VLDB 1986 Twelfth International Conference on Very Large Data Bases, August 25-28, 1986, Kyoto, Japan, Proceedings",
+          "author": "X. Qian",
+          "year": "1986",
+          "unstructured": "Qian, X., Wiederhold, G.: Knowledge-based integrity constraint validation. In: Chu, W.W., Gardarin, G., Ohsuga, S., Kambayashi, Y. (eds.) VLDB 1986 Twelfth International Conference on Very Large Data Bases, August 25-28, 1986, Kyoto, Japan, Proceedings, pp. 3–12. Morgan Kaufmann, San Francisco (1986)"
+        },
+        {
+          "issue": "2/3",
+          "key": "17_CR38",
+          "first-page": "111",
+          "volume": "15",
+          "author": "S. Schulz",
+          "year": "2002",
+          "unstructured": "Schulz, S.: E – A Brainiac Theorem Prover. Journal of AI Communications 15(2/3), 111–126 (2002)",
+          "journal-title": "Journal of AI Communications"
+        },
+        {
+          "key": "17_CR39",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Shankar, A., Bodik, R.: Ditto: Automatic incrementalization of data structure invariant checks. In: PLDI (2007)",
+          "DOI": "10.1145/1250734.1250770"
+        },
+        {
+          "key": "17_CR40",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Stolz, V., Bodden, E.: Temporal assertions using AspectJ (2005)",
+          "DOI": "10.1016/j.entcs.2006.02.007"
+        },
+        {
+          "key": "17_CR41",
+          "series-title": "Lecture Notes in Computer Science",
+          "volume-title": "TACAS 2007",
+          "author": "E. Torlak",
+          "year": "2007",
+          "unstructured": "Torlak, E., Jackson, D.: Kodkod: A relational model finder. In: Grumberg, O., Huth, M. (eds.) TACAS 2007. LNCS, vol. 4424, Springer, Heidelberg (2007)"
+        },
+        {
+          "key": "17_CR42",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Wies, T., Kuncak, V., Lam, P., Podelski, A., Rinard, M.: Field constraint analysis. In: Proc. Int. Conf. Verification, Model Checking, and Abstract Interpratation (2006)",
+          "DOI": "10.1007/11609773_11"
+        },
+        {
+          "key": "17_CR43",
+          "unstructured": "Wies, T., Kuncak, V., Zee, K., Podelski, A., Rinard, M.: Verifying complex properties using symbolic shape analysis. In: Workshop on Heap Abstraction and Verification (collocated with ETAPS) (2007)"
+        }
+      ],
+      "container-title": [
+        "Lecture Notes in Computer Science",
+        "Runtime Verification"
+      ],
+      "language": "en",
+      "link": [
+        {
+          "URL": "http://link.springer.com/content/pdf/10.1007/978-3-540-77395-5_17.pdf",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2021,
+            4,
+            27
+          ]
+        ],
+        "date-time": "2021-04-27T11:10:33Z",
+        "timestamp": 1619521833000
+      },
+      "score": 36.60466,
+      "resource": {
+        "primary": {
+          "URL": "http://link.springer.com/10.1007/978-3-540-77395-5_17"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            null
+          ]
+        ]
+      },
+      "ISBN": [
+        "9783540773948"
+      ],
+      "references-count": 43,
+      "URL": "https://doi.org/10.1007/978-3-540-77395-5_17"
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            10,
+            1
+          ]
+        ],
+        "date-time": "2026-10-01T00:11:23Z",
+        "timestamp": 1790813483013,
+        "version": "4.1.0"
+      },
+      "publisher-location": "Berlin, Heidelberg",
+      "reference-count": 6,
+      "publisher": "Springer Berlin Heidelberg",
+      "isbn-type": [
+        {
+          "value": "9783642356315",
+          "type": "print"
+        },
+        {
+          "value": "9783642356322",
+          "type": "electronic"
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2013
+          ]
+        ]
+      },
+      "DOI": "10.1007/978-3-642-35632-2_10",
+      "type": "book-chapter",
+      "created": {
+        "date-parts": [
+          [
+            2013,
+            1,
+            15
+          ]
+        ],
+        "date-time": "2013-01-15T00:40:54Z",
+        "timestamp": 1358210454000
+      },
+      "page": "82-87",
+      "source": "Crossref",
+      "is-referenced-by-count": 26,
+      "title": [
+        "Sliding between Model Checking and Runtime Verification"
+      ],
+      "prefix": "10.1007",
+      "author": [
+        {
+          "given": "Martin",
+          "family": "Leucker",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "297",
+      "reference": [
+        {
+          "key": "10_CR1",
+          "unstructured": "Kamp, H.W.: Tense Logic and the Theory of Linear Order. PhD thesis, University of California, Los Angeles (1968)"
+        },
+        {
+          "key": "10_CR2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-1-4612-4222-2",
+          "volume-title": "Temporal Verification of Reactive Systems: Safety",
+          "author": "Z. Manna",
+          "year": "1995",
+          "unstructured": "Manna, Z., Pnueli, A.: Temporal Verification of Reactive Systems: Safety. Springer, New York (1995)"
+        },
+        {
+          "key": "10_CR3",
+          "series-title": "Lecture Notes in Computer Science",
+          "doi-asserted-by": "publisher",
+          "first-page": "27",
+          "DOI": "10.1007/978-3-540-45069-6_3",
+          "volume-title": "Computer Aided Verification",
+          "author": "C. Eisner",
+          "year": "2003",
+          "unstructured": "Eisner, C., Fisman, D., Havlicek, J., Lustig, Y., McIsaac, A., Van Campenhout, D.: Reasoning with Temporal Logic on Truncated Paths. In: Hunt Jr., W.A., Somenzi, F. (eds.) CAV 2003. LNCS, vol. 2725, pp. 27–39. Springer, Heidelberg (2003)"
+        },
+        {
+          "issue": "3",
+          "key": "10_CR4",
+          "doi-asserted-by": "publisher",
+          "first-page": "651",
+          "DOI": "10.1093/logcom/exn075",
+          "volume": "20",
+          "author": "A. Bauer",
+          "year": "2010",
+          "unstructured": "Bauer, A., Leucker, M., Schallhart, C.: Comparing LTL semantics for runtime verification. Journal of Logic and Computation 20(3), 651–674 (2010)",
+          "journal-title": "Journal of Logic and Computation"
+        },
+        {
+          "key": "10_CR5",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Bauer, A., Leucker, M., Schallhart, C.: Runtime verification for LTL and TLTL. ACM TOSEM 20(4) (July 2011)",
+          "DOI": "10.1145/2000799.2000800"
+        },
+        {
+          "key": "10_CR6",
+          "unstructured": "Vardi, M.Y., Wolper, P.: An automata-theoretic approach to automatic program verification. In: LICS 1986, pp. 332–345. IEEE Computer Society Press (1986)"
+        }
+      ],
+      "container-title": [
+        "Lecture Notes in Computer Science",
+        "Runtime Verification"
+      ],
+      "link": [
+        {
+          "URL": "http://link.springer.com/content/pdf/10.1007/978-3-642-35632-2_10.pdf",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2021,
+            5,
+            4
+          ]
+        ],
+        "date-time": "2021-05-04T13:20:59Z",
+        "timestamp": 1620134459000
+      },
+      "score": 35.45553,
+      "resource": {
+        "primary": {
+          "URL": "http://link.springer.com/10.1007/978-3-642-35632-2_10"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2013
+          ]
+        ]
+      },
+      "ISBN": [
+        "9783642356315",
+        "9783642356322"
+      ],
+      "references-count": 6,
+      "URL": "https://doi.org/10.1007/978-3-642-35632-2_10",
+      "ISSN": [
+        "0302-9743",
+        "1611-3349"
+      ],
+      "issn-type": [
+        {
+          "value": "0302-9743",
+          "type": "print"
+        },
+        {
+          "value": "1611-3349",
+          "type": "electronic"
+        }
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2013
+          ]
+        ]
+      }
+    },
+    {
+      "institution": [
+        {
+          "name": "Chulalongkorn University",
+          "acronym": [
+            "CU"
+          ],
+          "place": [
+            "Bangkok, Thailand"
+          ],
+          "department": [
+            "Computer Engineering"
+          ]
+        }
+      ],
+      "indexed": {
+        "date-parts": [
+          [
+            2025,
+            3,
+            20
+          ]
+        ],
+        "date-time": "2025-03-20T04:21:15Z",
+        "timestamp": 1742444475970,
+        "version": "3.40.1"
+      },
+      "reference-count": 0,
+      "publisher": "Office of Academic Resources, Chulalongkorn University",
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "abstract": "<jats:p>The conformance problem has attracted much interest in the research field of software verification, since the implementation that doesn’t conform to the specification may cause some errors such as the communicating interruption in the composited application. However, the earlier works in conformance verification assume that the internal structures of the implementation are explicit. It may not always be the case such as the applications that implemented in .NET or Java. In this dissertation, we propose an alternative approach for verifying a conformance between the specification and the implementation whose only external behaviors can be observed. We use an adapted version of Angluin’s algorithm to infer a deterministic Finite State Machine (FSM) from the implementations. By transforming the obtained model to the modeling formalism LTS, the model checker LTSA can be used for checking the conformance criterion in our framework. From the experiment based on Web services composition, we can detect the execution trace of the implemented Web service that does not conform to the choreography specification. Moreover, since the assumption that the implementations have to be deterministic may be too restricted in some applications (such as, a communication system or a component-based system), we also present a novel learning algorithm, namely</jats:p>",
+      "DOI": "10.58837/chula.the.2012.1384",
+      "type": "dissertation",
+      "created": {
+        "date-parts": [
+          [
+            2025,
+            3,
+            19
+          ]
+        ],
+        "date-time": "2025-03-19T23:34:09Z",
+        "timestamp": 1742427249000
+      },
+      "approved": {
+        "date-parts": [
+          [
+            2012
+          ]
+        ]
+      },
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "Conformance verification of finite state machines based on machine inference and model checking"
+      ],
+      "prefix": "10.58837",
+      "author": [
+        {
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "Warawoot",
+          "family": "Pacharoen",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        }
+      ],
+      "member": "37481",
+      "deposited": {
+        "date-parts": [
+          [
+            2025,
+            3,
+            19
+          ]
+        ],
+        "date-time": "2025-03-19T23:34:09Z",
+        "timestamp": 1742427249000
+      },
+      "score": 35.333603,
+      "degree": [
+        "Doctor of Engineering"
+      ],
+      "resource": {
+        "primary": {
+          "URL": "https://digiverse.chula.ac.th/Info/item/dc:48545"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            null
+          ]
+        ]
+      },
+      "references-count": 0,
+      "URL": "https://doi.org/10.58837/chula.the.2012.1384"
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            10,
+            4
+          ]
+        ],
+        "date-time": "2026-10-04T01:38:53Z",
+        "timestamp": 1791077933986,
+        "version": "4.1.0"
+      },
+      "reference-count": 28,
+      "publisher": "IEEE",
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2010,
+            9
+          ]
+        ]
+      },
+      "DOI": "10.1109/sefm.2010.37",
+      "type": "proceedings-article",
+      "created": {
+        "date-parts": [
+          [
+            2010,
+            11,
+            23
+          ]
+        ],
+        "date-time": "2010-11-23T15:30:30Z",
+        "timestamp": 1290526230000
+      },
+      "page": "244-254",
+      "source": "Crossref",
+      "is-referenced-by-count": 10,
+      "title": [
+        "SMT-based Verification of LTL Specification with Integer Constraints and its Application to Runtime Checking of Service Substitutability"
+      ],
+      "prefix": "10.1109",
+      "author": [
+        {
+          "given": "Marcello M.",
+          "family": "Bersani",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Luca",
+          "family": "Cavallaro",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Achille",
+          "family": "Frigeri",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Matteo",
+          "family": "Pradella",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Matteo",
+          "family": "Rossi",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "263",
+      "reference": [
+        {
+          "key": "19",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.is.2004.02.002"
+        },
+        {
+          "key": "17",
+          "first-page": "27",
+          "article-title": "Automated generation of BPEL adapters",
+          "author": "brogi",
+          "year": "2006",
+          "journal-title": "Proceedings of ICSOC"
+        },
+        {
+          "key": "18",
+          "year": "2007",
+          "journal-title": "Web Services Business Process Execution Language Version 2 0"
+        },
+        {
+          "key": "15",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/SERVICES-1.2008.52"
+        },
+        {
+          "key": "16",
+          "author": "schaeck",
+          "year": "2003",
+          "journal-title": "WS-ResourceProperties"
+        },
+        {
+          "key": "13",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ASE.2008.22"
+        },
+        {
+          "key": "14",
+          "author": "drumm",
+          "year": "2008",
+          "journal-title": "Improving Schema Mapping by Exploiting Domain Knowledge"
+        },
+        {
+          "key": "11",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/1287624.1287669"
+        },
+        {
+          "key": "12",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-642-05089-3_47"
+        },
+        {
+          "key": "21",
+          "first-page": "213",
+          "article-title": "Proving safety properties of infinite state systems by compilation into presburger arithmetic",
+          "author": "fribourg",
+          "year": "1997",
+          "journal-title": "Proc CONCUR"
+        },
+        {
+          "key": "20",
+          "article-title": "Automatic generation of adaptation contracts",
+          "author": "marti?n",
+          "year": "2008",
+          "journal-title": "Proc of FOCLASA"
+        },
+        {
+          "key": "22",
+          "first-page": "268",
+          "article-title": "Multiple counters automata, safety analysis and presburger arithmetic",
+          "author": "comon",
+          "year": "1998",
+          "journal-title": "Proc CAV"
+        },
+        {
+          "key": "23",
+          "author": "boigelot",
+          "year": "1998",
+          "journal-title": "Symbolic methods for exploring infinite state spaces"
+        },
+        {
+          "key": "24",
+          "first-page": "368",
+          "article-title": "TReX: A tool for reachability analysis of complex systems",
+          "author": "annichini",
+          "year": "2001",
+          "journal-title": "Proc CAV"
+        },
+        {
+          "key": "25",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-540-24727-2_10"
+        },
+        {
+          "key": "26",
+          "first-page": "121",
+          "article-title": "An automata-theoretic approach to constraint LTL",
+          "author": "demri",
+          "year": "2002",
+          "journal-title": "Proc of FSTTCS"
+        },
+        {
+          "key": "27",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/11901914_36"
+        },
+        {
+          "key": "28",
+          "first-page": "155",
+          "article-title": "Lazy theorem proving for bounded model checking over infinite domains",
+          "author": "de moura",
+          "year": "2002",
+          "journal-title": "Proc CADE"
+        },
+        {
+          "key": "3",
+          "first-page": "159",
+          "article-title": "An automatic approach to enabfe repfacement of conversational services",
+          "author": "cavallaro",
+          "year": "2009",
+          "journal-title": "Proc ICSOC/ServiceWave"
+        },
+        {
+          "key": "2",
+          "article-title": "The METEOR-S approach for configuring and executing dynamic web processes",
+          "author": "verma",
+          "year": "2005",
+          "journal-title": "LSDIS Lab Tech Rep LSDIS 05-001"
+        },
+        {
+          "key": "10",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.2168/LMCS-2(5:5)2006"
+        },
+        {
+          "key": "1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1002/spe.696"
+        },
+        {
+          "key": "7",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TIME.2010.21"
+        },
+        {
+          "key": "6",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/PESOS.2009.5068824"
+        },
+        {
+          "key": "5",
+          "author": "ranise",
+          "year": "2006",
+          "journal-title": "SMT-LIB 1 2"
+        },
+        {
+          "key": "4",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1145/1808984.1808996",
+          "article-title": "Synthesizing adapters for conversational web-services from their WSDL interface",
+          "author": "cavalfaro",
+          "year": "2010",
+          "journal-title": "Proceedings of SEAMS"
+        },
+        {
+          "key": "9",
+          "first-page": "118",
+          "article-title": "Bounded model checking",
+          "volume": "58",
+          "author": "biere",
+          "year": "2003",
+          "journal-title": "Advances in Computers"
+        },
+        {
+          "key": "8",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/3-540-44622-2_17"
+        }
+      ],
+      "event": {
+        "name": "2010 8th IEEE International Conference on Software Engineering and Formal Methods (SEFM)",
+        "location": "Pisa, Italy",
+        "start": {
+          "date-parts": [
+            [
+              2010,
+              9,
+              13
+            ]
+          ]
+        },
+        "end": {
+          "date-parts": [
+            [
+              2010,
+              9,
+              18
+            ]
+          ]
+        }
+      },
+      "container-title": [
+        "2010 8th IEEE International Conference on Software Engineering and Formal Methods"
+      ],
+      "link": [
+        {
+          "URL": "http://xplorestaging.ieee.org/ielx5/5635422/5637151/05637436.pdf?arnumber=5637436",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2017,
+            6,
+            19
+          ]
+        ],
+        "date-time": "2017-06-19T12:28:15Z",
+        "timestamp": 1497875295000
+      },
+      "score": 34.704742,
+      "resource": {
+        "primary": {
+          "URL": "http://ieeexplore.ieee.org/document/5637436/"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2010,
+            9
+          ]
+        ]
+      },
+      "references-count": 28,
+      "URL": "https://doi.org/10.1109/sefm.2010.37",
+      "published": {
+        "date-parts": [
+          [
+            2010,
+            9
+          ]
+        ]
+      }
+    }
+  ]
+}

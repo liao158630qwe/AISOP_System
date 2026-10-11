@@ -1,0 +1,20 @@
+{
+  "title": "Modeling Multiple Normal Action Representations for Error Detection in Procedural Tasks",
+  "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Huang_Modeling_Multiple_Normal_Action_Representations_for_Error_Detection_in_Procedural_CVPR_2025_paper.html",
+  "venue": "CVPR2025",
+  "canonical_title": "Modeling Multiple Normal Action Representations for Error Detection in Procedural Tasks",
+  "authors": [
+    "Huang, Wei-Jin",
+    "Li, Yuan-Ming",
+    "Xia, Zhi-Wei",
+    "Tang, Yu-Ming",
+    "Lin, Kun-Yu",
+    "Hu, Jian-Fang",
+    "Zheng, Wei-Shi"
+  ],
+  "publication_date": "2025",
+  "accessed_at": "2026-10-05T07:33:42.882032+00:00",
+  "fetched_url": "https://openaccess.thecvf.com/content/CVPR2025/html/Huang_Modeling_Multiple_Normal_Action_Representations_for_Error_Detection_in_Procedural_CVPR_2025_paper.html",
+  "http_status": 200,
+  "abstract": "Error detection in procedural activities is essential for consistent and correct outcomes in AR-assisted and robotic systems. Existing methods often focus on temporal ordering errors or rely on static prototypes to represent normal actions. However, these approaches typically overlook the common scenario where multiple, distinct actions are valid following a given sequence of executed actions. This leads to two issues: (1) the model cannot effectively detect errors using static prototypes when the inference environment or action execution distribution differs from training; and (2) the model may also use the wrong prototypes to detect errors if the ongoing action label is not the same as the predicted one. To address this problem, we propose an Adaptive Multiple Normal Action Representation (AMNAR) framework. AMNAR predicts all valid next actions and reconstructs their corresponding normal action representations, which are compared against the ongoing action to detect errors. Extensive experiments demonstrate that AMNAR achieves state-of-the-art performance, highlighting the effectiveness of AMNAR and the importance of modeling multiple valid next actions in error detection. The code is available at https://github.com/iSEE-Laboratory/AMNAR."
+}

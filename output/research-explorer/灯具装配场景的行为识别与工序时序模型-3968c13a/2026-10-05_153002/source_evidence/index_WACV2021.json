@@ -1,0 +1,56 @@
+{
+  "url": "https://openaccess.thecvf.com/WACV2021?day=all",
+  "accessed_at": "2026-10-05T07:32:44.844464+00:00",
+  "matches": [
+    {
+      "title": "Automatic Calibration of the Fisheye Camera for Egocentric 3D Human Pose Estimation From a Single Image",
+      "url": "https://openaccess.thecvf.com/content/WACV2021/html/Zhang_Automatic_Calibration_of_the_Fisheye_Camera_for_Egocentric_3D_Human_WACV_2021_paper.html",
+      "venue": "WACV2021"
+    },
+    {
+      "title": "Improving Robustness and Uncertainty Modelling in Neural Ordinary Differential Equations",
+      "url": "https://openaccess.thecvf.com/content/WACV2021/html/Anumasa_Improving_Robustness_and_Uncertainty_Modelling_in_Neural_Ordinary_Differential_Equations_WACV_2021_paper.html",
+      "venue": "WACV2021"
+    },
+    {
+      "title": "Do Not Forget to Attend to Uncertainty While Mitigating Catastrophic Forgetting",
+      "url": "https://openaccess.thecvf.com/content/WACV2021/html/Kurmi_Do_Not_Forget_to_Attend_to_Uncertainty_While_Mitigating_Catastrophic_WACV_2021_paper.html",
+      "venue": "WACV2021"
+    },
+    {
+      "title": "Real-Time Uncertainty Estimation in Computer Vision via Uncertainty-Aware Distribution Distillation",
+      "url": "https://openaccess.thecvf.com/content/WACV2021/html/Shen_Real-Time_Uncertainty_Estimation_in_Computer_Vision_via_Uncertainty-Aware_Distribution_Distillation_WACV_2021_paper.html",
+      "venue": "WACV2021"
+    },
+    {
+      "title": "The IKEA ASM Dataset: Understanding People Assembling Furniture Through Actions, Objects and Pose",
+      "url": "https://openaccess.thecvf.com/content/WACV2021/html/Ben-Shabat_The_IKEA_ASM_Dataset_Understanding_People_Assembling_Furniture_Through_Actions_WACV_2021_paper.html",
+      "venue": "WACV2021"
+    },
+    {
+      "title": "Understanding the Impact of Mistakes on Background Regions in Crowd Counting",
+      "url": "https://openaccess.thecvf.com/content/WACV2021/html/Modolo_Understanding_the_Impact_of_Mistakes_on_Background_Regions_in_Crowd_WACV_2021_paper.html",
+      "venue": "WACV2021"
+    },
+    {
+      "title": "Misclassification Risk and Uncertainty Quantification in Deep Classifiers",
+      "url": "https://openaccess.thecvf.com/content/WACV2021/html/Sensoy_Misclassification_Risk_and_Uncertainty_Quantification_in_Deep_Classifiers_WACV_2021_paper.html",
+      "venue": "WACV2021"
+    },
+    {
+      "title": "Whose Hand Is This? Person Identification From Egocentric Hand Gestures",
+      "url": "https://openaccess.thecvf.com/content/WACV2021/html/Tsutsui_Whose_Hand_Is_This_Person_Identification_From_Egocentric_Hand_Gestures_WACV_2021_paper.html",
+      "venue": "WACV2021"
+    },
+    {
+      "title": "Integrating Human Gaze Into Attention for Egocentric Activity Recognition",
+      "url": "https://openaccess.thecvf.com/content/WACV2021/html/Min_Integrating_Human_Gaze_Into_Attention_for_Egocentric_Activity_Recognition_WACV_2021_paper.html",
+      "venue": "WACV2021"
+    },
+    {
+      "title": "The MECCANO Dataset: Understanding Human-Object Interactions From Egocentric Videos in an Industrial-Like Domain",
+      "url": "https://openaccess.thecvf.com/content/WACV2021/html/Ragusa_The_MECCANO_Dataset_Understanding_Human-Object_Interactions_From_Egocentric_Videos_in_WACV_2021_paper.html",
+      "venue": "WACV2021"
+    }
+  ]
+}

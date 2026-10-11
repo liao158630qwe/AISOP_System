@@ -1,0 +1,281 @@
+{
+  "url": "https://openaccess.thecvf.com/ICCV2025?day=all",
+  "accessed_at": "2026-10-05T07:31:43.843989+00:00",
+  "matches": [
+    {
+      "title": "HiERO: Understanding the Hierarchy of Human Behavior Enhances Reasoning on Egocentric Videos",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Peirone_HiERO_Understanding_the_Hierarchy_of_Human_Behavior_Enhances_Reasoning_on_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "UniEgoMotion: A Unified Model for Egocentric Motion Reconstruction, Forecasting, and Generation",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Patel_UniEgoMotion_A_Unified_Model_for_Egocentric_Motion_Reconstruction_Forecasting_and_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Probabilistic Inertial Poser (ProbIP): Uncertainty-aware Human Motion Modeling from Sparse Inertial Sensors",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Kim_Probabilistic_Inertial_Poser_ProbIP_Uncertainty-aware_Human_Motion_Modeling_from_Sparse_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "EgoAgent: A Joint Predictive Agent Model in Egocentric Worlds",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Chen_EgoAgent_A_Joint_Predictive_Agent_Model_in_Egocentric_Worlds_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Uncertainty-Aware Gradient Stabilization for Small Object Detection",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Sun_Uncertainty-Aware_Gradient_Stabilization_for_Small_Object_Detection_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Visual Intention Grounding for Egocentric Assistants",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Sun_Visual_Intention_Grounding_for_Egocentric_Assistants_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Learning Precise Affordances from Egocentric Videos for Robotic Manipulation",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Li_Learning_Precise_Affordances_from_Egocentric_Videos_for_Robotic_Manipulation_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "EgoM2P: Egocentric Multimodal Multitask Pretraining",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Li_EgoM2P_Egocentric_Multimodal_Multitask_Pretraining_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "On the Generalization of Representation Uncertainty in Earth Observation",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Kondylatos_On_the_Generalization_of_Representation_Uncertainty_in_Earth_Observation_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "egoPPG: Heart Rate Estimation from Eye-Tracking Cameras in Egocentric Systems to Benefit Downstream Vision Tasks",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Braun_egoPPG_Heart_Rate_Estimation_from_Eye-Tracking_Cameras_in_Egocentric_Systems_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Beyond Pixel Uncertainty: Bounding the OoD Objects in Road Scenes",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Zhu_Beyond_Pixel_Uncertainty_Bounding_the_OoD_Objects_in_Road_Scenes_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "LookOut: Real-World Humanoid Egocentric Navigation",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Pan_LookOut_Real-World_Humanoid_Egocentric_Navigation_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "What Changed and What Could Have Changed? State-Change Counterfactuals for Procedure-Aware Video Representation Learning",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Kung_What_Changed_and_What_Could_Have_Changed_State-Change_Counterfactuals_for_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Skeleton Motion Words for Unsupervised Skeleton-Based Temporal Action Segmentation",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Gokay_Skeleton_Motion_Words_for_Unsupervised_Skeleton-Based_Temporal_Action_Segmentation_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "MistSense: Versatile Online Detection of Procedural and Execution Mistakes",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Patsch_MistSense_Versatile_Online_Detection_of_Procedural_and_Execution_Mistakes_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "CLOT: Closed Loop Optimal Transport for Unsupervised Action Segmentation",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Bueno-Benito_CLOT_Closed_Loop_Optimal_Transport_for_Unsupervised_Action_Segmentation_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "U-ViLAR: Uncertainty-Aware Visual Localization for Autonomous Driving via Differentiable Association and Registration",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Li_U-ViLAR_Uncertainty-Aware_Visual_Localization_for_Autonomous_Driving_via_Differentiable_Association_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Joint Self-Supervised Video Alignment and Action Segmentation",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Ali_Joint_Self-Supervised_Video_Alignment_and_Action_Segmentation_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Bring Your Rear Cameras for Egocentric 3D Human Pose Estimation",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Akada_Bring_Your_Rear_Cameras_for_Egocentric_3D_Human_Pose_Estimation_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Embodied VideoAgent: Persistent Memory from Egocentric Videos and Embodied Sensors Enables Dynamic Scene Understanding",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Fan_Embodied_VideoAgent_Persistent_Memory_from_Egocentric_Videos_and_Embodied_Sensors_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Adaptive Dual Uncertainty Optimization: Boosting Monocular 3D Object Detection under Test-Time Shifts",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Hu_Adaptive_Dual_Uncertainty_Optimization_Boosting_Monocular_3D_Object_Detection_under_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Egocentric Action-aware Inertial Localization in Point Clouds with Vision-Language Guidance",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Zhang_Egocentric_Action-aware_Inertial_Localization_in_Point_Clouds_with_Vision-Language_Guidance_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "EgoAdapt: Adaptive Multisensory Distillation and Policy Learning for Efficient Egocentric Perception",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Chowdhury_EgoAdapt_Adaptive_Multisensory_Distillation_and_Policy_Learning_for_Efficient_Egocentric_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Combinative Matching for Geometric Shape Assembly",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Lee_Combinative_Matching_for_Geometric_Shape_Assembly_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Fine-grained Spatiotemporal Grounding on Egocentric Videos",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Liang_Fine-grained_Spatiotemporal_Grounding_on_Egocentric_Videos_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Fish2Mesh Transformer: 3D Human Mesh Recovery from Egocentric Vision",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Shen_Fish2Mesh_Transformer_3D_Human_Mesh_Recovery_from_Egocentric_Vision_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "ProbRes: Probabilistic Jump Diffusion for Open-World Egocentric Activity Recognition",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Kundu_ProbRes_Probabilistic_Jump_Diffusion_for_Open-World_Egocentric_Activity_Recognition_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Multi-Modal Few-Shot Temporal Action Segmentation",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Lu_Multi-Modal_Few-Shot_Temporal_Action_Segmentation_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Jigsaw++: Imagining Complete Shape Priors for Object Reassembly",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Lu_Jigsaw_Imagining_Complete_Shape_Priors_for_Object_Reassembly_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Quantifying and Narrowing the Unknown: Interactive Text-to-Video Retrieval via Uncertainty Minimization",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Zhang_Quantifying_and_Narrowing_the_Unknown_Interactive_Text-to-Video_Retrieval_via_Uncertainty_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Error Recognition in Procedural Videos using Generalized Task Graph",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Lee_Error_Recognition_in_Procedural_Videos_using_Generalized_Task_Graph_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Causal-Entity Reflected Egocentric Traffic Accident Video Synthesis",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Li_Causal-Entity_Reflected_Egocentric_Traffic_Accident_Video_Synthesis_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "O-MaMa: Learning Object Mask Matching between Egocentric and Exocentric Views",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Mur-Labadia_O-MaMa_Learning_Object_Mask_Matching_between_Egocentric_and_Exocentric_Views_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Completing 3D Partial Assemblies with View-Consistent 2D-3D Correspondence",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Wang_Completing_3D_Partial_Assemblies_with_View-Consistent_2D-3D_Correspondence_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Streaming VideoLLMs for Real-Time Procedural Video Understanding",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Chatterjee_Streaming_VideoLLMs_for_Real-Time_Procedural_Video_Understanding_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Manual-PA: Learning 3D Part Assembly from Instruction Diagrams",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Zhang_Manual-PA_Learning_3D_Part_Assembly_from_Instruction_Diagrams_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "SPA: Efficient User-Preference Alignment against Uncertainty in Medical Image Segmentation",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Zhu_SPA_Efficient_User-Preference_Alignment_against_Uncertainty_in_Medical_Image_Segmentation_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Diffusion Epistemic Uncertainty with Asymmetric Learning for Diffusion-Generated Image Detection",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Huang_Diffusion_Epistemic_Uncertainty_with_Asymmetric_Learning_for_Diffusion-Generated_Image_Detection_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Is Tracking Really More Challenging in First Person Egocentric Vision?",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Dunnhofer_Is_Tracking_Really_More_Challenging_in_First_Person_Egocentric_Vision_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Partially Matching Submap Helps: Uncertainty Modeling and Propagation for Text to Point Cloud Localization",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Feng_Partially_Matching_Submap_Helps_Uncertainty_Modeling_and_Propagation_for_Text_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Arti-PG: A Toolbox for Procedurally Synthesizing Large-Scale and Diverse Articulated Objects with Rich Annotations",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Sun_Arti-PG_A_Toolbox_for_Procedurally_Synthesizing_Large-Scale_and_Diverse_Articulated_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Harnessing Uncertainty-aware Bounding Boxes for Unsupervised 3D Object Detection",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Zhang_Harnessing_Uncertainty-aware_Bounding_Boxes_for_Unsupervised_3D_Object_Detection_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "SKALD: Learning-Based Shot Assembly for Coherent Multi-Shot Video Creation",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Lu_SKALD_Learning-Based_Shot_Assembly_for_Coherent_Multi-Shot_Video_Creation_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "DuoCLR: Dual-Surrogate Contrastive Learning for Skeleton-based Human Action Segmentation",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Tian_DuoCLR_Dual-Surrogate_Contrastive_Learning_for_Skeleton-based_Human_Action_Segmentation_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "ReassembleNet: Learnable Keypoints and Diffusion for 2D Fresco Reconstruction",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Islam_ReassembleNet_Learnable_Keypoints_and_Diffusion_for_2D_Fresco_Reconstruction_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Perceiving and Acting in First-Person: A Dataset and Benchmark for Egocentric Human-Object-Human Interactions",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Xu_Perceiving_and_Acting_in_First-Person_A_Dataset_and_Benchmark_for_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Benchmarking Egocentric Visual-Inertial SLAM at City Scale",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Krishnan_Benchmarking_Egocentric_Visual-Inertial_SLAM_at_City_Scale_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "SAGI: Semantically Aligned and Uncertainty Guided AI Image Inpainting",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Giakoumoglou_SAGI_Semantically_Aligned_and_Uncertainty_Guided_AI_Image_Inpainting_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Self-Supervised Monocular 4D Scene Reconstruction for Egocentric Videos",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Yuan_Self-Supervised_Monocular_4D_Scene_Reconstruction_for_Egocentric_Videos_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Collaborative Instance Object Navigation: Leveraging Uncertainty-Awareness to Minimize Human-Agent Dialogues",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Taioli_Collaborative_Instance_Object_Navigation_Leveraging_Uncertainty-Awareness_to_Minimize_Human-Agent_Dialogues_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Uncertainty-Driven Expert Control: Enhancing the Reliability of Medical Vision-Language Models",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Liang_Uncertainty-Driven_Expert_Control_Enhancing_the_Reliability_of_Medical_Vision-Language_Models_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "PRVQL: Progressive Knowledge-guided Refinement for Robust Egocentric Visual Query Localization",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Fan_PRVQL_Progressive_Knowledge-guided_Refinement_for_Robust_Egocentric_Visual_Query_Localization_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "GARF: Learning Generalizable 3D Reassembly for Real-World Fractures",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Li_GARF_Learning_Generalizable_3D_Reassembly_for_Real-World_Fractures_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Uncertainty-Aware Diffusion-Guided Refinement of 3D Scenes",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Bose_Uncertainty-Aware_Diffusion-Guided_Refinement_of_3D_Scenes_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    },
+    {
+      "title": "Underwater Visual SLAM with Depth Uncertainty and Medium Modeling",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Liu_Underwater_Visual_SLAM_with_Depth_Uncertainty_and_Medium_Modeling_ICCV_2025_paper.html",
+      "venue": "ICCV2025"
+    }
+  ]
+}

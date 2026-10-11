@@ -1,0 +1,152 @@
+[
+  {
+    "title": "Assembly101: A Large-Scale Multi-View Video Dataset for Understanding Procedural Activities",
+    "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Sener_Assembly101_A_Large-Scale_Multi-View_Video_Dataset_for_Understanding_Procedural_Activities_CVPR_2022_paper.html",
+    "venue": "CVPR2022"
+  },
+  {
+    "title": "The IKEA ASM Dataset: Understanding People Assembling Furniture Through Actions, Objects and Pose",
+    "url": "https://openaccess.thecvf.com/content/WACV2021/html/Ben-Shabat_The_IKEA_ASM_Dataset_Understanding_People_Assembling_Furniture_Through_Actions_WACV_2021_paper.html",
+    "venue": "WACV2021"
+  },
+  {
+    "title": "The MECCANO Dataset: Understanding Human-Object Interactions From Egocentric Videos in an Industrial-Like Domain",
+    "url": "https://openaccess.thecvf.com/content/WACV2021/html/Ragusa_The_MECCANO_Dataset_Understanding_Human-Object_Interactions_From_Egocentric_Videos_in_WACV_2021_paper.html",
+    "venue": "WACV2021"
+  },
+  {
+    "title": "HoloAssist: an Egocentric Human Interaction Dataset for Interactive AI Assistants in the Real World",
+    "url": "https://openaccess.thecvf.com/content/ICCV2023/html/Wang_HoloAssist_an_Egocentric_Human_Interaction_Dataset_for_Interactive_AI_Assistants_ICCV_2023_paper.html",
+    "venue": "ICCV2023"
+  },
+  {
+    "title": "AssemblyHands: Towards Egocentric Activity Understanding via 3D Hand Pose Estimation",
+    "url": "https://openaccess.thecvf.com/content/CVPR2023/html/Ohkawa_AssemblyHands_Towards_Egocentric_Activity_Understanding_via_3D_Hand_Pose_Estimation_CVPR_2023_paper.html",
+    "venue": "CVPR2023"
+  },
+  {
+    "title": "IndustReal: A Dataset for Procedure Step Recognition Handling Execution Errors in Egocentric Videos in an Industrial-Like Setting",
+    "url": "https://openaccess.thecvf.com/content/WACV2024/html/Schoonbeek_IndustReal_A_Dataset_for_Procedure_Step_Recognition_Handling_Execution_Errors_WACV_2024_paper.html",
+    "venue": "WACV2024"
+  },
+  {
+    "title": "FACT: Frame-Action Cross-Attention Temporal Modeling for Efficient Action Segmentation",
+    "url": "https://openaccess.thecvf.com/content/CVPR2024/html/Lu_FACT_Frame-Action_Cross-Attention_Temporal_Modeling_for_Efficient_Action_Segmentation_CVPR_2024_paper.html",
+    "venue": "CVPR2024"
+  },
+  {
+    "title": "Progress-Aware Online Action Segmentation for Egocentric Procedural Task Videos",
+    "url": "https://openaccess.thecvf.com/content/CVPR2024/html/Shen_Progress-Aware_Online_Action_Segmentation_for_Egocentric_Procedural_Task_Videos_CVPR_2024_paper.html",
+    "venue": "CVPR2024"
+  },
+  {
+    "title": "Weakly-Supervised Online Action Segmentation in Multi-View Instructional Videos",
+    "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Ghoddoosian_Weakly-Supervised_Online_Action_Segmentation_in_Multi-View_Instructional_Videos_CVPR_2022_paper.html",
+    "venue": "CVPR2022"
+  },
+  {
+    "title": "SVIP: Sequence VerIfication for Procedures in Videos",
+    "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Qian_SVIP_Sequence_VerIfication_for_Procedures_in_Videos_CVPR_2022_paper.html",
+    "venue": "CVPR2022"
+  },
+  {
+    "title": "PREGO: Online Mistake Detection in PRocedural EGOcentric Videos",
+    "url": "https://openaccess.thecvf.com/content/CVPR2024/html/Flaborea_PREGO_Online_Mistake_Detection_in_PRocedural_EGOcentric_Videos_CVPR_2024_paper.html",
+    "venue": "CVPR2024"
+  },
+  {
+    "title": "Error Detection in Egocentric Procedural Task Videos",
+    "url": "https://openaccess.thecvf.com/content/CVPR2024/html/Lee_Error_Detection_in_Egocentric_Procedural_Task_Videos_CVPR_2024_paper.html",
+    "venue": "CVPR2024"
+  },
+  {
+    "title": "PHGC: Procedural Heterogeneous Graph Completion for Natural Language Task Verification in Egocentric Videos",
+    "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Jiang_PHGC_Procedural_Heterogeneous_Graph_Completion_for_Natural_Language_Task_Verification_CVPR_2025_paper.html",
+    "venue": "CVPR2025"
+  },
+  {
+    "title": "Modeling Multiple Normal Action Representations for Error Detection in Procedural Tasks",
+    "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Huang_Modeling_Multiple_Normal_Action_Representations_for_Error_Detection_in_Procedural_CVPR_2025_paper.html",
+    "venue": "CVPR2025"
+  },
+  {
+    "title": "MistSense: Versatile Online Detection of Procedural and Execution Mistakes",
+    "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Patsch_MistSense_Versatile_Online_Detection_of_Procedural_and_Execution_Mistakes_ICCV_2025_paper.html",
+    "venue": "ICCV2025"
+  },
+  {
+    "title": "Error Recognition in Procedural Videos using Generalized Task Graph",
+    "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Lee_Error_Recognition_in_Procedural_Videos_using_Generalized_Task_Graph_ICCV_2025_paper.html",
+    "venue": "ICCV2025"
+  },
+  {
+    "title": "Mistake Attribution: Fine-Grained Mistake Understanding in Egocentric Videos",
+    "url": "https://openaccess.thecvf.com/content/CVPR2026/html/Li_Mistake_Attribution_Fine-Grained_Mistake_Understanding_in_Egocentric_Videos_CVPR_2026_paper.html",
+    "venue": "CVPR2026"
+  },
+  {
+    "title": "Polyphony: Diffusion-based Dual-Hand Action Segmentation with Alternating Vision Transformer and Semantic Conditioning",
+    "url": "https://openaccess.thecvf.com/content/CVPR2026/html/Zheng_Polyphony_Diffusion-based_Dual-Hand_Action_Segmentation_with_Alternating_Vision_Transformer_and_CVPR_2026_paper.html",
+    "venue": "CVPR2026"
+  },
+  {
+    "title": "A Stitch in Time: Learning Procedural Workflow via Self-Supervised Plackett-Luce Ranking",
+    "url": "https://openaccess.thecvf.com/content/CVPR2026/html/Che_A_Stitch_in_Time_Learning_Procedural_Workflow_via_Self-Supervised_Plackett-Luce_CVPR_2026_paper.html",
+    "venue": "CVPR2026"
+  },
+  {
+    "title": "Ego-Exo4D: Understanding Skilled Human Activity from First- and Third-Person Perspectives",
+    "venue": "CVPR2024",
+    "url": "https://openaccess.thecvf.com/content/CVPR2024/html/Grauman_Ego-Exo4D_Understanding_Skilled_Human_Activity_from_First-_and_Third-Person_Perspectives_CVPR_2024_paper.html"
+  },
+  {
+    "title": "MS-TCN: Multi-Stage Temporal Convolutional Network for Action Segmentation",
+    "venue": "CVPR2019",
+    "url": "https://openaccess.thecvf.com/content_CVPR_2019/html/Abu_Farha_MS-TCN_Multi-Stage_Temporal_Convolutional_Network_for_Action_Segmentation_CVPR_2019_paper.html"
+  },
+  {
+    "title": "The HA4M dataset: Multi-Modal Monitoring of an assembly task for Human Action recognition in Manufacturing",
+    "venue": "Scientific Data",
+    "url": "https://www.nature.com/articles/s41597-022-01843-z"
+  },
+  {
+    "title": "ASFormer: Transformer for Action Segmentation",
+    "venue": "BMVC2021",
+    "url": "https://arxiv.org/abs/2110.08568"
+  },
+  {
+    "title": "Diffusion Action Segmentation",
+    "venue": "ICCV2023",
+    "url": "https://arxiv.org/abs/2303.17959"
+  },
+  {
+    "title": "MS-TCN++: Multi-Stage Temporal Convolutional Network for Action Segmentation",
+    "venue": "IEEE TPAMI",
+    "url": "https://arxiv.org/abs/2006.09220"
+  },
+  {
+    "title": "On Calibration of Modern Neural Networks",
+    "venue": "ICML2017",
+    "url": "https://proceedings.mlr.press/v70/guo17a.html"
+  },
+  {
+    "title": "Temporal Action Segmentation: An Analysis of Modern Techniques",
+    "venue": "IEEE TPAMI",
+    "url": "https://arxiv.org/abs/2210.10352"
+  },
+  {
+    "title": "Declarative workflows: Balancing between flexibility and support",
+    "venue": "Computer Science - Research and Development",
+    "url": "https://link.springer.com/article/10.1007/s00450-009-0057-9"
+  },
+  {
+    "title": "Conformance checking over uncertain event data",
+    "venue": "Information Systems",
+    "url": "https://arxiv.org/abs/2009.14452"
+  },
+  {
+    "title": "Conformance Checking Based on Partially Ordered Event Data",
+    "venue": "BPM Workshops / Lecture Notes in Business Information Processing",
+    "url": "https://link.springer.com/chapter/10.1007/978-3-319-15895-2_7"
+  }
+]

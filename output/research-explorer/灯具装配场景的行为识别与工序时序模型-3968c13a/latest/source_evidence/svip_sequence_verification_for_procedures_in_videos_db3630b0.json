@@ -1,0 +1,24 @@
+{
+  "title": "SVIP: Sequence VerIfication for Procedures in Videos",
+  "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Qian_SVIP_Sequence_VerIfication_for_Procedures_in_Videos_CVPR_2022_paper.html",
+  "venue": "CVPR2022",
+  "canonical_title": "SVIP: Sequence VerIfication for Procedures in Videos",
+  "authors": [
+    "Qian, Yicheng",
+    "Luo, Weixin",
+    "Lian, Dongze",
+    "Tang, Xu",
+    "Zhao, Peilin",
+    "Gao, Shenghua"
+  ],
+  "publication_date": "2022",
+  "accessed_at": "2026-10-05T07:38:37.723195+00:00",
+  "fetched_url": "https://openaccess.thecvf.com/content/CVPR2022/html/Qian_SVIP_Sequence_VerIfication_for_Procedures_in_Videos_CVPR_2022_paper.html",
+  "http_status": 200,
+  "abstract": "In this paper, we propose a novel sequence verification task that aims to distinguish positive video pairs performing the same action sequence from negative ones with step-level transformations but still conducting the same task. Such a challenging task resides in an open-set setting without prior action detection or segmentation that requires event-level or even frame-level annotations. To that end, we carefully reorganize two publicly available action-related datasets with step-procedure-task structure. To fully investigate the effectiveness of any method, we collect a scripted video dataset enumerating all kinds of step-level transformations in chemical experiments. Besides, a novel evaluation metric Weighted Distance Ratio is introduced to ensure equivalence for different step-level transformations during evaluation. In the end, a simple but effective baseline based on the transformer encoder with a novel sequence alignment loss is introduced to better characterize long-term dependency between steps, which outperforms other action recognition methods. Codes and data will be released.",
+  "html_evidence": "source_evidence/svip_sequence_verification_for_procedures_in_videos_db3630b0.html",
+  "json_evidence": "source_evidence/svip_sequence_verification_for_procedures_in_videos_db3630b0.json",
+  "venue_evidence": [
+    "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition"
+  ]
+}

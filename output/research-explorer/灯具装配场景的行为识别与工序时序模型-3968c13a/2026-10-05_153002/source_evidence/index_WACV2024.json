@@ -1,0 +1,126 @@
+{
+  "url": "https://openaccess.thecvf.com/WACV2024?day=all",
+  "accessed_at": "2026-10-05T07:32:45.527012+00:00",
+  "matches": [
+    {
+      "title": "Multi-View 3D Object Reconstruction and Uncertainty Modelling With Neural Shape Prior",
+      "url": "https://openaccess.thecvf.com/content/WACV2024/html/Liao_Multi-View_3D_Object_Reconstruction_and_Uncertainty_Modelling_With_Neural_Shape_WACV_2024_paper.html",
+      "venue": "WACV2024"
+    },
+    {
+      "title": "Uncertainty-Weighted Loss Functions for Improved Adversarial Attacks on Semantic Segmentation",
+      "url": "https://openaccess.thecvf.com/content/WACV2024/html/Maag_Uncertainty-Weighted_Loss_Functions_for_Improved_Adversarial_Attacks_on_Semantic_Segmentation_WACV_2024_paper.html",
+      "venue": "WACV2024"
+    },
+    {
+      "title": "Mining and Unifying Heterogeneous Contrastive Relations for Weakly-Supervised Actor-Action Segmentation",
+      "url": "https://openaccess.thecvf.com/content/WACV2024/html/Duan_Mining_and_Unifying_Heterogeneous_Contrastive_Relations_for_Weakly-Supervised_Actor-Action_Segmentation_WACV_2024_paper.html",
+      "venue": "WACV2024"
+    },
+    {
+      "title": "AssemblyNet: A Point Cloud Dataset and Benchmark for Predicting Part Directions in an Exploded Layout",
+      "url": "https://openaccess.thecvf.com/content/WACV2024/html/Gaarsdal_AssemblyNet_A_Point_Cloud_Dataset_and_Benchmark_for_Predicting_Part_WACV_2024_paper.html",
+      "venue": "WACV2024"
+    },
+    {
+      "title": "ZEETAD: Adapting Pretrained Vision-Language Model for Zero-Shot End-to-End Temporal Action Detection",
+      "url": "https://openaccess.thecvf.com/content/WACV2024/html/Phan_ZEETAD_Adapting_Pretrained_Vision-Language_Model_for_Zero-Shot_End-to-End_Temporal_Action_WACV_2024_paper.html",
+      "venue": "WACV2024"
+    },
+    {
+      "title": "A*: Atrous Spatial Temporal Action Recognition for Real Time Applications",
+      "url": "https://openaccess.thecvf.com/content/WACV2024/html/Kim_A_Atrous_Spatial_Temporal_Action_Recognition_for_Real_Time_Applications_WACV_2024_paper.html",
+      "venue": "WACV2024"
+    },
+    {
+      "title": "CrashCar101: Procedural Generation for Damage Assessment",
+      "url": "https://openaccess.thecvf.com/content/WACV2024/html/Parslov_CrashCar101_Procedural_Generation_for_Damage_Assessment_WACV_2024_paper.html",
+      "venue": "WACV2024"
+    },
+    {
+      "title": "Egocentric Action Recognition by Capturing Hand-Object Contact and Object State",
+      "url": "https://openaccess.thecvf.com/content/WACV2024/html/Shiota_Egocentric_Action_Recognition_by_Capturing_Hand-Object_Contact_and_Object_State_WACV_2024_paper.html",
+      "venue": "WACV2024"
+    },
+    {
+      "title": "IndustReal: A Dataset for Procedure Step Recognition Handling Execution Errors in Egocentric Videos in an Industrial-Like Setting",
+      "url": "https://openaccess.thecvf.com/content/WACV2024/html/Schoonbeek_IndustReal_A_Dataset_for_Procedure_Step_Recognition_Handling_Execution_Errors_WACV_2024_paper.html",
+      "venue": "WACV2024"
+    },
+    {
+      "title": "MonoProb: Self-Supervised Monocular Depth Estimation With Interpretable Uncertainty",
+      "url": "https://openaccess.thecvf.com/content/WACV2024/html/Marsal_MonoProb_Self-Supervised_Monocular_Depth_Estimation_With_Interpretable_Uncertainty_WACV_2024_paper.html",
+      "venue": "WACV2024"
+    },
+    {
+      "title": "Ego2HandsPose: A Dataset for Egocentric Two-Hand 3D Global Pose Estimation",
+      "url": "https://openaccess.thecvf.com/content/WACV2024/html/Lin_Ego2HandsPose_A_Dataset_for_Egocentric_Two-Hand_3D_Global_Pose_Estimation_WACV_2024_paper.html",
+      "venue": "WACV2024"
+    },
+    {
+      "title": "Evaluation of Video Masked Autoencoders' Performance and Uncertainty Estimations for Driver Action and Intention Recognition",
+      "url": "https://openaccess.thecvf.com/content/WACV2024/html/Vellenga_Evaluation_of_Video_Masked_Autoencoders_Performance_and_Uncertainty_Estimations_for_WACV_2024_paper.html",
+      "venue": "WACV2024"
+    },
+    {
+      "title": "United We Stand, Divided We Fall: UnityGraph for Unsupervised Procedure Learning From Videos",
+      "url": "https://openaccess.thecvf.com/content/WACV2024/html/Bansal_United_We_Stand_Divided_We_Fall_UnityGraph_for_Unsupervised_Procedure_WACV_2024_paper.html",
+      "venue": "WACV2024"
+    },
+    {
+      "title": "Evidential Uncertainty Quantification: A Variance-Based Perspective",
+      "url": "https://openaccess.thecvf.com/content/WACV2024/html/Duan_Evidential_Uncertainty_Quantification_A_Variance-Based_Perspective_WACV_2024_paper.html",
+      "venue": "WACV2024"
+    },
+    {
+      "title": "UNSPAT: Uncertainty-Guided SpatioTemporal Transformer for 3D Human Pose and Shape Estimation on Videos",
+      "url": "https://openaccess.thecvf.com/content/WACV2024/html/Lee_UNSPAT_Uncertainty-Guided_SpatioTemporal_Transformer_for_3D_Human_Pose_and_Shape_WACV_2024_paper.html",
+      "venue": "WACV2024"
+    },
+    {
+      "title": "OTAS: Unsupervised Boundary Detection for Object-Centric Temporal Action Segmentation",
+      "url": "https://openaccess.thecvf.com/content/WACV2024/html/Li_OTAS_Unsupervised_Boundary_Detection_for_Object-Centric_Temporal_Action_Segmentation_WACV_2024_paper.html",
+      "venue": "WACV2024"
+    },
+    {
+      "title": "Domain Generalization With Correlated Style Uncertainty",
+      "url": "https://openaccess.thecvf.com/content/WACV2024/html/Zhang_Domain_Generalization_With_Correlated_Style_Uncertainty_WACV_2024_paper.html",
+      "venue": "WACV2024"
+    },
+    {
+      "title": "Leveraging Next-Active Objects for Context-Aware Anticipation in Egocentric Videos",
+      "url": "https://openaccess.thecvf.com/content/WACV2024/html/Thakur_Leveraging_Next-Active_Objects_for_Context-Aware_Anticipation_in_Egocentric_Videos_WACV_2024_paper.html",
+      "venue": "WACV2024"
+    },
+    {
+      "title": "Uncertainty Estimation in Instance Segmentation With Star-Convex Shapes",
+      "url": "https://openaccess.thecvf.com/content/WACV2024/html/Siddiqui_Uncertainty_Estimation_in_Instance_Segmentation_With_Star-Convex_Shapes_WACV_2024_paper.html",
+      "venue": "WACV2024"
+    },
+    {
+      "title": "Random Walks for Temporal Action Segmentation With Timestamp Supervision",
+      "url": "https://openaccess.thecvf.com/content/WACV2024/html/Hirsch_Random_Walks_for_Temporal_Action_Segmentation_With_Timestamp_Supervision_WACV_2024_paper.html",
+      "venue": "WACV2024"
+    },
+    {
+      "title": "SEMA: Semantic Attention for Capturing Long-Range Dependencies in Egocentric Lifelogs",
+      "url": "https://openaccess.thecvf.com/content/WACV2024/html/Nagar_SEMA_Semantic_Attention_for_Capturing_Long-Range_Dependencies_in_Egocentric_Lifelogs_WACV_2024_paper.html",
+      "venue": "WACV2024"
+    },
+    {
+      "title": "On the Quantification of Image Reconstruction Uncertainty Without Training Data",
+      "url": "https://openaccess.thecvf.com/content/WACV2024/html/Zhang_On_the_Quantification_of_Image_Reconstruction_Uncertainty_Without_Training_Data_WACV_2024_paper.html",
+      "venue": "WACV2024"
+    },
+    {
+      "title": "Interaction Region Visual Transformer for Egocentric Action Anticipation",
+      "url": "https://openaccess.thecvf.com/content/WACV2024/html/Roy_Interaction_Region_Visual_Transformer_for_Egocentric_Action_Anticipation_WACV_2024_paper.html",
+      "venue": "WACV2024"
+    },
+    {
+      "title": "IKEA Ego 3D Dataset: Understanding Furniture Assembly Actions From Ego-View 3D Point Clouds",
+      "url": "https://openaccess.thecvf.com/content/WACV2024/html/Ben-Shabat_IKEA_Ego_3D_Dataset_Understanding_Furniture_Assembly_Actions_From_Ego-View_WACV_2024_paper.html",
+      "venue": "WACV2024"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "title": "MS-TCN: Multi-Stage Temporal Convolutional Network for Action Segmentation",
+  "venue": "CVPR2019",
+  "url": "https://openaccess.thecvf.com/content_CVPR_2019/html/Abu_Farha_MS-TCN_Multi-Stage_Temporal_Convolutional_Network_for_Action_Segmentation_CVPR_2019_paper.html",
+  "canonical_title": "MS-TCN: Multi-Stage Temporal Convolutional Network for Action Segmentation",
+  "authors": [
+    "Farha, Yazan Abu",
+    "Gall, Jurgen"
+  ],
+  "publication_date": "2019",
+  "accessed_at": "2026-10-05T07:38:38.596973+00:00",
+  "fetched_url": "https://openaccess.thecvf.com/content_CVPR_2019/html/Abu_Farha_MS-TCN_Multi-Stage_Temporal_Convolutional_Network_for_Action_Segmentation_CVPR_2019_paper.html",
+  "http_status": 200,
+  "abstract": "Temporally locating and classifying action segments in long untrimmed videos is of particular interest to many applications like surveillance and robotics. While traditional approaches follow a two-step pipeline, by generating frame-wise probabilities and then feeding them to high-level temporal models, recent approaches use temporal convolutions to directly classify the video frames. In this paper, we introduce a multi-stage architecture for the temporal action segmentation task. Each stage features a set of dilated temporal convolutions to generate an initial prediction that is refined by the next one. This architecture is trained using a combination of a classification loss and a proposed smoothing loss that penalizes over-segmentation errors. Extensive evaluation shows the effectiveness of the proposed model in capturing long-range dependencies and recognizing action segments. Our model achieves state-of-the-art results on three challenging datasets: 50Salads, Georgia Tech Egocentric Activities (GTEA), and the Breakfast dataset.",
+  "html_evidence": "source_evidence/ms_tcn_multi_stage_temporal_convolutional_network_for_action_segmentation_658ec713.html",
+  "json_evidence": "source_evidence/ms_tcn_multi_stage_temporal_convolutional_network_for_action_segmentation_658ec713.json",
+  "venue_evidence": [
+    "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition"
+  ]
+}

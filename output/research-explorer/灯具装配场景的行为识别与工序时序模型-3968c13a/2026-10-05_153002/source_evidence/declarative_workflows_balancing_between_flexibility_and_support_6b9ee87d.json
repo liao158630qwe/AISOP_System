@@ -1,0 +1,21 @@
+{
+  "title": "Declarative workflows: Balancing between flexibility and support",
+  "venue": "Computer Science - Research and Development",
+  "url": "https://link.springer.com/article/10.1007/s00450-009-0057-9",
+  "canonical_title": "Declarative workflows: Balancing between flexibility and support",
+  "authors": [
+    "van der Aalst, W. M. P.",
+    "Pesic, M.",
+    "Schonenberg, H."
+  ],
+  "publication_date": "2009/05",
+  "accessed_at": "2026-10-05T07:38:41.982699+00:00",
+  "fetched_url": "https://link.springer.com/article/10.1007/s00450-009-0057-9",
+  "http_status": 200,
+  "abstract": "Abstract Today’s process-aware information systems tend to either support business processes or provide flexibility.\n  Classical workflow management systems offer good process support as long as the processes are structured\n  and do not require much flexibility. Information systems that allow for flexibility have a tendency to\n  lack process-related support. If systems offer guidance, then they are typically also inclined to ‘‘enforce\n  guidelines’’ and are perceived as inflexible. Moreover, implementing flexible systems is far from trivial.\n  This paper will show that using a more declarative approach can assist in a better balance between flexibility\n  and support. This is demonstrated by presenting the Declare framework\n  that aims to take care of the full spectrum of flexibility while at the same time supports the user using\n  recommendations and other process-mining-based diagnostics.",
+  "html_evidence": "source_evidence/declarative_workflows_balancing_between_flexibility_and_support_6b9ee87d.html",
+  "json_evidence": "source_evidence/declarative_workflows_balancing_between_flexibility_and_support_6b9ee87d.json",
+  "venue_evidence": [
+    "Computer Science - Research and Development"
+  ]
+}

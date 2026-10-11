@@ -1,0 +1,79 @@
+name: ai-sop
+x-app-env: &app-env
+  APP_ENV: production
+  DATABASE_URL: ${DATABASE_URL:?Set PostgreSQL SQLAlchemy URL in .env}
+  APP_USERNAME: ${APP_USERNAME:-admin}
+  APP_PASSWORD: ${APP_PASSWORD:?Set a password of at least 12 characters}
+  DATA_DIR: /data
+  MODEL_PATH: /app/models/yolo11s-pose.pt
+  COOKIE_SECURE: "true"
+services:
+  db:
+    image: postgres:16.6
+    environment:
+      POSTGRES_DB: aisop
+      POSTGRES_USER: aisop
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set database password}
+    volumes: ["postgres-data:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aisop -d aisop"]
+      interval: 5s
+      timeout: 3s
+      retries: 15
+    restart: unless-stopped
+  init:
+    build: {context: ., dockerfile: deploy/Dockerfile.api}
+    environment: *app-env
+    command: ["python", "-m", "backend.init_db"]
+    volumes: ["analysis-data:/data", "./models:/app/models:ro"]
+    depends_on:
+      db: {condition: service_healthy}
+  api:
+    build: {context: ., dockerfile: deploy/Dockerfile.api}
+    environment:
+      <<: *app-env
+      ARTIFACT_ACCEL_REDIRECT: "true"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    volumes: ["analysis-data:/data", "./models:/app/models:ro"]
+    depends_on:
+      init: {condition: service_completed_successfully}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health', timeout=3)"]
+      interval: 5s
+      timeout: 4s
+      retries: 12
+    restart: unless-stopped
+  worker:
+    build: {context: ., dockerfile: deploy/Dockerfile.worker}
+    environment: *app-env
+    volumes: ["analysis-data:/data", "./models:/app/models:ro"]
+    depends_on:
+      init: {condition: service_completed_successfully}
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
+    stop_grace_period: 70s
+  web:
+    image: nginx:1.28-alpine
+    ports: ["80:80", "443:443"]
+    volumes:
+      - ./deploy/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./deploy/certs:/etc/nginx/certs:ro
+      - analysis-data:/data:ro
+    depends_on:
+      api: {condition: service_healthy}
+    restart: unless-stopped
+volumes:
+  postgres-data:
+  analysis-data:

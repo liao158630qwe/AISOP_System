@@ -1,0 +1,24 @@
+{
+  "title": "PHGC: Procedural Heterogeneous Graph Completion for Natural Language Task Verification in Egocentric Videos",
+  "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Jiang_PHGC_Procedural_Heterogeneous_Graph_Completion_for_Natural_Language_Task_Verification_CVPR_2025_paper.html",
+  "venue": "CVPR2025",
+  "canonical_title": "PHGC: Procedural Heterogeneous Graph Completion for Natural Language Task Verification in Egocentric Videos",
+  "authors": [
+    "Jiang, Xun",
+    "Huang, Zhiyi",
+    "Xu, Xing",
+    "Song, Jingkuan",
+    "Shen, Fumin",
+    "Shen, Heng Tao"
+  ],
+  "publication_date": "2025",
+  "accessed_at": "2026-10-05T07:38:38.031128+00:00",
+  "fetched_url": "https://openaccess.thecvf.com/content/CVPR2025/html/Jiang_PHGC_Procedural_Heterogeneous_Graph_Completion_for_Natural_Language_Task_Verification_CVPR_2025_paper.html",
+  "http_status": 200,
+  "abstract": "Natural Language-based Egocentric Task Verification (NLETV) aims to equip agents to determine if operation flows of procedural tasks in egocentric videos align with natural language instructions. Describing rules with natural language provides generalizable applications, but also raises cross-modal heterogeneity and hierarchical misalignment challenges. In this paper, we proposed a novel approach termed Procedural Heterogeneous Graph Completion (PHGC), which addresses these challenges with heterogeneous graphs representing the logic in rules and operation flows. Specifically, our PHGC method mainly consists of three key components: (1) Heterogeneous Graph Construction module that defines objective states and operation flows as vertices, with temporal and sequential relations as edges. (2) Cross-Modal Path Finding module that aligns semantic relations between hierarchical video and text elements. (3) Discriminative Entity Representation module excavates hidden entities that integrate general logical relations and discriminative cues to reveal final verification results. Additionally, we further constructed a new dataset called CSV-NL comprised of realistic videos. Extensive experiments on the two benchmark datasets covering both digital and physical scenarios, i.e., EgoTV and CSV-NL, demonstrate that our proposed PHGC establishes state-of-the-art performance across different settings. Our code and dataset are available at https://github.com/XunCHN/PHGC.",
+  "html_evidence": "source_evidence/phgc_procedural_heterogeneous_graph_completion_for_natural_language_task_verification_in_e_cbcefbfa.html",
+  "json_evidence": "source_evidence/phgc_procedural_heterogeneous_graph_completion_for_natural_language_task_verification_in_e_cbcefbfa.json",
+  "venue_evidence": [
+    "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition"
+  ]
+}

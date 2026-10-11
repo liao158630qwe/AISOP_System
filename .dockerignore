@@ -1,0 +1,13 @@
+.git
+.env
+.runtime
+runtime-data
+test-results
+__pycache__
+.pytest_cache
+models
+reference
+work
+tmp
+outputs
+deploy/certs

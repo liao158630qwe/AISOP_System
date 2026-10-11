@@ -1,0 +1,193 @@
+[
+  {
+    "id": "s1",
+    "name": "工位1",
+    "version": "draft-1",
+    "approved": false,
+    "fixed_fixture": false,
+    "min_sharpness": 30,
+    "checks": [
+      {
+        "id": "s1-1",
+        "name": "定位孔",
+        "kind": "presence",
+        "expected": {
+          "hole": 4
+        },
+        "targets": [],
+        "required_evidence": [
+          "安装状态复核"
+        ]
+      },
+      {
+        "id": "s1-2",
+        "name": "螺丝",
+        "kind": "presence",
+        "expected": {
+          "screw": 4
+        },
+        "targets": [],
+        "required_evidence": [
+          "安装状态复核"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "s2",
+    "name": "工位2",
+    "version": "draft-1",
+    "approved": false,
+    "fixed_fixture": false,
+    "min_sharpness": 30,
+    "checks": [
+      {
+        "id": "s2-1",
+        "name": "螺丝",
+        "kind": "presence",
+        "expected": {
+          "screw": 5
+        },
+        "targets": [],
+        "required_evidence": [
+          "安装状态复核"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "s3",
+    "name": "工位3",
+    "version": "draft-1",
+    "approved": false,
+    "fixed_fixture": false,
+    "min_sharpness": 30,
+    "checks": [
+      {
+        "id": "s3-1",
+        "name": "螺丝及黄色卡扣",
+        "kind": "presence",
+        "expected": {
+          "screw": 2,
+          "yellow_clip": 1
+        },
+        "targets": [],
+        "required_evidence": [
+          "安装状态复核"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "s4",
+    "name": "工位4",
+    "version": "draft-1",
+    "approved": false,
+    "fixed_fixture": false,
+    "min_sharpness": 30,
+    "checks": [
+      {
+        "id": "s4-1",
+        "name": "螺丝",
+        "kind": "presence",
+        "expected": {
+          "screw": 2
+        },
+        "targets": [],
+        "required_evidence": [
+          "安装状态复核"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "s5",
+    "name": "工位5",
+    "version": "draft-1",
+    "approved": false,
+    "fixed_fixture": false,
+    "min_sharpness": 30,
+    "checks": [
+      {
+        "id": "s5-1",
+        "name": "接端子动作",
+        "kind": "process",
+        "expected": {},
+        "targets": [],
+        "required_evidence": [
+          "接触动作",
+          "设备或质量验证"
+        ]
+      },
+      {
+        "id": "s5-2",
+        "name": "八颗螺丝及安装顺序",
+        "kind": "presence",
+        "expected": {
+          "screw": 8
+        },
+        "targets": [],
+        "required_evidence": [
+          "位置关联",
+          "紧固工具结果",
+          "正式顺序"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "s6",
+    "name": "工位6",
+    "version": "draft-1",
+    "approved": false,
+    "fixed_fixture": false,
+    "min_sharpness": 30,
+    "checks": [
+      {
+        "id": "s6-1",
+        "name": "壳体吹净",
+        "kind": "process",
+        "expected": {},
+        "targets": [],
+        "required_evidence": [
+          "接触动作",
+          "设备或质量验证"
+        ]
+      },
+      {
+        "id": "s6-2",
+        "name": "装饰框总成吹净",
+        "kind": "process",
+        "expected": {},
+        "targets": [],
+        "required_evidence": [
+          "接触动作",
+          "设备或质量验证"
+        ]
+      },
+      {
+        "id": "s6-3",
+        "name": "线束端子连接",
+        "kind": "process",
+        "expected": {},
+        "targets": [],
+        "required_evidence": [
+          "接触动作",
+          "设备或质量验证"
+        ]
+      },
+      {
+        "id": "s6-4",
+        "name": "螺丝",
+        "kind": "presence",
+        "expected": {
+          "screw": 4
+        },
+        "targets": [],
+        "required_evidence": [
+          "安装状态复核"
+        ]
+      }
+    ]
+  }
+]

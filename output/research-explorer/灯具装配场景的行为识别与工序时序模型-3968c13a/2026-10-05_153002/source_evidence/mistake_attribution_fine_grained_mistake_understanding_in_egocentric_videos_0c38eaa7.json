@@ -1,0 +1,22 @@
+{
+  "title": "Mistake Attribution: Fine-Grained Mistake Understanding in Egocentric Videos",
+  "url": "https://openaccess.thecvf.com/content/CVPR2026/html/Li_Mistake_Attribution_Fine-Grained_Mistake_Understanding_in_Egocentric_Videos_CVPR_2026_paper.html",
+  "venue": "CVPR2026",
+  "canonical_title": "Mistake Attribution: Fine-Grained Mistake Understanding in Egocentric Videos",
+  "authors": [
+    "Li, Yayuan",
+    "Jain, Aadit",
+    "Bellos, Filippos",
+    "Corso, Jason J."
+  ],
+  "publication_date": "2026",
+  "accessed_at": "2026-10-05T07:38:38.321558+00:00",
+  "fetched_url": "https://openaccess.thecvf.com/content/CVPR2026/html/Li_Mistake_Attribution_Fine-Grained_Mistake_Understanding_in_Egocentric_Videos_CVPR_2026_paper.html",
+  "http_status": 200,
+  "abstract": "We introduce Mistake Attribution (MATT), a new task for fine-grained understanding of human mistakes in egocentric videos. While prior work detects whether a mistake occurs, MATT attributes the mistake to what part of the instruction is violated (semantic role), when in the video the deviation becomes irreversible (the Point-of-No-Return, PNR), and where the mistake appears in the PNR frame. We develop MisEngine, a data engine that automatically constructs mistake samples from existing datasets with attribution-rich annotations. Applied to large egocentric corpora, MisEngine yields EPIC-KITCHENS-M and Ego4D-M---two datasets up to two orders of magnitude larger than prior mistake datasets.We then present MisFormer, a unified attention-based model for mistake attribution across semantic, temporal, and spatial dimensions, trained with MisEngine supervision. A human study demonstrates the ecological validity of our MisEngine-constructed mistake samples, confirming that EPIC-KITCHENS-M and Ego4D-M can serve as reliable benchmarks for mistake understanding. Experiments on both our datasets and prior benchmarks show that MisFormer, as a single unified model, outperforms task-specific SOTA methods by at least 6.66%, 21.81%, 18.7%, and 3.00% in video-language understanding, temporal localization, hand-object interaction, and mistake detection, respectively. Project page: https://yayuanli.github.io/MATT/",
+  "html_evidence": "source_evidence/mistake_attribution_fine_grained_mistake_understanding_in_egocentric_videos_0c38eaa7.html",
+  "json_evidence": "source_evidence/mistake_attribution_fine_grained_mistake_understanding_in_egocentric_videos_0c38eaa7.json",
+  "venue_evidence": [
+    "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition"
+  ]
+}

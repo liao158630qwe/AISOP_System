@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#101317"><title>AI-SOP 视频行为分析平台</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg"><link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="dashboard">
+    <header class="header">
+      <div class="topbar">
+        <a class="brand" href="/" aria-label="AI-SOP 首页"><span class="logo">SOP</span><span><h1>AI-SOP 视频行为分析平台</h1><p>人体姿态 + 行为识别 + 目标检测 · 实时合规校验与分级告警（CPU 推理）</p></span></a>
+        <nav class="toolbar" aria-label="平台工具">
+          <button class="btn btn-green" data-action="upload"><i data-icon="upload"></i>上传视频检测</button>
+          <button class="btn" data-action="workflow"><i data-icon="sliders"></i>作业流程管理</button>
+          <button class="btn" data-action="export"><i data-icon="download"></i>导出当前 CSV</button>
+          <button class="btn" data-action="report"><i data-icon="report"></i>详细分析报告</button>
+          <button class="btn" data-action="system"><i data-icon="server"></i>系统运行详情</button>
+        </nav>
+        <div class="header-status"><button class="chip cpu-chip" data-action="system"><span class="dot green"></span>CPU <span class="processor">13th Gen Core(TM) i7-13620H</span><kbd>Ctrl+Shift+G</kbd></button><button class="chip check-chip" data-action="checks"><span class="dot yellow"></span>自检 10 项待处理</button><time id="clock">18:55:28</time><span class="chip running-chip"><span class="dot green pulse"></span><span id="run-state">运行中 · 运行 3分</span></span></div>
+      </div>
+      <div class="metrics" aria-label="运行指标">
+        <div class="metric"><span>视频流</span><strong>1/1</strong><small>路</small></div>
+        <div class="metric"><span>主画面帧率</span><strong id="metric-fps">5.8</strong><small>fps</small></div>
+        <div class="metric"><span>单帧延迟</span><strong id="metric-latency">23.0</strong><small>ms</small></div>
+        <div class="metric"><span>CPU 占用</span><strong id="metric-cpu">69</strong><small>%</small></div>
+        <div class="metric"><span>内存</span><strong id="metric-memory">468</strong><small>MB</small></div>
+        <div class="metric"><span>在场目标</span><strong id="metric-targets">1</strong><small>人</small></div>
+        <div class="metric"><span>待处置告警</span><strong class="text-yellow" id="metric-alerts">0</strong><small>条</small></div>
+        <div class="metric"><span>工序合规率</span><strong class="text-green" id="metric-compliance">100</strong><small>%</small></div>
+      </div>
+    </header>
+
+    <main class="main-grid">
+      <section class="panel detection-panel">
+        <div class="section-title"><h2>实时检测画面</h2><span class="title-tag camera-name">CAM010 车门玻璃装配工位·检测视频源</span><span class="title-tag stream-info">1024×576 · <span id="title-fps">5.8</span>fps 采样 · 1人</span></div>
+        <div class="detection-body">
+          <section class="video-panel subpanel">
+            <div class="subheading"><h3><b class="number blue">1</b>人体姿态识别 / 目标检测</h3><span class="live"><span></span> LIVE</span></div>
+            <div class="video-size-controls"><label for="video-size">画面高度</label><input id="video-size" type="range" min="180" max="720" step="10" value="300"><output id="video-size-value" for="video-size">300px</output><button class="btn" id="video-size-reset" type="button">恢复默认</button></div>
+            <div class="pose-legend" aria-label="人体骨骼图例"><span>● 左侧肢体</span><span>● 右侧肢体</span><span>● 躯干</span><small>低置信关键点淡化或隐藏</small></div>
+            <div class="video-stage" id="video-stage">
+              <div class="video-frame"><canvas id="monitor" width="1024" height="576" aria-label="车门玻璃装配工位检测视频"></canvas><div class="video-hover"><button id="play-button" class="icon-button" title="暂停视频" aria-label="暂停视频"><i data-icon="pause"></i></button><span id="video-time">00:00 / 00:42</span><input id="video-seek" type="range" min="0" max="42" step="0.1" value="0" aria-label="视频进度"><button class="icon-button" data-action="fullscreen" title="全屏画面" aria-label="全屏画面"><i data-icon="expand"></i></button></div></div>
+              <div id="video-empty" class="video-empty" hidden><strong>上传视频，开始分析</strong><p>查看人体姿态、动作时间轴与分析报告</p><div><button class="btn btn-primary" data-action="start-upload">选择视频</button><button class="btn" data-action="realtime">使用摄像头</button></div></div>
+              <div class="mode-label"><span class="dot blue-dot"></span><span id="mode-text">参考视频 · 演示检测</span></div>
+            </div>
+            <button id="video-resize-handle" type="button" aria-label="拖动调整画面高度，方向键微调" title="上下拖动调整高度，也可使用方向键">↕ 拖动调整画面</button>
+            <div class="video-stats"><div><span>运行中的工序</span><strong id="current-process">1 在岗 / 1 绑定</strong></div><div><span>采样 / 分析帧率</span><strong><span id="sample-fps">5.8</span> fps</strong></div><div><span>画面内最长停留</span><strong id="dwell">9.7 s</strong></div><div><span>工序合规率</span><strong id="video-compliance">100%</strong></div></div>
+          </section>
+          <div class="analysis-grid">
+            <section class="subpanel results-panel"><div class="subheading"><h3><b class="number green-bg">2</b>检测结果明细</h3><span class="micro-tag">实时</span></div><div class="table-wrap"><table><thead><tr><th>ID</th><th>动作</th><th>置信</th><th>所属区域</th><th>停留</th><th>当前工序</th></tr></thead><tbody id="detection-results"></tbody></table></div><div class="empty-note" id="result-note">每一帧，都有迹可循</div></section>
+            <section class="subpanel timeline-panel"><div class="subheading"><h3><b class="number yellow-bg">3</b>动作时序分析</h3><span class="micro-tag">最近 30s</span></div><div class="timeline"><span class="track-name" id="track-name">ID79</span><div class="timeline-plot"><div class="time-bars" id="time-bars"></div><div class="playhead" id="timeline-playhead" hidden><span></span></div><div class="axis"><span>0s</span><span>5s</span><span>10s</span><span>15s</span><span>20s</span><span>25s</span><span>30s</span></div></div></div><div class="legend"><span><i style="background:#39cd93"></i>行走</span><span><i style="background:#ad70ef"></i>举手取物</span><span><i style="background:#efc450"></i>站立</span></div></section>
+            <section class="subpanel compliance-panel"><div class="subheading"><h3><b class="number red-bg">4</b>SOP 行为识别与告警</h3></div><div class="compliance-grid"><div class="positive"><span>合规行为（本机位）</span><strong id="compliant-count">1</strong></div><div><span>违规行为（本机位）</span><strong id="noncompliant-count">0</strong></div><div><span>工序合规率</span><strong id="compliance-rate">100%</strong></div><div><span>实时告警</span><strong id="realtime-alert">无</strong></div></div><div class="compliance-foot"><span class="dot green"></span>工位安全状态正常</div></section>
+          </div>
+        </div>
+      </section>
+
+      <aside class="sidebar">
+        <section class="panel workflow-panel"><div class="section-title"><h2>检测判定过程（逐步骤）</h2><span class="title-tag" id="step-counter">2/3 步</span></div><div class="workflow-body"><div class="workflow-title"><h3 id="workflow-name">车门玻璃总成装配标准流程</h3><span class="badge amber" id="workflow-status">进行中 · 第2/3步</span></div><p class="workflow-description" id="workflow-description">区域 车门玻璃装配作业位 · 已合格 1/3 步 · 本周期已运行 12s · 目标 #79</p><div class="steps" id="steps"></div><div class="pending-step" id="pending-step"><i data-icon="warning"></i>未完成步骤：交还工具·离场</div><div class="recent-cycles"><span>最近周期</span><span class="cycle">✓ 合格 37s</span><span class="cycle">✓ 合格 24s</span></div></div></section>
+        <section class="panel alerts-panel"><div class="section-title red-title"><h2>实时告警中心</h2><span class="title-tag" id="alert-summary">累计 2 · 待处置 0</span><button class="tiny-button" data-action="confirm-all">全部确认</button></div><div class="alert-toolbar"><div class="filters" role="group" aria-label="告警级别"><button class="active" data-filter="all">全部</button><button data-filter="urgent">紧急</button><button data-filter="high">高</button><button data-filter="medium">中</button><button data-filter="low">低</button></div><button class="export-small" data-action="export-alerts" title="导出告警 CSV"><i data-icon="download"></i>导出 CSV</button></div><div class="alert-search"><i data-icon="search"></i><input id="alert-search" placeholder="搜索告警、工位或确认人" aria-label="搜索告警"><span id="alert-count">2 条记录</span></div><div id="alert-list" class="alert-list"></div><div class="alerts-foot"><span class="dot green"></span>告警通道已连接<span>自动刷新</span></div></section>
+      </aside>
+    </main>
+    <footer class="footer"><span><span class="dot green"></span>系统就绪 <b>·</b> CPU 推理 <b>·</b> YOLOv8 Pose + ONNX Runtime <b>·</b> 演示模式</span><span id="footer-performance">配置 30fps · 全局 34.1fps · 主画面 5.8fps · 延迟 15ms · 丢帧 0</span><span>AI-SOP <b>v1.0</b><button data-action="fullscreen" aria-label="全屏平台" title="全屏平台"><i data-icon="expand"></i></button></span></footer>
+  </div>
+  <video id="source-video" muted playsinline preload="auto" src="assets/reference.mp4" hidden></video>
+  <input type="file" id="video-upload" accept="video/*" hidden>
+  <dialog id="modal" aria-labelledby="modal-title"><div class="modal-heading"><div><span class="eyebrow">AI-SOP WORKSPACE</span><h2 id="modal-title"></h2></div><button class="icon-button" data-action="close-modal" aria-label="关闭弹窗"><i data-icon="close"></i></button></div><div id="modal-body"></div></dialog>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="app.js"></script>
+  <script src="server-ui.js"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "title": "PREGO: Online Mistake Detection in PRocedural EGOcentric Videos",
+  "url": "https://openaccess.thecvf.com/content/CVPR2024/html/Flaborea_PREGO_Online_Mistake_Detection_in_PRocedural_EGOcentric_Videos_CVPR_2024_paper.html",
+  "venue": "CVPR2024",
+  "canonical_title": "PREGO: Online Mistake Detection in PRocedural EGOcentric Videos",
+  "authors": [
+    "Flaborea, Alessandro",
+    "di Melendugno, Guido Maria D'Amely",
+    "Plini, Leonardo",
+    "Scofano, Luca",
+    "De Matteis, Edoardo",
+    "Furnari, Antonino",
+    "Farinella, Giovanni Maria",
+    "Galasso, Fabio"
+  ],
+  "publication_date": "2024",
+  "accessed_at": "2026-10-05T07:38:37.959066+00:00",
+  "fetched_url": "https://openaccess.thecvf.com/content/CVPR2024/html/Flaborea_PREGO_Online_Mistake_Detection_in_PRocedural_EGOcentric_Videos_CVPR_2024_paper.html",
+  "http_status": 200,
+  "abstract": "Promptly identifying procedural errors from egocentric videos in an online setting is highly challenging and valuable for detecting mistakes as soon as they happen. This capability has a wide range of applications across various fields such as manufacturing and healthcare. The nature of procedural mistakes is open-set since novel types of failures might occur which calls for one-class classifiers trained on correctly executed procedures. However no technique can currently detect open-set procedural mistakes online. We propose PREGO the first online one-class classification model for mistake detection in PRocedural EGOcentric videos. PREGO is based on an online action recognition component to model the current action and a symbolic reasoning module to predict the next actions. Mistake detection is performed by comparing the recognized current action with the expected future one. We evaluate PREGO on two procedural egocentric video datasets Assembly101 and Epic-tent which we adapt for online benchmarking of procedural mistake detection to establish suitable benchmarks thus defining the Assembly101-O and Epic-tent-O datasets respectively. The code is available at https://github.com/aleflabo/PREGO",
+  "html_evidence": "source_evidence/prego_online_mistake_detection_in_procedural_egocentric_videos_5aecf414.html",
+  "json_evidence": "source_evidence/prego_online_mistake_detection_in_procedural_egocentric_videos_5aecf414.json",
+  "venue_evidence": [
+    "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition"
+  ]
+}

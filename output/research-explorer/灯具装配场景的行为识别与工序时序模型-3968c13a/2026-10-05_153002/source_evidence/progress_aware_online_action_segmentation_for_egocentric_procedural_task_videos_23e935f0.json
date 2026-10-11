@@ -1,0 +1,20 @@
+{
+  "title": "Progress-Aware Online Action Segmentation for Egocentric Procedural Task Videos",
+  "url": "https://openaccess.thecvf.com/content/CVPR2024/html/Shen_Progress-Aware_Online_Action_Segmentation_for_Egocentric_Procedural_Task_Videos_CVPR_2024_paper.html",
+  "venue": "CVPR2024",
+  "canonical_title": "Progress-Aware Online Action Segmentation for Egocentric Procedural Task Videos",
+  "authors": [
+    "Shen, Yuhan",
+    "Elhamifar, Ehsan"
+  ],
+  "publication_date": "2024",
+  "accessed_at": "2026-10-05T07:38:37.694514+00:00",
+  "fetched_url": "https://openaccess.thecvf.com/content/CVPR2024/html/Shen_Progress-Aware_Online_Action_Segmentation_for_Egocentric_Procedural_Task_Videos_CVPR_2024_paper.html",
+  "http_status": 200,
+  "abstract": "We address the problem of online action segmentation for egocentric procedural task videos. While previous studies have mostly focused on offline action segmentation where entire videos are available for both training and inference the transition to online action segmentation is crucial for practical applications like AR/VR task assistants. Notably applying an offline-trained model directly to online inference results in a significant performance drop due to the inconsistency between training and inference. We propose an online action segmentation framework by first modifying existing architectures to make them causal. Second we develop a novel action progress prediction module to dynamically estimate the progress of ongoing actions and using them to refine the predictions of causal action segmentation. Third we propose to learn task graphs from training videos and leverage them to obtain smooth and procedure-consistent segmentations. With the combination of progress and task graph with casual action segmentation our framework effectively addresses prediction uncertainty and oversegmentation in online action segmentation and achieves significant improvement on three egocentric datasets.",
+  "html_evidence": "source_evidence/progress_aware_online_action_segmentation_for_egocentric_procedural_task_videos_23e935f0.html",
+  "json_evidence": "source_evidence/progress_aware_online_action_segmentation_for_egocentric_procedural_task_videos_23e935f0.json",
+  "venue_evidence": [
+    "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition"
+  ]
+}

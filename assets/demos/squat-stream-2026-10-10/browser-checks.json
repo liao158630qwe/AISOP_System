@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "frames": 37,
+  "videoDecoded": true,
+  "autoplay": true,
+  "seek": true,
+  "originalDetectionSwitchPreservesTimeAndPause": true,
+  "mobileOverflow": false,
+  "pageErrors": []
+}

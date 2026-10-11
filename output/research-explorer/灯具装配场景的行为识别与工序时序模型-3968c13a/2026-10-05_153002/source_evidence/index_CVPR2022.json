@@ -1,0 +1,236 @@
+{
+  "url": "https://openaccess.thecvf.com/CVPR2022?day=all",
+  "accessed_at": "2026-10-05T07:31:25.216701+00:00",
+  "matches": [
+    {
+      "title": "CAPRI-Net: Learning Compact CAD Shapes With Adaptive Primitive Assembly",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Yu_CAPRI-Net_Learning_Compact_CAD_Shapes_With_Adaptive_Primitive_Assembly_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "Learning To Refactor Action and Co-Occurrence Features for Temporal Action Localization",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Xia_Learning_To_Refactor_Action_and_Co-Occurrence_Features_for_Temporal_Action_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "Towards Fewer Annotations: Active Learning via Region Impurity and Prediction Uncertainty for Domain Adaptive Semantic Segmentation",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Xie_Towards_Fewer_Annotations_Active_Learning_via_Region_Impurity_and_Prediction_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "Fast and Unsupervised Action Boundary Detection for Action Segmentation",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Du_Fast_and_Unsupervised_Action_Boundary_Detection_for_Action_Segmentation_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "Multi-Source Uncertainty Mining for Deep Unsupervised Saliency Detection",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Wang_Multi-Source_Uncertainty_Mining_for_Deep_Unsupervised_Saliency_Detection_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "FineDiving: A Fine-Grained Dataset for Procedure-Aware Action Quality Assessment",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Xu_FineDiving_A_Fine-Grained_Dataset_for_Procedure-Aware_Action_Quality_Assessment_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "JoinABLe: Learning Bottom-Up Assembly of Parametric CAD Joints",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Willis_JoinABLe_Learning_Bottom-Up_Assembly_of_Parametric_CAD_Joints_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "Uncertainty-Aware Deep Multi-View Photometric Stereo",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Kaya_Uncertainty-Aware_Deep_Multi-View_Photometric_Stereo_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "ASM-Loc: Action-Aware Segment Modeling for Weakly-Supervised Temporal Action Localization",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/He_ASM-Loc_Action-Aware_Segment_Modeling_for_Weakly-Supervised_Temporal_Action_Localization_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "Uncertainty-Guided Probabilistic Transformer for Complex Action Recognition",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Guo_Uncertainty-Guided_Probabilistic_Transformer_for_Complex_Action_Recognition_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "Estimating Egocentric 3D Human Pose in the Wild With External Weak Supervision",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Wang_Estimating_Egocentric_3D_Human_Pose_in_the_Wild_With_External_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "Symmetry and Uncertainty-Aware Object SLAM for 6DoF Object Pose Estimation",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Merrill_Symmetry_and_Uncertainty-Aware_Object_SLAM_for_6DoF_Object_Pose_Estimation_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "Learning To Recognize Procedural Activities With Distant Supervision",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Lin_Learning_To_Recognize_Procedural_Activities_With_Distant_Supervision_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "Weakly Supervised Temporal Action Localization via Representative Snippet Knowledge Propagation",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Huang_Weakly_Supervised_Temporal_Action_Localization_via_Representative_Snippet_Knowledge_Propagation_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "Fine-Grained Temporal Contrastive Learning for Weakly-Supervised Temporal Action Localization",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Gao_Fine-Grained_Temporal_Contrastive_Learning_for_Weakly-Supervised_Temporal_Action_Localization_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "Assembly101: A Large-Scale Multi-View Video Dataset for Understanding Procedural Activities",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Sener_Assembly101_A_Large-Scale_Multi-View_Video_Dataset_for_Understanding_Procedural_Activities_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "An Empirical Study of End-to-End Temporal Action Detection",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Liu_An_Empirical_Study_of_End-to-End_Temporal_Action_Detection_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "Understanding Uncertainty Maps in Vision With Statistical Testing",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Nazarovs_Understanding_Uncertainty_Maps_in_Vision_With_Statistical_Testing_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "iPLAN: Interactive and Procedural Layout Planning",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/He_iPLAN_Interactive_and_Procedural_Layout_Planning_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "Egocentric Prediction of Action Target in 3D",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Li_Egocentric_Prediction_of_Action_Target_in_3D_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "Robust Egocentric Photo-Realistic Facial Expression Transfer for Virtual Reality",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Jourabloo_Robust_Egocentric_Photo-Realistic_Facial_Expression_Transfer_for_Virtual_Reality_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "HOI4D: A 4D Egocentric Dataset for Category-Level Human-Object Interaction",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Liu_HOI4D_A_4D_Egocentric_Dataset_for_Category-Level_Human-Object_Interaction_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "RCL: Recurrent Continuous Localization for Temporal Action Detection",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Wang_RCL_Recurrent_Continuous_Localization_for_Temporal_Action_Detection_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "Neural Shape Mating: Self-Supervised Object Assembly With Adversarial Shape Priors",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Chen_Neural_Shape_Mating_Self-Supervised_Object_Assembly_With_Adversarial_Shape_Priors_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "Uncertainty-Aware Adaptation for Self-Supervised 3D Human Pose Estimation",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Kundu_Uncertainty-Aware_Adaptation_for_Self-Supervised_3D_Human_Pose_Estimation_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "UCC: Uncertainty Guided Cross-Head Co-Training for Semi-Supervised Semantic Segmentation",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Fan_UCC_Uncertainty_Guided_Cross-Head_Co-Training_for_Semi-Supervised_Semantic_Segmentation_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "Primitive3D: 3D Object Dataset Synthesis From Randomly Assembled Primitives",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Li_Primitive3D_3D_Object_Dataset_Synthesis_From_Randomly_Assembled_Primitives_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "Unsupervised Pre-Training for Temporal Action Localization Tasks",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Zhang_Unsupervised_Pre-Training_for_Temporal_Action_Localization_Tasks_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "E2(GO)MOTION: Motion Augmented Event Stream for Egocentric Action Recognition",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Plizzari_E2GOMOTION_Motion_Augmented_Event_Stream_for_Egocentric_Action_Recognition_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "Weakly-Supervised Online Action Segmentation in Multi-View Instructional Videos",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Ghoddoosian_Weakly-Supervised_Online_Action_Segmentation_in_Multi-View_Instructional_Videos_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "Boosting Robustness of Image Matting With Context Assembling and Strong Data Augmentation",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Dai_Boosting_Robustness_of_Image_Matting_With_Context_Assembling_and_Strong_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "P3IV: Probabilistic Procedure Planning From Instructional Videos With Weak Supervision",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Zhao_P3IV_Probabilistic_Procedure_Planning_From_Instructional_Videos_With_Weak_Supervision_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "Exploring Denoised Cross-Video Contrast for Weakly-Supervised Temporal Action Localization",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Li_Exploring_Denoised_Cross-Video_Contrast_for_Weakly-Supervised_Temporal_Action_Localization_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "SVIP: Sequence VerIfication for Procedures in Videos",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Qian_SVIP_Sequence_VerIfication_for_Procedures_in_Videos_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "Joint Hand Motion and Interaction Hotspots Prediction From Egocentric Videos",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Liu_Joint_Hand_Motion_and_Interaction_Hotspots_Prediction_From_Egocentric_Videos_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "JRDB-Act: A Large-Scale Dataset for Spatio-Temporal Action, Social Group and Activity Detection",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Ehsanpour_JRDB-Act_A_Large-Scale_Dataset_for_Spatio-Temporal_Action_Social_Group_and_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "OpenTAL: Towards Open Set Temporal Action Localization",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Bao_OpenTAL_Towards_Open_Set_Temporal_Action_Localization_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "Ego4D: Around the World in 3,000 Hours of Egocentric Video",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Grauman_Ego4D_Around_the_World_in_3000_Hours_of_Egocentric_Video_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "Set-Supervised Action Learning in Procedural Task Videos via Pairwise Order Consistency",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Lu_Set-Supervised_Action_Learning_in_Procedural_Task_Videos_via_Pairwise_Order_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "A Hybrid Egocentric Activity Anticipation Framework via Memory-Augmented Recurrent and One-Shot Representation Forecasting",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Liu_A_Hybrid_Egocentric_Activity_Anticipation_Framework_via_Memory-Augmented_Recurrent_and_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "Domain Generalization via Shuffled Style Assembly for Face Anti-Spoofing",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Wang_Domain_Generalization_via_Shuffled_Style_Assembly_for_Face_Anti-Spoofing_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "Geometric Anchor Correspondence Mining With Uncertainty Modeling for Universal Domain Adaptation",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Chen_Geometric_Anchor_Correspondence_Mining_With_Uncertainty_Modeling_for_Universal_Domain_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "Few-Shot Keypoint Detection With Uncertainty Learning for Unseen Species",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Lu_Few-Shot_Keypoint_Detection_With_Uncertainty_Learning_for_Unseen_Species_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "Egocentric Deep Multi-Channel Audio-Visual Active Speaker Localization",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Jiang_Egocentric_Deep_Multi-Channel_Audio-Visual_Active_Speaker_Localization_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "Unsupervised Action Segmentation by Joint Representation Learning and Online Clustering",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Kumar_Unsupervised_Action_Segmentation_by_Joint_Representation_Learning_and_Online_Clustering_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    },
+    {
+      "title": "Egocentric Scene Understanding via Multimodal Spatial Rectifier",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Do_Egocentric_Scene_Understanding_via_Multimodal_Spatial_Rectifier_CVPR_2022_paper.html",
+      "venue": "CVPR2022"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+.env
+.runtime/
+runtime-data/
+__pycache__/
+.pytest_cache/
+deploy/certs/
+test-results/
+
+# 本地工作目录与临时文件
+work/
+tmp/
+.claude/settings.local.json
+
+# 自动生成的本地配置与根目录权重副本
+Ultralytics/
+/*.pt
+
+# Node
+node_modules/

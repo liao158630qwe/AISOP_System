@@ -1,0 +1,18 @@
+{
+  "title": "A Stitch in Time: Learning Procedural Workflow via Self-Supervised Plackett-Luce Ranking",
+  "url": "https://openaccess.thecvf.com/content/CVPR2026/html/Che_A_Stitch_in_Time_Learning_Procedural_Workflow_via_Self-Supervised_Plackett-Luce_CVPR_2026_paper.html",
+  "venue": "CVPR2026",
+  "canonical_title": "A Stitch in Time: Learning Procedural Workflow via Self-Supervised Plackett-Luce Ranking",
+  "authors": [
+    "Che, Chengan",
+    "Wang, Chao",
+    "Chen, Xinyue",
+    "Tsoka, Sophia",
+    "Garcia-Peraza-Herrera, Luis C."
+  ],
+  "publication_date": "2026",
+  "accessed_at": "2026-10-05T07:33:43.582824+00:00",
+  "fetched_url": "https://openaccess.thecvf.com/content/CVPR2026/html/Che_A_Stitch_in_Time_Learning_Procedural_Workflow_via_Self-Supervised_Plackett-Luce_CVPR_2026_paper.html",
+  "http_status": 200,
+  "abstract": "Procedural activities, ranging from routine cooking to complex surgical operations, are highly structured sequences of actions performed in a specific temporal order. Despite the success of current self-supervised learning (SSL) methods on static images and short clips, these models often overlook the underlying sequential structure of such activities. We expose this lack of procedural awareness with a motivating experiment: models pretrained on forward and time-reversed sequences produce highly similar features, confirming that their representations are blind to the underlying procedural order. To address this shortcoming, we propose PL-Stitch, a self-supervised framework that harnesses the inherent temporal order of video frames as a powerful supervisory signal. Our approach integrates two novel probabilistic objectives based on the Plackett-Luce (PL) model. The primary PL objective trains the model to sort sampled frames chronologically, compelling it to learn the global workflow progression. The secondary objective, a spatio-temporal jigsaw loss, complements the learning by capturing fine-grained, cross-frame object correspondences. Our approach consistently achieves superior performance across five surgical and cooking benchmarks. Specifically, PL-Stitch yields significant gains in surgical phase recognition (e.g., +11.4 pp in k-NN accuracy on Cholec80) and cooking action segmentation (e.g., +5.7 pp in linear probing accuracy on Breakfast), demonstrating its effectiveness for procedural video representation learning. Code and models are available at https://github.com/visurg-ai/PL-Stitch."
+}

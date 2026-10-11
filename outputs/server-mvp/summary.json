@@ -1,0 +1,30 @@
+{
+  "runId": "fa1d7f97-3e1d-484e-aca5-6f8b1fc29c1b",
+  "model": {
+    "name": "YOLO11s-pose",
+    "sha256": "1060bda4a27012060eca246f9b2adeea22eabb045a1e58f8d229be29b7ebc2ba",
+    "device": "NVIDIA GeForce RTX 5070 Ti",
+    "torchVersion": "2.8.0+cu128",
+    "sampleFps": 5,
+    "detectorThreshold": 0.35,
+    "keypointThreshold": 0.35,
+    "inputSize": 640,
+    "actionMethod": "关键点几何规则＋因果多数滤波；非工序分类器"
+  },
+  "summary": {
+    "analyzedFrames": 7,
+    "framesWithPeople": 7,
+    "presenceRate": 1,
+    "trackCount": 5,
+    "maxPeople": 5,
+    "segmentCount": 7,
+    "personSeconds": 6.466499999999999,
+    "meanConfidence": 0.7371617647058822,
+    "actionCoverage": 1,
+    "meanInferenceMs": 8.48517142899904,
+    "p95InferenceMs": 11.484300000483925,
+    "processingSeconds": 2.5884925000000294,
+    "peakMemoryMB": 1584.3046875
+  },
+  "errors": []
+}

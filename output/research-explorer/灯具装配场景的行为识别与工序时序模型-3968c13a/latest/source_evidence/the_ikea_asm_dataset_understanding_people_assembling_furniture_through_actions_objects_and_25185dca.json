@@ -1,0 +1,25 @@
+{
+  "title": "The IKEA ASM Dataset: Understanding People Assembling Furniture Through Actions, Objects and Pose",
+  "url": "https://openaccess.thecvf.com/content/WACV2021/html/Ben-Shabat_The_IKEA_ASM_Dataset_Understanding_People_Assembling_Furniture_Through_Actions_WACV_2021_paper.html",
+  "venue": "WACV2021",
+  "canonical_title": "The IKEA ASM Dataset: Understanding People Assembling Furniture Through Actions, Objects and Pose",
+  "authors": [
+    "Ben-Shabat, Yizhak",
+    "Yu, Xin",
+    "Saleh, Fatemeh",
+    "Campbell, Dylan",
+    "Rodriguez-Opazo, Cristian",
+    "Li, Hongdong",
+    "Gould, Stephen"
+  ],
+  "publication_date": "2021",
+  "accessed_at": "2026-10-05T07:38:37.321343+00:00",
+  "fetched_url": "https://openaccess.thecvf.com/content/WACV2021/html/Ben-Shabat_The_IKEA_ASM_Dataset_Understanding_People_Assembling_Furniture_Through_Actions_WACV_2021_paper.html",
+  "http_status": 200,
+  "abstract": "The availability of a large labelled dataset is a key requirement for applying deep learning methods to solve various computer vision tasks. In the context of understanding human activities, existing public datasets, while large in size, are often limited to a single RGB camera and provide only per-frame or per-clip action annotations. To enable richer analysis and understanding of human activities, we introduce IKEA ASM---a three million frame, multi-view, furniture assembly video dataset that includes depth, atomic actions, object segmentation, and human poses. Additionally, we benchmark prominent methods for video action recognition, object segmentation and human pose estimation tasks on this challenging dataset. The dataset enables the development of holistic methods, which integrate multi-modal and multi-view data to better perform on these tasks.",
+  "html_evidence": "source_evidence/the_ikea_asm_dataset_understanding_people_assembling_furniture_through_actions_objects_and_25185dca.html",
+  "json_evidence": "source_evidence/the_ikea_asm_dataset_understanding_people_assembling_furniture_through_actions_objects_and_25185dca.json",
+  "venue_evidence": [
+    "Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision"
+  ]
+}

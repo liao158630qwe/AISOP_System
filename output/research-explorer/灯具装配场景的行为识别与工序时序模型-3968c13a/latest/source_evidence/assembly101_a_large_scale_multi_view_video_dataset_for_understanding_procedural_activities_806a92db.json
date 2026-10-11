@@ -1,0 +1,25 @@
+{
+  "title": "Assembly101: A Large-Scale Multi-View Video Dataset for Understanding Procedural Activities",
+  "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Sener_Assembly101_A_Large-Scale_Multi-View_Video_Dataset_for_Understanding_Procedural_Activities_CVPR_2022_paper.html",
+  "venue": "CVPR2022",
+  "canonical_title": "Assembly101: A Large-Scale Multi-View Video Dataset for Understanding Procedural Activities",
+  "authors": [
+    "Sener, Fadime",
+    "Chatterjee, Dibyadip",
+    "Shelepov, Daniel",
+    "He, Kun",
+    "Singhania, Dipika",
+    "Wang, Robert",
+    "Yao, Angela"
+  ],
+  "publication_date": "2022",
+  "accessed_at": "2026-10-05T07:38:37.372697+00:00",
+  "fetched_url": "https://openaccess.thecvf.com/content/CVPR2022/html/Sener_Assembly101_A_Large-Scale_Multi-View_Video_Dataset_for_Understanding_Procedural_Activities_CVPR_2022_paper.html",
+  "http_status": 200,
+  "abstract": "Assembly101 is a new procedural activity dataset featuring 4321 videos of people assembling and disassembling 101 \"take-apart\" toy vehicles. Participants work without fixed instructions, and the sequences feature rich and natural variations in action ordering, mistakes, and corrections. Assembly101 is the first multi-view action dataset, with simultaneous static (8) and egocentric (4) recordings. Sequences are annotated with more than 100K coarse and 1M fine-grained action segments, and 18M 3D hand poses. We benchmark on three action understanding tasks: recognition, anticipation and temporal segmentation. Additionally, we propose a novel task of detecting mistakes. The unique recording format and rich set of annotations allow us to investigate generalization to new toys, cross-view transfer, long-tailed distributions, and pose vs. appearance. We envision that Assembly101 will serve as a new challenge to investigate various activity understanding problems.",
+  "html_evidence": "source_evidence/assembly101_a_large_scale_multi_view_video_dataset_for_understanding_procedural_activities_806a92db.html",
+  "json_evidence": "source_evidence/assembly101_a_large_scale_multi_view_video_dataset_for_understanding_procedural_activities_806a92db.json",
+  "venue_evidence": [
+    "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition"
+  ]
+}

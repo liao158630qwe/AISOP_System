@@ -1,0 +1,16 @@
+{
+  "title": "Temporal Action Segmentation: An Analysis of Modern Techniques",
+  "venue": "IEEE TPAMI",
+  "url": "https://arxiv.org/abs/2210.10352",
+  "canonical_title": "Temporal Action Segmentation: An Analysis of Modern Techniques",
+  "authors": [
+    "Ding, Guodong",
+    "Sener, Fadime",
+    "Yao, Angela"
+  ],
+  "publication_date": "2022/10/19",
+  "accessed_at": "2026-10-05T07:35:43.631474+00:00",
+  "fetched_url": "https://arxiv.org/abs/2210.10352",
+  "http_status": 200,
+  "abstract": "Abstract: Temporal action segmentation (TAS) in videos aims at densely identifying video frames in minutes-long videos with multiple action classes. As a long-range video understanding task, researchers have developed an extended collection of methods and examined their performance using various benchmarks. Despite the rapid growth of TAS techniques in recent years, no systematic survey has been conducted in these sectors. This survey analyzes and summarizes the most significant contributions and trends. In particular, we first examine the task definition, common benchmarks, types of supervision, and prevalent evaluation measures. In addition, we systematically investigate two essential techniques of this topic, i.e., frame representation and temporal modeling, which have been studied extensively in the literature. We then conduct a thorough review of existing TAS works categorized by their levels of supervision and conclude our survey by identifying and emphasizing several research gaps. In addition, we have curated a list of TAS resources, which is available at this https URL ."
+}

@@ -1,0 +1,28 @@
+{
+  "name": "ai-sop-monitor",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI-SOP 服务器离线视频分析平台",
+  "scripts": {
+    "dev": "node server.cjs",
+    "start": "node tools/python.cjs -m uvicorn backend.app:create_app --factory --host 127.0.0.1 --port 8000",
+    "test": "node tools/preview-test.cjs",
+    "test:ui": "node tools/preview-test.cjs",
+    "dev:local": "node tools/python.cjs tools/start-local.py",
+    "analyze:workers": "node tools/python.cjs tools/analyze-workers.py --video assets/factory-workers.mp4 --model models/yolo11s-pose.pt --out runtime-data/cli-analysis --start 0 --end 15 --sample-fps 5 --imgsz 640",
+    "test:api": "node tools/python.cjs -m pytest tests -q",
+    "test:e2e": "node tools/server-e2e.cjs",
+    "test:scene": "node tools/python.cjs -m pytest experiments/public_training/test_invariants.py experiments/public_training/test_simple_scene.py experiments/public_training/test_scene_v2.py experiments/public_training/test_evidence_filter.py experiments/public_training/test_scene_filter_v3.py experiments/public_training/test_scene_diagnostics.py -q",
+    "test:scene-ui": "node tools/scene-flow-test.cjs v2.3",
+    "benchmark:inference": "node tools/python.cjs tools/benchmark-inference.py",
+    "server:init": "node tools/python.cjs -m backend.init_db",
+    "server:start": "node tools/python.cjs -m uvicorn backend.app:create_app --factory --host 127.0.0.1 --port 8000",
+    "server:worker": "node tools/python.cjs -m backend.worker",
+    "server:cleanup": "node tools/python.cjs -m backend.cleanup_cli",
+    "evaluate:accuracy": "node tools/python.cjs tools/evaluate-accuracy.py",
+    "preview": "node server.cjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

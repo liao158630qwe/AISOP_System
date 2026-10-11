@@ -1,0 +1,60 @@
+[
+  {
+    "title": "Temporal Action Segmentation: An Analysis of Modern Techniques",
+    "venue": "IEEE TPAMI",
+    "url": "https://arxiv.org/abs/2210.10352",
+    "canonical_title": "Temporal Action Segmentation: An Analysis of Modern Techniques",
+    "authors": [
+      "Ding, Guodong",
+      "Sener, Fadime",
+      "Yao, Angela"
+    ],
+    "publication_date": "2022/10/19",
+    "accessed_at": "2026-10-05T07:35:43.631474+00:00",
+    "fetched_url": "https://arxiv.org/abs/2210.10352",
+    "http_status": 200,
+    "abstract": "Abstract: Temporal action segmentation (TAS) in videos aims at densely identifying video frames in minutes-long videos with multiple action classes. As a long-range video understanding task, researchers have developed an extended collection of methods and examined their performance using various benchmarks. Despite the rapid growth of TAS techniques in recent years, no systematic survey has been conducted in these sectors. This survey analyzes and summarizes the most significant contributions and trends. In particular, we first examine the task definition, common benchmarks, types of supervision, and prevalent evaluation measures. In addition, we systematically investigate two essential techniques of this topic, i.e., frame representation and temporal modeling, which have been studied extensively in the literature. We then conduct a thorough review of existing TAS works categorized by their levels of supervision and conclude our survey by identifying and emphasizing several research gaps. In addition, we have curated a list of TAS resources, which is available at this https URL ."
+  },
+  {
+    "title": "Runtime Verification for LTL and TLTL",
+    "venue": "ACM Transactions on Software Engineering and Methodology",
+    "url": "https://dl.acm.org/doi/10.1145/2000799.2000800",
+    "error": "403 Client Error: Forbidden for url: https://dl.acm.org/doi/10.1145/2000799.2000800"
+  },
+  {
+    "title": "Declarative workflows: Balancing between flexibility and support",
+    "venue": "Computer Science - Research and Development",
+    "url": "https://link.springer.com/article/10.1007/s00450-009-0057-9",
+    "canonical_title": "Declarative workflows: Balancing between flexibility and support",
+    "authors": [
+      "van der Aalst, W. M. P.",
+      "Pesic, M.",
+      "Schonenberg, H."
+    ],
+    "publication_date": "2009/05",
+    "accessed_at": "2026-10-05T07:35:45.660496+00:00",
+    "fetched_url": "https://link.springer.com/article/10.1007/s00450-009-0057-9",
+    "http_status": 200,
+    "abstract": "Abstract Today’s process-aware information systems tend to either support business processes or provide flexibility.\n  Classical workflow management systems offer good process support as long as the processes are structured\n  and do not require much flexibility. Information systems that allow for flexibility have a tendency to\n  lack process-related support. If systems offer guidance, then they are typically also inclined to ‘‘enforce\n  guidelines’’ and are perceived as inflexible. Moreover, implementing flexible systems is far from trivial.\n  This paper will show that using a more declarative approach can assist in a better balance between flexibility\n  and support. This is demonstrated by presenting the Declare framework\n  that aims to take care of the full spectrum of flexibility while at the same time supports the user using\n  recommendations and other process-mining-based diagnostics."
+  },
+  {
+    "title": "The HA4M dataset: Multi-Modal Monitoring of an assembly task for Human Action recognition in Manufacturing",
+    "venue": "Scientific Data",
+    "url": "https://www.nature.com/articles/s41597-022-01843-z",
+    "canonical_title": "The HA4M dataset: Multi-Modal Monitoring of an assembly task for Human Action recognition in Manufacturing",
+    "authors": [
+      "Cicirelli, Grazia",
+      "Marani, Roberto",
+      "Romeo, Laura",
+      "Domínguez, Manuel García",
+      "Heras, Jónathan",
+      "Perri, Anna G.",
+      "D’Orazio, Tiziana"
+    ],
+    "publication_date": "2022/12/02",
+    "accessed_at": "2026-10-05T07:35:46.105606+00:00",
+    "fetched_url": "https://www.nature.com/articles/s41597-022-01843-z",
+    "http_status": 200,
+    "abstract": "Abstract This paper introduces the Human Action Multi-Modal Monitoring in Manufacturing (HA4M) dataset, a collection of multi-modal data relative to actions performed by different subjects building an Epicyclic Gear Train (EGT). In particular, 41 subjects executed several trials of the assembly task, which consists of 12 actions. Data were collected in a laboratory scenario using a Microsoft® Azure Kinect which integrates a depth camera, an RGB camera, and InfraRed (IR) emitters. To the best of authors’ knowledge, the HA4M dataset is the first multi-modal dataset about an assembly task containing six types of data: RGB images, Depth maps, IR images, RGB-to-Depth-Aligned images, Point Clouds and Skeleton data. These data represent a good foundation to develop and test advanced action recognition systems in several fields, including Computer Vision and Machine Learning, and application domains such as smart manufacturing and human-robot collaboration."
+  }
+]

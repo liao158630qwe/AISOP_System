@@ -1,0 +1,306 @@
+{
+  "url": "https://openaccess.thecvf.com/CVPR2025?day=all",
+  "accessed_at": "2026-10-05T07:31:45.632536+00:00",
+  "matches": [
+    {
+      "title": "UA-Pose: Uncertainty-Aware 6D Object Pose Estimation and Online Object Completion with Partial References",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Li_UA-Pose_Uncertainty-Aware_6D_Object_Pose_Estimation_and_Online_Object_Completion_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Hyperbolic Uncertainty-Aware Few-Shot Incremental Point Cloud Segmentation",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Sur_Hyperbolic_Uncertainty-Aware_Few-Shot_Incremental_Point_Cloud_Segmentation_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "FRAME: Floor-aligned Representation for Avatar Motion from Egocentric Video",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Camiletto_FRAME_Floor-aligned_Representation_for_Avatar_Motion_from_Egocentric_Video_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "REWIND: Real-Time Egocentric Whole-Body Motion Diffusion with Exemplar-Based Identity Conditioning",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Lee_REWIND_Real-Time_Egocentric_Whole-Body_Motion_Diffusion_with_Exemplar-Based_Identity_Conditioning_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "FreeUV: Ground-Truth-Free Realistic Facial UV Texture Recovery via Cross-Assembly Inference Strategy",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Yang_FreeUV_Ground-Truth-Free_Realistic_Facial_UV_Texture_Recovery_via_Cross-Assembly_Inference_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "DI-PCG: Diffusion-based Efficient Inverse Procedural Content Generation for High-quality 3D Asset Creation",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Zhao_DI-PCG_Diffusion-based_Efficient_Inverse_Procedural_Content_Generation_for_High-quality_3D_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Condensing Action Segmentation Datasets via Generative Network Inversion",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Ding_Condensing_Action_Segmentation_Datasets_via_Generative_Network_Inversion_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Boosting Point-Supervised Temporal Action Localization through Integrating Query Reformation and Optimal Transport",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Liu_Boosting_Point-Supervised_Temporal_Action_Localization_through_Integrating_Query_Reformation_and_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Bridging the Vision-Brain Gap with an Uncertainty-Aware Blur Prior",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Wu_Bridging_the_Vision-Brain_Gap_with_an_Uncertainty-Aware_Blur_Prior_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "HOT3D: Hand and Object Tracking in 3D from Egocentric Multi-View Videos",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Banerjee_HOT3D_Hand_and_Object_Tracking_in_3D_from_Egocentric_Multi-View_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "EgoLife: Towards Egocentric Life Assistant",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Yang_EgoLife_Towards_Egocentric_Life_Assistant_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "EnvPoser: Environment-aware Realistic Human Motion Estimation from Sparse Observations with Uncertainty Modeling",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Xia_EnvPoser_Environment-aware_Realistic_Human_Motion_Estimation_from_Sparse_Observations_with_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "ECBench: Can Multi-modal Foundation Models Understand the Egocentric World? A Holistic Embodied Cognition Benchmark",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Dang_ECBench_Can_Multi-modal_Foundation_Models_Understand_the_Egocentric_World_A_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Uncertainty Meets Diversity: A Comprehensive Active Learning Framework for Indoor 3D Object Detection",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Wang_Uncertainty_Meets_Diversity_A_Comprehensive_Active_Learning_Framework_for_Indoor_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "CASAGPT: Cuboid Arrangement and Scene Assembly for Interior Design",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Feng_CASAGPT_Cuboid_Arrangement_and_Scene_Assembly_for_Interior_Design_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Is `Right' Right? Enhancing Object Orientation Understanding in Multimodal Large Language Models through Egocentric Instruction Tuning",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Jung_Is_Right_Right_Enhancing_Object_Orientation_Understanding_in_Multimodal_Large_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Weakly Supervised Temporal Action Localization via Dual-Prior Collaborative Learning Guided by Multimodal Large Language Models",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Zhang_Weakly_Supervised_Temporal_Action_Localization_via_Dual-Prior_Collaborative_Learning_Guided_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Mitigating Object Hallucinations in Large Vision-Language Models with Assembly of Global and Local Attention",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/An_Mitigating_Object_Hallucinations_in_Large_Vision-Language_Models_with_Assembly_of_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "PHGC: Procedural Heterogeneous Graph Completion for Natural Language Task Verification in Egocentric Videos",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Jiang_PHGC_Procedural_Heterogeneous_Graph_Completion_for_Natural_Language_Task_Verification_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Uncertainty-Instructed Structure Injection for Generalizable HD Map Construction",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Liu_Uncertainty-Instructed_Structure_Injection_for_Generalizable_HD_Map_Construction_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "HD-EPIC: A Highly-Detailed Egocentric Video Dataset",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Perrett_HD-EPIC_A_Highly-Detailed_Egocentric_Video_Dataset_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "DiGIT: Multi-Dilated Gated Encoder and Central-Adjacent Region Integrated Decoder for Temporal Action Detection Transformer",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Kim_DiGIT_Multi-Dilated_Gated_Encoder_and_Central-Adjacent_Region_Integrated_Decoder_for_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Object-Shot Enhanced Grounding Network for Egocentric Video",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Feng_Object-Shot_Enhanced_Grounding_Network_for_Egocentric_Video_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "EgoLM: Multi-Modal Language Model of Egocentric Motions",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Hong_EgoLM_Multi-Modal_Language_Model_of_Egocentric_Motions_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Two by Two: Learning Multi-Task Pairwise Objects Assembly for Generalizable Robot Manipulation",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Qi_Two_by_Two_Learning_Multi-Task_Pairwise_Objects_Assembly_for_Generalizable_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "LoTUS: Large-Scale Machine Unlearning with a Taste of Uncertainty",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Spartalis_LoTUS_Large-Scale_Machine_Unlearning_with_a_Taste_of_Uncertainty_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Temporal Action Detection Model Compression by Progressive Block Drop",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Chen_Temporal_Action_Detection_Model_Compression_by_Progressive_Block_Drop_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "HaWoR: World-Space Hand Motion Reconstruction from Egocentric Videos",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Zhang_HaWoR_World-Space_Hand_Motion_Reconstruction_from_Egocentric_Videos_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Cross-Modal and Uncertainty-Aware Agglomeration for Open-Vocabulary 3D Scene Understanding",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Li_Cross-Modal_and_Uncertainty-Aware_Agglomeration_for_Open-Vocabulary_3D_Scene_Understanding_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "EgoPressure: A Dataset for Hand Pressure and Pose Estimation in Egocentric Vision",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Zhao_EgoPressure_A_Dataset_for_Hand_Pressure_and_Pose_Estimation_in_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Omnia de EgoTempo: Benchmarking Temporal Understanding of Multi-Modal LLMs in Egocentric Videos",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Plizzari_Omnia_de_EgoTempo_Benchmarking_Temporal_Understanding_of_Multi-Modal_LLMs_in_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "UWAV: Uncertainty-weighted Weakly-supervised Audio-Visual Video Parsing",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Lai_UWAV_Uncertainty-weighted_Weakly-supervised_Audio-Visual_Video_Parsing_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "UNICL-SAM: Uncertainty-Driven In-Context Segmentation with Part Prototype Discovery",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Sheng_UNICL-SAM_Uncertainty-Driven_In-Context_Segmentation_with_Part_Prototype_Discovery_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Layered Motion Fusion: Lifting Motion Segmentation to 3D in Egocentric Videos",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Tschernezki_Layered_Motion_Fusion_Lifting_Motion_Segmentation_to_3D_in_Egocentric_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Uncertainty-guided Perturbation for Image Super-Resolution Diffusion Model",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Zhang_Uncertainty-guided_Perturbation_for_Image_Super-Resolution_Diffusion_Model_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "EgoTextVQA: Towards Egocentric Scene-Text Aware Video Question Answering",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Zhou_EgoTextVQA_Towards_Egocentric_Scene-Text_Aware_Video_Question_Answering_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Towards Understanding and Quantifying Uncertainty for Text-to-Image Generation",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Franchi_Towards_Understanding_and_Quantifying_Uncertainty_for_Text-to-Image_Generation_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Dual Energy-Based Model with Open-World Uncertainty Estimation for Out-of-distribution Detection",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Chen_Dual_Energy-Based_Model_with_Open-World_Uncertainty_Estimation_for_Out-of-distribution_Detection_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Sound Bridge: Associating Egocentric and Exocentric Videos via Audio Cues",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Huang_Sound_Bridge_Associating_Egocentric_and_Exocentric_Videos_via_Audio_Cues_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "UMotion: Uncertainty-driven Human Motion Estimation from Inertial and Ultra-wideband Units",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Liu_UMotion_Uncertainty-driven_Human_Motion_Estimation_from_Inertial_and_Ultra-wideband_Units_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "PUP 3D-GS: Principled Uncertainty Pruning for 3D Gaussian Splatting",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Hanson_PUP_3D-GS_Principled_Uncertainty_Pruning_for_3D_Gaussian_Splatting_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Hyperdimensional Uncertainty Quantification for Multimodal Uncertainty Fusion in Autonomous Vehicles Perception",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Chen_Hyperdimensional_Uncertainty_Quantification_for_Multimodal_Uncertainty_Fusion_in_Autonomous_Vehicles_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Generating 6DoF Object Manipulation Trajectories from Action Description in Egocentric Vision",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Yoshida_Generating_6DoF_Object_Manipulation_Trajectories_from_Action_Description_in_Egocentric_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Boosting the Dual-Stream Architecture in Ultra-High Resolution Segmentation with Resolution-Biased Uncertainty Estimation",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Qin_Boosting_the_Dual-Stream_Architecture_in_Ultra-High_Resolution_Segmentation_with_Resolution-Biased_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "ANNEXE: Unified Analyzing, Answering, and Pixel Grounding for Egocentric Interaction",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Su_ANNEXE_Unified_Analyzing_Answering_and_Pixel_Grounding_for_Egocentric_Interaction_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Unified Uncertainty-Aware Diffusion for Multi-Agent Trajectory Modeling",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Capellera_Unified_Uncertainty-Aware_Diffusion_for_Multi-Agent_Trajectory_Modeling_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "DyCON: Dynamic Uncertainty-aware Consistency and Contrastive Learning for Semi-supervised Medical Image Segmentation",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Assefa_DyCON_Dynamic_Uncertainty-aware_Consistency_and_Contrastive_Learning_for_Semi-supervised_Medical_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Uncertainty Weighted Gradients for Model Calibration",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Lin_Uncertainty_Weighted_Gradients_for_Model_Calibration_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "U-Know-DiffPAN: An Uncertainty-aware Knowledge Distillation Diffusion Framework with Details Enhancement for PAN-Sharpening",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Kim_U-Know-DiffPAN_An_Uncertainty-aware_Knowledge_Distillation_Diffusion_Framework_with_Details_Enhancement_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Gazing Into Missteps: Leveraging Eye-Gaze for Unsupervised Mistake Detection in Egocentric Videos of Skilled Human Activities",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Mazzamuto_Gazing_Into_Missteps_Leveraging_Eye-Gaze_for_Unsupervised_Mistake_Detection_in_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Ego4o: Egocentric Human Motion Capture and Understanding from Multi-Modal Input",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Wang_Ego4o_Egocentric_Human_Motion_Capture_and_Understanding_from_Multi-Modal_Input_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Conformal Prediction and MLLM aided Uncertainty Quantification in Scene Graph Generation",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Nag_Conformal_Prediction_and_MLLM_aided_Uncertainty_Quantification_in_Scene_Graph_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "RoboSense: Large-scale Dataset and Benchmark for Egocentric Robot Perception and Navigation in Crowded and Unstructured Environments",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Su_RoboSense_Large-scale_Dataset_and_Benchmark_for_Egocentric_Robot_Perception_and_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Rate-In: Information-Driven Adaptive Dropout Rates for Improved Inference-Time Uncertainty Estimation",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Zeevi_Rate-In_Information-Driven_Adaptive_Dropout_Rates_for_Improved_Inference-Time_Uncertainty_Estimation_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "PSBD: Prediction Shift Uncertainty Unlocks Backdoor Detection",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Li_PSBD_Prediction_Shift_Uncertainty_Unlocks_Backdoor_Detection_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Rethinking Epistemic and Aleatoric Uncertainty for Active Open-Set Annotation: An Energy-Based Approach",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Zong_Rethinking_Epistemic_and_Aleatoric_Uncertainty_for_Active_Open-Set_Annotation_An_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Modeling Multiple Normal Action Representations for Error Detection in Procedural Tasks",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Huang_Modeling_Multiple_Normal_Action_Representations_for_Error_Detection_in_Procedural_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "DIV-FF: Dynamic Image-Video Feature Fields For Environment Understanding in Egocentric Videos",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Mur-Labadia_DIV-FF_Dynamic_Image-Video_Feature_Fields_For_Environment_Understanding_in_Egocentric_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Toward Real-world BEV Perception: Depth Uncertainty Estimation via Gaussian Splatting",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Lu_Toward_Real-world_BEV_Perception_Depth_Uncertainty_Estimation_via_Gaussian_Splatting_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    },
+    {
+      "title": "Bridge the Gap: From Weak to Full Supervision for Temporal Action Localization with PseudoFormer",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Liu_Bridge_the_Gap_From_Weak_to_Full_Supervision_for_Temporal_CVPR_2025_paper.html",
+      "venue": "CVPR2025"
+    }
+  ]
+}

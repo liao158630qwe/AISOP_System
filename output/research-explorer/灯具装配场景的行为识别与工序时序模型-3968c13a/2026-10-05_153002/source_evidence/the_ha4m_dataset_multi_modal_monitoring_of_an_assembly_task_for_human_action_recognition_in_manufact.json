@@ -1,0 +1,20 @@
+{
+  "title": "The HA4M dataset: Multi-Modal Monitoring of an assembly task for Human Action recognition in Manufacturing",
+  "venue": "Scientific Data",
+  "url": "https://www.nature.com/articles/s41597-022-01843-z",
+  "canonical_title": "The HA4M dataset: Multi-Modal Monitoring of an assembly task for Human Action recognition in Manufacturing",
+  "authors": [
+    "Cicirelli, Grazia",
+    "Marani, Roberto",
+    "Romeo, Laura",
+    "Domínguez, Manuel García",
+    "Heras, Jónathan",
+    "Perri, Anna G.",
+    "D’Orazio, Tiziana"
+  ],
+  "publication_date": "2022/12/02",
+  "accessed_at": "2026-10-05T07:35:46.105606+00:00",
+  "fetched_url": "https://www.nature.com/articles/s41597-022-01843-z",
+  "http_status": 200,
+  "abstract": "Abstract This paper introduces the Human Action Multi-Modal Monitoring in Manufacturing (HA4M) dataset, a collection of multi-modal data relative to actions performed by different subjects building an Epicyclic Gear Train (EGT). In particular, 41 subjects executed several trials of the assembly task, which consists of 12 actions. Data were collected in a laboratory scenario using a Microsoft® Azure Kinect which integrates a depth camera, an RGB camera, and InfraRed (IR) emitters. To the best of authors’ knowledge, the HA4M dataset is the first multi-modal dataset about an assembly task containing six types of data: RGB images, Depth maps, IR images, RGB-to-Depth-Aligned images, Point Clouds and Skeleton data. These data represent a good foundation to develop and test advanced action recognition systems in several fields, including Computer Vision and Machine Learning, and application domains such as smart manufacturing and human-robot collaboration."
+}

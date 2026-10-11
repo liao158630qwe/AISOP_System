@@ -1,0 +1,50 @@
+{
+  "checked_at": "2026-10-05T15:45:24.435528+08:00",
+  "scope": "Document structure, links, source metadata and saved evidence integrity; not full-text replication or field validation",
+  "source_count": 30,
+  "unique_source_urls": 30,
+  "bibliographic_year_counts": {
+    "2009": 1,
+    "2015": 1,
+    "2017": 1,
+    "2019": 1,
+    "2021": 4,
+    "2022": 4,
+    "2023": 4,
+    "2024": 7,
+    "2025": 4,
+    "2026": 3
+  },
+  "source_fields_and_evidence_passed": true,
+  "latest_points_to_run": true,
+  "files": [
+    {
+      "file": "research_exploration.md",
+      "bytes": 13391,
+      "sha256": "b222158717b102a4a6d877fca1aee372577544a48151fb6c32219ed11e3c61df"
+    },
+    {
+      "file": "technical_research_plan.md",
+      "bytes": 28539,
+      "sha256": "c917398b5514919f92d554c05c57957dbb028e6828c0b7708dd3f120c8a48306"
+    },
+    {
+      "file": "topic_matrix.md",
+      "bytes": 2612,
+      "sha256": "5ef172199b82da979b12135defe5d995395963dfd29a3ecc54c7a7e748da412e"
+    },
+    {
+      "file": "literature_pre_survey.md",
+      "bytes": 45730,
+      "sha256": "3ce12bf04318893559548753b702341daba604a83e80ae10deb2b42daa46094a"
+    },
+    {
+      "file": "search_notes.md",
+      "bytes": 11513,
+      "sha256": "1b311b855be0f30a1286cf98e36d3a359f74da1aac22f17a148b428713fce419"
+    }
+  ],
+  "issues": [],
+  "field_data_available": false,
+  "field_experiment_performed": false
+}

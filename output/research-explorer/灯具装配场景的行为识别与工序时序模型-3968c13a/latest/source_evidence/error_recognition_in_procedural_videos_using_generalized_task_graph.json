@@ -1,0 +1,15 @@
+{
+  "title": "Error Recognition in Procedural Videos using Generalized Task Graph",
+  "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Lee_Error_Recognition_in_Procedural_Videos_using_Generalized_Task_Graph_ICCV_2025_paper.html",
+  "venue": "ICCV2025",
+  "canonical_title": "Error Recognition in Procedural Videos using Generalized Task Graph",
+  "authors": [
+    "Lee, Shih-Po",
+    "Elhamifar, Ehsan"
+  ],
+  "publication_date": "2025",
+  "accessed_at": "2026-10-05T07:33:43.203357+00:00",
+  "fetched_url": "https://openaccess.thecvf.com/content/ICCV2025/html/Lee_Error_Recognition_in_Procedural_Videos_using_Generalized_Task_Graph_ICCV_2025_paper.html",
+  "http_status": 200,
+  "abstract": "Understanding user actions and their possible mistakes is essential for successful operation of task assistants. In this paper, we develop a unified framework for joint temporal action segmentation and error recognition (recognizing when and which type of error happens) in procedural task videos. We propose a Generalized Task Graph (GTG) whose nodes encode correct steps and background (task-irrelevant actions). We then develop a GTG-Video Alignment algorithm (GTG2Vid) to jointly segment videos into actions and detect frames containing errors. Given that it is infeasible to gather many videos and their annotations for different types of errors, we study a framework that only requires normal (error-free) videos during training. More specifically, we leverage large language models (LLMs) to obtain error descriptions and subsequently use video-language models (VLMs) to generate visually-aligned textual features, which we use for error recognition. We then propose an Error Recognition Module (ERM) to recognize the error frames predicted by GTG2Vid using the generated error features. By extensive experiments on two egocentric datasets of EgoPER and CaptainCook4D, we show that our framework outperforms other baselines on action segmentation, error detection and recognition."
+}

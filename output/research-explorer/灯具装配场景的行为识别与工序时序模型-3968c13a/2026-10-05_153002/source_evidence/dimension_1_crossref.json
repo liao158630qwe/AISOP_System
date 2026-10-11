@@ -1,0 +1,1584 @@
+{
+  "dimension": "热点",
+  "query": "procedural activity understanding temporal action segmentation 2025 2026",
+  "url": "https://api.crossref.org/works?query=procedural+activity+understanding+temporal+action+segmentation+2025+2026&rows=8",
+  "accessed_at": "2026-10-05T07:32:37.955771+00:00",
+  "items": [
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            10,
+            3
+          ]
+        ],
+        "date-time": "2026-10-03T09:53:11Z",
+        "timestamp": 1791021191683,
+        "version": "4.1.0"
+      },
+      "reference-count": 55,
+      "publisher": "Elsevier BV",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                11,
+                1
+              ]
+            ],
+            "date-time": "2026-11-01T00:00:00Z",
+            "timestamp": 1793491200000
+          },
+          "content-version": "tdm",
+          "delay-in-days": 0,
+          "URL": "https://www.elsevier.com/tdm/userlicense/1.0/"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                11,
+                1
+              ]
+            ],
+            "date-time": "2026-11-01T00:00:00Z",
+            "timestamp": 1793491200000
+          },
+          "content-version": "tdm",
+          "delay-in-days": 0,
+          "URL": "https://www.elsevier.com/legal/tdmrep-license"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                11,
+                1
+              ]
+            ],
+            "date-time": "2026-11-01T00:00:00Z",
+            "timestamp": 1793491200000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-017"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                11,
+                1
+              ]
+            ],
+            "date-time": "2026-11-01T00:00:00Z",
+            "timestamp": 1793491200000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-037"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                11,
+                1
+              ]
+            ],
+            "date-time": "2026-11-01T00:00:00Z",
+            "timestamp": 1793491200000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-012"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                11,
+                1
+              ]
+            ],
+            "date-time": "2026-11-01T00:00:00Z",
+            "timestamp": 1793491200000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-029"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                11,
+                1
+              ]
+            ],
+            "date-time": "2026-11-01T00:00:00Z",
+            "timestamp": 1793491200000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-004"
+        }
+      ],
+      "funder": [
+        {
+          "DOI": "10.13039/501100014188",
+          "name": "Korea Ministry of Science and ICT",
+          "doi-asserted-by": "publisher",
+          "id": [
+            {
+              "id": "10.13039/501100014188",
+              "id-type": "DOI",
+              "asserted-by": "publisher"
+            }
+          ]
+        },
+        {
+          "DOI": "10.13039/501100002460",
+          "name": "Chung-Ang University",
+          "doi-asserted-by": "publisher",
+          "id": [
+            {
+              "id": "10.13039/501100002460",
+              "id-type": "DOI",
+              "asserted-by": "publisher"
+            }
+          ]
+        }
+      ],
+      "content-domain": {
+        "domain": [
+          "elsevier.com",
+          "sciencedirect.com"
+        ],
+        "crossmark-restriction": true
+      },
+      "short-container-title": [
+        "Computer Vision and Image Understanding"
+      ],
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            11
+          ]
+        ]
+      },
+      "DOI": "10.1016/j.cviu.2026.104963",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            9,
+            28
+          ]
+        ],
+        "date-time": "2026-09-28T15:58:50Z",
+        "timestamp": 1790611130000
+      },
+      "page": "104963",
+      "update-policy": "https://doi.org/10.1016/elsevier_cm_policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "special_numbering": "C",
+      "title": [
+        "Action-incrementer: Action-incremental learning for temporal action segmentation"
+      ],
+      "prefix": "10.1016",
+      "volume": "273",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0002-6688-3083",
+          "authenticated-orcid": false,
+          "given": "Gyeong-hyeon",
+          "family": "Kim",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Hyundong",
+          "family": "Jin",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Dongyoon",
+          "family": "Han",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0003-0840-0044",
+          "authenticated-orcid": false,
+          "given": "Eunwoo",
+          "family": "Kim",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "78",
+      "reference": [
+        {
+          "key": "10.1016/j.cviu.2026.104963_b1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Alayrac, J.-B., Bojanowski, P., Agrawal, N., Sivic, J., Laptev, I., Lacoste-Julien, S., 2016. Unsupervised learning from narrated instruction videos. In: Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. pp. 4575–4583.",
+          "DOI": "10.1109/CVPR.2016.495"
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Bahrami, E., Francesca, G., Gall, J., 2023. How Much Temporal Long-Term Context is Needed for Action Segmentation?. In: Proceedings of the IEEE/CVF International Conference on Computer Vision. pp. 10351–10361.",
+          "DOI": "10.1109/ICCV51070.2023.00950"
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b3",
+          "series-title": "European Conference on Computer Vision",
+          "first-page": "213",
+          "article-title": "End-to-end object detection with transformers",
+          "author": "Carion",
+          "year": "2020"
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b4",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Carreira, J., Zisserman, A., 2017. Quo vadis, action recognition? a new model and the kinetics dataset. In: Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. pp. 6299–6308.",
+          "DOI": "10.1109/CVPR.2017.502"
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b5",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Cermelli, F., Cord, M., Douillard, A., 2023. CoMFormer: Continual Learning in Semantic and Panoptic Segmentation. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. pp. 3010–3020.",
+          "DOI": "10.1109/CVPR52729.2023.00294"
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b6",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Cermelli, F., Mancini, M., Bulo, S.R., Ricci, E., Caputo, B., 2020. Modeling the background for incremental learning in semantic segmentation. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. pp. 9233–9242.",
+          "DOI": "10.1109/CVPR42600.2020.00925"
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b7",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Cheng, B., Misra, I., Schwing, A.G., Kirillov, A., Girdhar, R., 2022. Masked-attention mask transformer for universal image segmentation. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. pp. 1290–1299.",
+          "DOI": "10.1109/CVPR52688.2022.00135"
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b8",
+          "first-page": "17864",
+          "article-title": "Per-pixel classification is not all you need for semantic segmentation",
+          "volume": "34",
+          "author": "Cheng",
+          "year": "2021",
+          "journal-title": "Adv. Neural Inf. Process. Syst."
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b9",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Ding, G., Golong, H., Yao, A., 2024. Coherent Temporal Synthesis for Incremental Action Segmentation. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. pp. 28485–28494.",
+          "DOI": "10.1109/CVPR52733.2024.02691"
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b10",
+          "article-title": "Temporal action segmentation: An analysis of modern techniques",
+          "author": "Ding",
+          "year": "2023",
+          "journal-title": "IEEE Trans. Pattern Anal. Mach. Intell."
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b11",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Douillard, A., Chen, Y., Dapogny, A., Cord, M., 2021. PLOP: Learning without forgetting for continual semantic segmentation. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. pp. 4040–4050.",
+          "DOI": "10.1109/CVPR46437.2021.00403"
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b12",
+          "series-title": "European Conference on Computer Vision",
+          "first-page": "86",
+          "article-title": "PODNet: Pooled outputs distillation for small-tasks incremental learning",
+          "author": "Douillard",
+          "year": "2020"
+        },
+        {
+          "issue": "4",
+          "key": "10.1016/j.cviu.2026.104963_b13",
+          "doi-asserted-by": "crossref",
+          "first-page": "128",
+          "DOI": "10.1016/S1364-6613(99)01294-2",
+          "article-title": "Catastrophic forgetting in connectionist networks",
+          "volume": "3",
+          "author": "French",
+          "year": "1999",
+          "journal-title": "Trends Cogn. Sci."
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b14",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Gong, Y., Yu, S., Wang, X., Xiao, J., 2024. Continual segmentation with disentangled objectness learning and class recognition. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. pp. 3848–3857.",
+          "DOI": "10.1109/CVPR52733.2024.00369"
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b15",
+          "series-title": "Distilling the knowledge in a neural network",
+          "author": "Hinton",
+          "year": "2015"
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b16",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Hirsch, R., Cohen, R., Golany, T., Freedman, D., Rivlin, E., 2024. Random walks for temporal action segmentation with timestamp supervision. In: Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision. pp. 6614–6624.",
+          "DOI": "10.1109/WACV57701.2024.00648"
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b17",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Hong, K., Kim, G.-h., Kim, E., 2025. RainbowPrompt: Diversity-Enhanced Prompt-Evolving for Continual Learning. In: Proceedings of the IEEE/CVF International Conference on Computer Vision. pp. 1130–1140.",
+          "DOI": "10.1109/ICCV51701.2025.00113"
+        },
+        {
+          "issue": "4",
+          "key": "10.1016/j.cviu.2026.104963_b18",
+          "doi-asserted-by": "crossref",
+          "first-page": "225",
+          "DOI": "10.1137/0202019",
+          "article-title": "An n̂5/2 algorithm for maximum matchings in bipartite graphs",
+          "volume": "2",
+          "author": "Hopcroft",
+          "year": "1973",
+          "journal-title": "SIAM J. Comput."
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b19",
+          "first-page": "190",
+          "article-title": "A brief analysis of gesture recognition in VR",
+          "volume": "vol. 51",
+          "author": "Jiang",
+          "year": "2020"
+        },
+        {
+          "issue": "25",
+          "key": "10.1016/j.cviu.2026.104963_b20",
+          "doi-asserted-by": "crossref",
+          "first-page": "972",
+          "DOI": "10.1049/ell2.12678",
+          "article-title": "Stacked encoder–decoder transformer with boundary smoothing for action segmentation",
+          "volume": "58",
+          "author": "Kim",
+          "year": "2022",
+          "journal-title": "Electron. Lett."
+        },
+        {
+          "issue": "13",
+          "key": "10.1016/j.cviu.2026.104963_b21",
+          "doi-asserted-by": "crossref",
+          "first-page": "3521",
+          "DOI": "10.1073/pnas.1611835114",
+          "article-title": "Overcoming catastrophic forgetting in neural networks",
+          "volume": "114",
+          "author": "Kirkpatrick",
+          "year": "2017",
+          "journal-title": "Proc. Natl. Acad. Sci."
+        },
+        {
+          "issue": "13",
+          "key": "10.1016/j.cviu.2026.104963_b22",
+          "doi-asserted-by": "crossref",
+          "first-page": "1473",
+          "DOI": "10.1163/156855307782148578",
+          "article-title": "The meaning of action: A review on action recognition and mapping",
+          "volume": "21",
+          "author": "Krüger",
+          "year": "2007",
+          "journal-title": "Adv. Robot."
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b23",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Kuehne, H., Arslan, A., Serre, T., 2014. The language of actions: Recovering the syntax and semantics of goal-directed human activities. In: Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. pp. 780–787.",
+          "DOI": "10.1109/CVPR.2014.105"
+        },
+        {
+          "issue": "1–2",
+          "key": "10.1016/j.cviu.2026.104963_b24",
+          "doi-asserted-by": "crossref",
+          "first-page": "83",
+          "DOI": "10.1002/nav.3800020109",
+          "article-title": "The Hungarian method for the assignment problem",
+          "volume": "2",
+          "author": "Kuhn",
+          "year": "1955",
+          "journal-title": "Nav. Res. Logist. Q."
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b25",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Lea, C., Flynn, M.D., Vidal, R., Reiter, A., Hager, G.D., 2017. Temporal Convolutional Networks for Action Segmentation and Detection. In: Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition.",
+          "DOI": "10.1109/CVPR.2017.113"
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b26",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Li, Z., Abu Farha, Y., Gall, J., 2021. Temporal Action Segmentation From Timestamp Supervision. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. pp. 8365–8374.",
+          "DOI": "10.1109/CVPR46437.2021.00826"
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b27",
+          "article-title": "MS-TCN++: Multi-stage temporal convolutional network for action segmentation",
+          "author": "Li",
+          "year": "2020",
+          "journal-title": "IEEE Trans. Pattern Anal. Mach. Intell."
+        },
+        {
+          "issue": "12",
+          "key": "10.1016/j.cviu.2026.104963_b28",
+          "doi-asserted-by": "crossref",
+          "first-page": "2935",
+          "DOI": "10.1109/TPAMI.2017.2773081",
+          "article-title": "Learning without forgetting",
+          "volume": "40",
+          "author": "Li",
+          "year": "2017",
+          "journal-title": "IEEE Trans. Pattern Anal. Mach. Intell."
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b29",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Li, Y., Ye, Z., Rehg, J.M., 2015. Delving into egocentric actions. In: Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. pp. 287–295.",
+          "DOI": "10.1109/CVPR.2015.7298625"
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b30",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Lin, T.-Y., Goyal, P., Girshick, R., He, K., Dollár, P., 2017. Focal loss for dense object detection. In: Proceedings of the IEEE International Conference on Computer Vision. pp. 2980–2988.",
+          "DOI": "10.1109/ICCV.2017.324"
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b31",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Liu, D., Li, Q., Dinh, A.-D., Jiang, T., Shah, M., Xu, C., 2023. Diffusion action segmentation. In: Proceedings of the IEEE/CVF International Conference on Computer Vision. pp. 10139–10149.",
+          "DOI": "10.1109/ICCV51070.2023.00930"
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b32",
+          "series-title": "Decoupled weight decay regularization",
+          "author": "Loshchilov",
+          "year": "2017"
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b33",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Lu, Z., Elhamifar, E., 2024. Fact: Frame-action cross-attention temporal modeling for efficient action segmentation. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. pp. 18175–18185.",
+          "DOI": "10.1109/CVPR52733.2024.01721"
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b34",
+          "series-title": "European Conference on Computer Vision",
+          "first-page": "445",
+          "article-title": "Nymeria: A massive collection of multimodal egocentric daily motion in the wild",
+          "author": "Ma",
+          "year": "2024"
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b35",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Mallya, A., Lazebnik, S., 2018. PackNet: Adding multiple tasks to a single network by iterative pruning. In: Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. pp. 7765–7773.",
+          "DOI": "10.1109/CVPR.2018.00810"
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b36",
+          "first-page": "109",
+          "article-title": "Catastrophic interference in connectionist networks: The sequential learning problem",
+          "volume": "vol. 24",
+          "author": "McCloskey",
+          "year": "1989"
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b37",
+          "series-title": "International Conference on 3D Vision",
+          "first-page": "565",
+          "article-title": "V-Net: Fully convolutional neural networks for volumetric medical image segmentation",
+          "author": "Milletari",
+          "year": "2016"
+        },
+        {
+          "issue": "7",
+          "key": "10.1016/j.cviu.2026.104963_b38",
+          "first-page": "3523",
+          "article-title": "Image segmentation using deep learning: A survey",
+          "volume": "44",
+          "author": "Minaee",
+          "year": "2021",
+          "journal-title": "IEEE Trans. Pattern Anal. Mach. Intell."
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b39",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Rebuffi, S.-A., Kolesnikov, A., Sperl, G., Lampert, C.H., 2017. iCaRL: Incremental classifier and representation learning. In: Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. pp. 2001–2010.",
+          "DOI": "10.1109/CVPR.2017.587"
+        },
+        {
+          "issue": "11",
+          "key": "10.1016/j.cviu.2026.104963_b40",
+          "doi-asserted-by": "crossref",
+          "first-page": "68",
+          "DOI": "10.1145/3127874",
+          "article-title": "Healthcare robotics",
+          "volume": "60",
+          "author": "Riek",
+          "year": "2017",
+          "journal-title": "Commun. ACM"
+        },
+        {
+          "issue": "1",
+          "key": "10.1016/j.cviu.2026.104963_b41",
+          "article-title": "Wearable sensor-based human activity recognition in the smart healthcare system",
+          "volume": "2022",
+          "author": "Serpush",
+          "year": "2022",
+          "journal-title": "Comput. Intell. Neurosci."
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b42",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Shang, C., Li, H., Meng, F., Wu, Q., Qiu, H., Wang, L., 2023. Incrementer: Transformer for class-incremental semantic segmentation with knowledge distillation focusing on old class. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. pp. 7214–7224.",
+          "DOI": "10.1109/CVPR52729.2023.00697"
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b43",
+          "first-page": "2262",
+          "article-title": "Iterative contrast-classify for semi-supervised temporal action segmentation",
+          "volume": "vol. 36",
+          "author": "Singhania",
+          "year": "2022"
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b44",
+          "series-title": "M2r2: MulitModal robotic representation for temporal action segmentation",
+          "author": "Sliwowski",
+          "year": "2025"
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b45",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Stein, S., McKenna, S.J., 2013. Combining embedded accelerometers with computer vision for recognizing food preparation activities. In: Proceedings of the 2013 ACM International Joint Conference on Pervasive and Ubiquitous Computing. pp. 729–738.",
+          "DOI": "10.1145/2493432.2493482"
+        },
+        {
+          "issue": "Suppl 3",
+          "key": "10.1016/j.cviu.2026.104963_b46",
+          "doi-asserted-by": "crossref",
+          "first-page": "S492",
+          "DOI": "10.4103/IJO.IJO_1621_24",
+          "article-title": "Artificial intelligence-powered smart vision glasses for the visually impaired",
+          "volume": "73",
+          "author": "Udayakumar",
+          "year": "2025",
+          "journal-title": "Indian J. Ophthalmol."
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b47",
+          "article-title": "Attention is all you need",
+          "volume": "30",
+          "author": "Vaswani",
+          "year": "2017",
+          "journal-title": "Adv. Neural Inf. Process. Syst."
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b48",
+          "series-title": "European Conference on Computer Vision",
+          "first-page": "631",
+          "article-title": "Dualprompt: Complementary prompting for rehearsal-free continual learning",
+          "author": "Wang",
+          "year": "2022"
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b49",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Wang, Z., Zhang, Z., Lee, C.-Y., Zhang, H., Sun, R., Ren, X., Su, G., Perot, V., Dy, J., Pfister, T., 2022b. Learning to prompt for continual learning. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. pp. 139–149.",
+          "DOI": "10.1109/CVPR52688.2022.00024"
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b50",
+          "article-title": "A comprehensive survey of continual learning: Theory, method and application",
+          "author": "Wang",
+          "year": "2024",
+          "journal-title": "IEEE Trans. Pattern Anal. Mach. Intell."
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b51",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Xiao, J.-W., Zhang, C.-B., Feng, J., Liu, X., van de Weijer, J., Cheng, M.-M., 2023. Endpoints weight fusion for class incremental semantic segmentation. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. pp. 7204–7213.",
+          "DOI": "10.1109/CVPR52729.2023.00696"
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b52",
+          "series-title": "ASFormer: Transformer for action segmentation",
+          "author": "Yi",
+          "year": "2021"
+        },
+        {
+          "issue": "5",
+          "key": "10.1016/j.cviu.2026.104963_b53",
+          "doi-asserted-by": "crossref",
+          "first-page": "1038",
+          "DOI": "10.1109/TMM.2018.2808769",
+          "article-title": "EgoGesture: A new dataset and benchmark for egocentric hand gesture recognition",
+          "volume": "20",
+          "author": "Zhang",
+          "year": "2018",
+          "journal-title": "IEEE Trans. Multimed."
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b54",
+          "doi-asserted-by": "crossref",
+          "first-page": "58984",
+          "DOI": "10.52202/079017-1881",
+          "article-title": "Onlinetas: An online baseline for temporal action segmentation",
+          "volume": "37",
+          "author": "Zhong",
+          "year": "2024",
+          "journal-title": "Adv. Neural Inf. Process. Syst."
+        },
+        {
+          "key": "10.1016/j.cviu.2026.104963_b55",
+          "first-page": "10932",
+          "article-title": "Adaptive prototype replay for class incremental semantic segmentation",
+          "volume": "vol. 39",
+          "author": "Zhu",
+          "year": "2025"
+        }
+      ],
+      "container-title": [
+        "Computer Vision and Image Understanding"
+      ],
+      "language": "en",
+      "link": [
+        {
+          "URL": "https://api.elsevier.com/content/article/PII:S1077314226003309?httpAccept=text/xml",
+          "content-type": "text/xml",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        },
+        {
+          "URL": "https://api.elsevier.com/content/article/PII:S1077314226003309?httpAccept=text/plain",
+          "content-type": "text/plain",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            10,
+            3
+          ]
+        ],
+        "date-time": "2026-10-03T08:56:37Z",
+        "timestamp": 1791017797000
+      },
+      "score": 32.40349,
+      "resource": {
+        "primary": {
+          "URL": "https://linkinghub.elsevier.com/retrieve/pii/S1077314226003309"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2026,
+            11
+          ]
+        ]
+      },
+      "references-count": 55,
+      "alternative-id": [
+        "S1077314226003309"
+      ],
+      "URL": "https://doi.org/10.1016/j.cviu.2026.104963",
+      "ISSN": [
+        "1077-3142"
+      ],
+      "issn-type": [
+        {
+          "value": "1077-3142",
+          "type": "print"
+        }
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2026,
+            11
+          ]
+        ]
+      },
+      "assertion": [
+        {
+          "value": "Elsevier",
+          "name": "publisher",
+          "label": "This article is maintained by"
+        },
+        {
+          "value": "Action-incrementer: Action-incremental learning for temporal action segmentation",
+          "name": "articletitle",
+          "label": "Article Title"
+        },
+        {
+          "value": "Computer Vision and Image Understanding",
+          "name": "journaltitle",
+          "label": "Journal Title"
+        },
+        {
+          "value": "https://doi.org/10.1016/j.cviu.2026.104963",
+          "name": "articlelink",
+          "label": "CrossRef DOI link to publisher maintained version"
+        },
+        {
+          "value": "article",
+          "name": "content_type",
+          "label": "Content Type"
+        },
+        {
+          "value": "© 2026 Elsevier Inc. All rights are reserved, including those for text and data mining, AI training, and similar technologies.",
+          "name": "copyright",
+          "label": "Copyright"
+        }
+      ],
+      "article-number": "104963"
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            4,
+            3
+          ]
+        ],
+        "date-time": "2026-04-03T13:51:17Z",
+        "timestamp": 1775224277833,
+        "version": "3.50.1"
+      },
+      "posted": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "group-title": "SSRN",
+      "reference-count": 0,
+      "publisher": "Elsevier BV",
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "abstract": "<jats:p>Recognizing procedural activities-such as cooking recipes, furniture assembly, or laboratory protocols-from video requires understanding the temporal ordering and composition of fine-grained action steps. While supervised methods achieve strong results, they require extensive per-step annotations that are impractical to collect at scale for diverse procedural domains. We propose ProtoStep, a few-shot procedural activity recognition framework that learns generalizable temporal prototypes from limited labeled examples. Our approach consists of three components: (1) a Step Prototype Network that constructs prototype representations for each procedural step from few support videos, (2) a Temporal Prototype Alignment mechanism that matches query video sequences to step prototypes through differentiable dynamic time warping, and (3) a Cross-Procedure Transfer module that leverages shared sub-steps across different procedures to improve few-shot generalization. We evaluate ProtoStep on three benchmarks-COIN, CrossTask, and a newly curated ProceduralFew dataset-and show that it outperforms existing few-shot action recognition methods by 4.7% on 5-shot recognition, while being the first method specifically designed for procedural activities in the few-shot setting.</jats:p>",
+      "DOI": "10.2139/ssrn.6240858",
+      "type": "posted-content",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            4,
+            3
+          ]
+        ],
+        "date-time": "2026-04-03T13:04:23Z",
+        "timestamp": 1775221463000
+      },
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "ProtoStep: Few-Shot Procedural Activity Recognition via Temporal Prototype Alignment"
+      ],
+      "prefix": "10.2139",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0009-0006-3348-0452",
+          "authenticated-orcid": true,
+          "given": "Ayaan",
+          "family": "Verma",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        }
+      ],
+      "member": "78",
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            4,
+            3
+          ]
+        ],
+        "date-time": "2026-04-03T13:04:24Z",
+        "timestamp": 1775221464000
+      },
+      "score": 30.113455,
+      "resource": {
+        "primary": {
+          "URL": "https://www.ssrn.com/abstract=6240858"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "references-count": 0,
+      "URL": "https://doi.org/10.2139/ssrn.6240858",
+      "published": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "subtype": "preprint"
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            21
+          ]
+        ],
+        "date-time": "2026-05-21T17:22:14Z",
+        "timestamp": 1779384134130,
+        "version": "3.53.1"
+      },
+      "reference-count": 0,
+      "publisher": "IOP Publishing",
+      "content-domain": {
+        "domain": []
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            4,
+            9
+          ]
+        ]
+      },
+      "DOI": "10.1088/2631-8695/ae68d8/v2/review1",
+      "type": "peer-review",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            6
+          ]
+        ],
+        "date-time": "2026-05-06T21:05:33Z",
+        "timestamp": 1778101533000
+      },
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "Review for \"A video action segmentation method based on multi-scale temporal features\""
+      ],
+      "prefix": "10.1088",
+      "member": "266",
+      "review": {
+        "type": "referee-report",
+        "running-number": "PR3V2",
+        "revision-round": "2",
+        "stage": "pre-publication"
+      },
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            6
+          ]
+        ],
+        "date-time": "2026-05-06T21:05:34Z",
+        "timestamp": 1778101534000
+      },
+      "score": 29.409971,
+      "resource": {
+        "primary": {
+          "URL": "https://www.webofscience.com/api/gateway/wos/peer-review/10.1088/2631-8695/AE68D8"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2026,
+            4,
+            9
+          ]
+        ]
+      },
+      "references-count": 0,
+      "URL": "https://doi.org/10.1088/2631-8695/ae68d8/v2/review1",
+      "relation": {
+        "is-review-of": [
+          {
+            "id-type": "doi",
+            "id": "10.1088/2631-8695/AE68D8",
+            "asserted-by": "subject"
+          }
+        ]
+      },
+      "published": {
+        "date-parts": [
+          [
+            2026,
+            4,
+            9
+          ]
+        ]
+      }
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            21
+          ]
+        ],
+        "date-time": "2026-05-21T19:33:34Z",
+        "timestamp": 1779392014765,
+        "version": "3.53.1"
+      },
+      "reference-count": 0,
+      "publisher": "IOP Publishing",
+      "content-domain": {
+        "domain": []
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            2,
+            19
+          ]
+        ]
+      },
+      "DOI": "10.1088/2631-8695/ae68d8/v1/review1",
+      "type": "peer-review",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            6
+          ]
+        ],
+        "date-time": "2026-05-06T21:05:33Z",
+        "timestamp": 1778101533000
+      },
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "Review for \"A video action segmentation method based on multi-scale temporal features\""
+      ],
+      "prefix": "10.1088",
+      "member": "266",
+      "review": {
+        "type": "referee-report",
+        "running-number": "PR1V1",
+        "revision-round": "1",
+        "stage": "pre-publication"
+      },
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            6
+          ]
+        ],
+        "date-time": "2026-05-06T21:05:35Z",
+        "timestamp": 1778101535000
+      },
+      "score": 29.400875,
+      "resource": {
+        "primary": {
+          "URL": "https://www.webofscience.com/api/gateway/wos/peer-review/10.1088/2631-8695/AE68D8"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2026,
+            2,
+            19
+          ]
+        ]
+      },
+      "references-count": 0,
+      "URL": "https://doi.org/10.1088/2631-8695/ae68d8/v1/review1",
+      "relation": {
+        "is-review-of": [
+          {
+            "id-type": "doi",
+            "id": "10.1088/2631-8695/AE68D8",
+            "asserted-by": "subject"
+          }
+        ]
+      },
+      "published": {
+        "date-parts": [
+          [
+            2026,
+            2,
+            19
+          ]
+        ]
+      }
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            21
+          ]
+        ],
+        "date-time": "2026-05-21T17:27:34Z",
+        "timestamp": 1779384454464,
+        "version": "3.53.1"
+      },
+      "reference-count": 0,
+      "publisher": "IOP Publishing",
+      "content-domain": {
+        "domain": []
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            4,
+            16
+          ]
+        ]
+      },
+      "DOI": "10.1088/2631-8695/ae68d8/v2/review2",
+      "type": "peer-review",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            6
+          ]
+        ],
+        "date-time": "2026-05-06T21:05:33Z",
+        "timestamp": 1778101533000
+      },
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "Review for \"A video action segmentation method based on multi-scale temporal features\""
+      ],
+      "prefix": "10.1088",
+      "member": "266",
+      "review": {
+        "type": "referee-report",
+        "running-number": "PR4V2",
+        "revision-round": "2",
+        "stage": "pre-publication"
+      },
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            6
+          ]
+        ],
+        "date-time": "2026-05-06T21:05:33Z",
+        "timestamp": 1778101533000
+      },
+      "score": 29.395138,
+      "resource": {
+        "primary": {
+          "URL": "https://www.webofscience.com/api/gateway/wos/peer-review/10.1088/2631-8695/AE68D8"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2026,
+            4,
+            16
+          ]
+        ]
+      },
+      "references-count": 0,
+      "URL": "https://doi.org/10.1088/2631-8695/ae68d8/v2/review2",
+      "relation": {
+        "is-review-of": [
+          {
+            "id-type": "doi",
+            "id": "10.1088/2631-8695/AE68D8",
+            "asserted-by": "subject"
+          }
+        ]
+      },
+      "published": {
+        "date-parts": [
+          [
+            2026,
+            4,
+            16
+          ]
+        ]
+      }
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            23
+          ]
+        ],
+        "date-time": "2026-05-23T16:04:30Z",
+        "timestamp": 1779552270752,
+        "version": "3.53.1"
+      },
+      "reference-count": 0,
+      "publisher": "SCITEPRESS - Science and Technology Publications",
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "DOI": "10.5220/0014464500004084",
+      "type": "proceedings-article",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            3,
+            18
+          ]
+        ],
+        "date-time": "2026-03-18T21:20:11Z",
+        "timestamp": 1773868811000
+      },
+      "page": "255-264",
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "Ego-Exo Temporal Action Segmentation in Industrial Environments"
+      ],
+      "prefix": "10.5220",
+      "author": [
+        {
+          "given": "Alessandro",
+          "family": "Passanisi",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Department of Mathematics and Computer Science, University of Catania, Catania, Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Giovanni",
+          "family": "Farinella",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Mathematics and Computer Science, University of Catania, Catania, Italy"
+            },
+            {
+              "name": "Next Vision s.r.l. - Spin-off of the University of Catania, Catania, Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Francesco",
+          "family": "Ragusa",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Mathematics and Computer Science, University of Catania, Catania, Italy"
+            },
+            {
+              "name": "Next Vision s.r.l. - Spin-off of the University of Catania, Catania, Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "3171",
+      "event": {
+        "name": "21st International Conference on Computer Vision Theory and Applications",
+        "location": "Marbella, Spain",
+        "start": {
+          "date-parts": [
+            [
+              2026,
+              3,
+              9
+            ]
+          ]
+        },
+        "end": {
+          "date-parts": [
+            [
+              2026,
+              3,
+              11
+            ]
+          ]
+        }
+      },
+      "container-title": [
+        "Proceedings of the 21st International Conference on Computer Vision Theory and Applications"
+      ],
+      "original-title": [
+        "Ego-Exo Temporal Action Segmentation in Industrial Environments"
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            23
+          ]
+        ],
+        "date-time": "2026-05-23T15:07:53Z",
+        "timestamp": 1779548873000
+      },
+      "score": 28.941355,
+      "resource": {
+        "primary": {
+          "URL": "https://www.scitepress.org/DigitalLibrary/Link.aspx?doi=10.5220/0014464500004084"
+        }
+      },
+      "subtitle": [
+        ""
+      ],
+      "issued": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "references-count": 0,
+      "URL": "https://doi.org/10.5220/0014464500004084",
+      "published": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      }
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            9,
+            4
+          ]
+        ],
+        "date-time": "2026-09-04T19:13:16Z",
+        "timestamp": 1788549196924,
+        "version": "build-2803163510"
+      },
+      "posted": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "group-title": "SSRN",
+      "reference-count": 0,
+      "publisher": "Elsevier BV",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                1,
+                1
+              ]
+            ],
+            "date-time": "2026-01-01T00:00:00Z",
+            "timestamp": 1767225600000
+          },
+          "content-version": "unspecified",
+          "delay-in-days": 0,
+          "URL": "https://www.uspto.gov/ip-policy/copyright-policy/copyright-basics"
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "abstract": "<jats:p>Online temporal action segmentation (TAS) labels each time step without future inputs, yet standard evaluation assumes fresh visual features always arrive. We evaluate feature non-arrival using a strictly causal paired protocol that controls missing fraction and burst duration with Bernoulli and two-state Markov processes. Six causal architectures are tested on GTEA, 50Salads, and Breakfast using last-observation hold and a paired zero-fill control. Of 270 non-clean conditions, 102 met a descriptive metric-inversion rule, but only three survived paired bootstrap and multiplicity-corrected sign-flip tests. In the largest supported case, Accuracy decreased by 0.54 points while F1@50 increased by 5.84 points and transition delay rose by 0.25 steps. At 50% missingness and expected burst length 32, mean Accuracy fell by 6.69 points and delay increased by 8.52 steps. Favorable segmental scores can therefore conceal slower causal reaction. Online TAS evaluation should jointly report frame, segment, and transition-latency metrics under burst-shaped outages.p=0.5</jats:p>",
+      "DOI": "10.2139/ssrn.7412282",
+      "type": "posted-content",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            9,
+            4
+          ]
+        ],
+        "date-time": "2026-09-04T18:52:27Z",
+        "timestamp": 1788547947000
+      },
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "Causal Stress Testing of Online Temporal Action Segmentation under Missing Visual Features"
+      ],
+      "prefix": "10.2139",
+      "author": [
+        {
+          "given": "Zhiyuan",
+          "family": "Yan",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "78",
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            9,
+            4
+          ]
+        ],
+        "date-time": "2026-09-04T18:52:27Z",
+        "timestamp": 1788547947000
+      },
+      "score": 28.58112,
+      "resource": {
+        "primary": {
+          "URL": "https://www.ssrn.com/abstract=7412282"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "references-count": 0,
+      "URL": "https://doi.org/10.2139/ssrn.7412282",
+      "published": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "subtype": "preprint"
+    },
+    {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            21
+          ]
+        ],
+        "date-time": "2026-05-21T21:27:26Z",
+        "timestamp": 1779398846966,
+        "version": "3.53.1"
+      },
+      "reference-count": 0,
+      "publisher": "IOP Publishing",
+      "content-domain": {
+        "domain": []
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            3,
+            13
+          ]
+        ]
+      },
+      "DOI": "10.1088/2631-8695/ae68d8/v1/review2",
+      "type": "peer-review",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            6
+          ]
+        ],
+        "date-time": "2026-05-06T21:05:33Z",
+        "timestamp": 1778101533000
+      },
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "Review for \"A video action segmentation method based on multi-scale temporal features\""
+      ],
+      "prefix": "10.1088",
+      "member": "266",
+      "review": {
+        "type": "referee-report",
+        "running-number": "PR2V1",
+        "revision-round": "1",
+        "stage": "pre-publication"
+      },
+      "contributor": [
+        {
+          "given": "Bonian",
+          "family": "Chen",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "reviewer"
+            }
+          ]
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            6
+          ]
+        ],
+        "date-time": "2026-05-06T21:05:35Z",
+        "timestamp": 1778101535000
+      },
+      "score": 28.562714,
+      "resource": {
+        "primary": {
+          "URL": "https://www.webofscience.com/api/gateway/wos/peer-review/10.1088/2631-8695/AE68D8"
+        }
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2026,
+            3,
+            13
+          ]
+        ]
+      },
+      "references-count": 0,
+      "URL": "https://doi.org/10.1088/2631-8695/ae68d8/v1/review2",
+      "relation": {
+        "is-review-of": [
+          {
+            "id-type": "doi",
+            "id": "10.1088/2631-8695/AE68D8",
+            "asserted-by": "subject"
+          }
+        ]
+      },
+      "published": {
+        "date-parts": [
+          [
+            2026,
+            3,
+            13
+          ]
+        ]
+      }
+    }
+  ]
+}

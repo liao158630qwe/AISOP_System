@@ -1,0 +1,11 @@
+-r requirements-api.txt
+ultralytics==8.4.155
+psutil==5.9.8
+scipy==1.13.1
+mediapipe==1.0.1
+# Optional RTMPose/RTMO pose backends for tools/analyze-workers.py (--pose-backend rtmpose|rtmo).
+# Install with `pip install rtmlib --no-deps` plus a CUDA-matching onnxruntime-gpu, e.g.:
+# rtmlib==0.0.16
+# onnxruntime-gpu==1.22.0
+# See docs/rtmpose-rtmo-backend-2026-10-10.md (do not install plain rtmlib: it pulls CPU onnxruntime).
+# Torch is supplied by the pinned CUDA base image; local installs need PyTorch separately.

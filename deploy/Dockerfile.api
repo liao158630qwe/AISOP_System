@@ -1,0 +1,12 @@
+FROM pytorch/pytorch:2.8.0-cuda12.8-cudnn9-runtime
+WORKDIR /app
+RUN apt-get update && apt-get install -y --no-install-recommends libgl1 libglib2.0-0 && rm -rf /var/lib/apt/lists/*
+COPY requirements-api.txt requirements-worker.txt ./
+RUN pip install --no-cache-dir -r requirements-worker.txt
+COPY backend backend
+COPY algorithms algorithms
+COPY config config
+COPY index.html app.js server-ui.js styles.css ./
+COPY assets assets
+ENV PYTHONUNBUFFERED=1
+CMD ["uvicorn", "backend.app:create_app", "--factory", "--host", "0.0.0.0", "--port", "8000"]

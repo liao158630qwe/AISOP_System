@@ -1,0 +1,21 @@
+{
+  "title": "Conformance Checking Based on Partially Ordered Event Data",
+  "venue": "BPM Workshops / Lecture Notes in Business Information Processing",
+  "url": "https://link.springer.com/chapter/10.1007/978-3-319-15895-2_7",
+  "canonical_title": "Conformance Checking Based on Partially Ordered Event Data",
+  "authors": [
+    "Lu, Xixi",
+    "Fahland, Dirk",
+    "van der Aalst, Wil M. P."
+  ],
+  "publication_date": "2015",
+  "accessed_at": "2026-10-05T07:38:42.308986+00:00",
+  "fetched_url": "https://link.springer.com/chapter/10.1007/978-3-319-15895-2_7",
+  "http_status": 200,
+  "abstract": "Abstract Conformance checking is becoming more important for the analysis of business processes. While the diagnosed results of conformance checking techniques are used in diverse context such as enabling auditing and performance analysis, the quality and reliability of the conformance checking techniques themselves have not been analyzed rigorously. As the existing conformance checking techniques heavily rely on the total ordering of events, their diagnostics are unreliable and often even misleading when the timestamps of events are coarse or incorrect. This paper presents an approach to incorporate flexibility, uncertainty, concurrency and explicit orderings between events in the input as well as in the output of conformance checking using partially ordered traces and partially ordered alignments , respectively. The paper also illustrates various ways to acquire partially ordered traces from existing logs. In addition, a quantitative-based quality metric is introduced to objectively compare the results of conformance checking. The approach is implemented in ProM plugins and has been evaluated using artificial logs.",
+  "html_evidence": "source_evidence/conformance_checking_based_on_partially_ordered_event_data_d9c2a15f.html",
+  "json_evidence": "source_evidence/conformance_checking_based_on_partially_ordered_event_data_d9c2a15f.json",
+  "venue_evidence": [
+    "International Conference on Business Process Management"
+  ]
+}

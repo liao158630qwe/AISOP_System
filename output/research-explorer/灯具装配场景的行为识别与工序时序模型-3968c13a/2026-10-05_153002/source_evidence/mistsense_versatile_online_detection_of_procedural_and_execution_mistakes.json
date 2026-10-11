@@ -1,0 +1,18 @@
+{
+  "title": "MistSense: Versatile Online Detection of Procedural and Execution Mistakes",
+  "url": "https://openaccess.thecvf.com/content/ICCV2025/html/Patsch_MistSense_Versatile_Online_Detection_of_Procedural_and_Execution_Mistakes_ICCV_2025_paper.html",
+  "venue": "ICCV2025",
+  "canonical_title": "MistSense: Versatile Online Detection of Procedural and Execution Mistakes",
+  "authors": [
+    "Patsch, Constantin",
+    "Wu, Yuankai",
+    "Zakour, Marsil",
+    "Salihu, Driton",
+    "Steinbach, Eckehard"
+  ],
+  "publication_date": "2025",
+  "accessed_at": "2026-10-05T07:33:43.187334+00:00",
+  "fetched_url": "https://openaccess.thecvf.com/content/ICCV2025/html/Patsch_MistSense_Versatile_Online_Detection_of_Procedural_and_Execution_Mistakes_ICCV_2025_paper.html",
+  "http_status": 200,
+  "abstract": "Online mistake detection is crucial across various domains, ranging from industrial automation to educational applications, as mistakes can be corrected by the human operator after their detection due to the continuous inference on a video stream. While prior research mainly addresses procedural errors that often relate to temporal and ordering information, identifying a broader range of error types is essential for real-world implementation. In this work, we present MistSense, an approach for online mistake identification that includes this versatility by considering both procedural errors, which involve incorrect action sequences, and execution errors, such as motor inaccuracies or improper equipment use. Our method integrates RGB and hand pose features to capture fine-grained contextual cues in order to detect a mistake. By jointly modeling spatial and sequential aspects of human actions, our framework enables robust and adaptive error detection in dynamic environments. Once a mistake has been detected, we leverage a large language model (LLM) which provides an error explanation that gives the user further insights into why an action has been identified as a mistake. The evaluation on common mistake detection benchmarks shows the effectiveness of our approach."
+}
