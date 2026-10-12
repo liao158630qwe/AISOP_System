@@ -243,8 +243,10 @@ class RealtimeDetector:
                 if gpu_memory is not None:
                     self._peak_gpu_memory = max(self._peak_gpu_memory, gpu_memory)
             self._record(processing_ms, queue_wait_ms)
+            from algorithms.skeleton import topology
             return {"people": people, "width": w, "height": h, "verdict": "REVIEW",
                     "inspection": inspection, "lab": lab, "actionSequence": action_sequence,
+                    "skeleton": topology(),
                     "processingMs": round(processing_ms, 1), "device": str(device),
                     "model": self.model_label(slot), "backend": slot.model_kind,
                     "gpuMemoryMB": gpu_memory, "tracking": "stream-scoped" if stream else "frame-local",

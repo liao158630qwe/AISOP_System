@@ -128,16 +128,32 @@ function requestVideoRender(){
 }
 for(const event of ['play','pause','loadeddata','seeked','emptied'])video.addEventListener(event,requestVideoRender);
 document.addEventListener('visibilitychange',()=>{requestVideoRender();if(!document.hidden)updateDashboard();});
-const poseEdges=[[5,6],[5,7],[7,9],[6,8],[8,10],[5,11],[6,12],[11,12],[11,13],[13,15],[12,14],[14,16]];
+// 骨骼拓扑以服务端 algorithms/skeleton.py 的 topology() 为准；此常量是静态预览等
+// 无接口场景的兜底，字段与 topology() 保持一致（tests/test_skeleton.py 校验一致性）。
+const fallbackSkeleton={"jointCount":17,"edges":[[5,6],[5,7],[7,9],[6,8],[8,10],[5,11],[6,12],[11,12],[11,13],[13,15],[12,14],[14,16],[0,1],[0,2],[1,3],[2,4]],"leftJoints":[1,3,5,7,9,11,13,15],"rightJoints":[2,4,6,8,10,12,14,16],"handChains":[[0,1,2,3,4],[0,5,6,7,8],[5,9,10,11,12],[9,13,14,15,16],[13,17,18,19,20],[0,17]],"visibilityThreshold":0.35};
+let poseSkeleton=fallbackSkeleton;
+let adoptedTopology=null;
+function adoptSkeletonTopology(topology){
+  if(!topology||!Array.isArray(topology.edges)||!topology.edges.length)return false;
+  if(topology===adoptedTopology)return true;
+  const jointCount=Number.isInteger(topology.jointCount)&&topology.jointCount>=17?topology.jointCount:fallbackSkeleton.jointCount;
+  const validEdge=edge=>Array.isArray(edge)&&edge.length===2&&edge.every(i=>Number.isInteger(i)&&i>=0&&i<jointCount);
+  if(!topology.edges.every(validEdge))return false;
+  const jointList=value=>Array.isArray(value)&&value.every(i=>Number.isInteger(i)&&i>=0&&i<jointCount)?value:null;
+  const chains=Array.isArray(topology.handChains)&&topology.handChains.every(chain=>Array.isArray(chain)&&chain.length>=2&&chain.every(i=>Number.isInteger(i)&&i>=0&&i<21))?topology.handChains:fallbackSkeleton.handChains;
+  poseSkeleton={jointCount,edges:topology.edges,leftJoints:jointList(topology.leftJoints)||fallbackSkeleton.leftJoints,rightJoints:jointList(topology.rightJoints)||fallbackSkeleton.rightJoints,handChains:chains,visibilityThreshold:Number.isFinite(topology.visibilityThreshold)?topology.visibilityThreshold:fallbackSkeleton.visibilityThreshold};
+  adoptedTopology=topology;
+  return true;
+}
 function drawPoseSkeleton(context,points,x,y,w,h){
   if(!Array.isArray(points))return;
-  const visible=i=>points[i]?.length>=3&&points[i].every(Number.isFinite)&&points[i][2]>=.35;
-  const left=new Set([1,3,5,7,9,11,13,15]),right=new Set([2,4,6,8,10,12,14,16]);
+  const visible=i=>points[i]?.length>=3&&points[i].every(Number.isFinite)&&points[i][2]>=poseSkeleton.visibilityThreshold;
+  const left=new Set(poseSkeleton.leftJoints),right=new Set(poseSkeleton.rightJoints);
   const color=i=>left.has(i)?'#53e8ff':right.has(i)?'#ffbe63':'#ecf7ff';
   const scale=Math.max(1,Math.min(w,h)/420),line=2.4*scale,radius=3.2*scale;
   context.save();context.lineCap='round';context.lineJoin='round';
   context.beginPath();context.rect(x,y,w,h);context.clip();
-  for(const [a,b] of [...poseEdges,[0,1],[0,2],[1,3],[2,4]]){
+  for(const [a,b] of poseSkeleton.edges){
     if(!visible(a)||!visible(b))continue;
     const pa=points[a],pb=points[b];
     context.globalAlpha=Math.min(pa[2],pb[2])<.5?.55:1;
@@ -146,7 +162,7 @@ function drawPoseSkeleton(context,points,x,y,w,h){
     context.strokeStyle=left.has(a)&&left.has(b)?color(a):right.has(a)&&right.has(b)?color(a):'#9ff2bd';
     context.lineWidth=line;context.stroke();
   }
-  for(let i=0;i<Math.min(points.length,17);i++){
+  for(let i=0;i<Math.min(points.length,poseSkeleton.jointCount);i++){
     if(!visible(i))continue;
     const p=points[i];context.globalAlpha=p[2]<.5?.55:1;
     context.beginPath();context.arc(x+p[0]*w,y+p[1]*h,i<5?radius*.65:radius,0,Math.PI*2);
@@ -162,6 +178,7 @@ function analysisFrame(){
 }
 function drawAnalysisOverlay(x,y,w,h){
   const frame=analysisFrame();if(!frame)return;
+  if(analysisData?.skeleton)adoptSkeletonTopology(analysisData.skeleton);
   ctx.save();ctx.lineWidth=Math.max(2,w/450);ctx.font=`${Math.max(13,w/65)}px "Microsoft YaHei"`;
   for(const p of frame.people){
     const b=p.bbox;ctx.strokeStyle='#33d7ef';ctx.fillStyle='#33d7ef';ctx.strokeRect(x+b[0]*w,y+b[1]*h,(b[2]-b[0])*w,(b[3]-b[1])*h);

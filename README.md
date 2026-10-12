@@ -28,7 +28,7 @@ npm run server:cleanup -- --dry-run
 
 已有本机 Python 依赖时，可运行 `npm run dev:local` 一次启动 API 和 Worker；登录信息保存在 `.runtime/local-settings.json`。该命令沿用已有本机数据库与登录配置，不覆盖分析记录。
 
-## 综合优化（截至 2026-10-11）
+## 综合优化（截至 2026-10-12）
 
 - 上传显示百分比与传输大小，支持中途取消，文件限额与服务器配置同步。
 - 任务历史显示视频名称，支持名称／编号搜索、状态筛选及分页；切换任务会取消旧查询。
@@ -40,6 +40,7 @@ npm run server:cleanup -- --dry-run
 - Worker 增加可配置保留期清理（终态任务、孤儿上传、`.part` 文件）和 `server:cleanup -- --dry-run` 审计入口；实时 API 使用有界模型槽位池，满载快速返回 429。
 - 任务状态支持带超时长轮询和游标分页；`/api/v1/metrics` 汇总队列等待、处理/推理 P95、显存、吞吐和失败原因；生产 Compose 可用 Nginx `X-Accel-Redirect` 直接传输大产物。
 - 新增独立现场评测格式与 `evaluate:accuracy` 工具，按遮挡、光照、工位条件输出指标，明确区分 train/validation/test，禁止用测试集调阈值。
+- 骨骼拓扑收拢为 `algorithms/skeleton.py` 单一事实来源（参考 ARecognition 的 skeleton_defs 做法）：证据图补齐头部连线，`analysis.json` 与实时接口下发拓扑，前端优先按服务端定义绘制，内置常量仅作静态预览兜底并有测试校验一致性。
 
 改动与测试范围见 [综合优化验收记录](docs/optimization-2026-10-08.md)。
 
@@ -61,6 +62,8 @@ npm run server:cleanup -- --dry-run
 HA4M 四步装配实验已完成 V2.3 优化：重训 13 个因果模型并在验证集上枚举子集集成与滤波网格（新增 `evidence-decay-v3` 衰减证据滤波：候选短暂翻转时证据按帧衰减而非清零），冻结协议后重跑原测试集回归与全部 14 段浏览器回放。完整序列匹配保持 10/14，稳定帧准确率 83.53% → 84.09%，宏 F1 75.95% → 76.95%，分段 F1@0.5 74.14% → 81.48%，序列对齐后多余事件 4 → 3，匹配事件起点绝对偏移中位数 1.8 → 1.6 秒；帧准确率增量的描述性 bootstrap 区间包含 0，且这仍是此前已使用的测试人员，不是新外部验证。指标、事件对齐与逐段结果见 [V2.3 验收记录](docs/simple-sop-v23-results-2026-10-10.md)，此前结果见 [V2.2 记录](docs/simple-sop-v22-results-2026-10-10.md)。可用 `npm run test:scene` 和 `npm run test:scene-ui` 复测；后者需要已生成的 `work/simple-sop-2026-10-10/v2.3` 回放与 CLI 结果。
 
 离线管线新增可选姿态后端 RTMPose / RTMO（rtmlib + ONNX Runtime，CLI 参数 `--pose-backend`，YOLO11s-pose 仍为默认），跟踪、规则与报告输出不变。安装方式、实现位置与同片对比结果见 [RTMPose/RTMO 后端记录](docs/rtmpose-rtmo-backend-2026-10-10.md)。
+
+骨骼拓扑已统一到 `algorithms/skeleton.py`（COCO-17 与 MediaPipe Hands 21 点、可见度阈值、证据图与前端共用），判定逻辑与阈值数值未变；接入方式与测试见 [骨骼框架统一记录](docs/skeleton-framework-2026-10-12.md)。
 
 ```sh
 npm run test:api

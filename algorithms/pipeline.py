@@ -11,8 +11,9 @@ import cv2
 import numpy as np
 import psutil
 
-from .pose import COLORS, EDGES, LABELS
+from .pose import COLORS, LABELS
 from .report import build_report
+from .skeleton import BODY_EDGES, topology, visible_edges
 from .tracking import PoseTracker
 from .action_sop import ActionSequence
 from .video import AnalysisError, Cancelled, file_hash, probe, validate_options
@@ -54,9 +55,8 @@ def annotate(img, people):
         cv2.rectangle(img, tuple(box[:2]), tuple(box[2:]), (235, 225, 45), 2)
         cv2.putText(img, f'P{p["trackId"]:02}', (box[0], max(18, box[1] - 6)), cv2.FONT_HERSHEY_SIMPLEX, .6, (235, 225, 45), 2)
         k = np.array(p["keypoints"]) * [w, h, 1]
-        for a, b in EDGES:
-            if min(k[a, 2], k[b, 2]) >= .35:
-                cv2.line(img, tuple(k[a, :2].astype(int)), tuple(k[b, :2].astype(int)), (235, 225, 45), 2)
+        for a, b in visible_edges(k, BODY_EDGES):
+            cv2.line(img, tuple(k[a, :2].astype(int)), tuple(k[b, :2].astype(int)), (235, 225, 45), 2)
     return img
 
 
@@ -198,6 +198,7 @@ def analyze(video, model_path, out, *, run_id, options=None, progress=None, dete
             file=Path(video).name, sha256=file_hash(video), start=origin, end=origin + duration, duration=duration,
             fps=fps, width=w, height=h, crop=crop, video="video.webm", hasBurnedAnnotations=None),
         model=_model_descriptor(model_path, model_meta, device, torch, sample_fps, imgsz),
+        skeleton=topology(),
         summary=dict(analyzedFrames=len(frames), framesWithPeople=sum(bool(f["people"]) for f in frames),
             presenceRate=sum(bool(f["people"]) for f in frames) / len(frames), trackCount=len(tracks),
             maxPeople=max(len(f["people"]) for f in frames), segmentCount=len(segments), personSeconds=person_seconds,

@@ -1,9 +1,12 @@
 import math
 import numpy as np
 
+from .skeleton import LIMB_EDGES, VISIBILITY_THRESHOLD
+
 LABELS = {'standing':'站立 / 原地作业','walking':'位置移动（行走候选）','raised':'抬手','reaching':'手臂伸出','bending':'躯干前倾','unknown':'姿态不确定'}
 COLORS = {'standing':'#3fcf9b','walking':'#5aa7ff','raised':'#b17bfd','reaching':'#efb956','bending':'#ed8396','unknown':'#7890ac'}
-EDGES = [(5,6),(5,7),(7,9),(6,8),(8,10),(5,11),(6,12),(11,12),(11,13),(13,15),(12,14),(14,16)]
+# 兼容旧调用方：四肢躯干连线；完整可绘制骨架（含头部连线）见 skeleton.BODY_EDGES。
+EDGES = LIMB_EDGES
 
 
 def smooth_keypoints(current, previous, dt, body_height, aspect=1.):
@@ -11,7 +14,7 @@ def smooth_keypoints(current, previous, dt, body_height, aspect=1.):
     result = current.copy()
     if previous is None or dt is None or not 0 < dt <= .35:
         return result
-    visible = (current[:, 2] >= .35) & (previous[:, 2] >= .35)
+    visible = (current[:, 2] >= VISIBILITY_THRESHOLD) & (previous[:, 2] >= VISIBILITY_THRESHOLD)
     distance = np.linalg.norm((current[:, :2]-previous[:, :2])*[aspect, 1], axis=1)
     motion = np.clip(distance/max(.05, body_height)/.12, 0, 1)
     # Fast motion reduces the filter time constant to avoid dragging the skeleton.
@@ -26,7 +29,7 @@ def iou(a,b):
     return intersection / max(1e-8,(a[2]-a[0])*(a[3]-a[1])+(b[2]-b[0])*(b[3]-b[1])-intersection)
 
 def action_rule(k,box,history,t):
-    def visible(*ids):return all(k[i][2]>=.35 for i in ids)
+    def visible(*ids):return all(k[i][2]>=VISIBILITY_THRESHOLD for i in ids)
     if not visible(5,6,11,12):return 'unknown', '肩部或髋部关键点置信不足，保留为不确定'
     shoulder=(k[5][:2]+k[6][:2])/2;hip=(k[11][:2]+k[12][:2])/2
     torso=max(float(np.linalg.norm(hip-shoulder)),.06)
@@ -48,7 +51,7 @@ def action_rule(k,box,history,t):
 def action_observation(k, box, history, t):
     """Aspect-corrected geometry; independent signals preserve overlapping actions."""
     scores = {name: 0. for name in LABELS if name != 'unknown'}
-    if not np.isfinite(k).all() or min(k[i, 2] for i in (5, 6, 11, 12)) < .35:
+    if not np.isfinite(k).all() or min(k[i, 2] for i in (5, 6, 11, 12)) < VISIBILITY_THRESHOLD:
         return scores, {'valid': False, 'reason': '肩髋关键点置信不足', 'signals': {}}
     shoulder = (k[5, :2] + k[6, :2]) / 2
     hip = (k[11, :2] + k[12, :2]) / 2
@@ -60,7 +63,7 @@ def action_observation(k, box, history, t):
     raised, reach = 0., 0.
     arms = 0
     for wrist, side in ((9, 5), (10, 6)):
-        if min(k[wrist, 2], k[side, 2]) < .35:
+        if min(k[wrist, 2], k[side, 2]) < VISIBILITY_THRESHOLD:
             continue
         arms += 1
         reliability = min(1., k[wrist, 2]/.6)

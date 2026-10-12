@@ -86,6 +86,7 @@ def test_realtime_predict_reports_rtmo_backend(tmp_path):
     data = detector.predict(buffer.getvalue())
     assert (data['backend'], data['model'], data['device']) == ('rtmlib', 'RTMO-m', 'cuda')
     assert (data['width'], data['height']) == (640, 360)
+    assert data['skeleton']['jointCount'] == 17 and data['skeleton']['handChains']
     assert len(data['people']) == 1 and data['people'][0]['trackId'] == 1
     assert detector.model.calls == 1
 

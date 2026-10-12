@@ -183,6 +183,7 @@ window.ServerApp = (() => {
             finally{clearTimeout(timeout);}
             if(generation!==liveGeneration)return;
             retries=0;
+            adoptSkeletonTopology(data.skeleton);
             if(output.width!==capture.width||output.height!==capture.height){output.width=capture.width;output.height=capture.height;}
             const ctx=output.getContext('2d');ctx.drawImage(capture,0,0);ctx.strokeStyle='#3fcf9b';ctx.fillStyle='#3fcf9b';ctx.lineWidth=2;ctx.font='18px sans-serif';
             for(const p of data.people){
@@ -199,7 +200,7 @@ window.ServerApp = (() => {
               ctx.strokeStyle='#c594ff';ctx.fillStyle='#c594ff';
               for(const o of data.lab.objects){const [a,b,c,d]=o.bbox;ctx.strokeRect(a*output.width,b*output.height,(c-a)*output.width,(d-b)*output.height);ctx.fillText(`${o.label} ${(o.confidence*100).toFixed(0)}%`,a*output.width,Math.max(18,b*output.height));}
               ctx.strokeStyle='#ffcf60';ctx.fillStyle='#ffcf60';
-              for(const hand of data.lab.hands){const p=hand.points;for(const chain of [[0,1,2,3,4],[0,5,6,7,8],[5,9,10,11,12],[9,13,14,15,16],[13,17,18,19,20],[0,17]])for(let i=1;i<chain.length;i++){const a=p[chain[i-1]],b=p[chain[i]];ctx.beginPath();ctx.moveTo(a[0]*output.width,a[1]*output.height);ctx.lineTo(b[0]*output.width,b[1]*output.height);ctx.stroke();}ctx.fillText(hand.label,p[0][0]*output.width,p[0][1]*output.height);}
+              for(const hand of data.lab.hands){const p=hand.points;for(const chain of poseSkeleton.handChains)for(let i=1;i<chain.length;i++){const a=p[chain[i-1]],b=p[chain[i]];ctx.beginPath();ctx.moveTo(a[0]*output.width,a[1]*output.height);ctx.lineTo(b[0]*output.width,b[1]*output.height);ctx.stroke();}ctx.fillText(hand.label,p[0][0]*output.width,p[0][1]*output.height);}
             }
             const modelTag=data.model?' · '+data.model:'';
             message.textContent=`检测到 ${data.people.length} 人 · 请求耗时 ${Math.round(performance.now()-sent)} ms${modelTag} · SOP待复核`;

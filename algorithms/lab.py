@@ -1,6 +1,8 @@
 """Interactive algorithm tests; no industrial quality or grasp-force claims."""
 import math
 
+from .skeleton import FINGER_CURL_JOINTS, RELIABLE_VISIBILITY
+
 NAMES = {'raise':'举手', 'grip':'握拳／抓握候选', 'objects':'通用目标识别'}
 
 
@@ -9,7 +11,7 @@ def raised_hands(people):
     for person in people:
         k=person['keypoints']
         for shoulder,wrist,side in [(5,9,'左'),(6,10,'右')]:
-            if min(k[shoulder][2],k[wrist][2])>=.5 and k[wrist][1]<k[shoulder][1]-.04:
+            if min(k[shoulder][2],k[wrist][2])>=RELIABLE_VISIBILITY and k[wrist][1]<k[shoulder][1]-.04:
                 found.append({'person':person['trackId'],'side':side})
     return found
 
@@ -21,7 +23,7 @@ def hand_shape(points):
         norm=math.sqrt(sum(x*x for x in u)*sum(x*x for x in v))
         if norm<1e-8:return None
         return math.degrees(math.acos(max(-1,min(1,sum(x*y for x,y in zip(u,v))/norm))))
-    angles=[angle(points[m],points[p],points[t]) for m,p,t in [(5,6,8),(9,10,12),(13,14,16),(17,18,20)]]
+    angles=[angle(points[m],points[p],points[t]) for m,p,t in FINGER_CURL_JOINTS]
     if any(a is None for a in angles):return 'UNKNOWN'
     folded=sum(a<125 for a in angles)
     return 'CLOSED' if folded>=3 else 'OPEN' if all(a>155 for a in angles) else 'PARTIAL'

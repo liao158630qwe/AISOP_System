@@ -5,6 +5,7 @@ import numpy as np
 from scipy.optimize import linear_sum_assignment
 
 from .pose import LABELS, action_observation, iou, smooth_keypoints
+from .skeleton import VISIBILITY_THRESHOLD, metric_keypoints
 from .temporal import ActionDecoder
 
 
@@ -96,13 +97,12 @@ class PoseTracker:
             raw_keypoints = k.copy()
             k = smooth_keypoints(k, tr.get('filtered_keypoints') if not ambiguous else None,
                                  gap, box[3]-box[1], w/h)
-            metric = k.copy()
-            metric[:, 0] *= w/h
+            metric = metric_keypoints(k, w/h)
             scores, quality = action_observation(metric, box, tr['history'], t)
             decoded = tr['decoder'].update(scores, t, valid=quality['valid'] and not ambiguous)
             action = decoded['action']
             raw_action = max(scores, key=scores.get) if max(scores.values(), default=0) >= .6 else 'unknown'
-            if min(k[11, 2], k[12, 2]) >= .35 and not ambiguous:
+            if min(k[11, 2], k[12, 2]) >= VISIBILITY_THRESHOLD and not ambiguous:
                 tr['history'].append((t, float((metric[11, 0]+metric[12, 0])/2)))
             tr.update(last=t, box=box, center=center, keypoints=raw_keypoints,
                       filtered_keypoints=k if not ambiguous else None, observations=tr['observations']+1)
