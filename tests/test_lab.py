@@ -1,5 +1,6 @@
 import math
-from algorithms.lab import hand_shape, raised_hands
+from algorithms.hands import hand_shape
+from algorithms.lab import raised_hands
 
 
 def points(closed=False):

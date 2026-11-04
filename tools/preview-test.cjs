@@ -32,7 +32,7 @@ function run(script,env){
       await new Promise(resolve=>setTimeout(resolve,100));
     }
     if(!ready)throw new Error('Preview server did not become ready');
-    const checks=['smoke-test.cjs','worker-test.cjs','ui-regression.cjs'];
+    const checks=['smoke-test.cjs','worker-test.cjs','ui-regression.cjs','display-regression.cjs','diagnostics-test.cjs'];
     const selected=process.argv.length>2?process.argv.slice(2):checks;
     for(const script of selected){
       if(!checks.includes(script))throw new Error('Unknown browser check: '+script);

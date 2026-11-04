@@ -9,6 +9,89 @@ COLORS = {'standing':'#3fcf9b','walking':'#5aa7ff','raised':'#b17bfd','reaching'
 EDGES = LIMB_EDGES
 
 
+
+class OneEuroFilter:
+    """Adaptive 1€ Filter (Casiez et al., CHI 2012) for jitter reduction and low-latency tracking."""
+
+    def __init__(self, min_cutoff=1.2, beta=0.08, d_cutoff=1.0):
+        self.min_cutoff = float(min_cutoff)
+        self.beta = float(beta)
+        self.d_cutoff = float(d_cutoff)
+        self.x_prev = None
+        self.dx_prev = None
+        self.t_prev = None
+
+    def reset(self):
+        self.x_prev = None
+        self.dx_prev = None
+        self.t_prev = None
+
+    @staticmethod
+    def _alpha(dt, cutoff):
+        tau = 1.0 / (2.0 * math.pi * cutoff)
+        return 1.0 / (1.0 + tau / dt)
+
+    def filter(self, x, t):
+        x = np.asarray(x, dtype=float)
+        if self.t_prev is None or self.x_prev is None:
+            self.t_prev = t
+            self.x_prev = x.copy()
+            self.dx_prev = np.zeros_like(x)
+            return x.copy()
+
+        dt = t - self.t_prev
+        if dt <= 0 or dt > 0.5:
+            self.t_prev = t
+            self.x_prev = x.copy()
+            self.dx_prev = np.zeros_like(x)
+            return x.copy()
+
+        # Filter derivative (velocity)
+        dx = (x - self.x_prev) / dt
+        alpha_d = self._alpha(dt, self.d_cutoff)
+        dx_hat = alpha_d * dx + (1.0 - alpha_d) * self.dx_prev
+
+        # Compute speed-adaptive cutoff
+        speed = np.abs(dx_hat)
+        cutoff = self.min_cutoff + self.beta * speed
+        alpha = self._alpha(dt, cutoff)
+
+        x_hat = alpha * x + (1.0 - alpha) * self.x_prev
+
+        self.t_prev = t
+        self.x_prev = x_hat
+        self.dx_prev = dx_hat
+        return x_hat
+
+
+class OneEuroPoseFilter:
+    """Track-level 1€ filter for human keypoints preserving visibility masks."""
+
+    def __init__(self, min_cutoff=1.5, beta=0.05, d_cutoff=1.0, visibility_threshold=VISIBILITY_THRESHOLD):
+        self.min_cutoff = min_cutoff
+        self.beta = beta
+        self.d_cutoff = d_cutoff
+        self.visibility_threshold = visibility_threshold
+        self.filter_x = OneEuroFilter(min_cutoff, beta, d_cutoff)
+        self.filter_y = OneEuroFilter(min_cutoff, beta, d_cutoff)
+
+    def reset(self):
+        self.filter_x.reset()
+        self.filter_y.reset()
+
+    def filter(self, keypoints, t):
+        k = np.asarray(keypoints, dtype=float)
+        result = k.copy()
+        visible = k[:, 2] >= self.visibility_threshold
+
+        x_filt = self.filter_x.filter(k[:, 0], t)
+        y_filt = self.filter_y.filter(k[:, 1], t)
+
+        result[visible, 0] = x_filt[visible]
+        result[visible, 1] = y_filt[visible]
+        return result
+
+
 def smooth_keypoints(current, previous, dt, body_height, aspect=1.):
     """Damp small jitter, follow fast motion, never restore occluded joints."""
     result = current.copy()

@@ -123,3 +123,31 @@ def test_frontend_fallback_matches_server_topology():
     data = topology()
     for key in ('jointCount', 'edges', 'leftJoints', 'rightJoints', 'handChains', 'visibilityThreshold'):
         assert fallback[key] == data[key], f'app.js 兜底骨架的 {key} 与服务端 topology() 不一致'
+
+
+def test_head_and_neck_keep_pixel_proportions_across_aspects():
+    from algorithms.skeleton import body_overlay
+    pixels = np.tile([320., 250., .9], (17, 1))
+    pixels[:7] = [[320, 120, .9], [306, 100, .9], [334, 100, .9],
+                  [292, 100, .9], [348, 100, .9], [270, 185, .9], [370, 185, .9]]
+    overlays = []
+    for width, height in [(640, 480), (1280, 720), (480, 640)]:
+        points = pixels / [width, height, 1]
+        overlay = body_overlay(points, width, height)
+        assert overlay['head'] and overlay['neck']
+        head = overlay['head']
+        overlays.append((np.array(head['center']) * [width, height], np.array(head['axes']) * height))
+        assert np.allclose(np.array(overlay['neck'][1]) * [width, height], [320, 185])
+    for center, axes in overlays[1:]:
+        assert np.allclose(center, overlays[0][0]) and np.allclose(axes, overlays[0][1])
+    points[5, 2] = .1
+    assert body_overlay(points, width, height)['neck'] is None
+    points[:5, 2] = .1
+    assert body_overlay(points, width, height) == {'head': None, 'neck': None}
+
+
+def test_nonfinite_keypoints_are_not_drawn():
+    points = np.tile([.5, .5, .9], (17, 1))
+    points[5, 0] = float('nan')
+    assert not visible_mask(points)[5]
+    assert all(5 not in edge for edge in visible_edges(points))

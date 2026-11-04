@@ -72,7 +72,7 @@ def visible_mask(keypoints, threshold=VISIBILITY_THRESHOLD):
     points = np.asarray(keypoints, dtype=float)
     if points.ndim != 2 or points.shape[1] < 3:
         raise ValueError("关键点数组形状应为 (N, 3)")
-    return points[:, 2] >= threshold
+    return np.isfinite(points).all(axis=1) & (points[:, 2] >= threshold)
 
 
 def visible_edges(keypoints, edges=BODY_EDGES, threshold=VISIBILITY_THRESHOLD):
@@ -88,6 +88,63 @@ def metric_keypoints(keypoints, aspect):
     result = np.array(keypoints, copy=True)
     result[:, 0] *= aspect
     return result
+
+
+def body_overlay(keypoints, width, height):
+    """Head contour and neck for rendering; derived points never enter pose rules.
+
+    Adapted from ARecognition/bend_demo's head_geometry. Calculations use
+    isotropic coordinates, so portrait and landscape inputs retain proportions.
+    Centers/neck endpoints use normalized x/y; ellipse axes use frame height.
+    """
+    points = np.asarray(keypoints, dtype=float)
+    if points.shape != (JOINT_COUNT, 3) or width <= 0 or height <= 0:
+        return {"head": None, "neck": None}
+    aspect = width / height
+    visible = (np.isfinite(points).all(axis=1) &
+               (points[:, 2] >= VISIBILITY_THRESHOLD) &
+               (points[:, :2] >= 0).all(axis=1) &
+               (points[:, :2] <= 1).all(axis=1))
+    metric = points[:, :2] * [aspect, 1]
+    point = lambda index: metric[index] if visible[index] else None
+    nose, left_eye, right_eye, left_ear, right_ear = [point(i) for i in range(5)]
+    head = None
+    reference = None
+    if left_ear is not None and right_ear is not None:
+        span = float(np.linalg.norm(left_ear - right_ear))
+        reference = (left_ear + right_ear) / 2
+        face_length = float(np.linalg.norm(nose - reference)) if nose is not None else .8 * span
+    elif left_eye is not None and right_eye is not None and nose is not None:
+        span = 2.4 * float(np.linalg.norm(left_eye - right_eye))
+        reference = (left_eye + right_eye) / 2
+        face_length = 1.3 * float(np.linalg.norm(nose - reference))
+    if reference is not None and span * height >= 1 and face_length * height >= 1:
+        face_length = min(face_length, 1.2 * span)
+        half_width = .55 * span
+        if half_width * height >= 6:
+            if nose is not None:
+                direction = reference - nose
+                direction /= max(float(np.linalg.norm(direction)), 1e-6)
+                center = nose + direction * .35 * face_length
+            else:
+                along = right_ear - left_ear
+                direction = np.array([-along[1], along[0]])
+                direction /= max(float(np.linalg.norm(direction)), 1e-6)
+                if direction[1] > 0:
+                    direction = -direction
+                center = reference + direction * .65 * face_length
+            half_height = max(1.15 * face_length, half_width)
+            head = {"center": (center / [aspect, 1]).tolist(),
+                    "axes": [half_height, half_width],
+                    "rotation": float(np.arctan2(direction[1], direction[0]))}
+            anchor = center - direction * half_height
+    if head is None:
+        anchor = reference if reference is not None else nose
+    neck = None
+    if anchor is not None and visible[5] and visible[6]:
+        shoulder = (metric[5] + metric[6]) / 2
+        neck = [(anchor / [aspect, 1]).tolist(), (shoulder / [aspect, 1]).tolist()]
+    return {"head": head, "neck": neck}
 
 
 def topology():

@@ -1,0 +1,23 @@
+{
+  "backend": "ultralytics",
+  "task": "detect",
+  "dataset": "../../datasets/your-scene/manifest.json",
+  "pretrained": "../../models/yolo11s.pt",
+  "seed": 42,
+  "train": {
+    "epochs": 100,
+    "imgsz": 640,
+    "batch": 8,
+    "device": 0,
+    "workers": 0,
+    "amp": false,
+    "optimizer": "AdamW",
+    "lr0": 0.001,
+    "patience": 20,
+    "cos_lr": true,
+    "fliplr": 0.0,
+    "flipud": 0.0,
+    "mosaic": 0.0,
+    "mixup": 0.0
+  }
+}

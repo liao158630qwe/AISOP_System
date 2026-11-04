@@ -66,7 +66,7 @@ def test_validation_does_not_echo_password_and_limits_match(context):
         'max_upload_bytes': settings.max_upload_bytes, 'max_video_seconds': settings.max_video_seconds,
     }
     html = client.get('/').text
-    assert 'window.AISOP_SERVER=true' in html and 'src="assets/reference.mp4"' not in html
+    assert 'src="screw-dashboard.js?v=' in html and 'window.AISOP_SERVER=true' in html and 'src="assets/reference.mp4"' not in html
 
 
 def test_cursor_pagination_long_poll_and_metrics(authenticated):

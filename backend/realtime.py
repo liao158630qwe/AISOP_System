@@ -17,6 +17,7 @@ class _InferenceSlot:
         self.load_lock = threading.Lock()
         self.inspector = None
         self.lab = None
+        self.hands = None
 
 
 class RealtimeDetector:
@@ -127,7 +128,7 @@ class RealtimeDetector:
             frame = np.zeros((360, 640, 3), dtype=np.uint8)
             device = self.device()
             for _ in range(2):
-                self.model.predict(frame, imgsz=640, conf=.35, iou=.5, max_det=50,
+                self.model.predict(frame, classes=[0], imgsz=640, conf=.35, iou=.5, max_det=50,
                                     device=device, verbose=False)
             return True
         except Exception:
@@ -148,6 +149,20 @@ class RealtimeDetector:
         index = min(len(ordered) - 1, round((len(ordered) - 1) * percentile))
         return round(ordered[index], 2)
 
+    def status_snapshot(self):
+        """Describe existing model state without loading weights or running inference."""
+        slot = next((slot for slot in self._slots if slot.model is not None), None)
+        if slot is not None:
+            device = (getattr(slot.model, '_device', None) if slot.model_kind == 'rtmlib'
+                      else getattr(slot.model, 'device', None))
+            return {'state': 'loaded', 'model': self.model_label(slot),
+                    'backend': slot.model_kind, 'device': str(device) if device is not None else None}
+        loading = any(slot.load_lock.locked() for slot in self._slots)
+        unavailable = self.backend == 'yolo' and not self.model_path.is_file()
+        return {'state': 'loading' if loading else 'unavailable' if unavailable else 'not_loaded',
+                'model': {'rtmo': 'RTMO-m', 'rtmpose': 'RTMPose-m'}.get(self.backend, self.model_path.stem),
+                'backend': self.backend, 'device': None}
+
     def metrics_snapshot(self):
         with self._metrics_lock:
             latencies, waits = list(self._latencies), list(self._queue_waits)
@@ -164,7 +179,7 @@ class RealtimeDetector:
         }
 
     def predict(self, payload, inspection_config=None, test_algorithms=None, *, stream_key=None,
-                frame_time=None, workflow=None, sequential=True):
+                frame_time=None, workflow=None, sequential=True, hands=False):
         if not self.lock.acquire(blocking=False):
             raise HTTPException(429, "实时检测繁忙，请稍后重试", headers={"Retry-After": "1"})
         self.lock.release()
@@ -206,7 +221,7 @@ class RealtimeDetector:
             started = time.perf_counter()
             from algorithms.tracking import PoseTracker
             device = self.device(slot)
-            result = slot.model.predict(frame, imgsz=640, conf=.35, iou=.5,
+            result = slot.model.predict(frame, classes=[0], imgsz=640, conf=.35, iou=.5,
                                         max_det=50, device=device, verbose=False)[0]
             h, w = frame.shape[:2]
             if stream:
@@ -216,6 +231,7 @@ class RealtimeDetector:
                 people = PoseTracker().update(result, w, h, 0)
             inspection = None
             lab = None
+            hand_landmarks = None
             if test_algorithms:
                 from algorithms.lab import AlgorithmLab
                 if slot.lab is None:
@@ -226,6 +242,14 @@ class RealtimeDetector:
                 if slot.inspector is None or slot.inspector.frozen['sha256'] != inspection_config['sha256']:
                     slot.inspector = Inspector(inspection_config)
                 inspection = slot.inspector.inspect(frame)
+            if hands and not test_algorithms:
+                from algorithms.hands import HAND_MODEL_FILENAME, HandLandmarker
+                if slot.hands is None:
+                    slot.hands = HandLandmarker(self.model_path.parent / HAND_MODEL_FILENAME)
+                try:
+                    hand_landmarks = slot.hands.detect(frame)
+                except (ImportError, FileNotFoundError):
+                    hand_landmarks = None
             if stream and stream['sequence']:
                 with stream['lock']:
                     action_sequence = stream['sequence'].update(people, frame_time)
@@ -244,9 +268,10 @@ class RealtimeDetector:
                     self._peak_gpu_memory = max(self._peak_gpu_memory, gpu_memory)
             self._record(processing_ms, queue_wait_ms)
             from algorithms.skeleton import topology
-            return {"people": people, "width": w, "height": h, "verdict": "REVIEW",
+            return {"analysisType": "pose", "detectionClasses": ["person"],
+                    "people": people, "width": w, "height": h, "verdict": "REVIEW",
                     "inspection": inspection, "lab": lab, "actionSequence": action_sequence,
-                    "skeleton": topology(),
+                    "hands": hand_landmarks, "skeleton": topology(),
                     "processingMs": round(processing_ms, 1), "device": str(device),
                     "model": self.model_label(slot), "backend": slot.model_kind,
                     "gpuMemoryMB": gpu_memory, "tracking": "stream-scoped" if stream else "frame-local",
@@ -260,3 +285,27 @@ class RealtimeDetector:
         finally:
             if slot is not None:
                 self._available.put_nowait(slot)
+
+    def detect_people(self, frame, tracker, frame_time):
+        """Use a bounded pose slot on the same decoded frame as inspection inference."""
+        try:
+            slot = self._available.get_nowait()
+        except queue.Empty:
+            raise HTTPException(429, '人体检测繁忙，请稍后重试', headers={'Retry-After': '1'})
+        started = time.perf_counter()
+        try:
+            self._ensure_slot_model(slot)
+            from algorithms.person_detection import predict_people
+            from algorithms.skeleton import topology
+            people = predict_people(slot.model, frame, tracker, frame_time)
+            latency = (time.perf_counter()-started)*1000
+            self._record(latency, 0)
+            return {'people': people, 'skeleton': topology(),
+                    'personModel': {'name': self.model_label(slot), 'backend': slot.model_kind,
+                                    'device': str(self.device(slot))},
+                    'personProcessingMs': round(latency, 1)}
+        except Exception:
+            self._record((time.perf_counter()-started)*1000, 0, True)
+            raise
+        finally:
+            self._available.put_nowait(slot)

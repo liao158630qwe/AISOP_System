@@ -23,6 +23,7 @@ from starlette.concurrency import run_in_threadpool
 
 from .config import ROOT, Settings
 from .db import digest, make_engine, media, now, request_hash, run_metrics, runs, sessions
+from .scenes import SceneRegistry, SceneDefinition, ModelImport, ModelToggle
 
 
 class Login(BaseModel):
@@ -40,6 +41,8 @@ class Options(BaseModel):
     station_id: str | None = Field(default=None, max_length=30)
     workflow_id: str | None = Field(default=None, max_length=40)
     pose_backend: Literal["yolo", "rtmo", "rtmpose"] | None = None
+    analysis_type: Literal["pose", "screw", "sticker", "scene"] = "pose"
+    scene_id: str | None = Field(default=None, max_length=36)
 
 
 class RunRequest(BaseModel):
@@ -81,6 +84,13 @@ def create_app(settings=None):
     app.state.engine, app.state.settings = engine, settings
     from .realtime import RealtimeDetector
     app.state.realtime = RealtimeDetector(settings.model_path, settings.realtime_backend, settings.realtime_pool_size)
+    from .screw_realtime import RealtimeScrews
+    app.state.screw_realtime = RealtimeScrews(app.state.realtime)
+    from .sticker_realtime import RealtimeStickers
+    app.state.sticker_realtime = RealtimeStickers(app.state.realtime)
+    app.state.scenes = SceneRegistry(engine, settings)
+    from .scene_realtime import RealtimeScenes
+    app.state.scene_realtime = RealtimeScenes(app.state.scenes)
     if settings.environment != "test" and settings.realtime_warmup:
         # 后台预热：避免摄像头首帧等待数秒的 ONNX CUDA 图编译。
         threading.Thread(target=app.state.realtime.warmup, name="realtime-warmup", daemon=True).start()
@@ -123,6 +133,8 @@ def create_app(settings=None):
         response = await call_next(request)
         if request.url.path.startswith("/api/"):
             response.headers["Cache-Control"] = "no-store"
+        elif request.url.path in ('/','/index.html','/app.js','/styles.css','/screw-dashboard.js','/screw-dashboard.css'):
+            response.headers['Cache-Control']='no-cache'
         response.headers["X-Content-Type-Options"] = "nosniff"
         response.headers["Referrer-Policy"] = "same-origin"
         return response
@@ -134,7 +146,12 @@ def create_app(settings=None):
                 c.execute(select(sessions.c.owner).limit(1)).first()
         except Exception:
             return JSONResponse({"status": "unavailable"}, status_code=503)
-        return {"status": "ready", "analysis": "offline-pose", "sop": "not-implemented",
+        return {"status": "ready", "analysis": "screw-and-sticker-inspection", "sop": "retired",
+                "realtime": app.state.realtime.status_snapshot(),
+                "capabilities": {"personDetection": True, "poseEstimation": True,
+                                 "actionSequence": False, "productionSop": False, "screwInspection": True,
+                                 "stickerInspection": True, "selectableInspectionTasks": True,
+                                 "sceneTasks": True, "modelManagement": True},
                 "limits": {"max_upload_bytes": settings.max_upload_bytes, "max_video_seconds": settings.max_video_seconds}}
 
     @app.post("/api/v1/login")
@@ -211,6 +228,78 @@ def create_app(settings=None):
             final.unlink(missing_ok=True)
             raise
 
+    @app.get('/api/v1/admin/model-candidates')
+    def model_candidates(request: Request):
+        auth(request)
+        return {'items': app.state.scenes.candidates()}
+
+    @app.get('/api/v1/admin/models')
+    def list_models(request: Request):
+        return {'items': app.state.scenes.models(auth(request)['owner'])}
+
+    @app.post('/api/v1/admin/models/import', status_code=201)
+    def import_model(body: ModelImport, request: Request):
+        return app.state.scenes.import_model(body, auth(request)['owner'])
+
+    @app.post('/api/v1/admin/models/upload', status_code=201)
+    async def upload_model(request: Request, name: str = Query(min_length=1, max_length=100),
+                           version: str = Query('1.0', min_length=1, max_length=60),
+                           filename: str = Query(min_length=1, max_length=255)):
+        user = await run_in_threadpool(auth, request)
+        if Path(filename.replace('\\', '/')).suffix.lower() != '.pt':
+            raise HTTPException(415, '当前支持可信来源的 Ultralytics .pt 模型')
+        if not name.strip() or not version.strip():
+            raise HTTPException(422, '模型名称和版本不能为空')
+        length = request.headers.get('content-length', '')
+        if length.isdecimal() and int(length) > settings.max_upload_bytes:
+            raise HTTPException(413, '模型文件超过上传限制')
+        identity = str(uuid.uuid4())
+        destination = app.state.scenes.directory / (identity + '.pt')
+        temporary = destination.with_suffix('.part')
+        size = 0
+        try:
+            with temporary.open('xb') as handle:
+                async for chunk in request.stream():
+                    size += len(chunk)
+                    if size > settings.max_upload_bytes:
+                        raise HTTPException(413, '模型文件超过上传限制')
+                    await run_in_threadpool(handle.write, chunk)
+            if not size:
+                raise HTTPException(422, '模型文件为空')
+            temporary.replace(destination)
+            return await run_in_threadpool(app.state.scenes.register, identity, destination,
+                user['owner'], name.strip(), version.strip())
+        except BaseException:
+            temporary.unlink(missing_ok=True)
+            destination.unlink(missing_ok=True)
+            raise
+
+    @app.patch('/api/v1/admin/models/{model_id}')
+    def toggle_model(model_id: uuid.UUID, body: ModelToggle, request: Request):
+        return app.state.scenes.toggle(model_id, body.enabled, auth(request)['owner'])
+
+    @app.get('/api/v1/admin/scenes')
+    def admin_scenes(request: Request):
+        return {'items': app.state.scenes.scenes(auth(request)['owner'])}
+
+    @app.post('/api/v1/admin/scenes', status_code=201)
+    def create_scene(body: SceneDefinition, request: Request):
+        return app.state.scenes.save(body, auth(request)['owner'])
+
+    @app.put('/api/v1/admin/scenes/{scene_id}')
+    def update_scene(scene_id: uuid.UUID, body: SceneDefinition, request: Request):
+        if body.revision is None:
+            raise HTTPException(422, '修改任务需要当前版本号')
+        return app.state.scenes.save(body, auth(request)['owner'], scene_id)
+
+    @app.get('/api/v1/scenes')
+    def scene_catalog():
+        return {'items': app.state.scenes.scenes()}
+
+    @app.get('/api/v1/scenes/{scene_id}')
+    def get_scene(scene_id: uuid.UUID):
+        return app.state.scenes.scene(scene_id)
+
     @app.post("/api/v1/analysis-runs", status_code=202)
     def create_run(body: RunRequest, request: Request):
         user = auth(request)
@@ -230,12 +319,49 @@ def create_app(settings=None):
         if not source:
             raise HTTPException(404, "媒体不存在")
         from algorithms.video import validate_options, file_hash, AnalysisError
-        try:
-            validate_options(source["metadata"], **{k: options[k] for k in ["start", "end", "sample_fps", "crop", "imgsz"]})
-        except AnalysisError as exc:
-            raise HTTPException(422, str(exc)) from exc
+        if options.get('analysis_type') != 'scene':
+            try:
+                validate_options(source["metadata"], **{k: options[k] for k in ["start", "end", "sample_fps", "crop", "imgsz"]})
+            except AnalysisError as exc:
+                raise HTTPException(422, str(exc)) from exc
         options["pose_backend"] = options.get("pose_backend") or settings.pose_backend
-        if options["pose_backend"] == "yolo":
+        if options.get('analysis_type') == 'scene':
+            if not options.get('scene_id') or any(options.get(k) for k in ('crop','station_id','workflow_id')):
+                raise HTTPException(422, '场景检测需要选择任务，不能叠加旧工位或裁切')
+            frozen = app.state.scenes.snapshot(options['scene_id'], user['owner'])
+            options['scene_config'] = frozen
+            options['sample_fps'] = min(frozen['config']['sample_fps'], source['metadata']['fps'])
+            options['imgsz'] = frozen['config']['imgsz']
+            try:
+                validate_options(source['metadata'], **{k: options[k] for k in ['start','end','sample_fps','crop','imgsz']})
+            except AnalysisError as exc:
+                raise HTTPException(422, str(exc)) from exc
+            model_hash = frozen['model']['sha256']
+        elif options.get('scene_id'):
+            raise HTTPException(422, 'scene_id 只能用于场景检测')
+        elif options.get('analysis_type') in ('screw','sticker'):
+            task=options['analysis_type']
+            if task=='sticker' and options['sample_fps']<2:
+                raise HTTPException(422,'贴条工序顺序检测至少需要2FPS采样')
+            if options.get('crop') or options.get('workflow_id') or options.get('station_id'):
+                raise HTTPException(422, '专项检测使用独立工件标定，请勿选择旧工位、动作流程或裁切')
+            if task=='screw':
+                from algorithms.screws import snapshot as task_snapshot
+            else:
+                from algorithms.stickers import snapshot as task_snapshot
+            try:
+                options[task+'_config'] = task_snapshot()
+            except AnalysisError as exc:
+                raise HTTPException(503, str(exc)) from exc
+            frozen=options[task+'_config']
+            model_hash = frozen['assets'][frozen['config']['model']]
+            from algorithms.person_detection import snapshot as person_snapshot
+            try:
+                options['person_config'] = person_snapshot(settings.model_path, options['pose_backend'])
+            except Exception as exc:
+                name = '贴条' if task=='sticker' else '螺丝'
+                raise HTTPException(503, name+'检测需要人体姿态模型，请检查模型文件与依赖') from exc
+        elif options["pose_backend"] == "yolo":
             if not settings.model_path.is_file():
                 raise HTTPException(503, "服务器模型文件尚未配置")
             model_hash = file_hash(settings.model_path)
@@ -278,7 +404,9 @@ def create_app(settings=None):
 
     @app.post("/api/v1/realtime/frame")
     async def realtime_frame(request: Request, station_id: str | None = None, test_algorithms: str | None = None,
-                             workflow_id: str | None = Query(None, max_length=40), sequential: bool = True):
+                             workflow_id: str | None = Query(None, max_length=40), sequential: bool = True,
+                             hands: bool = False, analysis_type: Literal['pose','screw','sticker','scene'] = 'pose',
+                             scene_id: uuid.UUID | None = None):
         user = await run_in_threadpool(auth, request)
         stream_id, timestamp = request.headers.get('x-stream-id'), request.headers.get('x-frame-time')
         extra = {}
@@ -292,6 +420,10 @@ def create_app(settings=None):
             except (TypeError, ValueError, AttributeError) as exc:
                 raise HTTPException(422, '实时流需要有效UUID和0–86400秒采样时间戳') from exc
             extra = {'stream_key': (user['token_hash'], stream_id), 'frame_time': timestamp, 'sequential': sequential}
+        if analysis_type in ('screw','sticker','scene') and (not stream_id or station_id or test_algorithms or workflow_id):
+            raise HTTPException(422,'专项实时检测需要独立连续流，不能混用旧工位或动作流程')
+        if (analysis_type == 'scene') != (scene_id is not None):
+            raise HTTPException(422, '场景检测必须携带对应的 scene_id')
         if workflow_id:
             if not stream_id or test_algorithms:
                 raise HTTPException(422, '动作时序需要连续实时流，且不能与算法测试混用')
@@ -311,6 +443,15 @@ def create_app(settings=None):
             if len(payload) + len(chunk) > 1024 * 1024:
                 raise HTTPException(413, "实时画面不能超过1 MiB")
             payload.extend(chunk)
+        if analysis_type=='scene':
+            return await run_in_threadpool(app.state.scene_realtime.predict, bytes(payload),
+                scene_id=str(scene_id), stream_key=(user['token_hash'],stream_id), frame_time=timestamp, owner=user['owner'])
+        if analysis_type=='screw':
+            return await run_in_threadpool(app.state.screw_realtime.predict,bytes(payload),
+                stream_key=(user['token_hash'],stream_id),frame_time=timestamp)
+        if analysis_type=='sticker':
+            return await run_in_threadpool(app.state.sticker_realtime.predict,bytes(payload),
+                stream_key=(user['token_hash'],stream_id),frame_time=timestamp)
         if test_algorithms:
             return await run_in_threadpool(app.state.realtime.predict,bytes(payload),None,names,**extra)
         if station_id:
@@ -319,14 +460,23 @@ def create_app(settings=None):
                 frozen = await run_in_threadpool(snapshot, station_id)
             except ValueError as exc:
                 raise HTTPException(422, str(exc)) from exc
-            return await run_in_threadpool(app.state.realtime.predict, bytes(payload), frozen, **extra)
-        return await run_in_threadpool(app.state.realtime.predict, bytes(payload), **extra)
+            return await run_in_threadpool(app.state.realtime.predict, bytes(payload), frozen, hands=hands, **extra)
+        return await run_in_threadpool(app.state.realtime.predict, bytes(payload), hands=hands, **extra)
 
     @app.delete('/api/v1/realtime/streams/{stream_id}')
     def release_stream(stream_id: uuid.UUID, request: Request):
         user = auth(request)
         app.state.realtime.release((user['token_hash'], str(stream_id)))
+        app.state.screw_realtime.release((user['token_hash'], str(stream_id)))
+        app.state.sticker_realtime.release((user['token_hash'], str(stream_id)))
+        app.state.scene_realtime.release((user['token_hash'], str(stream_id)))
         return {'ok': True}
+
+    @app.post('/api/v1/realtime/streams/{stream_id}/finish')
+    def finish_screw_stream(stream_id: uuid.UUID,request: Request,analysis_type: Literal['screw','sticker','scene']='screw'):
+        user=auth(request)
+        service=app.state.scene_realtime if analysis_type=='scene' else app.state.sticker_realtime if analysis_type=='sticker' else app.state.screw_realtime
+        return service.finish((user['token_hash'],str(stream_id)))
 
     @app.get('/api/v1/stations')
     def station_catalog():
@@ -341,14 +491,78 @@ def create_app(settings=None):
         from algorithms.action_sop import catalog
         return {'items': [workflow.model_dump(mode='json') for workflow in catalog()]}
 
+    @app.get('/api/v1/screw-model')
+    def screw_model():
+        from algorithms.screws import CONFIG, sequence_profiles
+        config = json.loads(CONFIG.read_text(encoding='utf-8'))
+        sequences = sequence_profiles(config)
+        result_path = ROOT/config.get('training_result',
+            'outputs/screw-inspection-2026-10-17/refinement/training-result.json'
+            if config.get('algorithm')=='local-roi-v2' else 'outputs/screw-inspection-2026-10-17/training-result.json')
+        training = json.loads(result_path.read_text(encoding='utf-8')) if result_path.is_file() else None
+        pointer = ROOT/'.runtime/screw-reference-run.json'
+        reference_run = json.loads(pointer.read_text(encoding='utf-8')).get('id') if pointer.is_file() else None
+        from algorithms.skeleton import topology
+        person_status=app.state.realtime.status_snapshot()
+        return {'name': config['name'], 'version': config['version'], 'targets': config['targets'],
+                'scope': config['scope'], 'ready': (ROOT/config['model']).is_file(), 'training': training,
+                'referenceRun': reference_run,'modelName':config.get('model_name','YOLO11n 螺丝专项 v1'),
+                'detectionClasses':['screw','person'],'skeleton':topology(),
+                'personModelName':person_status['model'],
+                'sequence': config.get('sequence'), 'sequences': sequences,
+                'verificationMode': config.get('verification_mode','visual-cumulative'),
+                'preassembled': [target['id'] for target in config['targets'] if target.get('preassembled')],
+                'operationCount': sum(not target.get('preassembled') for target in config['targets'])}
+
+    @app.get('/api/v1/sticker-model')
+    def sticker_model():
+        from algorithms.stickers import CONFIG
+        from algorithms.skeleton import topology
+        if not CONFIG.is_file():raise HTTPException(503,'贴条模型正在准备，尚未启用')
+        config=json.loads(CONFIG.read_text(encoding='utf-8'))
+        return {'name':config['name'],'version':config['version'],'targets':config['targets'],
+                'scope':config['scope'],'ready':all((ROOT/config[k]).is_file() for k in ('model','reference')+ (('material_model',) if config.get('material_model') else ())),
+                'modelName':config['model_name'],'mode':config.get('mode','appearance'),'sequence':config.get('sequence',{}),
+                'detectionClasses':['sticker','person'],'skeleton':topology(),
+                'personModelName':app.state.realtime.status_snapshot()['model']}
+
+    @app.get('/api/v1/pose-model')
+    def pose_model():
+        from algorithms.skeleton import topology
+        status = app.state.realtime.status_snapshot()
+        return {'name': '人体检测与骨骼', 'version': 1, 'mode': 'pose',
+                'modelName': status['model'], 'ready': settings.model_path.is_file() or status['state'] == 'loaded',
+                'offlineBackend': settings.pose_backend, 'realtimeBackend': settings.realtime_backend,
+                'scope': '仅检测人体，绘制17点骨骼、头颈轮廓并输出姿态规则',
+                'detectionClasses': ['person'], 'skeleton': topology(), 'targets': []}
+
+    @app.get('/api/v1/inspection-tasks')
+    def inspection_tasks():
+        tasks=[]
+        for identity,name,rule in [('screw','螺丝安装检测','逐位置核对螺丝安装，同时检测人体和17点骨骼'),
+                                   ('sticker','贴条工序检测','先完成两处三角贴放/按压，再完成方形动作，同时检测人体和17点骨骼')]:
+            path=ROOT/f'config/{"screw" if identity=="screw" else "sticker"}-inspection.json'
+            config=json.loads(path.read_text(encoding='utf-8')) if path.is_file() else {}
+            tasks.append({'id':identity,'name':name,'rule':rule,'ready':bool(config) and
+                          all((ROOT/config[k]).is_file() for k in ('model','reference')+(('material_model',) if config.get('material_model') else ()))})
+        tasks.append({'id': 'pose', 'name': '人体检测与骨骼',
+                      'rule': '人体框、17点骨骼与姿态规则', 'ready': pose_model()['ready']})
+        return {'items':tasks,'default':'screw'}
+
     @app.get("/api/v1/analysis-runs")
     def list_runs(request: Request, limit: int = Query(100, ge=1, le=100), offset: int = Query(0, ge=0),
                   status: str | None = Query(None, pattern="^(QUEUED|RUNNING|CANCELLING|CANCELLED|FAILED|SUCCEEDED)$"),
-                  q: str = Query("", max_length=200), cursor: str | None = Query(None, max_length=200)):
+                  q: str = Query("", max_length=200), cursor: str | None = Query(None, max_length=200),
+                  analysis_type: Literal['pose','screw','sticker','scene'] | None = None,
+                  scene_id: uuid.UUID | None = None):
         user = auth(request)
         conditions = [runs.c.owner == user["owner"]]
         if status:
             conditions.append(runs.c.status == status)
+        if analysis_type:
+            conditions.append(runs.c.options['analysis_type'].as_string() == analysis_type)
+        if scene_id:
+            conditions.append(runs.c.options['scene_id'].as_string() == str(scene_id))
         if q.strip():
             conditions.append(media.c.name.icontains(q.strip(), autoescape=True) | runs.c.id.icontains(q.strip(), autoescape=True))
         if cursor:
@@ -364,7 +578,13 @@ def create_app(settings=None):
             has_more = len(rows) > limit
             rows = rows[:limit]
             next_cursor = _encode_cursor(rows[-1]["created_at"], rows[-1]["id"]) if has_more and rows else None
-            return {"items": [{**public_run(row), "media_name": row["media_name"]} for row in rows],
+            return {"items": [{**public_run(row), "media_name": row["media_name"],
+                    'analysis_type':row['options'].get('analysis_type','pose'),
+                    'scene_id':row['options'].get('scene_id'),
+                    'scene_name':row['options'].get('scene_config',{}).get('config',{}).get('name'),
+                    'model_name':row['options'].get('scene_config',{}).get('model',{}).get('name') or row['options'].get(row['options'].get('analysis_type','pose')+'_config',{}).get('config',{}).get('model_name',
+                        'YOLO11n 螺丝专项 v1' if row['options'].get('analysis_type')=='screw' else '历史分析模型')}
+                    for row in rows],
                     "total": total, "limit": limit, "offset": offset, "next_cursor": next_cursor}
 
     @app.get("/api/v1/analysis-runs/{run_id}")
@@ -441,17 +661,41 @@ def create_app(settings=None):
         return FileResponse(path, filename=name if name in ["analysis.json", "manifest.json", "segments.csv"] else None)
 
     @app.api_route("/{path:path}", methods=["GET", "HEAD"])
-    def static(path: str):
-        path = path or "index.html"
-        if path not in ["index.html", "styles.css", "app.js", "server-ui.js"] and not path.startswith("assets/"):
+    def static(path: str, request: Request):
+        path = 'index.html' if path in ('', 'index.html') else path
+        if path == 'index.html' and request.query_params.get('scene'):
+            path = 'scene-console.html'
+        if path == 'admin':
+            path = 'admin.html'
+        static_files = {
+            'index.html', 'styles.css', 'app.js', 'screw-dashboard.js', 'screw-dashboard.css',
+            'screw-inspection.html', 'screw-inspection.js', 'screw-inspection.css',
+            'admin.html', 'admin.js', 'workspace.css', 'workspace-api.js',
+            'scene-console.html', 'scene-console.js',
+        }
+        if path not in static_files and not path.startswith("assets/"):
             raise HTTPException(404, "Not found")
         target = (ROOT / path).resolve()
         boundary = (ROOT / "assets").resolve() if path.startswith("assets/") else ROOT
         if not target.is_relative_to(boundary) or not target.is_file():
             raise HTTPException(404, "Not found")
-        if path == "index.html":
-            html = target.read_text(encoding="utf-8").replace('src="assets/reference.mp4"', '')
-            return HTMLResponse(html.replace('<script src="app.js">', '<script>window.AISOP_SERVER=true;</script><script src="app.js">'))
-        return FileResponse(target)
+        no_store = {'Cache-Control': 'no-store, max-age=0'}
+        if path.endswith('.html'):
+            text = target.read_text(encoding='utf-8')
+            if path == 'index.html':
+                text = text.replace('src="assets/reference.mp4"', '')
+                text = text.replace('<script src="app.js">', '<script>window.AISOP_SERVER=true;</script><script src="app.js">')
+            for asset in ('app.js', 'styles.css', 'screw-dashboard.js', 'screw-dashboard.css',
+                          'screw-inspection.js', 'screw-inspection.css', 'admin.js', 'workspace.css',
+                          'workspace-api.js', 'scene-console.js'):
+                asset_path = ROOT / asset
+                if not asset_path.is_file():
+                    continue
+                revision = hashlib.sha256(asset_path.read_bytes()).hexdigest()[:12]
+                for attribute in ('src', 'href'):
+                    text = text.replace(f'{attribute}="{asset}"', f'{attribute}="{asset}?v={revision}"')
+            return HTMLResponse(text, headers=no_store)
+        headers = no_store if path.endswith(('.js', '.css')) else None
+        return FileResponse(target, headers=headers)
 
     return app

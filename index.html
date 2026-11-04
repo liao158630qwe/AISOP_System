@@ -2,15 +2,17 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#101317"><title>AI-SOP 视频行为分析平台</title>
+  <meta name="theme-color" content="#101317"><title>视觉检测平台</title>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg"><link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="screw-dashboard.css">
 </head>
 <body>
   <div class="dashboard">
     <header class="header">
       <div class="topbar">
-        <a class="brand" href="/" aria-label="AI-SOP 首页"><span class="logo">SOP</span><span><h1>AI-SOP 视频行为分析平台</h1><p>人体姿态 + 行为识别 + 目标检测 · 实时合规校验与分级告警（CPU 推理）</p></span></a>
+        <a class="brand" href="/" aria-label="视觉检测平台首页"><span class="logo">SOP</span><span><h1>视觉检测平台</h1><p>人体姿态 + 行为识别 + 目标检测 · 实时合规校验与分级告警（CPU 推理）</p></span></a>
         <nav class="toolbar" aria-label="平台工具">
+          <a class="btn" href="/admin.html" id="model-admin-link">模型与任务管理</a>
           <button class="btn btn-green" data-action="upload"><i data-icon="upload"></i>上传视频检测</button>
           <button class="btn" data-action="workflow"><i data-icon="sliders"></i>作业流程管理</button>
           <button class="btn" data-action="export"><i data-icon="download"></i>导出当前 CSV</button>
@@ -56,7 +58,7 @@
       </section>
 
       <aside class="sidebar">
-        <section class="panel workflow-panel"><div class="section-title"><h2>检测判定过程（逐步骤）</h2><span class="title-tag" id="step-counter">2/3 步</span></div><div class="workflow-body"><div class="workflow-title"><h3 id="workflow-name">车门玻璃总成装配标准流程</h3><span class="badge amber" id="workflow-status">进行中 · 第2/3步</span></div><p class="workflow-description" id="workflow-description">区域 车门玻璃装配作业位 · 已合格 1/3 步 · 本周期已运行 12s · 目标 #79</p><div class="steps" id="steps"></div><div class="pending-step" id="pending-step"><i data-icon="warning"></i>未完成步骤：交还工具·离场</div><div class="recent-cycles"><span>最近周期</span><span class="cycle">✓ 合格 37s</span><span class="cycle">✓ 合格 24s</span></div></div></section>
+        <section class="panel workflow-panel"><div class="section-title"><h2>检测判定过程（逐步骤）</h2><span class="title-tag" id="step-counter">2/3 步</span><button class="tiny-button" data-action="sop-history" title="查看所有历史检测与判定记录">历史记录</button></div><div class="workflow-body"><div class="workflow-title"><h3 id="workflow-name">车门玻璃总成装配标准流程</h3><span class="badge amber" id="workflow-status">进行中 · 第2/3步</span></div><p class="workflow-description" id="workflow-description">区域 车门玻璃装配作业位 · 已合格 1/3 步 · 本周期已运行 12s · 目标 #79</p><div class="steps" id="steps"></div><div class="pending-step" id="pending-step"><i data-icon="warning"></i>未完成步骤：交还工具·离场</div><div class="recent-cycles"><span>最近周期</span><span class="cycle">✓ 合格 37s</span><span class="cycle">✓ 合格 24s</span></div></div></section>
         <section class="panel alerts-panel"><div class="section-title red-title"><h2>实时告警中心</h2><span class="title-tag" id="alert-summary">累计 2 · 待处置 0</span><button class="tiny-button" data-action="confirm-all">全部确认</button></div><div class="alert-toolbar"><div class="filters" role="group" aria-label="告警级别"><button class="active" data-filter="all">全部</button><button data-filter="urgent">紧急</button><button data-filter="high">高</button><button data-filter="medium">中</button><button data-filter="low">低</button></div><button class="export-small" data-action="export-alerts" title="导出告警 CSV"><i data-icon="download"></i>导出 CSV</button></div><div class="alert-search"><i data-icon="search"></i><input id="alert-search" placeholder="搜索告警、工位或确认人" aria-label="搜索告警"><span id="alert-count">2 条记录</span></div><div id="alert-list" class="alert-list"></div><div class="alerts-foot"><span class="dot green"></span>告警通道已连接<span>自动刷新</span></div></section>
       </aside>
     </main>
@@ -67,6 +69,6 @@
   <dialog id="modal" aria-labelledby="modal-title"><div class="modal-heading"><div><span class="eyebrow">AI-SOP WORKSPACE</span><h2 id="modal-title"></h2></div><button class="icon-button" data-action="close-modal" aria-label="关闭弹窗"><i data-icon="close"></i></button></div><div id="modal-body"></div></dialog>
   <div id="toast" class="toast" role="status"></div>
   <script src="app.js"></script>
-  <script src="server-ui.js"></script>
+  <script src="screw-dashboard.js"></script>
 </body>
 </html>

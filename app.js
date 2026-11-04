@@ -32,6 +32,7 @@ if(!Array.isArray(alerts)||alerts.length!==2||alerts.some(a=>!a.title||!a.descri
 let filter='all', demo=!window.AISOP_SERVER, analysisData=null, uploadedURL=null, sessionStart=Date.now(), toastTimer, frameId, workflowDraft;
 let analysisBase='assets/worker-analysis/', sceneRevision=0;
 let videoFrameId;
+let modalRevision=0;
 const video=$('#source-video'), canvas=$('#monitor'), ctx=canvas.getContext('2d'), modal=$('#modal');
 const START=7.8, END=49.8;
 // Demo action model: one segment table drives the timeline, detection table and SOP step checks.
@@ -62,11 +63,12 @@ paintIcons();
 
 function toast(message){clearTimeout(toastTimer);$('#toast').textContent=message;$('#toast').classList.add('visible');toastTimer=setTimeout(()=>$('#toast').classList.remove('visible'),3600);}
 function fmtTime(seconds){const n=Math.max(0,Math.floor(seconds || 0));return `${String(Math.floor(n/60)).padStart(2,'0')}:${String(n%60).padStart(2,'0')}`;}
-function showModal(title,html){$('#modal-title').textContent=title;$('#modal-body').innerHTML=html;paintIcons($('#modal-body'));if(!modal.open)modal.showModal();}
+function showModal(title,html){modalRevision++;$('#modal-title').textContent=title;$('#modal-body').innerHTML=html;paintIcons($('#modal-body'));if(!modal.open)modal.showModal();}
 function closeModal(){modal.close();}
 modal.addEventListener('click',e=>{if(e.target===modal){const r=modal.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeModal();}});
 
 function renderVideo(){
+  if(window.ScrewApp)return window.ScrewApp.draw();
   if(document.hidden||$('#inline-live'))return;
   if(video.readyState>=2){
     if(demo){ctx.drawImage(video,296,260,336,188,0,0,1024,576);}else{
@@ -145,28 +147,51 @@ function adoptSkeletonTopology(topology){
   adoptedTopology=topology;
   return true;
 }
-function drawPoseSkeleton(context,points,x,y,w,h){
+function displayPixelRatio(context){
+  const canvas=context.canvas,rect=canvas?.getBoundingClientRect?.();
+  if(rect?.width>0&&rect.height>0&&canvas.width>0&&canvas.height>0){
+    const scale=Math.min(rect.width/canvas.width,rect.height/canvas.height);
+    if(scale>0)return Math.max(.5,1/scale);
+  }
+  const cssWidth=canvas?.clientWidth||0;
+  return cssWidth>0?Math.max(.5,canvas.width/cssWidth):1;
+}
+function drawPoseSkeleton(context,points,x,y,w,h,overlay){
   if(!Array.isArray(points))return;
-  const visible=i=>points[i]?.length>=3&&points[i].every(Number.isFinite)&&points[i][2]>=poseSkeleton.visibilityThreshold;
+  const visible=i=>points[i]?.length>=3&&points[i].every(Number.isFinite)&&points[i][2]>=poseSkeleton.visibilityThreshold&&points[i][0]>=0&&points[i][0]<=1&&points[i][1]>=0&&points[i][1]<=1;
   const left=new Set(poseSkeleton.leftJoints),right=new Set(poseSkeleton.rightJoints);
   const color=i=>left.has(i)?'#53e8ff':right.has(i)?'#ffbe63':'#ecf7ff';
-  const scale=Math.max(1,Math.min(w,h)/420),line=2.4*scale,radius=3.2*scale;
+  // 以画布实际显示的 CSS 尺寸为准，缩小显示时仍保持同样的视觉粗细。
+  const unit=displayPixelRatio(context),line=3.2*unit,outline=line+2.4*unit,radius=4.2*unit;
   context.save();context.lineCap='round';context.lineJoin='round';
   context.beginPath();context.rect(x,y,w,h);context.clip();
+  const finitePair=p=>Array.isArray(p)&&p.length===2&&p.every(Number.isFinite);
+  if(overlay?.neck?.length===2&&overlay.neck.every(finitePair)){
+    const [a,b]=overlay.neck;context.beginPath();context.moveTo(x+a[0]*w,y+a[1]*h);context.lineTo(x+b[0]*w,y+b[1]*h);
+    context.strokeStyle='#03101fd9';context.lineWidth=outline;context.stroke();
+    context.strokeStyle='#9ff2bd';context.lineWidth=line;context.stroke();
+  }
+  const head=overlay?.head;
+  if(head&&finitePair(head.center)&&finitePair(head.axes)&&head.axes.every(v=>v>0)&&Number.isFinite(head.rotation)){
+    context.beginPath();context.ellipse(x+head.center[0]*w,y+head.center[1]*h,head.axes[0]*h,head.axes[1]*h,head.rotation,0,Math.PI*2);
+    context.fillStyle='#f5ebcd22';context.fill();
+    context.strokeStyle='#03101fd9';context.lineWidth=outline;context.stroke();
+    context.strokeStyle='#ffe9b8';context.lineWidth=1.8*unit;context.stroke();
+  }
   for(const [a,b] of poseSkeleton.edges){
     if(!visible(a)||!visible(b))continue;
     const pa=points[a],pb=points[b];
     context.globalAlpha=Math.min(pa[2],pb[2])<.5?.55:1;
     context.beginPath();context.moveTo(x+pa[0]*w,y+pa[1]*h);context.lineTo(x+pb[0]*w,y+pb[1]*h);
-    context.strokeStyle='#03101fe6';context.lineWidth=line+3*scale;context.stroke();
+    context.strokeStyle='#03101fe6';context.lineWidth=outline;context.stroke();
     context.strokeStyle=left.has(a)&&left.has(b)?color(a):right.has(a)&&right.has(b)?color(a):'#9ff2bd';
     context.lineWidth=line;context.stroke();
   }
   for(let i=0;i<Math.min(points.length,poseSkeleton.jointCount);i++){
     if(!visible(i))continue;
     const p=points[i];context.globalAlpha=p[2]<.5?.55:1;
-    context.beginPath();context.arc(x+p[0]*w,y+p[1]*h,i<5?radius*.65:radius,0,Math.PI*2);
-    context.fillStyle=color(i);context.fill();context.strokeStyle='#03101f';context.lineWidth=1.5*scale;context.stroke();
+    context.beginPath();context.arc(x+p[0]*w,y+p[1]*h,i<5?radius*.62:radius,0,Math.PI*2);
+    context.fillStyle=color(i);context.fill();context.strokeStyle='#03101f';context.lineWidth=1.8*unit;context.stroke();
   }
   context.restore();
 }
@@ -179,11 +204,19 @@ function analysisFrame(){
 function drawAnalysisOverlay(x,y,w,h){
   const frame=analysisFrame();if(!frame)return;
   if(analysisData?.skeleton)adoptSkeletonTopology(analysisData.skeleton);
-  ctx.save();ctx.lineWidth=Math.max(2,w/450);ctx.font=`${Math.max(13,w/65)}px "Microsoft YaHei"`;
+  const unit=displayPixelRatio(ctx),fontSize=Math.round(15*unit),pad=6*unit,labelHeight=fontSize+8*unit;
+  ctx.save();ctx.textBaseline='middle';ctx.font=`700 ${fontSize}px "Microsoft YaHei",sans-serif`;
   for(const p of frame.people){
-    const b=p.bbox;ctx.strokeStyle='#33d7ef';ctx.fillStyle='#33d7ef';ctx.strokeRect(x+b[0]*w,y+b[1]*h,(b[2]-b[0])*w,(b[3]-b[1])*h);
-    const label=`P${String(p.trackId).padStart(2,'0')} ${p.label} ${(p.confidence*100).toFixed(0)}%`,ty=Math.max(y+18,y+b[1]*h-5);const tw=ctx.measureText(label).width+10;ctx.fillStyle='#062a3cdd';ctx.fillRect(x+b[0]*w,ty-17,tw,20);ctx.fillStyle='#65e9f8';ctx.fillText(label,x+b[0]*w+5,ty-2);
-    drawPoseSkeleton(ctx,p.keypoints,x,y,w,h);
+    const b=p.bbox,bx=x+b[0]*w,by=y+b[1]*h,bw=(b[2]-b[0])*w,bh=(b[3]-b[1])*h;
+    ctx.strokeStyle='#03101f';ctx.lineWidth=5*unit;ctx.strokeRect(bx,by,bw,bh);
+    ctx.strokeStyle='#33d7ef';ctx.lineWidth=3*unit;ctx.strokeRect(bx,by,bw,bh);
+    const label=`P${String(p.trackId).padStart(2,'0')} ${p.label} ${(p.confidence*100).toFixed(0)}%`;
+    const textWidth=ctx.measureText(label).width+pad*2;
+    const labelX=Math.max(x,Math.min(bx,x+w-textWidth)),labelY=Math.max(y,by-labelHeight);
+    ctx.fillStyle='#041822ee';ctx.fillRect(labelX,labelY,textWidth,labelHeight);
+    ctx.strokeStyle='#33d7ef';ctx.lineWidth=1.2*unit;ctx.strokeRect(labelX,labelY,textWidth,labelHeight);
+    ctx.fillStyle='#8df2ff';ctx.fillText(label,labelX+pad,labelY+labelHeight/2);
+    drawPoseSkeleton(ctx,p.keypoints,x,y,w,h,p.skeletonOverlay);
   }
   ctx.restore();
 }
@@ -209,8 +242,10 @@ function currentState(){
   return {t,id,action,active,elapsed,fps:(4.3+Math.sin(t*.7)*.7+Math.cos(t*.21)*.5).toFixed(1),latency:(24.5+Math.sin(t*.43)*2.4).toFixed(1),cpu:Math.round(75+Math.sin(t*.6)*10),memory:468+Math.round(Math.sin(t*.27)*5),dwell:(3.2+t%13).toFixed(1),confidence:Math.round(70+Math.sin(t*.3)*8)};
 }
 function updateDashboard(){
+  if(window.ScrewApp)return window.ScrewApp.render();
   if($('#inline-live'))return;
-  $('#video-empty').hidden=!(window.AISOP_SERVER&&!demo&&!analysisData&&!video.getAttribute('src'));
+  const serverMode=window.AISOP_SERVER||window.ServerApp?.available;
+  $('#video-empty').hidden=!(serverMode&&!demo&&!analysisData&&!video.getAttribute('src'));
   $('#noncompliant-count').textContent=demo?'0':'—';
   const s=currentState(), pending=demo?alerts.filter(a=>!a.confirmed).length:0;
   $('#clock').textContent=new Date().toLocaleTimeString('zh-CN',{hour12:false});
@@ -226,12 +261,12 @@ function updateDashboard(){
   const complianceRate=demo?Math.round(compliantCount/workflow.steps.length*100):null;
   $('#metric-compliance').textContent=demo?complianceRate:'—';$('#video-compliance').textContent=demo?complianceRate+'%':'—';$('#compliance-rate').textContent=demo?complianceRate+'%':'—';
   $('#compliant-count').textContent=demo?compliantCount:'—';$('#realtime-alert').textContent=demo?(pending?`${pending} 条待处置`:'无'):'待识别';
-  $('#current-process').textContent=demo?`1 在岗 / 1 绑定 · ${workflow.steps[s.active].name}`:'待接入识别引擎';$('#dwell').textContent=demo?`${s.dwell} s`:'—';
+  $('#current-process').textContent=demo?`1 在岗 / 1 绑定 · ${workflow.steps[s.active].name}`:serverMode?'等待分析结果':'待接入识别引擎';$('#dwell').textContent=demo?`${s.dwell} s`:'—';
   $('#detection-results').innerHTML=demo?`<tr><td>#${s.id}</td><td><span class="action-text" style="color:${demoActionColor(s.action)}">${s.action}</span> <small>${(s.t%8+1).toFixed(1)}s</small></td><td>${s.confidence}%</td><td class="cell-ellipsis" title="${escapeHTML(workflow.area)}">${escapeHTML(workflow.area)}</td><td>${s.dwell}s</td><td class="cell-ellipsis" title="${escapeHTML(workflow.steps[s.active].name)}">${escapeHTML(workflow.steps[s.active].name)}</td></tr>`:'';
-  $('#result-note').textContent=demo?'每一帧，都有迹可循':'等待识别引擎返回检测结果';
+  $('#result-note').textContent=demo?'每一帧，都有迹可循':serverMode?'上传视频或使用摄像头，检测结果将在这里显示':'等待识别引擎返回检测结果';
   $('#track-name').textContent=demo?`ID${s.id}`:'—';
   if(demo)renderDemoTimeline(s.t);else $('#time-bars').innerHTML='';
-  $('#footer-performance').textContent=demo?`配置 30fps · 全局 34.1fps · 主画面 ${s.fps}fps · 延迟 ${s.latency}ms · 丢帧 0`:'本地视频回放 · 识别引擎尚未连接';
+  $('#footer-performance').textContent=demo?`配置 30fps · 全局 34.1fps · 主画面 ${s.fps}fps · 延迟 ${s.latency}ms · 丢帧 0`:serverMode?'服务器分析 · 等待视频或摄像头检测':'本地视频回放 · 识别引擎尚未连接';
   $('.compliance-foot').innerHTML=demo?'<span class="dot green"></span>工位安全状态正常':'等待识别结果';
   $('.recent-cycles').hidden=!demo;
   $('.recent-cycles').style.display=demo?'':'none';
@@ -341,8 +376,9 @@ function updateWorkerDashboard(){
   $('#footer-performance').textContent=`实际离线分析 · ${analysisData.model.name} · ${summary.meanInferenceMs.toFixed(1)}ms/采样帧 · 检出率 ${(summary.presenceRate*100).toFixed(1)}%`;
   $('.compliance-foot').innerHTML='<span class="dot yellow"></span>已完成人体与姿态分析 · SOP 结论待人工复核';$('.recent-cycles').style.display='none';
   $('#workflow-status').textContent='证据不足 · 待人工复核';$('#workflow-status').className='badge amber';$('#step-counter').textContent='0/3 步';$('#workflow-name').textContent='SOP证据检查（未配置正式工艺）';$('#workflow-description').textContent=`实际检测 ${summary.analyzedFrames} 帧 · 人员检出率 ${(summary.presenceRate*100).toFixed(1)}% · 轨迹段 ${summary.trackCount} 条（非人数）`;
-  $('#steps').innerHTML=analysisData.sop.map((step,i)=>`<div class="step"><div class="step-top"><span class="step-index">${i+1}</span><span class="step-name">${escapeHTML(step.name)}</span><span class="step-status">待复核</span></div><div class="step-detail">${escapeHTML(step.reason)}</div></div>`).join('');
+  if(!frame.actionSequence||!analysisData.actionSequence)$('#steps').innerHTML=analysisData.sop.map((step,i)=>`<div class="step"><div class="step-top"><span class="step-index">${i+1}</span><span class="step-name">${escapeHTML(step.name)}</span><span class="step-status">待复核</span></div><div class="step-detail">${escapeHTML(step.reason)}</div></div>`).join('');
   $('#pending-step').innerHTML=`${icon('warning')}<span>未接入工具、工件和设备状态，不能判定工序合格</span>`;
+  $('#pending-step').hidden=false;
   const sequence=analysisFrame()?.actionSequence;
   if(sequence&&analysisData.actionSequence&&window.ServerApp){
     window.ServerApp.renderSequence({...analysisData.actionSequence,...sequence});
@@ -356,6 +392,13 @@ function updateWorkerDashboard(){
   }
 }
 function renderWorkflow(s){
+  if(!demo&&(window.AISOP_SERVER||window.ServerApp?.available)){
+    $('#workflow-name').textContent='动作流程观察';$('#workflow-status').textContent='等待检测';$('#step-counter').textContent='—';
+    $('#workflow-description').textContent='选择工位和动作顺序后开始检测，或从服务器任务打开已有结果。';
+    $('#steps').innerHTML='<p class="empty-note">检出人物后，显示当前步骤与持续证据。</p>';
+    $('#pending-step').hidden=true;return;
+  }
+  $('#pending-step').hidden=false;
   const elapsed=s.elapsed,active=demo?s.active:-1;
   $('#workflow-name').textContent=workflow.name;
   $('#workflow-status').textContent=demo?`进行中 · 第${active+1}/${workflow.steps.length}步`:'等待识别';
@@ -383,6 +426,7 @@ setInterval(()=>{if(!document.hidden)updateDashboard();},1000);updateDashboard()
 function filteredAlerts(){if(!demo)return [];const query=$('#alert-search').value.trim().toLowerCase();return alerts.filter(a=>(filter==='all'||a.severity===filter)&&`${a.title} ${a.camera} ${a.area} ${a.by||''}`.toLowerCase().includes(query));}
 const severityLabels={urgent:'紧急',high:'高',medium:'中',low:'低'};
 function renderAlerts(){
+  if(window.ScrewApp)return window.ScrewApp.renderAlerts();
   if(analysisData){renderWorkerAlerts();return;}
   const list=filteredAlerts(),pending=demo?alerts.filter(a=>!a.confirmed).length:0;
   $('#alert-summary').textContent=demo?`累计 ${alerts.length} · 待处置 ${pending}`:'当前视频 · 待接入检测';$('#metric-alerts').textContent=pending;$('#alert-count').textContent=`${list.length} 条记录`;
@@ -417,12 +461,111 @@ function downloadCSV(rows,name){const safe=value=>{let text=String(value??'');if
 function showWorkflow(){workflowDraft=structuredClone(workflow);showModal('作业流程管理',`<p class="modal-intro">定义工位的标准作业步骤与演示阶段时长。保存后立即应用到当前工位，并保存在本机浏览器。</p><form id="workflow-form"><label class="form-label" for="flow-name">流程名称</label><input class="field" id="flow-name" maxlength="40" required value="${escapeHTML(workflow.name)}"><label class="form-label" for="flow-area">绑定区域</label><input class="field" id="flow-area" maxlength="35" required value="${escapeHTML(workflow.area)}"><label class="form-label">作业步骤</label><div class="editor-head"><span>按实际作业顺序配置</span><span>时长（秒）</span></div><div id="step-editors"></div><button class="add-step" type="button" data-action="add-step">＋ 添加步骤</button><p class="hint">支持 2–8 个步骤，单步骤时长 1–300 秒。演示按配置时长切换；真实判定需要识别服务。</p><div class="modal-actions"><button class="btn btn-secondary" type="button" data-action="reset-workflow">恢复默认</button><button class="btn btn-primary" type="submit">保存并应用</button></div></form>`);renderStepEditors();$('#workflow-form').addEventListener('submit',e=>{e.preventDefault();syncDraft();const name=$('#flow-name').value.trim(),area=$('#flow-area').value.trim();if(!name||!area||workflowDraft.steps.some(s=>!s.name.trim()||s.duration<1||s.duration>300||!Number.isFinite(s.duration)))return toast('请填写完整名称，并将时长设为 1–300 秒');workflow={name,area,steps:workflowDraft.steps.map(s=>({name:s.name.trim(),duration:s.duration}))};writeStorage('aisop-workflow',workflow);updateDashboard();closeModal();toast('作业流程已保存并应用');});}
 function syncDraft(){workflowDraft.steps=$$('.step-editor').map(row=>({name:$('[data-step-name]',row).value,duration:Number($('[data-step-duration]',row).value)}));}
 function renderStepEditors(){$('#step-editors').innerHTML=workflowDraft.steps.map((s,i)=>`<div class="step-editor"><span class="editor-index">${i+1}</span><input class="field" data-step-name value="${escapeHTML(s.name)}" required maxlength="35" aria-label="步骤 ${i+1} 名称"><input class="field" data-step-duration type="number" min="1" max="300" required value="${s.duration}" aria-label="步骤 ${i+1} 时长"><button class="icon-button" type="button" data-remove-step="${i}" aria-label="删除步骤 ${i+1}" ${workflowDraft.steps.length<=2?'disabled':''}>${icon('close')}</button></div>`).join('');$('[data-action="add-step"]').disabled=workflowDraft.steps.length>=8;}
-function showSystem(){const s=currentState(),real=analysisData?.summary;showModal('系统运行详情',`<p class="modal-intro">当前工作区运行状态与视频源信息。</p><div class="system-grid"><div class="system-item"><span>运行模式</span><strong>${real?'实际离线分析':demo?'参考视频演示':'本地视频回放'}</strong></div><div class="system-item"><span>识别模型</span><strong>${real?escapeHTML(analysisData.model.name):'未连接'}</strong></div><div class="system-item"><span>推理设备</span><strong>${real?escapeHTML(analysisData.model.device):'—'}</strong></div><div class="system-item"><span>分析采样</span><strong>${real?analysisData.model.sampleFps+' fps':'—'}</strong></div><div class="system-item"><span>平均模型推理</span><strong>${real?real.meanInferenceMs.toFixed(1)+' ms':demo?s.latency+' ms':'—'}</strong></div><div class="system-item"><span>人体检出率</span><strong>${real?(real.presenceRate*100).toFixed(1)+'%':'—'}</strong></div><div class="system-item"><span>视频源分辨率</span><strong>${video.videoWidth} × ${video.videoHeight}</strong></div><div class="system-item"><span>分析帧数</span><strong>${real?real.analyzedFrames:'—'}</strong></div></div><div class="system-note">${real?'当前检测结果来自实际模型离线推理。动作由关键点几何规则生成；未用人工真值验证，也未接入工具、工件和设备状态，因此不输出工序合格率。':'演示数据不是本机真实推理结果。上传视频可回放，自动判定需接入模型服务。'}</div><div class="modal-actions">${real?'<button class="btn btn-secondary" data-action="report">打开详细报告</button>':'<button class="btn btn-secondary" data-action="checks">运行环境自检</button>'}<button class="btn btn-primary" data-action="close-modal">完成</button></div>`);}
+function diagnosticContext(){
+  const serverMode=!!(window.AISOP_SERVER||window.ServerApp?.available);
+  const runtime=window.ServerApp?.runtime||{};
+  return {serverMode,runtime,live:serverMode?runtime.live:null,
+    connected:serverMode&&runtime.health?.analysis==='offline-pose'&&!runtime.healthError};
+}
+function diagnosticNumber(value,unit='',digits=1){return typeof value==='number'&&Number.isFinite(value)?value.toFixed(digits)+unit:'未采集';}
+function diagnosticResolution(width,height){return width>0&&height>0?`${width} × ${height}`:'未加载画面';}
+function diagnosticDevice(value){return value==='0'?'GPU 0':value==='cpu'?'CPU':value||'待首次检测';}
+function systemDetailsHTML(){
+  const {serverMode,runtime,live,connected}=diagnosticContext();
+  const service=connected?'已连接':runtime.healthError?'连接失败':'连接中';
+  const model=runtime.health?.realtime;
+  const modelState={loaded:'已加载',loading:'加载中',not_loaded:'按需加载',unavailable:'不可用'};
+  const serverModel=model?`${model.model} · ${modelState[model.state]||'待检测'}`:connected?'已接入 · 待首次检测':'等待服务连接';
+  let entries,note;
+  if(live){
+    const phases={idle:'待开启',starting:'正在开启',active:'检测中',retrying:'正在重试',stopped:'已停止',error:'检测异常'};
+    const data=live.data;
+    entries=[['运行模式','实时摄像头检测'],['检测状态',phases[live.phase]||'待开启'],
+      ['识别模型',data?.model||serverModel],['推理设备',diagnosticDevice(data?.device||model?.device)],
+      ['检测帧率',diagnosticNumber(live.phase==='active'?live.fps:null,' fps')],['最近服务端处理',diagnosticNumber(data?.processingMs,' ms')],
+      ['摄像头画面分辨率',diagnosticResolution(live.width,live.height)],['本轮检测帧数',String(live.frames||0)]];
+    note=live.error?`检测反馈：${live.error}`:live.phase==='stopped'?'摄像头已释放，显示本轮最近一次检测信息。重新开始会清空本轮记录。':
+      data?'当前模型、设备和耗时来自本轮服务器检测响应。摄像头画面按帧采样，不保存录像；动作顺序与工艺质量需人工复核。':'开始检测并授权摄像头后显示实际画面和推理信息。模型会在首次检测时按需加载。';
+  }else if(analysisData?.summary){
+    const {summary,source,model}=analysisData;
+    entries=[['运行模式',serverMode?'服务器离线分析回放':'离线分析样例回放'],['识别模型',model.name],
+      ['推理设备',diagnosticDevice(model.device)],['分析采样',diagnosticNumber(model.sampleFps,' fps')],
+      ['平均模型推理',diagnosticNumber(summary.meanInferenceMs,' ms')],['人体检出率',diagnosticNumber(summary.presenceRate*100,'%')],
+      ['视频源分辨率',diagnosticResolution(source.width,source.height)],['分析帧数',diagnosticNumber(summary.analyzedFrames,'',0)]];
+    note='模型、设备与统计来自当前视频的分析结果，不代表服务器当前负载。人体姿态和动作顺序已有分析；工艺合格结论仍需人工复核。';
+  }else if(serverMode&&!demo){
+    const runNames={QUEUED:'等待分析',RUNNING:'正在分析',CANCELLING:'正在取消',CANCELLED:'已取消',FAILED:'分析失败',SUCCEEDED:'分析完成'};
+    entries=[['运行模式','服务器视频分析'],['分析服务',service],['登录状态',runtime.user||'未登录'],
+      ['当前任务',runtime.uploading?'正在上传':runtime.run?runNames[runtime.run.status]||runtime.run.status:'未选择任务'],
+      ['实时姿态模型',serverModel],['离线分析模型',$('#pose-model')?.selectedOptions[0]?.textContent||'未选择'],
+      ['视频源',video.getAttribute('src')?diagnosticResolution(video.videoWidth,video.videoHeight):'未选择视频'],
+      ['SOP 能力','动作顺序观察 · 待人工复核']];
+    note=runtime.healthError?`服务器状态读取失败：${runtime.healthError}。可重新检查连接状态。`:
+      runtime.run?'分析任务在服务器执行。打开完成的结果后显示模型、采样、耗时和视频统计。':
+      connected?'分析服务已连接。选择视频上传分析，或开启实时摄像头检测；未选择视频属于等待操作状态。':'正在连接分析服务器，连接完成后可查看服务和模型状态。';
+  }else{
+    entries=[['运行模式',demo?'参考视频演示':'本地视频回放'],['识别模型','未连接推理服务'],['推理设备','未使用推理设备'],
+      ['视频状态',video.error?'加载失败':video.readyState>=2?'已就绪':'等待加载'],
+      ['视频源分辨率',diagnosticResolution(video.videoWidth,video.videoHeight)],['分析采样','未执行分析'],['模型推理耗时','未执行推理'],['分析帧数','未执行分析']];
+    note=demo?'当前为参考视频演示，画面与演示指标不代表本机推理结果。使用服务器入口可上传分析或开启摄像头检测。':'当前仅播放本地视频，尚未执行模型分析。使用服务器入口运行检测后可查看实际结果。';
+  }
+  return `<p class="modal-intro">当前工作区的模式、画面与检测信息。</p><div class="system-grid">${entries.map(([label,value])=>`<div class="system-item"><span>${escapeHTML(label)}</span><strong>${escapeHTML(value)}</strong></div>`).join('')}</div><div class="system-note">${escapeHTML(note)}</div><div class="modal-actions">${!live&&analysisData?'<button class="btn btn-secondary" data-action="report">打开详细报告</button>':''}<button class="btn btn-secondary" data-action="checks">运行环境自检</button><button class="btn btn-primary" data-action="close-modal">完成</button></div>`;
+}
+async function showSystem(){
+  showModal('系统运行详情',systemDetailsHTML());const revision=modalRevision;
+  if(diagnosticContext().serverMode&&window.ServerApp?.refreshDiagnostics){
+    await window.ServerApp.refreshDiagnostics();
+    if(modal.open&&modalRevision===revision){$('#modal-body').innerHTML=systemDetailsHTML();paintIcons($('#modal-body'));}
+  }
+}
 let checksRun=false;
-function showChecks(){
-  const supported=[['视频播放能力',!!document.createElement('video').canPlayType('video/mp4')],['Canvas 画面渲染',!!ctx],['本地文件读取',typeof FileReader!=='undefined'],['浏览器本地存储',(()=>{try{return !!localStorage;}catch{return false;}})()],['CSV 文件导出',typeof Blob!=='undefined'],['全屏显示',!!document.fullscreenEnabled],['视频源就绪',video.readyState>=2],['人体检测模型服务',false],['姿态估计模型服务',false],['SOP 判定服务',false]];
-  showModal('运行环境自检',`<p class="modal-intro">检查浏览器能力与模型连接状态。当前 ${checksRun?supported.filter(x=>x[1]).length:0} 项通过，${checksRun?supported.filter(x=>!x[1]).length:10} 项${checksRun?'待接入':'待检查'}。</p><div>${supported.map(([label,ok],i)=>`<div class="check-row"><span class="check-mark">${checksRun&&ok?'✓':'○'}</span><span>${String(i+1).padStart(2,'0')} · ${label}</span><span class="check-state ${checksRun&&ok?'':'pending'}">${checksRun?(ok?'已通过':i>6?'待接入':'不可用'):'待检查'}</span></div>`).join('')}</div><div class="modal-actions"><button class="btn btn-secondary" data-action="close-modal">关闭</button><button class="btn btn-primary" data-action="run-checks">${checksRun?'重新检查':'开始检查'}</button></div>`);
-  if(checksRun)$('.check-chip').innerHTML=`<span class="dot yellow"></span>自检 ${supported.filter(x=>!x[1]).length} 项待处理`;
+function environmentChecks(){
+  const {serverMode,runtime,live,connected}=diagnosticContext();
+  const row=(id,label,ok,detail)=>({id,label,state:ok?'passed':'failed',status:ok?'已通过':'不可用',detail});
+  let storage=false;
+  try{const key='aisop-self-check-'+Date.now();localStorage.setItem(key,'1');storage=localStorage.getItem(key)==='1';localStorage.removeItem(key);}catch{}
+  const rows=[row('playback','视频播放能力',!!document.createElement('video').canPlayType('video/mp4'),'检查浏览器的视频解码能力。'),
+    row('canvas','Canvas 画面渲染',!!ctx,'用于绘制视频、人体框与骨架。'),
+    row('files','本地文件读取',typeof FileReader!=='undefined','用于选择和读取待分析视频。'),
+    row('storage','浏览器本地存储',storage,storage?'本机配置可读写。':'浏览器限制了本地保存，本次会话仍可使用。'),
+    row('csv','CSV 文件导出',typeof Blob!=='undefined'&&typeof URL.createObjectURL==='function','检查浏览器生成下载文件的能力。'),
+    row('fullscreen','全屏显示',!!document.fullscreenEnabled,'检查浏览器全屏接口。')];
+  let source;
+  if(live)source={id:'source',label:'当前视频源',state:live.sourceReady?'passed':live.phase==='error'?'failed':'info',
+    status:live.sourceReady?'已就绪':live.phase==='error'?'不可用':live.phase==='stopped'?'已停止':'待开启',
+    detail:live.error|| (live.sourceReady?'摄像头正在提供画面。':'点击开始检测并授权摄像头；停止后会释放设备。')};
+  else source={id:'source',label:'当前视频源',state:video.error?'failed':video.readyState>=2?'passed':'info',
+    status:video.error?'加载失败':video.readyState>=2?'已就绪':video.getAttribute('src')?'加载中':'待选择',
+    detail:video.error?'请检查视频格式或网络连接。':video.readyState>=2?'当前视频已加载。':'选择视频或打开分析结果后检查画面；空闲状态不属于服务故障。'};
+  rows.push(source);
+  for(const [id,label,capability] of [['people','人体检测模型服务','personDetection'],['pose','姿态估计模型服务','poseEstimation']]){
+    const model=runtime.health?.realtime;
+    const unavailable=model?.state==='unavailable'||runtime.health?.capabilities?.[capability]===false;
+    const verified=!!live?.data&&live.frames>0;
+    rows.push({id,label,state:serverMode?(runtime.healthError||unavailable?'failed':connected?'passed':'info'):'pending',
+      status:serverMode?(runtime.healthError?'连接失败':unavailable?'模型不可用':connected?(verified?'已验证':model?.state==='loaded'?'已加载':'已接入'):'连接中'):'未接入',
+      detail:serverMode?(runtime.healthError|| (unavailable?'模型资源不可用，请检查服务器模型配置。':verified?`本轮已完成服务器推理 · ${live.data.model||model?.model||'姿态模型'}`:
+        connected?`${model?.model||'人体与姿态服务'} · ${model?.state==='loaded'?'模型已加载，开启检测可验证画面结果':'模型按需加载，首次检测返回结果后可验证推理'}`:'等待服务器健康状态。')):
+        analysisData?'当前可查看已有离线结果，静态入口没有运行中的推理服务。':'静态入口仅提供视频回放；服务器入口提供模型检测。'});
+  }
+  rows.push({id:'sop',label:'动作流程 / SOP 判定',state:serverMode?'notice':'pending',status:serverMode?'待人工复核':'未接入',
+    detail:serverMode?(runtime.workflowsLoaded||live?.data?.actionSequence?'动作顺序观察服务已接入；工艺合格结论需人工复核。':'正式工艺判定未配置；不能依据人体姿态判定产品合格。'):'静态演示不执行生产 SOP 判定。'});
+  return rows;
+}
+function checksHTML(){
+  const rows=environmentChecks();
+  const passed=rows.filter(row=>row.state==='passed').length;
+  const attention=rows.filter(row=>['failed','pending'].includes(row.state)).length;
+  const waiting=rows.length-passed-attention;
+  $('.check-chip').innerHTML=`<span class="dot ${attention?'yellow':'green'}"></span>自检 ${attention?attention+' 项需处理':waiting?waiting+' 项待操作 / 复核':'已通过'}`;
+  return `<p class="modal-intro">${passed} 项已通过${waiting?' · '+waiting+' 项待操作 / 复核':''}${attention?' · '+attention+' 项需处理':''}。检查当前浏览器与服务状态。</p><div class="checks-list">${rows.map((row,i)=>`<div class="check-row" data-check="${row.id}"><span class="check-mark ${row.state}">${row.state==='passed'?'✓':row.state==='failed'?'!':'○'}</span><div class="check-info"><b>${String(i+1).padStart(2,'0')} · ${escapeHTML(row.label)}</b><small class="check-desc">${escapeHTML(row.detail)}</small></div><span class="check-state ${row.state}">${escapeHTML(row.status)}</span></div>`).join('')}</div><div class="modal-actions"><button class="btn btn-secondary" data-action="close-modal">关闭</button><button class="btn btn-primary" data-action="run-checks">重新检查</button></div>`;
+}
+async function showChecks(){
+  checksRun=true;showModal('运行环境自检',checksHTML());const revision=modalRevision;
+  if(diagnosticContext().serverMode&&window.ServerApp?.refreshDiagnostics){
+    await window.ServerApp.refreshDiagnostics();
+    if(modal.open&&modalRevision===revision){$('#modal-body').innerHTML=checksHTML();paintIcons($('#modal-body'));}
+  }
 }
 function showUpload(){showModal('上传视频检测',`<p class="modal-intro">选择本地工位视频。文件仅在当前浏览器中读取，不会上传到外部服务。</p><div class="upload-zone" id="upload-zone" tabindex="0" role="button" aria-label="选择或拖放视频"><i>${icon('upload')}</i><h3>将视频拖放到这里</h3><p>支持浏览器可解码的 MP4、WebM、MOV · 最大 500 MB</p><button class="btn btn-primary" data-action="choose-video">选择本地视频</button></div><div class="system-note">当前为界面复刻与视频回放版本。上传后可播放、暂停和拖动进度；自动检测需要接入 AI 推理引擎，系统不会生成虚构识别结果。</div><div class="modal-actions"><button class="btn btn-secondary" data-action="restore-demo">恢复参考视频演示</button><button class="btn btn-secondary" data-action="close-modal">取消</button></div>`);
   const zone=$('#upload-zone');zone.insertAdjacentHTML('afterend','<button class="add-step" style="margin-top:12px" data-action="worker-video">播放工厂工人实际分析视频</button><button class="add-step" data-action="factory-video">播放瓶装生产线测试视频</button><button class="add-step" data-action="test-video">播放行人测试视频</button>');zone.addEventListener('click',e=>{if(!e.target.closest('button'))$('#video-upload').click();});zone.addEventListener('keydown',e=>{if(e.target===zone&&(e.key==='Enter'||e.key===' ')){e.preventDefault();$('#video-upload').click();}});zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('drag-over');});zone.addEventListener('dragleave',()=>zone.classList.remove('drag-over'));zone.addEventListener('drop',e=>{e.preventDefault();zone.classList.remove('drag-over');if(e.dataTransfer.files[0])loadUpload(e.dataTransfer.files[0]);});
@@ -475,7 +618,7 @@ document.addEventListener('keydown',e=>{
 actions['test-video']=()=>loadTestVideo('people');
 actions['factory-video']=()=>loadTestVideo('factory');
 actions['worker-video']=loadWorkerVideo;
-const requestedSample=new URLSearchParams(location.search).get('video');
+const requestedSample=window.AISOP_SERVER?null:new URLSearchParams(location.search).get('video');
 if(requestedSample==='workers')loadWorkerVideo();else if(requestedSample==='people'||requestedSample==='factory')loadTestVideo(requestedSample);
 window.addEventListener('beforeunload',()=>{cancelAnimationFrame(frameId);if(uploadedURL)URL.revokeObjectURL(uploadedURL);});
 // Share the picture size across replay and dynamically created camera views.

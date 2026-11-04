@@ -2,24 +2,116 @@
 // Server adapter. Legacy static-preview mode remains usable without the API.
 window.ServerApp = (() => {
   const state={available:false,csrf:null,user:null,active:null,loaded:null,timer:null,busy:false,
+    health:null,healthError:null,run:null,workflowsLoaded:false,
     runGeneration:0,runAbort:null,pollUpdatedAt:null,upload:null,limits:{max_upload_bytes:500*1024*1024,max_video_seconds:600}};
   const labels={QUEUED:'等待分析',RUNNING:'正在分析',CANCELLING:'正在取消',CANCELLED:'已取消',FAILED:'分析失败',SUCCEEDED:'分析完成'};
   const isLab=()=>$('#station-select')?.value==='algorithm-test';
   const selectedStation=()=>isLab()?null:$('#station-select')?.value||null;
   const selectedWorkflow=()=>isLab()?null:$('#action-workflow')?.value||null;
+  const sequenceStatuses={OBSERVING:'观察中',INCOMPLETE:'尚未完整观察',EVIDENCE_GAP:'证据中断',REVIEW_SEQUENCE:'顺序需复核',OBSERVED_SEQUENCE:'已观察完整顺序'};
+  let currentSequence=null,sequenceRevision=-1,sequenceTrack=null;
+  function clearSequence(){currentSequence=null;sequenceRevision=-1;sequenceTrack=null;}
   function renderSequence(sequence){
-    const names={OBSERVING:'观察中',INCOMPLETE:'尚未完整观察',EVIDENCE_GAP:'证据中断',REVIEW_SEQUENCE:'顺序需复核',OBSERVED_SEQUENCE:'已观察完整顺序'};
+    if(sequenceRevision!==sceneRevision)sequenceTrack=null;
+    currentSequence=sequence;sequenceRevision=sceneRevision;
+    $('#pending-step').hidden=true;$('.recent-cycles').hidden=true;
     const steps=sequence.workflow.config.steps;
     $('#workflow-name').textContent=sequence.workflow.config.name;
     $('#workflow-status').textContent='按人物观察 · 待复核';
     $('#step-counter').textContent=`${sequence.subjects.length} 条人物轨迹`;
     $('#workflow-description').textContent=sequence.scope;
-    $('#steps').innerHTML=sequence.subjects.map(s=>{
-      const current=steps.find(step=>step.id===s.currentStep),p=s.currentStepProgress;
-      return `<div class="station-check"><b>人物 ${s.trackId} · 第 ${s.cycle} 轮</b><span>${names[s.status]||'待复核'}</span><p>${s.completed.length}/${steps.length} 步 · ${s.observed?'当前可见':'当前未见'}</p><progress class="sequence-progress" value="${s.completed.length}" max="${steps.length}" aria-label="人物${s.trackId}步骤完成进度"></progress><p class="current-stage">当前阶段：${escapeHTML(current?.name||'本轮观察完成')}</p>${current&&p?`<p>${p.waitingForRelease?'等待上一动作释放':`持续证据 ${p.observedSeconds.toFixed(2)} / ${p.requiredSeconds.toFixed(2)}s`}</p><progress class="sequence-progress" max="1" value="${p.fraction}" aria-label="当前步骤证据进度"></progress>`:''}<ol class="sequence-steps">${steps.map(step=>`<li class="${s.completed.some(c=>c.stepId===step.id)?'done':step.id===s.currentStep?'current':''}">${s.completed.some(c=>c.stepId===step.id)?'✓':step.id===s.currentStep?'▶':'○'} ${escapeHTML(step.name)}</li>`).join('')}</ol></div>`;
-    }).join('')||'<p>等待可靠的人物轨迹</p>';
-    $('#steps').innerHTML+=sequence.events.slice(-8).map(e=>`<p>人物 ${e.trackId} · ${e.time}s：${escapeHTML(e.detail)}</p>`).join('');
-    if($('#live-inspection'))$('#live-inspection').innerHTML=$('#steps').innerHTML;
+
+    const subjects = sequence.subjects;
+    const wanted=$('#inline-live')?sequenceTrack:temporalTrack;
+    const s = subjects.find(sub=>String(sub.trackId)===String(wanted)) || subjects.filter(sub=>sub.observed).at(-1) || subjects.at(-1);
+    if(!s){
+      $('#workflow-status').textContent='等待人物轨迹';
+      $('#steps').innerHTML = '<p class="empty-note">等待可靠的人物轨迹，检出后显示各步骤进度。</p><ol class="sequence-steps">'+steps.map(step=>`<li>○ ${escapeHTML(step.name)}</li>`).join('')+'</ol>';
+      if($('#live-inspection'))$('#live-inspection').innerHTML=$('#steps').innerHTML;
+      return;
+    }
+    sequenceTrack=s.trackId;
+    $('#workflow-status').textContent=sequenceStatuses[s.status]||'待复核';
+    const current = steps.find(step => step.id === s.currentStep);
+    const p = s.currentStepProgress;
+    const eventCount = sequence.eventCount ?? sequence.events?.length ?? 0;
+
+    const optionsHTML=subjects.map(sub=>`<option value="${escapeHTML(sub.trackId)}" ${sub===s?'selected':''}>人物 ${escapeHTML(sub.trackId)} · 第 ${escapeHTML(sub.cycle)} 轮${sub.observed?' · 当前可见':' · 当前未见'}</option>`).join('');
+    const selectorHTML=subjects.length>1?`<label class="sequence-subject-control" for="sequence-subject">查看人物流程 <select id="sequence-subject" class="field">${optionsHTML}</select></label>`:'';
+    const cardHTML = `
+      <div class="station-check latest-focused">
+        <div class="station-check-head">
+          <b>人物 ${s.trackId} · 第 ${s.cycle} 轮（最新判定）</b>
+          <span class="status-badge">${sequenceStatuses[s.status] || '待复核'}</span>
+        </div>
+        <p class="cycle-summary">${s.completed.length}/${steps.length} 步 · ${s.observed ? '当前作业中' : '当前未见'}</p>
+        <progress class="sequence-progress" value="${s.completed.length}" max="${steps.length}" aria-label="人物${s.trackId}步骤完成进度"></progress>
+
+        <div class="current-stage-card">
+          <span class="stage-label">实时判定阶段</span>
+          <strong class="stage-name">${escapeHTML(current?.name || '本轮观察完成')}</strong>
+          ${current && p ? `
+            <div class="stage-evidence">
+              <small>${p.waitingForRelease ? '等待上一动作释放' : `持续证据 ${p.observedSeconds.toFixed(2)}s / ${p.requiredSeconds.toFixed(2)}s`}</small>
+              <progress class="sequence-progress" max="1" value="${p.fraction}" aria-label="当前步骤证据进度"></progress>
+            </div>
+          ` : ''}
+        </div>
+
+        <ol class="sequence-steps">
+          ${steps.map(step => `
+            <li class="${s.completed.some(c => c.stepId === step.id) ? 'done' : step.id === s.currentStep ? 'current' : ''}">
+              ${s.completed.some(c => c.stepId === step.id) ? '✓' : step.id === s.currentStep ? '▶' : '○'} ${escapeHTML(step.name)}
+            </li>
+          `).join('')}
+        </ol>
+
+        <div class="history-chip" data-action="sop-history">
+          <span class="chip-dot"></span>
+          <span>当前检测记录 (${eventCount} 条)</span>
+          <button class="btn-link" type="button" data-action="sop-history">查看记录 ›</button>
+        </div>
+      </div>
+    `;
+    const container=$('#steps'),card=$('.latest-focused',container),picker=$('#sequence-subject',container);
+    if(!card)container.innerHTML=selectorHTML+cardHTML;
+    else{
+      card.outerHTML=cardHTML;
+      if(subjects.length>1){
+        if(!picker)container.insertAdjacentHTML('afterbegin',selectorHTML);
+        else if(document.activeElement!==picker){
+          if(picker.innerHTML!==optionsHTML)picker.innerHTML=optionsHTML;
+          picker.value=String(s.trackId);
+        }
+      }else picker?.closest('label').remove();
+    }
+    if($('#sequence-subject'))$('#sequence-subject').onchange=event=>{
+      sequenceTrack=event.target.value;
+      if(!$('#inline-live')&&analysisData){temporalTrack=Number(sequenceTrack);renderedWorker=null;updateWorkerDashboard();}
+      else renderSequence(currentSequence);
+    };
+    if($('#live-inspection')) $('#live-inspection').innerHTML = $('#steps .latest-focused').outerHTML;
+  }
+  function showSequenceHistory(){
+    const sequence=$('#inline-live')?(sequenceRevision===sceneRevision?currentSequence:null):analysisData?.actionSequence;
+    const events=Array.isArray(sequence?.events)?sequence.events:[];
+    if(!sequence){showModal('动作流程历史记录','<p class="modal-intro">当前没有动作流程记录。选择动作顺序后开始摄像头检测，或打开包含动作流程的分析结果。</p><div class="modal-actions"><button class="btn btn-primary" data-action="close-modal">关闭</button></div>');return;}
+    const codes={STEP_OBSERVED:'已观察步骤',STEP_TIMEOUT:'等待超时',OUT_OF_ORDER:'顺序需复核',CONTINUITY_RESET:'连续性中断'};
+    const tracks=[...new Set(events.map(event=>event.trackId))];
+    const replay=!$('#inline-live')&&!!analysisData;
+    showModal('动作流程历史记录',`<p class="modal-intro">${escapeHTML(sequence.workflow.config.name)} · ${replay?'当前视频分析结果，可定位到事件画面':'当前摄像头检测，未保存录像'}。观察记录需人工复核。</p><label class="sequence-subject-control" for="sequence-history-track">筛选人物 <select id="sequence-history-track" class="field"><option value="">全部人物</option>${tracks.map(id=>`<option value="${escapeHTML(id)}">人物 ${escapeHTML(id)}</option>`).join('')}</select></label><p id="sequence-history-summary" class="hint" role="status"></p><div class="history-table-wrap"><table class="sop-history-table"><thead><tr><th>时间</th><th>人物 / 周期</th><th>判定</th><th>依据</th>${replay?'<th>回放</th>':''}</tr></thead><tbody id="sequence-history-rows"></tbody></table></div><div class="modal-actions"><button class="btn btn-primary" data-action="close-modal">关闭</button></div>`);
+    const render=()=>{
+      const track=$('#sequence-history-track').value;
+      const selected=events.filter(event=>!track||String(event.trackId)===track).slice().reverse();
+      $('#sequence-history-summary').textContent=`显示 ${selected.length} 条记录${sequence.truncated?` · 累计 ${sequence.eventCount??events.length} 条，仅展示保留记录`:''}`;
+      $('#sequence-history-rows').innerHTML=selected.length?selected.map(event=>`<tr><td>${Number(event.time).toFixed(2)}s</td><td>P${escapeHTML(event.trackId)} / ${escapeHTML(event.cycle)}</td><td>${escapeHTML(codes[event.code]||event.code)}</td><td class="cell-desc">${escapeHTML(event.detail)}</td>${replay?`<td><button class="btn" data-sequence-seek="${Number(event.time)}" data-sequence-track="${escapeHTML(event.trackId)}">定位画面</button></td>`:''}</tr>`).join(''):`<tr><td colspan="${replay?5:4}">暂无记录，持续观察到步骤或复核提示后会显示。</td></tr>`;
+    };
+    $('#sequence-history-track').onchange=render;render();
+    $('#sequence-history-rows').onclick=event=>{
+      const button=event.target.closest('[data-sequence-seek]');if(!button)return;
+      temporalTrack=Number(button.dataset.sequenceTrack);renderedWorker=null;
+      video.pause();video.currentTime=Number(button.dataset.sequenceSeek);closeModal();updateWorkerDashboard();
+    };
   }
   const labNames={raise:'举手',grip:'握拳／抓握候选',objects:'通用目标识别'};
   const savedLab=readStorage('aisop-lab',null);
@@ -85,6 +177,8 @@ window.ServerApp = (() => {
     $('#server-account').textContent=state.user?`${state.user} · 退出`:'登录服务器';
   }
   function leaveRun(){
+    clearSequence();
+    state.run=null;
     state.runGeneration++;state.runAbort?.abort();state.runAbort=null;
     state.active=null;state.loaded=null;state.pollUpdatedAt=null;clearTimeout(state.timer);progress(null);
     if($('#server-cancel'))$('#server-cancel').hidden=true;
@@ -107,12 +201,14 @@ window.ServerApp = (() => {
     $('#server-drop').addEventListener('dragleave',()=>$('#server-drop')?.classList.remove('dragging'));
     $('#server-drop').addEventListener('drop',e=>{e.preventDefault();if(e.dataTransfer.files[0])upload(e.dataTransfer.files[0]);});
   }
-  let liveStreamId=null, liveGeneration=0, liveStream=null, liveTimer=null, liveAbort=null;
+  let liveStreamId=null, liveGeneration=0, liveStream=null, liveTimer=null, liveAbort=null, liveDeviceChange=null;
+  let livePhase='idle',liveData=null,liveFrames=0,liveFps=null,liveError=null;
   function stopLive(){
     const released=liveStreamId;liveStreamId=null;
     if($('#inline-live'))$('.timeline-panel .micro-tag').textContent='实时检测已停止';
     if(released)request('/realtime/streams/'+released,{method:'DELETE'}).catch(()=>{});
     liveGeneration++;clearTimeout(liveTimer);liveAbort?.abort();liveAbort=null;
+    livePhase='stopped';
     liveStream?.getTracks().forEach(track=>track.stop());liveStream=null;
     const camera=$('#live-camera');if(camera)camera.srcObject=null;
     if($('#live-stop'))$('#live-stop').disabled=true;
@@ -120,43 +216,105 @@ window.ServerApp = (() => {
   }
   window.addEventListener('pagehide',stopLive);
   function leaveLive(){
-    stopLive();$('#inline-live')?.remove();$('#video-stage').hidden=false;$('.video-stats').hidden=false;
+    stopLive();
+    clearSequence();
+    if(liveDeviceChange){navigator.mediaDevices?.removeEventListener('devicechange',liveDeviceChange);liveDeviceChange=null;}
+    $('#inline-live')?.remove();$('#video-stage').hidden=false;$('.video-stats').hidden=false;
     if($('#video-mode'))$('#video-mode').value='replay';
     if(analysisData){$('.camera-name').textContent=analysisData.source.title;$('.stream-info').textContent=analysisData.model.name;}
     updateDashboard();
   }
+  function drawHands(ctx,hands,output){
+    if(!Array.isArray(hands)||!hands.length)return;
+    const unit=displayPixelRatio(ctx);
+    ctx.save();ctx.lineCap='round';ctx.lineJoin='round';
+    ctx.font=`600 ${Math.round(12*unit)}px "Microsoft YaHei",sans-serif`;
+    for(const hand of hands){
+      const p=hand.points;if(!Array.isArray(p))continue;
+      ctx.beginPath();
+      for(const chain of poseSkeleton.handChains)for(let i=1;i<chain.length;i++){const a=p[chain[i-1]],b=p[chain[i]];if(!a||!b)continue;ctx.moveTo(a[0]*output.width,a[1]*output.height);ctx.lineTo(b[0]*output.width,b[1]*output.height);}
+      ctx.strokeStyle='#03101f';ctx.lineWidth=4.5*unit;ctx.stroke();
+      ctx.strokeStyle='#ffcf60';ctx.lineWidth=2.4*unit;ctx.stroke();
+      ctx.fillStyle='#ffcf60';ctx.fillText(hand.label,p[0][0]*output.width,p[0][1]*output.height);
+    }
+    ctx.restore();
+  }
   function showLive(){
     if(state.busy){toast('请先完成或取消上传，再开始实时检测');$('#video-mode').value='replay';return;}
-    if(!state.user){login(showLive);return;}
+    if(!state.user){$('#video-mode').value='replay';login(showLive);return;}
     leaveLive();leaveRun();sceneRevision++;demo=false;video.pause();$('#video-mode').value='realtime';$('#video-stage').hidden=true;$('.video-stats').hidden=true;
+    livePhase='idle';liveData=null;liveFrames=0;liveFps=null;liveError=null;
     for(const id of ['metric-compliance','video-compliance','compliance-rate','compliant-count','noncompliant-count','metric-fps','metric-latency','metric-targets'])$('#'+id).textContent='—';
     $('#detection-results').innerHTML='';$('#time-bars').innerHTML='';$('#timeline-playhead')?.setAttribute('hidden','');$('#result-note').textContent='等待实时采样结果';
     resetLiveTimeline();
     $('#workflow-description').textContent='实时单帧姿态与配置工位检查，不判定工艺完成';$('#steps').innerHTML='';$('#workflow-status').textContent='待复核';
+    $('#pending-step').hidden=true;$('.recent-cycles').hidden=true;
     $('.compliance-foot').textContent='实时检测 · SOP待复核';$('#realtime-alert').textContent='待复核';
     $('.camera-name').textContent='浏览器摄像头';$('.stream-info').textContent='实时预览与采样检测';$('.live').textContent='等待开启';status('实时摄像头模式');
-    $('#video-stage').insertAdjacentHTML('afterend',`<section id="inline-live"><div class="live-controls"><label>视图 <select id="live-view" class="field"><option value="detection">算法检测画面</option><option value="preview">原始预览（不叠加检测）</option></select></label><label>检测目标帧率 <select id="live-rate" class="field"><option>5</option><option>10</option><option>15</option><option selected>30</option><option>60</option></select> fps</label><button class="btn btn-primary" id="live-start">开始检测</button><button class="btn btn-secondary" id="live-stop">停止检测</button></div><div class="live-picture"><video id="live-camera" autoplay muted playsinline hidden></video><canvas id="live-result" width="640" height="360" aria-label="实时检测采样画面"></canvas></div><p id="live-status" role="status">点击开始授权摄像头。画面发送到当前服务器，不保存录像。</p><p id="live-metrics">预览 — fps · 检测 — fps · 延迟 — ms</p></section>`);
-    const message=$('#live-status'),start=$('#live-start'),camera=$('#live-camera'),output=$('#live-result');
+    $('#video-stage').insertAdjacentHTML('afterend',`<section id="inline-live"><div class="live-controls"><label>摄像头 <select id="live-device" class="field" aria-label="选择摄像头设备"><option value="">默认摄像头</option></select></label><label>视图 <select id="live-view" class="field"><option value="detection">算法检测画面</option><option value="preview">原始预览（不叠加检测）</option></select></label><label>检测目标帧率 <select id="live-rate" class="field"><option>5</option><option>10</option><option>15</option><option selected>30</option><option>60</option></select> fps</label><button class="btn btn-primary" id="live-start">开始检测</button><button class="btn btn-secondary" id="live-stop">停止检测</button></div><div class="live-picture"><video id="live-camera" autoplay muted playsinline hidden></video><canvas id="live-result" width="640" height="360" aria-label="实时检测采样画面"></canvas></div><p id="live-status" role="status">点击开始授权摄像头。画面发送到当前服务器，不保存录像。</p><p id="live-metrics">预览 — fps · 检测 — fps · 延迟 — ms</p></section>`);
+    const message=$('#live-status'),start=$('#live-start'),camera=$('#live-camera'),output=$('#live-result'),deviceSelect=$('#live-device');
     $('#live-stop').disabled=true;
     message.insertAdjacentHTML('afterend','<div id="live-inspection" hidden></div>');
+    $('#live-start').insertAdjacentHTML('beforebegin','<label>手部骨架 <input type="checkbox" id="live-hands"></label>');
+    $('#live-hands').disabled=isLab();
     $('#live-view').onchange=()=>{const preview=$('#live-view').value==='preview';camera.hidden=!preview;output.hidden=preview;};
+    const cameraKey=()=>{try{return localStorage.getItem('aisop-camera-device')||'';}catch{return '';}};
+    const rememberCamera=id=>{try{if(id)localStorage.setItem('aisop-camera-device',id);else localStorage.removeItem('aisop-camera-device');}catch{}};
+    let desiredCamera=cameraKey();
+    const refreshCameraDevices=async()=>{
+      if(!navigator.mediaDevices?.enumerateDevices)return;
+      let devices;try{devices=await navigator.mediaDevices.enumerateDevices();}catch{return;}
+      if(!document.body.contains(deviceSelect))return;
+      const cameras=devices.filter(device=>device.kind==='videoinput');
+      const current=deviceSelect.value;
+      deviceSelect.innerHTML='<option value="">默认摄像头</option>';
+      cameras.forEach((device,index)=>{const option=document.createElement('option');option.value=device.deviceId;option.textContent=device.label||`摄像头 ${index+1}`;deviceSelect.append(option);});
+      if(desiredCamera&&cameras.some(device=>device.deviceId===desiredCamera)){deviceSelect.value=desiredCamera;desiredCamera='';}
+      else if(current&&cameras.some(device=>device.deviceId===current))deviceSelect.value=current;
+      else deviceSelect.value='';
+    };
+    deviceSelect.onchange=()=>{desiredCamera='';rememberCamera(deviceSelect.value);if(liveStreamId)beginLive();};
+    refreshCameraDevices();
+    liveDeviceChange=refreshCameraDevices;
+    navigator.mediaDevices?.addEventListener('devicechange',liveDeviceChange);
     $('#live-stop').onclick=()=>{stopLive();start.disabled=false;message.textContent='已停止，摄像头已释放';output.getContext('2d').clearRect(0,0,output.width,output.height);};
-    start.onclick=async()=>{
+    const beginLive=async()=>{
       stopLive();const generation=liveGeneration;start.disabled=true;$('#live-stop').disabled=false;
+      livePhase='starting';liveData=null;liveFrames=0;liveFps=null;liveError=null;
+      clearSequence();$('#steps').innerHTML='<p class="empty-note">等待新一轮检测结果</p>';
+      $('#workflow-status').textContent='等待检测';$('#step-counter').textContent='—';
       const stationId=selectedStation(),testIds=isLab()?labOrder.filter(id=>$('#test-'+id)?.checked):[];
       if(isLab()&&!testIds.length){stopLive();message.textContent='请至少选择一个测试算法';return;}
       const streamId=crypto.randomUUID(),streamStarted=performance.now(),workflowId=selectedWorkflow();liveStreamId=streamId;
       resetLiveTimeline();
       const sequence={},sequential=$('#test-sequential')?.checked;
+      const handsOn=!testIds.length&&!!$('#live-hands')?.checked;
+      const frameQuery=new URLSearchParams();
+      if(testIds.length){frameQuery.set('test_algorithms',testIds.join(','));frameQuery.set('sequential',String(sequential));}
+      else{if(stationId)frameQuery.set('station_id',stationId);if(workflowId)frameQuery.set('workflow_id',workflowId);if(handsOn)frameQuery.set('hands','1');}
+      const frameQueryString=frameQuery.toString(),frameUrl='/realtime/frame'+(frameQueryString?'?'+frameQueryString:'');
       let previewFrames=0,previewFps=0,previewStart=performance.now(),lastResult=0,retries=0;
       function countPreview(now){if(generation!==liveGeneration)return;previewFrames++;if(now-previewStart>=1000){previewFps=previewFrames*1000/(now-previewStart);previewFrames=0;previewStart=now;}camera.requestVideoFrameCallback?.(countPreview);}
       try{
         if(!navigator.mediaDevices?.getUserMedia)throw new Error('摄像头需要HTTPS或localhost环境');
         message.textContent='正在请求摄像头权限…';
-        const stream=await navigator.mediaDevices.getUserMedia({video:{width:{ideal:1280},height:{ideal:720},frameRate:{ideal:30}},audio:false});
+        const videoConstraints={width:{ideal:1280},height:{ideal:720},frameRate:{ideal:30}};
+        const cameraId=deviceSelect.value;
+        let stream;
+        try{stream=await navigator.mediaDevices.getUserMedia({video:cameraId?{...videoConstraints,deviceId:{exact:cameraId}}:videoConstraints,audio:false});}
+        catch(error){
+          if(cameraId&&['OverconstrainedError','NotFoundError','DevicesNotFoundError'].includes(error.name)){
+            desiredCamera='';rememberCamera('');deviceSelect.value='';
+            message.textContent='所选摄像头不可用，已改用默认摄像头';
+            stream=await navigator.mediaDevices.getUserMedia({video:videoConstraints,audio:false});
+          }else throw error;
+        }
         if(generation!==liveGeneration){stream.getTracks().forEach(t=>t.stop());return;}
         liveStream=stream;camera.srcObject=stream;await camera.play();
         if(generation!==liveGeneration)return;
+        await refreshCameraDevices();
+        const trackLabel=stream.getVideoTracks()[0]?.label;
+        if(trackLabel)$('.camera-name').textContent=trackLabel;
         $('.live').textContent='实时检测';
         camera.requestVideoFrameCallback?.(countPreview);
         const capture=document.createElement('canvas');
@@ -178,41 +336,58 @@ window.ServerApp = (() => {
             liveAbort=new AbortController();
             const controller=liveAbort,timeout=setTimeout(()=>controller.abort(),60000);
             let data;
-            try{data=await request('/realtime/frame'+(testIds.length?'?test_algorithms='+testIds.join(',')+'&sequential='+Boolean(sequential):stationId?'?station_id='+encodeURIComponent(stationId)+(workflowId?'&workflow_id='+encodeURIComponent(workflowId):''):workflowId?'?workflow_id='+encodeURIComponent(workflowId):''),{method:'POST',headers:{'Content-Type':'image/jpeg','X-Stream-Id':streamId,'X-Frame-Time':String((tickStarted-streamStarted)/1000)},body:blob,signal:controller.signal,timeoutMs:60000});}
+            try{data=await request(frameUrl,{method:'POST',headers:{'Content-Type':'image/jpeg','X-Stream-Id':streamId,'X-Frame-Time':String((tickStarted-streamStarted)/1000)},body:blob,signal:controller.signal,timeoutMs:60000});}
             catch(error){if(error.name==='AbortError'&&generation===liveGeneration)throw new Error('服务器60秒内未返回结果，请检查推理服务后重试');throw error;}
             finally{clearTimeout(timeout);}
             if(generation!==liveGeneration)return;
             retries=0;
             adoptSkeletonTopology(data.skeleton);
             if(output.width!==capture.width||output.height!==capture.height){output.width=capture.width;output.height=capture.height;}
-            const ctx=output.getContext('2d');ctx.drawImage(capture,0,0);ctx.strokeStyle='#3fcf9b';ctx.fillStyle='#3fcf9b';ctx.lineWidth=2;ctx.font='18px sans-serif';
+            const ctx=output.getContext('2d');ctx.drawImage(capture,0,0);
+            const unit=displayPixelRatio(ctx),fontSize=Math.round(15*unit),labelHeight=fontSize+8*unit;
+            ctx.textBaseline='middle';ctx.font=`700 ${fontSize}px "Microsoft YaHei",sans-serif`;
             for(const p of data.people){
-              const [x,y,x2,y2]=p.bbox;ctx.strokeRect(x*output.width,y*output.height,(x2-x)*output.width,(y2-y)*output.height);
+              const [x,y,x2,y2]=p.bbox,bx=x*output.width,by=y*output.height,bw=(x2-x)*output.width,bh=(y2-y)*output.height;
+              ctx.strokeStyle='#03101f';ctx.lineWidth=5*unit;ctx.strokeRect(bx,by,bw,bh);
+              ctx.strokeStyle='#3fcf9b';ctx.lineWidth=3*unit;ctx.strokeRect(bx,by,bw,bh);
               const label=`P${String(p.trackId).padStart(2,'0')} ${p.label}`;
-              const labelWidth=Math.min(output.width,ctx.measureText(label).width+12);
-              const labelX=Math.max(0,Math.min(x*output.width,output.width-labelWidth));
-              const labelY=Math.max(23,Math.min(output.height,y*output.height-5));
-              ctx.fillStyle='#03101fe6';ctx.fillRect(labelX,labelY-23,labelWidth,27);
-              ctx.fillStyle='#b5ffe1';ctx.fillText(label,labelX+6,labelY-3);
+              const labelWidth=Math.min(output.width,ctx.measureText(label).width+12*unit);
+              const labelX=Math.max(0,Math.min(bx,output.width-labelWidth));
+              const labelY=Math.max(0,Math.min(by-labelHeight,output.height-labelHeight));
+              ctx.fillStyle='#041822ee';ctx.fillRect(labelX,labelY,labelWidth,labelHeight);
+              ctx.strokeStyle='#3fcf9b';ctx.lineWidth=1.2*unit;ctx.strokeRect(labelX,labelY,labelWidth,labelHeight);
+              ctx.fillStyle='#b5ffe1';ctx.fillText(label,labelX+6*unit,labelY+labelHeight/2);
               drawPoseSkeleton(ctx,p.keypoints,0,0,output.width,output.height);
             }
             if(data.lab){
-              ctx.strokeStyle='#c594ff';ctx.fillStyle='#c594ff';
-              for(const o of data.lab.objects){const [a,b,c,d]=o.bbox;ctx.strokeRect(a*output.width,b*output.height,(c-a)*output.width,(d-b)*output.height);ctx.fillText(`${o.label} ${(o.confidence*100).toFixed(0)}%`,a*output.width,Math.max(18,b*output.height));}
-              ctx.strokeStyle='#ffcf60';ctx.fillStyle='#ffcf60';
-              for(const hand of data.lab.hands){const p=hand.points;for(const chain of poseSkeleton.handChains)for(let i=1;i<chain.length;i++){const a=p[chain[i-1]],b=p[chain[i]];ctx.beginPath();ctx.moveTo(a[0]*output.width,a[1]*output.height);ctx.lineTo(b[0]*output.width,b[1]*output.height);ctx.stroke();}ctx.fillText(hand.label,p[0][0]*output.width,p[0][1]*output.height);}
+              const labFont=Math.round(13*unit),labHeight=labFont+8*unit;
+              ctx.font=`700 ${labFont}px "Microsoft YaHei",sans-serif`;
+              for(const o of data.lab.objects){
+                const [a,b,c,d]=o.bbox,bx=a*output.width,by=b*output.height,bw=(c-a)*output.width,bh=(d-b)*output.height;
+                ctx.strokeStyle='#03101f';ctx.lineWidth=4.5*unit;ctx.strokeRect(bx,by,bw,bh);
+                ctx.strokeStyle='#c594ff';ctx.lineWidth=2.6*unit;ctx.strokeRect(bx,by,bw,bh);
+                const text=`${o.label} ${(o.confidence*100).toFixed(0)}%`,tw=ctx.measureText(text).width+10*unit;
+                const tx=Math.max(0,Math.min(bx,output.width-tw)),ty=Math.max(0,by-labHeight);
+                ctx.fillStyle='#110b1fee';ctx.fillRect(tx,ty,tw,labHeight);
+                ctx.strokeStyle='#c594ff';ctx.lineWidth=1.2*unit;ctx.strokeRect(tx,ty,tw,labHeight);
+                ctx.fillStyle='#dcc4ff';ctx.fillText(text,tx+5*unit,ty+labHeight/2);
+              }
+              drawHands(ctx,data.lab.hands,output);
             }
+            if(Array.isArray(data.hands))drawHands(ctx,data.hands,output);
             const modelTag=data.model?' · '+data.model:'';
-            message.textContent=`检测到 ${data.people.length} 人 · 请求耗时 ${Math.round(performance.now()-sent)} ms${modelTag} · SOP待复核`;
+            message.textContent=`检测到 ${data.people.length} 人 · 请求耗时 ${Math.round(performance.now()-sent)} ms${modelTag}${handsOn&&!Array.isArray(data.hands)?' · 手部模型未就绪':''} · SOP待复核`;
             const now=performance.now(),fps=lastResult?1000/(now-lastResult):0;lastResult=now;
+            livePhase='active';liveData=data;liveFrames++;liveFps=fps||null;liveError=null;
             $('#live-metrics').textContent=`预览 ${previewFps?previewFps.toFixed(1):'—'} fps · 检测 ${fps?fps.toFixed(1):'—'} fps · 延迟 ${Math.round(now-tickStarted)} ms · 服务端 ${data.processingMs} ms${modelTag}`;
             $('#footer-performance').textContent=$('#live-metrics').textContent;$('#clock').textContent=new Date().toLocaleTimeString('zh-CN',{hour12:false});
             $('#metric-fps').textContent=fps?fps.toFixed(1):'—';$('#metric-latency').textContent=Math.round(now-tickStarted);$('#metric-targets').textContent=data.people.length;
-            $('#detection-results').innerHTML=data.people.map(p=>`<tr><td>${p.trackId}</td><td>${escapeHTML(p.label)}</td><td>${(p.confidence*100).toFixed(0)}%</td><td>当前画面</td><td>—</td><td>待复核</td></tr>`).join('');
+            $('#detection-results').innerHTML=data.people.length?data.people.map(p=>`<tr><td>${p.trackId}</td><td>${escapeHTML(p.label)}</td><td>${(p.confidence*100).toFixed(0)}%</td><td>当前画面</td><td>—</td><td>待复核</td></tr>`).join(''):'<tr><td colspan="6">当前画面未检出可靠人体，请检查画面范围与光照。</td></tr>';
             $('#result-note').textContent='连续流跟踪 · 遮挡或关联不确定会中断证据';renderLiveTimeline(data.people,data.frameTime??(tickStarted-streamStarted)/1000);
-            $('#steps').innerHTML=inspectionHTML(data.inspection);$('#workflow-name').textContent=data.inspection?.stationName||'实时姿态检测';$('#workflow-status').textContent='待复核';$('#step-counter').textContent='待复核';
+            if(!data.actionSequence){clearSequence();$('#steps').innerHTML=inspectionHTML(data.inspection);}
+            $('#workflow-name').textContent=data.inspection?.stationName||'实时姿态检测';$('#workflow-status').textContent='待复核';$('#step-counter').textContent='待复核';
             $('#live-inspection').innerHTML=inspectionHTML(data.inspection);
-            if(data.lab){renderLab(data.lab,testIds,sequence,sequential);$('#result-note').textContent=data.lab.checks.map(c=>`${c.name}：${c.state==='DETECTED'||c.state==='CANDIDATE'?'检出':c.state==='UNAVAILABLE'?'模型未就绪':'未观察到'}`).join('；');}
+            if(data.lab){if(!data.actionSequence)renderLab(data.lab,testIds,sequence,sequential);$('#result-note').textContent=data.lab.checks.map(c=>`${c.name}：${c.state==='DETECTED'||c.state==='CANDIDATE'?'检出':c.state==='UNAVAILABLE'?'模型未就绪':'未观察到'}`).join('；');}
             if(data.actionSequence){renderSequence(data.actionSequence);if(data.inspection)$('#live-inspection').insertAdjacentHTML('beforeend',inspectionHTML(data.inspection));}
             if(data.inspection){ctx.strokeStyle='#efb956';for(const check of data.inspection.checks)for(const target of check.targets){const [a,b,c,d]=target.roi;ctx.strokeRect(a*output.width,b*output.height,(c-a)*output.width,(d-b)*output.height);}}
             liveTimer=setTimeout(tick,Math.max(0,1000/Number($('#live-rate').value)-(performance.now()-tickStarted)));
@@ -220,15 +395,17 @@ window.ServerApp = (() => {
             if(generation!==liveGeneration)return;
             if((error.status===429||error instanceof TypeError)&&retries<5){
               const delay=Math.max(error.retryAfter||0,Math.min(8000,500*2**retries++));
+              livePhase='retrying';liveError=error.message;
               message.textContent=`${error.status===429?'检测服务繁忙':'网络暂时中断'}，${(delay/1000).toFixed(1)} 秒后重试（${retries}/5）`;
               liveTimer=setTimeout(tick,delay);return;
             }
-            stopLive();start.disabled=false;message.textContent='检测已停止：'+error.message;
+            stopLive();livePhase='error';liveError=error.message;start.disabled=false;message.textContent='检测已停止：'+error.message;
           }
         }
         await tick();
-      }catch(error){if(generation!==liveGeneration)return;stopLive();start.disabled=false;message.textContent='无法开始：'+error.message;}
+      }catch(error){if(generation!==liveGeneration)return;stopLive();livePhase='error';liveError=error.message;start.disabled=false;message.textContent='无法开始：'+error.message;}
     };
+    start.onclick=beginLive;
   }
   function sendVideo(file){
     return new Promise((resolve,reject)=>{
@@ -292,6 +469,7 @@ window.ServerApp = (() => {
     try{
       const path=state.pollUpdatedAt===null?'/analysis-runs/'+id:`/analysis-runs/${id}/wait?since=${encodeURIComponent(state.pollUpdatedAt)}&timeout=25`;
       const run=await request(path,{signal:controller.signal,timeoutMs:32000});if(!current())return;
+      state.run=run;
       state.pollUpdatedAt=run.updated_at;
       status(`${labels[run.status]||run.status} · ${id.slice(0,8)}${run.status==='RUNNING'?' · '+Math.floor(run.progress*100)+'%':''}${run.error_message?' · '+run.error_message:''}`,run.status.toLowerCase());
       progress(run.status==='RUNNING'?Math.floor(run.progress*100):null);
@@ -349,9 +527,11 @@ window.ServerApp = (() => {
     await load();
   }
   async function initialize(){
-    let healthy=false;
-    try{const health=await request('/health',{timeoutMs:10000});healthy=health.analysis==='offline-pose';if(!healthy&&!window.AISOP_SERVER)return;if(health.limits)state.limits=health.limits;}
-    catch{if(!window.AISOP_SERVER)return;}
+    let health=null;
+    if(!window.AISOP_SERVER){
+      try{health=await request('/health',{timeoutMs:10000});if(health.analysis!=='offline-pose')return;}
+      catch{return;}
+    }
     state.available=true;
     document.body.classList.add('server-mode');
     $('.header').insertAdjacentHTML('afterend','<section class="ops-strip" id="ops-strip" aria-label="服务器分析与工位"><div class="ops-row"><span id="server-status" role="status">服务器已连接 · 请登录后上传分析</span><progress id="server-progress" max="100" value="0" aria-label="当前任务进度" hidden></progress><div class="ops-actions"><button class="btn" id="server-account">登录服务器</button><button class="btn" data-action="server-history">服务器任务</button><button class="btn" id="server-cancel" hidden>取消当前任务</button><button class="btn" id="server-upload-cancel" hidden>取消上传</button></div></div><div class="ops-row"><label for="station-select">检测工位（用于下一次上传或实时检测）</label><select id="station-select" class="field"><option value="">通用人体姿态</option><option value="algorithm-test">算法测试工位（可自选流程）</option></select><div id="station-requirements" role="status"></div><label for="pose-model">离线分析姿态模型</label><select id="pose-model" class="field"><option value="rtmo" selected>RTMO-m 单阶段（最新，rtmlib）</option><option value="rtmpose">RTMPose-m 两阶段（rtmlib）</option><option value="yolo">YOLO11s-pose</option></select></div></section>');
@@ -366,26 +546,26 @@ window.ServerApp = (() => {
     actions['realtime']=showLive;
     $('.video-panel .subheading').insertAdjacentHTML('afterend','<div class="video-mode-control"><label for="video-mode">视频分析模式</label><select id="video-mode" class="field"><option value="replay">视频分析回放</option><option value="realtime">实时摄像头检测</option></select></div>');
     $('#video-mode').onchange=()=>{if($('#video-mode').value==='realtime')showLive();else leaveLive();};
-    try{
-      setupLabControls();
-      $('#station-requirements').insertAdjacentHTML('beforebegin','<label for="action-workflow">通用动作顺序（用于下一次检测）</label><select id="action-workflow" class="field"><option value="">仅观察动作</option></select>');
-      try{
-        const workflows=await request('/action-workflows');
-        for(const w of workflows.items){const option=document.createElement('option');option.value=w.id;option.textContent=w.name;$('#action-workflow').append(option);}
-        $('#action-workflow').value='generic-actions';
-      }catch{/* 动作顺序列表不可用时保持“仅观察动作”，不影响工位配置 */}
-      $('#action-workflow').onchange=()=>{if($('#inline-live'))leaveLive();};
-      const catalog=await request('/stations');
-      for(const s of catalog.items){const option=document.createElement('option');option.value=s.id;option.textContent=s.name;$('#station-select').append(option);}
-      let saved;try{saved=localStorage.getItem('aisop-station');}catch{}
-      if(saved==='algorithm-test'||catalog.items.some(s=>s.id===saved))$('#station-select').value=saved;
-      const updateStation=()=>{const id=$('#station-select').value;try{localStorage.setItem('aisop-station',id||'');}catch{}$('#test-controls').hidden=!isLab();$('#action-workflow').disabled=isLab();if($('#inline-live'))leaveLive();const s=catalog.items.find(s=>s.id===id);$('#station-requirements').textContent=s?s.checks.map(c=>`${c.name}：${c.configured?'视觉候选检测已配置；质量待复核':'未配置／待复核'}`).join('；'):isLab()?'测试流程：自行勾选算法、调整顺序；仅用于功能测试。':'人体与姿态检测，不代表灯具工艺检测。';};
-      $('#station-select').onchange=updateStation;updateStation();
-      const modelSelect=$('#pose-model');
-      let savedModel;try{savedModel=localStorage.getItem('aisop-pose-model');}catch{}
-      if(['rtmo','rtmpose','yolo'].includes(savedModel))modelSelect.value=savedModel;
-      modelSelect.onchange=()=>{try{localStorage.setItem('aisop-pose-model',modelSelect.value);}catch{}};
-    }catch(error){$('#station-requirements').textContent='工位配置加载失败：'+error.message;}
+    setupLabControls();
+    $('#station-requirements').insertAdjacentHTML('beforebegin','<label for="action-workflow">通用动作顺序（用于下一次检测）</label><select id="action-workflow" class="field"><option value="">仅观察动作</option></select>');
+    let workflowChanged=false,stationChanged=false,savedStation;
+    $('#action-workflow').onchange=()=>{workflowChanged=true;if($('#inline-live'))leaveLive();};
+    try{savedStation=localStorage.getItem('aisop-station');}catch{}
+    if(savedStation==='algorithm-test')$('#station-select').value=savedStation;
+    let catalog={items:[]},catalogError='';
+    const updateStation=(stopCamera=true,persist=true)=>{
+      const id=$('#station-select').value;
+      if(persist)try{localStorage.setItem('aisop-station',id||'');}catch{}
+      $('#test-controls').hidden=!isLab();$('#action-workflow').disabled=isLab();
+      if(stopCamera&&$('#inline-live'))leaveLive();
+      const station=catalog.items.find(station=>station.id===id);
+      $('#station-requirements').textContent=(station?station.checks.map(check=>`${check.name}：${check.configured?'视觉候选检测已配置；质量待复核':'未配置／待复核'}`).join('；'):isLab()?'测试流程：自行勾选算法、调整顺序；仅用于功能测试。':'人体与姿态检测，不代表灯具工艺检测。')+catalogError;
+    };
+    $('#station-select').onchange=()=>{stationChanged=true;updateStation();};updateStation(false,false);
+    const modelSelect=$('#pose-model');
+    let savedModel;try{savedModel=localStorage.getItem('aisop-pose-model');}catch{}
+    if(['rtmo','rtmpose','yolo'].includes(savedModel))modelSelect.value=savedModel;
+    modelSelect.onchange=()=>{try{localStorage.setItem('aisop-pose-model',modelSelect.value);}catch{}};
     $('#server-account').onclick=async()=>{if(!state.user){login();return;}if(state.busy){toast('请先完成或取消上传');return;}try{await request('/logout',{method:'POST'});state.user=null;state.csrf=null;leaveLive();leaveRun();video.pause();video.removeAttribute('src');video.load();analysisData=null;demo=false;updateDashboard();renderAlerts();renderAccount();status('已退出登录');}catch(error){toast(error.message);}};
     $('#server-cancel').onclick=async()=>{
       const id=state.active,generation=state.runGeneration,button=$('#server-cancel');if(!id)return;
@@ -395,13 +575,56 @@ window.ServerApp = (() => {
       finally{if(state.active===id&&state.runGeneration===generation)button.disabled=false;}
     };
     document.addEventListener('click',e=>{const button=e.target.closest('[data-server-run]');if(button)selectRun(button.dataset.serverRun);});
-    try{const data=await request('/session');state.user=data.username;state.csrf=data.csrf;}catch{}
-    renderAccount();
     const params=new URLSearchParams(location.search),run=params.get('run');
-    if(!params.get('video')){sceneRevision++;demo=false;analysisData=null;video.pause();updateDashboard();renderAlerts();$('.camera-name').textContent='尚未选择分析结果';$('#mode-text').textContent='服务器模式 · 上传视频开始分析';}
-    if(!healthy)status('服务端暂不可用，请检查数据库与服务状态');
+    if(!params.get('video')){sceneRevision++;demo=false;analysisData=null;video.pause();video.removeAttribute('src');video.load();updateDashboard();renderAlerts();$('.camera-name').textContent='尚未选择分析结果';$('.stream-info').textContent='未加载视频';$('#mode-text').textContent='服务器模式 · 上传视频开始分析';}
+    status('正在连接服务器…');
+    await Promise.allSettled([
+      (async()=>{
+        try{
+          health=health||await request('/health',{timeoutMs:10000});
+          state.health=health;state.healthError=null;
+          if(health.limits)state.limits=health.limits;
+          if(health.analysis!=='offline-pose')throw new Error('分析服务未就绪');
+          if($('#server-status').textContent==='正在连接服务器…')status(state.user?'服务器已连接 · 可上传视频或开始摄像头检测':'服务器已连接 · 请登录后上传分析');
+        }catch(error){state.health=null;state.healthError=error.message;if($('#server-status').textContent==='正在连接服务器…')status('服务端暂不可用，请检查数据库与服务状态','error');}
+      })(),
+      (async()=>{
+        try{const data=await request('/session',{timeoutMs:10000});state.user=data.username;state.csrf=data.csrf;}catch{}
+        renderAccount();
+      })(),
+      (async()=>{
+        try{
+          const workflows=await request('/action-workflows',{timeoutMs:10000});
+          state.workflowsLoaded=true;
+          for(const workflow of workflows.items){const option=document.createElement('option');option.value=workflow.id;option.textContent=workflow.name;$('#action-workflow').append(option);}
+          if(!workflowChanged&&!state.busy&&!$('#inline-live')&&workflows.items.some(workflow=>workflow.id==='generic-actions'))$('#action-workflow').value='generic-actions';
+        }catch{$('#action-workflow').title='动作顺序加载失败；当前可仅观察动作';}
+      })(),
+      (async()=>{
+        try{
+          catalog=await request('/stations',{timeoutMs:10000});
+          for(const station of catalog.items){const option=document.createElement('option');option.value=station.id;option.textContent=station.name;$('#station-select').append(option);}
+          if(!stationChanged&&!state.busy&&!$('#inline-live')&&(savedStation==='algorithm-test'||catalog.items.some(station=>station.id===savedStation)))$('#station-select').value=savedStation;
+        }catch(error){catalogError=' 工位配置加载失败：'+error.message+'；仍可使用通用姿态或算法测试。';}
+        updateStation(false,false);
+      })(),
+    ]);
     if(run){if(state.user)await selectRun(run);else login(()=>selectRun(run));}
   }
+  actions['sop-history']=showSequenceHistory;
   initialize();
-  return {get available(){return state.available;},upload,leaveRun,inspectionHTML,renderSequence};
+  return {get available(){return state.available;},
+    get runtime(){
+      const camera=$('#live-camera');
+      return {health:state.health,healthError:state.healthError,user:state.user,run:state.run,
+        uploading:state.busy,workflowsLoaded:state.workflowsLoaded,
+        live:$('#inline-live')?{phase:livePhase,data:liveData,frames:liveFrames,fps:liveFps,error:liveError,
+          sourceReady:!!liveStream?.getVideoTracks().some(track=>track.readyState==='live')&&camera?.readyState>=2,
+          width:camera?.videoWidth||liveData?.width||null,height:camera?.videoHeight||liveData?.height||null}:null};
+    },
+    async refreshDiagnostics(){
+      try{const health=await request('/health',{timeoutMs:5000});if(health.analysis!=='offline-pose')throw new Error('分析服务未就绪');state.health=health;state.healthError=null;}
+      catch(error){state.health=null;state.healthError=error.message;}
+    },
+    upload,leaveRun,inspectionHTML,renderSequence};
 })();

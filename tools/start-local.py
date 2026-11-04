@@ -19,8 +19,8 @@ def main():
     if not config_path.exists():
         config_path.write_text(json.dumps({'username':'admin', 'password':secrets.token_urlsafe(18)}, indent=2), encoding='utf-8')
     config = json.loads(config_path.read_text(encoding='utf-8'))
-    if len(config['password']) < 12:
-        raise RuntimeError('local-settings.json password must contain at least 12 characters')
+    if not config['password']:
+        raise RuntimeError('local-settings.json password must not be empty')
     with socket.socket() as check:
         if check.connect_ex(('127.0.0.1',8000)) == 0:
             print('Port 8000 is already in use. Existing service was left running. Open http://127.0.0.1:8000')

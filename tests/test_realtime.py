@@ -20,7 +20,7 @@ def test_realtime_bounds_and_csrf(authenticated):
     data = BytesIO()
     Image.new('RGB', (1281, 720)).save(data, format='JPEG')
     assert client.post(url, content=data.getvalue(), headers=headers).status_code == 422
-    app.state.realtime.predict = lambda payload: {'people': [], 'verdict': 'REVIEW'}
+    app.state.realtime.predict = lambda payload, **kwargs: {'people': [], 'verdict': 'REVIEW'}
     assert client.post(url, content=b'test', headers=headers).json()['verdict'] == 'REVIEW'
     client.headers.pop('X-CSRF-Token')
     assert client.post(url, content=b'test', headers=headers).status_code == 403
@@ -99,3 +99,67 @@ def test_realtime_missing_model_and_warmup(tmp_path):
         detector.predict(buffer.getvalue())
     assert exc.value.status_code == 503
     assert detector.warmup() is False
+
+
+def _jpeg(width=640, height=360):
+    buffer = BytesIO()
+    Image.new('RGB', (width, height)).save(buffer, format='JPEG')
+    return buffer.getvalue()
+
+
+def test_realtime_hands_are_opt_in_and_cached_per_slot(tmp_path, monkeypatch):
+    import algorithms.hands as hands_module
+    detector = RealtimeDetector(tmp_path/'model.pt', backend='rtmo')
+    detector.model, detector.model_kind = _FakeModel(), 'rtmlib'
+    payload = _jpeg()
+    assert detector.predict(payload)['hands'] is None
+    created = []
+
+    class _FakeHands:
+        def __init__(self, model_path):
+            self.model_path = model_path
+            created.append(model_path)
+
+        def detect(self, frame):
+            assert frame.ndim == 3
+            return [{'points': [[.1, .1, .0]] * 21, 'shape': 'CLOSED', 'label': '握拳／抓握候选'}]
+
+    monkeypatch.setattr(hands_module, 'HandLandmarker', _FakeHands)
+    data = detector.predict(payload, hands=True)
+    assert [hand['shape'] for hand in data['hands']] == ['CLOSED']
+    assert data['hands'][0]['points'][0] == [.1, .1, .0]
+    for _ in range(2 * detector.pool_size):
+        detector.predict(payload, hands=True)
+    assert len(created) == detector.pool_size, '手部模型应按推理槽位缓存复用'
+
+
+def test_realtime_hands_fail_open_when_model_missing(tmp_path):
+    detector = RealtimeDetector(tmp_path/'model.pt', backend='rtmo')
+    detector.model, detector.model_kind = _FakeModel(), 'rtmlib'
+    data = detector.predict(_jpeg(), hands=True)
+    assert data['hands'] is None
+    assert data['people'], '手部模型缺失不应影响人体检测结果'
+
+
+def test_realtime_hands_flag_is_ignored_by_algorithm_tests(tmp_path):
+    detector = RealtimeDetector(tmp_path/'model.pt', backend='rtmo')
+    detector.model, detector.model_kind = _FakeModel(), 'rtmlib'
+    data = detector.predict(_jpeg(), None, ['raise'], hands=True)
+    assert data['lab'] is not None and data['hands'] is None
+
+
+def test_realtime_frame_forwards_hands_query(authenticated, monkeypatch):
+    _, app, client = authenticated
+    seen = {}
+
+    def fake(payload, config=None, names=None, **kwargs):
+        seen.update(kwargs)
+        return {'people': [], 'verdict': 'REVIEW', 'hands': None}
+
+    monkeypatch.setattr(app.state.realtime, 'predict', fake)
+    headers = {'Content-Type': 'image/jpeg'}
+    assert client.post('/api/v1/realtime/frame?hands=1', content=b'test', headers=headers).json()['verdict'] == 'REVIEW'
+    assert seen['hands'] is True
+    seen.clear()
+    assert client.post('/api/v1/realtime/frame', content=b'test', headers=headers).status_code == 200
+    assert seen['hands'] is False

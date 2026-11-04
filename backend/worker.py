@@ -22,13 +22,20 @@ def execute_one(engine, settings, analyzer=None):
         return False
     from algorithms.video import AnalysisError, Cancelled, file_hash
     if analyzer is None:
-        from algorithms.pipeline import analyze
+        if job['options'].get('analysis_type') == 'screw':
+            from algorithms.screws import analyze
+        elif job['options'].get('analysis_type') == 'sticker':
+            from algorithms.stickers import analyze
+        elif job['options'].get('analysis_type') == 'scene':
+            from algorithms.scene_runtime import analyze
+        else:
+            from algorithms.pipeline import analyze
         analyzer = analyze
     stop, lost = threading.Event(), threading.Event()
     progress_value = [0.0]
 
     def renew():
-        while not stop.wait(max(1, settings.lease_seconds / 4)):
+        while not stop.wait(max(1, min(2, settings.lease_seconds / 10))):
             try:
                 if not heartbeat(engine, job["id"], job["token"], settings.lease_seconds, progress_value[0]):
                     lost.set()
@@ -52,8 +59,23 @@ def execute_one(engine, settings, analyzer=None):
         with engine.connect() as c:
             source = c.execute(select(media).where(media.c.id == job["media_id"])).mappings().one()
         video = settings.data_dir / "uploads" / (source["id"] + source["suffix"])
+        screw_mode = job['options'].get('analysis_type') in ('screw','sticker')
+        scene_mode = job['options'].get('analysis_type') == 'scene'
         backend = job["options"].get("pose_backend") or "yolo"
-        if backend == "yolo":
+        if scene_mode:
+            from algorithms.scene_runtime import verify
+            verify(job['options']['scene_config'])
+        elif screw_mode:
+            task=job['options']['analysis_type']
+            if task=='sticker':
+                from algorithms.stickers import verify
+            else:
+                from algorithms.screws import verify
+            verify(job['options'][task+'_config'])
+            if job['options'].get('person_config'):
+                from algorithms.person_detection import verify as verify_person
+                verify_person(job['options']['person_config'])
+        elif backend == "yolo":
             if not settings.model_path.is_file() or file_hash(settings.model_path) != job["model_hash"]:
                 raise AnalysisError("MODEL_CHANGED", "任务创建后模型改变或缺失，请重新创建任务")
         elif real_inference:
@@ -63,7 +85,24 @@ def execute_one(engine, settings, analyzer=None):
         if not video.is_file() or file_hash(video) != source["sha256"]:
             raise AnalysisError("MEDIA_CHANGED", "输入媒体缺失或校验失败")
         extra = {}
-        if real_inference:
+        if real_inference and screw_mode:
+            from algorithms.person_detection import load_detector, snapshot as person_snapshot
+            frozen_person = job['options'].get('person_config') or person_snapshot(settings.model_path, backend)
+            job['options']['person_config'] = frozen_person
+            pose_key = ('person', backend, tuple(asset['sha256'] for asset in frozen_person['assets']))
+            if pose_key not in _model_cache:
+                _model_cache.clear()
+                _model_cache[pose_key] = load_detector(settings.model_path, backend)
+            extra['pose_detector'] = _model_cache[pose_key]
+        if real_inference and scene_mode:
+            from algorithms.scene_runtime import SceneDetector
+            frozen = job['options']['scene_config']
+            cache_key = ('scene', frozen['sha256'])
+            if cache_key not in _model_cache:
+                _model_cache.clear()
+                _model_cache[cache_key] = SceneDetector(frozen)
+            extra['detector'] = _model_cache[cache_key]
+        if real_inference and not screw_mode and not scene_mode:
             if job["model_hash"] not in _model_cache:
                 _model_cache.clear()
                 if backend == "yolo":
@@ -80,6 +119,11 @@ def execute_one(engine, settings, analyzer=None):
                           max_seconds=settings.max_video_seconds, **extra)
         progress(1)
         manifest = json.loads((folder / "manifest.json").read_text(encoding="utf-8"))
+        if real_inference and job['options'].get('person_config'):
+            from algorithms.person_detection import verify as verify_person
+            verify_person(job['options']['person_config'])
+            if manifest.get('person_model_hash') != job['options']['person_config']['sha256']:
+                raise AnalysisError('INPUT_CHANGED', '人体姿态模型版本发生改变，结果未发布')
         if real_inference and (manifest.get("model_hash") != job["model_hash"] or manifest.get("source_hash") != source["sha256"]):
             raise AnalysisError("INPUT_CHANGED", "处理期间输入或模型版本发生改变，结果未发布")
         for name, sha in manifest["files"].items():

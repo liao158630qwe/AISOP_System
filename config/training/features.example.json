@@ -1,0 +1,8 @@
+{
+  "backend": "sklearn",
+  "task": "feature-classify",
+  "dataset": "../../datasets/your-scene/manifest.json",
+  "feature_schema": "your-extractor-v1: feature names, order, normalization and ROI definition",
+  "seed": 42,
+  "train": {"C": 1.0, "max_iter": 1000}
+}

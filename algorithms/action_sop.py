@@ -114,15 +114,43 @@ class ActionSequence:
                 'release_since': None, 'continuity': True, 'violations': 0, 'observed': True}
 
     def matches(self, person, step):
+        touch_boost = 0.0
         if step.roi:
-            box = person['bbox']
-            x, y = (box[0]+box[2])/2, (box[1]+box[3])/2
             a, b, c, d = step.roi
-            if not a <= x <= c or not b <= y <= d:
+            box = person.get('bbox')
+            body_in_roi = False
+            if box:
+                x, y = (box[0]+box[2])/2, (box[1]+box[3])/2
+                body_in_roi = (a <= x <= c and b <= y <= d)
+
+            # HOI: Check left wrist (joint 9) and right wrist (joint 10) in COCO-17
+            wrist_touch = False
+            kpts = person.get('keypoints')
+            if kpts is not None and len(kpts) >= 11:
+                for widx in (9, 10):
+                    w = kpts[widx]
+                    if len(w) >= 3 and w[2] >= 0.35 and a <= w[0] <= c and b <= w[1] <= d:
+                        wrist_touch = True
+                        break
+            # Also check optional MediaPipe hand landmarks if present
+            if not wrist_touch and person.get('hands'):
+                for hand in person['hands']:
+                    hp = hand.get('points')
+                    if hp and len(hp) > 0 and a <= hp[0][0] <= c and b <= hp[0][1] <= d:
+                        wrist_touch = True
+                        break
+
+            if not body_in_roi and not wrist_touch:
                 return False
+            # Direct hand contact into picking/workbench ROI provides +0.15 spatial boost
+            if wrist_touch:
+                touch_boost = 0.15
+
         # Current-frame signals prevent stale filtered labels completing steps.
-        return any(math.isfinite(person.get('signals', {}).get(action, 0)) and
-                   person.get('signals', {}).get(action, 0) >= self.spec.threshold for action in step.actions)
+        threshold = self.spec.threshold
+        signals = person.get('signals', {})
+        return any(math.isfinite(signals.get(action, 0)) and
+                   signals.get(action, 0) + touch_boost >= threshold for action in step.actions)
 
     def released(self, person, step):
         # Missing signals are not evidence that a repeated action ended.

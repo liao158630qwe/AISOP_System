@@ -14,7 +14,7 @@
 
 ## 1. Linux GPU服务器：PostgreSQL＋HTTPS
 
-前提：Docker Engine、Docker Compose v2、NVIDIA驱动与NVIDIA Container Toolkit。GPU需与PyTorch 2.8/CUDA 12.8兼容。YOLO后端采用已有`models/yolo11s-pose.pt`；rtmlib后端（RTMO-m/RTMPose-m）需预置`~/.cache/rtmlib/hub/checkpoints`权重（随镜像或挂载提供），不在用户上传任务期间自动下载。
+前提：Docker Engine、Docker Compose v2、NVIDIA驱动与NVIDIA Container Toolkit。GPU需与PyTorch 2.8/CUDA 12.8兼容。螺丝检测和姿态/实时模型使用GPU；贴条动作分类按精度优先保留CPU，因此服务器需同时具备足够的CPU资源。YOLO后端采用已有`models/yolo11s-pose.pt`；rtmlib后端（RTMO-m/RTMPose-m）需预置`~/.cache/rtmlib/hub/checkpoints`权重（随镜像或挂载提供），不在用户上传任务期间自动下载。
 
 1. 复制`.env.example`为`.env`，设置独立的登录密码和数据库密码。登录密码至少12字符。
 2. 设置`DATABASE_URL=postgresql+psycopg://aisop:数据库密码@db:5432/aisop`；URL中的特殊密码字符必须编码，且与`POSTGRES_PASSWORD`一致。
@@ -33,16 +33,17 @@ docker compose logs --tail=100 api worker
 
 ## 2. Windows本机开发验证
 
-已有`D:/Anaconda/python.exe`环境包含推理、FastAPI和测试依赖。其他环境请安装`requirements-api.txt`、`requirements-worker.txt`和`requirements-test.txt`，并单独安装与硬件匹配的PyTorch。开发时可显式设置SQLite；生产模式禁止使用SQLite、禁止关闭Secure Cookie。
+双击项目根目录的 `启动本机服务.bat`（原 `启动本机服务.cmd` 也可）即可一键启动或重启：先关闭本项目的 API、Worker 及其子进程，等待退出后重新启动两项服务。沿用 `.runtime/local-settings.json` 登录配置、`.runtime/local.db` 数据库和 `.runtime/local-data` 历史数据。若 8000 端口被其他程序占用，会显示错误并停止；连续点击时只允许一个启动脚本执行。看到 `Ready: http://127.0.0.1:8000` 后刷新浏览器即可。正在分析的任务会被中断，租约过期后由 Worker 重试。命令行调用可传入 `--no-pause` 跳过结束时的按键等待。
+
+启动脚本、npm 命令和端到端测试共用 Python 环境选择：优先使用 `PYTHON` 环境变量，其次使用项目 `.venv`，再尝试已有的 `D:/Anaconda/python.exe`（Windows），最后使用系统 Python。双击“启动本机服务.cmd”也使用这一规则。所选环境需要安装 `requirements-api.txt`、`requirements-worker.txt` 和 `requirements-test.txt`，并单独安装与硬件匹配的 PyTorch。开发时可显式设置 SQLite；生产模式禁止使用 SQLite、禁止关闭 Secure Cookie。
 
 在两个PowerShell终端中设置**相同**环境变量，密码自行设置，勿提交至代码库：
 
 ```powershell
-$env:PYTHON = 'D:/Anaconda/python.exe'
 $env:APP_ENV = 'development'
-$env:DATABASE_URL = 'sqlite:///D:/Project/myarc/.runtime/local.db'
-$env:DATA_DIR = 'D:/Project/myarc/.runtime/local-data'
-$env:MODEL_PATH = 'D:/Project/myarc/models/yolo11s-pose.pt'
+$env:DATABASE_URL = 'sqlite:///D:/Project/AISOP/.runtime/local.db'
+$env:DATA_DIR = 'D:/Project/AISOP/.runtime/local-data'
+$env:MODEL_PATH = 'D:/Project/AISOP/models/yolo11s-pose.pt'
 $env:COOKIE_SECURE = 'false'
 $env:APP_USERNAME = 'admin'
 $env:APP_PASSWORD = '<自行替换为至少12位密码>'

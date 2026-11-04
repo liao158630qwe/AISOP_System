@@ -1,0 +1,228 @@
+{
+  "version": "sticker-action-v1",
+  "name": "贴条工序检测",
+  "model_name": "贴条动作模型 v1 · 位置动作与顺序",
+  "model": "models/sticker-actions-v1.joblib",
+  "reference": "models/sticker-reference-v1.jpg",
+  "reference_size": [
+    1080,
+    1920
+  ],
+  "targets": [
+    {
+      "id": "T01",
+      "name": "左侧三角贴",
+      "expected": "triangle",
+      "reference_bbox": [
+        250,
+        885,
+        312,
+        977
+      ],
+      "point": [
+        281.0,
+        931.0
+      ]
+    },
+    {
+      "id": "T02",
+      "name": "右侧三角贴",
+      "expected": "triangle",
+      "reference_bbox": [
+        681,
+        891,
+        748,
+        984
+      ],
+      "point": [
+        714.5,
+        937.5
+      ]
+    },
+    {
+      "id": "R01",
+      "name": "左上方形贴",
+      "expected": "rectangle",
+      "reference_bbox": [
+        296,
+        803,
+        387,
+        884
+      ],
+      "point": [
+        341.5,
+        843.5
+      ]
+    },
+    {
+      "id": "R02",
+      "name": "右上方形贴",
+      "expected": "rectangle",
+      "reference_bbox": [
+        605,
+        806,
+        696,
+        889
+      ],
+      "point": [
+        650.5,
+        847.5
+      ]
+    },
+    {
+      "id": "R03",
+      "name": "左中方形贴",
+      "expected": "rectangle",
+      "reference_bbox": [
+        298,
+        946,
+        359,
+        1046
+      ],
+      "point": [
+        328.5,
+        996.0
+      ]
+    },
+    {
+      "id": "R04",
+      "name": "右中方形贴",
+      "expected": "rectangle",
+      "reference_bbox": [
+        633,
+        951,
+        695,
+        1051
+      ],
+      "point": [
+        664.0,
+        1001.0
+      ]
+    },
+    {
+      "id": "R05",
+      "name": "左下方形贴",
+      "expected": "rectangle",
+      "reference_bbox": [
+        251,
+        1094,
+        301,
+        1173
+      ],
+      "point": [
+        276.0,
+        1133.5
+      ]
+    },
+    {
+      "id": "R06",
+      "name": "右下方形贴",
+      "expected": "rectangle",
+      "reference_bbox": [
+        695,
+        1100,
+        747,
+        1181
+      ],
+      "point": [
+        721.0,
+        1140.5
+      ]
+    }
+  ],
+  "product_bbox": [
+    190,
+    700,
+    780,
+    1290
+  ],
+  "registration_regions": [
+    [
+      [
+        200,
+        760
+      ],
+      [
+        770,
+        760
+      ],
+      [
+        780,
+        1250
+      ],
+      [
+        190,
+        1250
+      ]
+    ]
+  ],
+  "station_roi": [
+    0.28,
+    0.4,
+    0.68,
+    0.68
+  ],
+  "crop_size": 160,
+  "detector_input": 320,
+  "threshold": 0.55,
+  "bare_threshold": 0.75,
+  "assignment_radius": 35,
+  "class_map": {
+    "0": "triangle",
+    "1": "rectangle",
+    "2": "bare"
+  },
+  "scope": "观察到对应位置的贴放/按压动作即计完成；先两处三角后六处方形；不核验贴片外观、粘附或实际存在",
+  "sequence": {
+    "triangles": [
+      "T01",
+      "T02"
+    ],
+    "rectangles": [
+      "R01",
+      "R02",
+      "R03",
+      "R04",
+      "R05",
+      "R06"
+    ],
+    "confirmation_frames": 3
+  },
+  "source_video": "lv_0_20261017162449.mp4",
+  "source_sha256": "06104b7e2081121418d777d7bfa0931edecc30870a176a6f173af51c90183e6e",
+  "cycle_start": "explicit",
+  "training_result": "outputs/sticker-inspection-2026-10-17/action-training-result.json",
+  "component_anchors": [
+    [
+      465,
+      720,
+      525,
+      766
+    ],
+    [
+      207,
+      1010,
+      232,
+      1070
+    ],
+    [
+      760,
+      1010,
+      788,
+      1070
+    ]
+  ],
+  "required_anchor": 0,
+  "component_threshold": 0.5,
+  "anchor_search_radius": 12,
+  "mode": "action",
+  "action": {
+    "contact_threshold": 0.6,
+    "single_contact_threshold": 0.85,
+    "min_contact_seconds": 0.2,
+    "contact_frames": 2,
+    "clear_frames": 2,
+    "max_gap": 1.5,
+    "min_motion": 2.5
+  }
+}

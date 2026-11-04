@@ -5,7 +5,7 @@ import numpy as np
 from scipy.optimize import linear_sum_assignment
 
 from .pose import LABELS, action_observation, iou, smooth_keypoints
-from .skeleton import VISIBILITY_THRESHOLD, metric_keypoints
+from .skeleton import VISIBILITY_THRESHOLD, body_overlay, metric_keypoints
 from .temporal import ActionDecoder
 
 
@@ -52,8 +52,12 @@ class PoseTracker:
             return []
         boxes = result.boxes.xyxy.cpu().numpy()/np.array([w, h, w, h])
         points = result.keypoints.data.cpu().numpy()
+        classes = getattr(result.boxes, 'cls', None)
+        classes = classes.cpu().numpy() if classes is not None else np.zeros(len(boxes))
         detections = []
-        for box, conf, raw in zip(boxes, result.boxes.conf.cpu().numpy(), points):
+        for box, conf, raw, class_id in zip(boxes, result.boxes.conf.cpu().numpy(), points, classes):
+            if not np.isfinite(class_id) or class_id != 0:
+                continue
             if raw.shape != (17, 3) or not np.isfinite(raw).all() or not np.isfinite(box).all() or not np.isfinite(conf):
                 continue
             if box[2] <= box[0] or box[3] <= box[1] or conf < .2:
@@ -107,13 +111,18 @@ class PoseTracker:
             tr.update(last=t, box=box, center=center, keypoints=raw_keypoints,
                       filtered_keypoints=k if not ambiguous else None, observations=tr['observations']+1)
             reliable = quality['valid'] and not ambiguous and tr['observations'] >= 2
-            people.append(dict(trackId=tid, confidence=round(conf, 4), bbox=np.round(box, 5).tolist(),
+            people.append(dict(trackId=tid, classId=0, className='person',
+                confidence=round(conf, 4), bbox=np.round(box, 5).tolist(),
                 keypoints=np.round(k, 5).tolist(), rawKeypoints=np.round(raw_keypoints, 5).tolist(),
+                skeletonOverlay=body_overlay(k, w, h),
                 action=action, rawAction=raw_action, label=LABELS[action],
                 evidence=f"{quality['reason']}；{decoded['reason']}；不等同于工序完成",
                 visibleKeypoints=int(sum(k[:, 2] >= .35)), actionScores=decoded['scores'],
                 signals=quality['signals'] if reliable else {}, temporal=decoded,
                 tracking={'reliable': reliable, 'ambiguous': ambiguous, 'gapSeconds': round(gap or 0, 4)}))
+        primary = max(people, key=lambda p: (p['bbox'][2]-p['bbox'][0])*(p['bbox'][3]-p['bbox'][1]), default=None)
+        for person in people:
+            person['primary'] = person is primary
         observed = {person['trackId'] for person in people}
         for tid, track in self.active.items():
             if tid not in observed:

@@ -68,6 +68,15 @@ def test_server_files_are_not_public(context):
         assert client.get(path).status_code == 404
 
 
+def test_standalone_screw_page_is_served(context):
+    _, _, client = context
+    page = client.get('/screw-inspection.html')
+    assert page.status_code == 200
+    assert 'screw-inspection.js?v=' in page.text
+    assert page.headers['cache-control'] == 'no-store, max-age=0'
+    assert client.get('/screw-inspection.js').status_code == 200
+
+
 def test_result_range_requests_and_fenced_file_access(authenticated, video_bytes):
     from backend.worker import execute_one
     from test_worker import fake_analyzer

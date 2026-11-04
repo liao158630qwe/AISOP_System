@@ -7,13 +7,13 @@ const {spawn, spawnSync} = require('node:child_process');
 let playwright;
 try {playwright=require(process.env.PLAYWRIGHT_MODULE||'playwright');}
 catch {playwright=require(path.join(process.env.USERPROFILE,'.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright'));}
-const root=path.resolve(__dirname,'..'),python=process.env.PYTHON||'D:/Anaconda/python.exe';
+const root=path.resolve(__dirname,'..'),python=require('./python.cjs').resolvePython();
 const folder=path.join(root,'.runtime','e2e-'+Date.now());fs.mkdirSync(folder,{recursive:true});
 const password=crypto.randomBytes(20).toString('hex');
 const env={...process.env,APP_ENV:'test',APP_USERNAME:'admin',APP_PASSWORD:password,COOKIE_SECURE:'false',
   DATABASE_URL:'sqlite:///'+path.join(folder,'e2e.db').replaceAll('\\','/'),DATA_DIR:path.join(folder,'data'),
   MODEL_PATH:path.join(root,'models','yolo11s-pose.pt'),POSE_BACKEND:'yolo',REALTIME_BACKEND:'yolo'};
-const run=(args)=>{const r=spawnSync(python,args,{cwd:root,env,windowsHide:true,encoding:'utf8'});assert.equal(r.status,0,r.stderr||r.stdout);};
+const run=(args)=>{const r=spawnSync(python,args,{cwd:root,env,windowsHide:true,encoding:'utf8'});assert.equal(r.status,0,r.error?.message||r.stderr||r.stdout);};
 const freePort=()=>new Promise(resolve=>{const s=net.createServer();s.listen(0,'127.0.0.1',()=>{const port=s.address().port;s.close(()=>resolve(port));});});
 (async()=>{
   const port=await freePort(),url='http://127.0.0.1:'+port;
@@ -113,6 +113,16 @@ const freePort=()=>new Promise(resolve=>{const s=net.createServer();s.listen(0,'
     await page.locator('#live-view').selectOption('preview');
     assert.ok(await page.locator('#live-camera').isVisible());
     console.log('Live metrics:',await page.locator('#live-metrics').textContent());
+    await page.locator('[data-action="system"]').first().click();
+    assert.match(await page.locator('#modal-body').textContent(),/实时摄像头检测/);
+    assert.match(await page.locator('#modal-body').textContent(),/yolo11s-pose/);
+    assert.doesNotMatch(await page.locator('#modal-body').textContent(),/服务器离线分析回放|0 × 0/);
+    await page.locator('#modal').screenshot({path:path.join(folder,'system-realtime.png')});
+    await page.locator('#modal [data-action="checks"]').click();
+    await page.waitForFunction(()=>document.querySelector('[data-check="pose"] .check-state').textContent==='已验证');
+    assert.equal(await page.locator('[data-check="source"] .check-state').textContent(),'已就绪');
+    await page.locator('#modal').screenshot({path:path.join(folder,'checks-realtime.png')});
+    await page.locator('#modal .modal-heading [data-action="close-modal"]').click();
     await page.screenshot({path:path.join(folder,'realtime.png'),fullPage:true});
     await page.locator('#live-stop').click();
     assert.equal(await page.evaluate(()=>window.testCameraTrack.readyState),'ended');

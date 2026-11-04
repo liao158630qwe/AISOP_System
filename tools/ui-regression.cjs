@@ -19,8 +19,26 @@ const deferred=()=>{let resolve;const promise=new Promise(r=>{resolve=r;});retur
       // Station controls must also work when browser storage is blocked.
       Storage.prototype.getItem=()=>{throw new DOMException('Blocked','SecurityError');};
       Storage.prototype.setItem=()=>{throw new DOMException('Blocked','SecurityError');};
+      const open=XMLHttpRequest.prototype.open;
+      XMLHttpRequest.prototype.open=function(method,url,...args){
+        this.testUploadRequest=method==='POST'&&String(url).startsWith('/api/v1/media?');
+        return open.call(this,method,url,...args);
+      };
       const send=XMLHttpRequest.prototype.send;
-      XMLHttpRequest.prototype.send=function(...args){window.testUploadXHR=this;return send.apply(this,args);};
+      XMLHttpRequest.prototype.send=function(...args){
+        // Browser-injected background requests must not replace the upload fixture.
+        if(this.testUploadRequest)window.testUploadXHR=this;
+        return send.apply(this,args);
+      };
+      // Deterministic local cameras so the realtime device picker is testable.
+      const cameras=[{deviceId:'cam-front',kind:'videoinput',label:'前置摄像头',groupId:'g1'},{deviceId:'cam-usb',kind:'videoinput',label:'USB 摄像头',groupId:'g2'}];
+      navigator.mediaDevices.enumerateDevices=async()=>cameras.slice();
+      navigator.mediaDevices.getUserMedia=async constraints=>{
+        window.cameraCalls=[...(window.cameraCalls||[]),JSON.parse(JSON.stringify(constraints))];
+        const canvas=document.createElement('canvas');canvas.width=640;canvas.height=360;
+        const context=canvas.getContext('2d');context.fillStyle='#101820';context.fillRect(0,0,640,360);
+        return canvas.captureStream(10);
+      };
     });
     await page.route('**/api/v1/**',async route=>{
       const url=new URL(route.request().url()),endpoint=url.pathname.replace('/api/v1','');
@@ -43,6 +61,7 @@ const deferred=()=>{let resolve;const promise=new Promise(r=>{resolve=r;});retur
         uploadRequests++;await heldUpload.promise;
         return route.fulfill({status:201,json:{id:'uploaded-fixture',metadata:{fps:30}}}).catch(()=>{});
       }
+      if(endpoint==='/realtime/frame')return route.fulfill({json:{people:[],processingMs:1,hands:[]}});
       if(endpoint==='/analysis-runs'&&route.request().method()==='POST'){created++;return route.fulfill({status:202,json:{id:'new-task'}});}
       return route.fulfill({status:404,json:{message:'Not found'}});
     });
@@ -59,6 +78,14 @@ const deferred=()=>{let resolve;const promise=new Promise(r=>{resolve=r;});retur
     assert.equal(await pictureHeight('#video-stage'),720);
     await page.locator('#video-mode').selectOption('realtime');
     assert.equal(await pictureHeight('.live-picture'),720);
+    // Local camera picker: list devices and constrain getUserMedia to the choice.
+    await page.waitForFunction(()=>document.querySelectorAll('#live-device option').length===3);
+    assert.deepEqual(await page.locator('#live-device option').evaluateAll(options=>options.map(option=>option.value)),['','cam-front','cam-usb']);
+    await page.locator('#live-device').selectOption('cam-usb');
+    await page.locator('#live-start').click();
+    await page.waitForFunction(()=>document.querySelector('#live-status')?.textContent.startsWith('检测到'));
+    assert.equal(await page.evaluate(()=>window.cameraCalls.at(-1).video.deviceId.exact),'cam-usb');
+    await page.locator('#live-stop').click();
     await page.evaluate(()=>{
       const person={trackId:7,action:'raised',label:'抬手'};
       renderLiveTimeline([person],0);
@@ -85,6 +112,7 @@ const deferred=()=>{let resolve;const promise=new Promise(r=>{resolve=r;});retur
     await page.locator('#video-size-reset').click();
     assert.equal(await pictureHeight('#video-stage'),220);
     await page.setViewportSize({width:1440,height:1000});
+    await page.waitForFunction(()=>document.querySelector('#video-size').value==='300');
     assert.equal(await pictureHeight('#video-stage'),300);
     await page.locator('[data-action="server-history"]').first().click();
     await page.waitForFunction(()=>document.querySelectorAll('[data-server-run]').length===20);
@@ -113,7 +141,9 @@ const deferred=()=>{let resolve;const promise=new Promise(r=>{resolve=r;});retur
     assert.ok(runRequests>=2);
     await page.locator('[data-action="upload"]').first().click();
     assert.match(await page.locator('#server-drop').textContent(),/5 MiB、2 分钟/);
+    const uploadStarted=page.waitForRequest(request=>new URL(request.url()).pathname==='/api/v1/media'&&request.method()==='POST');
     await page.locator('#video-upload').setInputFiles({name:'upload.mp4',mimeType:'video/mp4',buffer:Buffer.alloc(1024*1024,1)});
+    await uploadStarted;
     await page.locator('#server-upload-cancel').waitFor();
     // Intercepted requests do not reach the transport; supply a browser progress
     // event to exercise the UI while the mock server deliberately holds its reply.

@@ -4,7 +4,7 @@ import json
 import time
 import uuid
 
-from sqlalchemy import (Column, Float, Index, Integer, JSON, MetaData, String, Table,
+from sqlalchemy import (Boolean, Column, Float, Index, Integer, JSON, MetaData, String, Table,
                         UniqueConstraint, create_engine, select, update, text)
 
 metadata = MetaData()
@@ -34,6 +34,20 @@ sessions = Table("sessions", metadata,
     Column("token_hash", String(64), primary_key=True), Column("owner", String(100), nullable=False),
     Column("csrf", String(80), nullable=False), Column("expires_at", Float, nullable=False))
 schema = Table("schema_version", metadata, Column("version", Integer, primary_key=True))
+
+model_registry = Table('model_registry', metadata,
+    Column('id', String(36), primary_key=True), Column('owner', String(100), nullable=False),
+    Column('name', String(100), nullable=False), Column('version', String(60), nullable=False),
+    Column('task', String(30), nullable=False), Column('classes', JSON, nullable=False),
+    Column('path', String(255), nullable=False), Column('sha256', String(64), nullable=False),
+    Column('size', Integer, nullable=False), Column('enabled', Boolean, nullable=False, default=True),
+    Column('notes', String(1000), nullable=False, default=''), Column('created_at', Float, nullable=False))
+scene_tasks = Table('scene_tasks', metadata,
+    Column('id', String(36), primary_key=True), Column('owner', String(100), nullable=False),
+    Column('name', String(100), nullable=False), Column('model_id', String(36), nullable=False),
+    Column('status', String(20), nullable=False), Column('revision', Integer, nullable=False),
+    Column('config', JSON, nullable=False), Column('created_at', Float, nullable=False),
+    Column('updated_at', Float, nullable=False))
 
 # Cover task history, queue polling and expired-session cleanup.
 query_indexes = (

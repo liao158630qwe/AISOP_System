@@ -50,3 +50,32 @@
   阈值，因此不产生新的精度声明；现场视频仍按既有流程复验。
 - `topology()` 的 `version` 字段用于未来扩展（例如接入手部 59 点或工具关键点），
   前端遇到不认识的版本仍按字段校验后使用。
+
+## 后续：手部骨架接入实时检测
+
+首版统一后，手部检测只存在于算法测试工位：MediaPipe 调用与手形映射内联在
+`AlgorithmLab`，实时接口不返回 `hands`，界面也只在 `lab` 分支画手。本次把这条
+链路补齐，仍复用同一份手部拓扑：
+
+- 新增 `algorithms/hands.py`：`HandLandmarker`（惰性加载 MediaPipe HandLandmarker，
+  缺依赖抛 `ImportError`、缺模型抛 `FileNotFoundError`）与 `hand_shape` /
+  `HAND_SHAPE_LABELS`。`lab.py` 不再内联 mediapipe 与手形映射，改为复用该模块；
+  手形判定仍是四指三元组（`FINGER_CURL_JOINTS`）、阈值 125°/155° 不变。
+- 实时检测：`predict(..., hands=False)` 为显式开关；开启且非算法测试时，检测器按
+  推理槽位缓存（与 `lab` / `inspector` 相同的槽位生命周期），结果写入响应新增字段
+  `hands`，结构与算法测试的 `lab.hands` 一致（`{points, shape, label}`）。模型或
+  依赖缺失时该字段为 `null`，不影响人体检测结果。
+- 接口：`POST /api/v1/realtime/frame` 新增查询参数 `hands`（默认 `false`）。算法
+  测试分支不受影响，手部仍由 `grip` 算法负责，因此该参数在那里不生效。
+- 前端：`server-ui.js` 抽出 `drawHands()`，算法测试与实时检测共用同一绘制；实时
+  控制条新增“手部骨架”开关（算法测试工位禁用），勾选后请求携带 `hands=1`，绘制
+  链取自服务端 `topology().handChains`。
+- 测试：`tests/test_realtime.py` 覆盖开关默认关闭、按槽位缓存复用、模型缺失时降级、
+  算法测试分支忽略该开关、接口参数透传；`tests/test_lab.py` 改从 `algorithms.hands`
+  导入 `hand_shape`。
+
+## 边界（手部实时接入）
+
+- `hands` 默认关闭，既有实时链路的时延与行为不变；开启后每帧额外跑一次 MediaPipe
+  Hands，帧率会下降，按需开启。
+- 本次仍未改动模型权重、跟踪与动作规则阈值，不产生新的精度声明。

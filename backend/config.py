@@ -36,7 +36,9 @@ class Settings:
             raise RuntimeError("Set DATABASE_URL (PostgreSQL required in production)")
         if environment == "production" and not database_url.startswith("postgresql+psycopg://"):
             raise RuntimeError("Production requires postgresql+psycopg:// DATABASE_URL")
-        if len(password) < 12:
+        if not password:
+            raise RuntimeError("Set APP_PASSWORD to a non-empty password")
+        if environment != "development" and len(password) < 12:
             raise RuntimeError("Set APP_PASSWORD to at least 12 characters")
         secure = os.getenv("COOKIE_SECURE", "true").lower() == "true"
         if environment == "production" and not secure:
@@ -47,7 +49,7 @@ class Settings:
         offline = os.getenv("POSE_BACKEND", "rtmo").strip().lower() or "rtmo"
         if offline not in ("rtmo", "rtmpose", "yolo"):
             raise RuntimeError("POSE_BACKEND 仅支持 rtmo / rtmpose / yolo")
-        warmup = os.getenv("REALTIME_WARMUP", "true").strip().lower() not in ("0", "false", "no")
+        warmup = os.getenv("REALTIME_WARMUP", "false").strip().lower() not in ("0", "false", "no")
         try:
             pool_size = int(os.getenv("REALTIME_POOL_SIZE", "2"))
             cleanup_interval = int(os.getenv("CLEANUP_INTERVAL_SECONDS", "3600"))

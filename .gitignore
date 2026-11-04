@@ -17,3 +17,7 @@ Ultralytics/
 
 # Node
 node_modules/
+
+# 本地 Python 环境与下载缓存
+.venv/
+.wheels/

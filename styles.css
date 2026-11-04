@@ -29,8 +29,8 @@
 .dashboard:has(#inline-live){height:auto;min-height:100dvh}.main-grid:has(#inline-live){flex:none;align-items:start}.video-panel:has(#inline-live){flex:none;overflow:visible}.detection-body:has(#inline-live){flex:none}.video-panel:has(#inline-live) .video-stats[hidden]{display:none}.live-picture{max-width:100%;overflow:hidden}
 .live-picture{width:100%;max-width:640px;height:300px;aspect-ratio:auto;margin:0 auto;background:#040c19}.live-picture video,.live-picture canvas{object-fit:contain}#inline-live #live-metrics{padding:8px 12px}#test-controls{flex-basis:100%;padding:8px 0}#test-algorithms{display:flex;gap:12px;flex-wrap:wrap;margin:8px 0}.test-item{display:inline-flex;align-items:center;gap:6px}#test-controls[hidden],#live-inspection[hidden]{display:none!important}@media(max-width:760px){.live-picture{height:220px}.live-controls{gap:6px}.live-controls label{max-width:100%}}
 
-/* Server workspace: whole dashboard fits one viewport; panels scroll internally. */
-.server-mode .dashboard { height:100dvh; min-height:640px; gap:8px; }
+/* Server workspace follows content height so results stay reachable. */
+.server-mode .dashboard { height:auto; min-height:100dvh; gap:8px; }
 .server-mode .main-grid { flex:1; min-height:0; }
 .server-mode .brand p { font-size:10px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .server-mode .btn { min-height:28px; font-size:11px; padding:5px 10px; }
@@ -63,9 +63,9 @@
 .server-mode .detection-body { flex:1; min-height:0; }
 .server-mode .video-panel { flex:0 0 auto; }
 .server-mode .video-stage { flex:none; padding:2px 16px 8px; }
-.server-mode .analysis-grid { flex:1 1 auto; height:auto; max-height:none; min-height:176px; }
+.server-mode .analysis-grid { flex:0 0 auto; height:auto; max-height:none; min-height:240px; }
 .server-mode .table-wrap { max-height:none; }
-.server-mode .workflow-panel { max-height:46%; }
+.server-mode .workflow-panel { max-height:none; }
 .server-mode .workflow-body { overflow:auto; padding:8px; }
 .server-mode .workflow-description { white-space:normal; font-size:10px; line-height:1.6; margin:5px 0 7px; }
 .server-mode .step-detail { font-size:10px; line-height:1.5; }
@@ -75,8 +75,8 @@
 .server-mode .alert-list { max-height:none; }
 .server-mode .alerts-panel { min-height:0; }
 .server-mode .footer { min-height:0; height:25px; margin-top:0; }
-/* Realtime camera keeps the same one-viewport layout; inspection list scrolls. */
-.server-mode .dashboard:has(#inline-live) { height:100dvh; min-height:640px; }
+/* Realtime and replay share the same content-driven layout. */
+.server-mode .dashboard:has(#inline-live) { height:auto; min-height:100dvh; }
 .server-mode .main-grid:has(#inline-live) { flex:1; min-height:0; align-items:stretch; }
 .server-mode .detection-body:has(#inline-live) { flex:1; min-height:0; }
 .server-mode .video-panel:has(#inline-live) { flex:1; min-height:0; display:flex; flex-direction:column; overflow:hidden; }
@@ -458,3 +458,356 @@ dialog::backdrop{background:#050708cc;backdrop-filter:blur(4px)}
 .station-check>span{color:#ffc447}
 .station-check p{color:#9aa2ab}
 #login-error{color:#ff9c8a}
+
+/* --- Enhanced Self-Check & Modern UI Elements --- */
+.checks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 10px;
+}
+.check-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border-bottom: 1px solid rgba(38, 58, 91, 0.45);
+  background: rgba(7, 23, 46, 0.4);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.check-row:hover {
+  background: rgba(16, 44, 84, 0.55);
+}
+.check-mark {
+  font-size: 13px;
+  font-weight: 700;
+  width: 18px;
+  text-align: center;
+}
+.check-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+  min-width: 0;
+}
+.check-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #dbe7f7;
+  letter-spacing: 0.2px;
+}
+.check-desc {
+  font-size: 10px;
+  color: #7b94b7;
+  line-height: 1.3;
+}
+.check-row .check-state {
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 12px;
+  background: rgba(66, 214, 155, 0.12);
+  border: 1px solid rgba(66, 214, 155, 0.32);
+  color: #42d69b;
+  white-space: nowrap;
+}
+.check-row .check-state.pending {
+  background: rgba(255, 196, 71, 0.12);
+  border-color: rgba(255, 196, 71, 0.35);
+  color: #ffc447;
+}
+
+/* Metric card subtle interactive elevation */
+.metrics .metric {
+  position: relative;
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+.metrics .metric:hover {
+  background: rgba(117, 172, 255, 0.06);
+}
+.metrics .metric strong {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.5px;
+}
+
+/* Enhanced Video Hover Control Bar */
+.video-hover {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background: rgba(6, 17, 36, 0.78);
+  border: 1px solid rgba(78, 123, 190, 0.4);
+  border-radius: 7px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+}
+
+/* Alert list cards visual hierarchy */
+.alert-card {
+  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+}
+.alert-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Single-Page Focused Workflow Panel & History Storage --- */
+.station-check.latest-focused {
+  background: rgba(16, 35, 68, 0.45);
+  border: 1px solid rgba(65, 106, 204, 0.35);
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 8px;
+}
+.station-check-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.station-check-head b {
+  color: #dbe7f7;
+  font-size: 12px;
+}
+.station-check-head .status-badge {
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 10px;
+  background: rgba(255, 196, 71, 0.15);
+  border: 1px solid rgba(255, 196, 71, 0.35);
+  color: #ffc447;
+}
+.cycle-summary {
+  font-size: 10px;
+  color: #8b939c;
+  margin-bottom: 6px;
+}
+.current-stage-card {
+  background: rgba(7, 23, 46, 0.6);
+  border: 1px solid rgba(78, 123, 190, 0.3);
+  border-radius: 5px;
+  padding: 8px 10px;
+  margin: 8px 0;
+}
+.current-stage-card .stage-label {
+  display: block;
+  font-size: 9px;
+  color: #7b94b7;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.current-stage-card .stage-name {
+  display: block;
+  font-size: 13px;
+  color: #70baff;
+  margin: 2px 0 6px;
+}
+.stage-evidence small {
+  display: block;
+  font-size: 9px;
+  color: #a4bedc;
+  margin-bottom: 3px;
+}
+
+/* History Chip (Bottom single-line indicator to drawer) */
+.history-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(14, 27, 49, 0.6);
+  border: 1px dashed rgba(65, 106, 204, 0.45);
+  border-radius: 5px;
+  padding: 6px 10px;
+  margin-top: 8px;
+  font-size: 10px;
+  color: #9ebcde;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+.history-chip:hover {
+  background: rgba(24, 48, 86, 0.8);
+  border-color: #70baff;
+  color: #e6f1ff;
+}
+.history-chip .chip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #42d69b;
+  box-shadow: 0 0 6px rgba(66, 214, 155, 0.5);
+  flex-shrink: 0;
+}
+.history-chip button, .history-chip .btn-link {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: #70baff;
+  font-size: 10px;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* SOP History Modal */
+.sop-history-section h4, .sop-history-title {
+  font-size: 12px;
+  color: #dbe7f7;
+  margin-bottom: 8px;
+  letter-spacing: 0.2px;
+}
+.sop-history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cycles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 8px;
+}
+.cycle-card {
+  background: rgba(7, 23, 46, 0.5);
+  border: 1px solid rgba(65, 106, 204, 0.35);
+  border-radius: 5px;
+  padding: 8px 10px;
+}
+.cycle-card .cycle-head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #8fa5c7;
+}
+.cycle-card .cycle-tag.ok {
+  color: #42d69b;
+  font-weight: 600;
+}
+.cycle-card strong {
+  display: block;
+  font-size: 14px;
+  color: #70baff;
+  margin: 4px 0 2px;
+}
+.cycle-card small {
+  font-size: 9px;
+  color: #6d84a3;
+}
+.sop-history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+.sop-history-table th, .sop-history-table td {
+  padding: 7px 9px;
+  border-bottom: 1px solid rgba(38, 58, 91, 0.45);
+  text-align: left;
+}
+.sop-history-table th {
+  background: rgba(14, 27, 49, 0.7);
+  color: #8fa5c7;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+}
+.sop-history-table .badge-track {
+  background: rgba(65, 106, 204, 0.25);
+  color: #90c2ff;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-family: monospace;
+}
+.sop-history-table .badge-event {
+  color: #ffc447;
+  font-size: 10px;
+}
+.sop-history-table .cell-desc {
+  color: #dbe7f7;
+}
+
+/* Shared layout: page scrolling exposes every panel at any picture height. */
+[hidden] { display:none!important; }
+.dashboard { height:auto; min-height:100dvh; }
+.main-grid,.server-mode .main-grid,.main-grid:has(#inline-live),.server-mode .main-grid:has(#inline-live) {
+  flex:1 0 auto; align-items:start; grid-template-columns:minmax(0,1fr) 340px;
+}
+.detection-panel .detection-body,.server-mode .detection-body,.detection-body:has(#inline-live),.server-mode .detection-body:has(#inline-live) {
+  flex:none; min-height:0; overflow:visible;
+}
+.sidebar { min-width:0; }
+.workflow-panel,.server-mode .workflow-panel { max-height:none; }
+.workflow-body,.server-mode .workflow-body { max-height:none; overflow:visible; }
+.workflow-description,.server-mode .workflow-description { white-space:normal; overflow-wrap:anywhere; }
+.workflow-title,.station-check-head { flex-wrap:wrap; }
+.workflow-title h3 { white-space:normal; overflow-wrap:anywhere; }
+.steps,.station-check { min-width:0; overflow-wrap:anywhere; }
+.step-name { min-width:0; overflow-wrap:anywhere; }
+.analysis-grid,.server-mode .analysis-grid { flex:none; height:auto; min-height:240px; grid-template-columns:repeat(3,minmax(0,1fr)); }
+.analysis-grid>.subpanel { min-width:0; min-height:240px; }
+.results-panel .table-wrap { flex:1; min-height:100px; max-height:260px; }
+.empty-note,.server-mode .empty-note { position:static; width:auto; margin:10px 8px; color:#9aa2ab; letter-spacing:0; line-height:1.6; }
+.timeline-panel { overflow:visible; }
+.legend { flex-wrap:wrap; gap:6px 12px; }
+.compliance-panel { display:block; grid-column:auto; padding:0; }
+.compliance-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
+.compliance-grid>div { min-width:0; }
+.compliance-foot { display:flex; flex-wrap:wrap; text-align:center; line-height:1.5; }
+.alerts-panel,.server-mode .alerts-panel { flex:none; min-height:300px; }
+.alert-list,.server-mode .alert-list { flex:auto; max-height:420px; }
+.ops-actions { flex-wrap:wrap; max-width:100%; }
+#server-status { min-width:0; flex:1 1 240px; white-space:normal; overflow-wrap:anywhere; }
+#station-requirements { flex-basis:100%; white-space:normal; overflow-wrap:anywhere; }
+.footer,.server-mode .footer { height:auto; min-height:30px; flex-wrap:wrap; }
+dialog { max-height:calc(100dvh - 24px); }
+dialog[open] { display:flex; flex-direction:column; }
+.modal-heading { flex-shrink:0; }
+#modal-body { min-height:0; max-height:none; }
+.sequence-subject-control { display:flex; align-items:center; flex-wrap:wrap; gap:8px; margin:8px 0; color:#9aa2ab; }
+.sequence-subject-control .field { flex:1; min-width:130px; width:auto; padding:6px 8px; }
+.history-table-wrap { overflow:auto; max-height:360px; margin-top:10px; }
+.sop-history-table .cell-desc { white-space:normal; min-width:170px; overflow-wrap:anywhere; }
+.history-chip { flex-wrap:wrap; }
+.system-item { min-width:0; }
+.system-item strong { overflow-wrap:anywhere; line-height:1.5; font-size:14px; }
+.check-info { min-width:0; flex:1; }
+.check-info b { display:block; font-size:11px; line-height:1.5; }
+.check-desc { display:block; margin-top:3px; overflow-wrap:anywhere; color:#9aa2ab; }
+.check-row .check-state { flex-shrink:0; }
+.check-row .check-state.info { color:#80c9e6; background:#12303b; border-color:#315667; }
+.check-row .check-state.notice { color:#ffc447; background:#332708; border-color:#6b5518; }
+.check-row .check-state.failed { color:#ff9c8a; background:#33150f; border-color:#6e2b22; }
+.check-mark.failed { color:#ff9c8a; }
+.check-mark.info { color:#80c9e6; }
+.check-mark.notice,.check-mark.pending { color:#ffc447; }
+@media(max-width:1450px) {
+  .topbar { flex-wrap:wrap; }
+  .brand { min-width:0; flex:1 1 300px; }
+  .toolbar { flex-wrap:wrap; }
+  .header-status { flex:1 1 100%; flex-wrap:wrap; }
+  .analysis-grid,.server-mode .analysis-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .compliance-panel { grid-column:1/-1; }
+  .analysis-grid>.compliance-panel { min-height:170px; }
+}
+@media(max-width:1000px) {
+  .main-grid,.server-mode .main-grid,.main-grid:has(#inline-live),.server-mode .main-grid:has(#inline-live) { grid-template-columns:minmax(0,1fr); }
+  .sidebar { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); align-items:start; }
+}
+@media(max-width:760px) {
+  .metrics,.server-mode .metrics { height:auto; }
+  .metric,.server-mode .metric { min-height:62px; }
+  .analysis-grid,.server-mode .analysis-grid { grid-template-columns:minmax(0,1fr); grid-template-rows:auto; }
+  .analysis-grid>.subpanel { min-height:200px; }
+  .analysis-grid>.compliance-panel { min-height:170px; }
+  .sidebar { grid-template-columns:minmax(0,1fr); }
+  .ops-row label { white-space:normal; }
+  .ops-actions { flex:1 1 100%; }
+  .server-mode .ops-row select.field { min-width:0; }
+  .header-status .cpu-chip { max-width:100%; white-space:normal; }
+  .video-mode-control .field,.live-controls .field { min-width:0; }
+  .live-controls label { display:flex; align-items:center; flex-wrap:wrap; gap:5px; width:100%; }
+  #live-device { flex:1; min-width:0; }
+  .video-stats strong { overflow-wrap:anywhere; }
+  .modal-heading { padding:14px 18px; }
+  .modal-heading h2 { font-size:18px; }
+  .modal-actions { flex-wrap:wrap; }
+}
+/* 画面高度滑杆行按需求隐藏，仍可通过下方拖动条调整。 */
+.video-size-controls { display:none; }

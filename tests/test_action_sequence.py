@@ -139,7 +139,11 @@ def test_stream_identity_owner_isolation_expiry_and_bounds():
     with pytest.raises(HTTPException): registry.get(('x','x'),float('nan'),(),clock=3)
 
 
-def test_stream_api_passes_identity_and_workflow(authenticated):
+def test_stream_api_passes_identity_and_workflow(authenticated,monkeypatch):
+    # The production demo catalog was retired; exercise plumbing with an
+    # explicit test-only template instead of depending on enabled SOPs.
+    monkeypatch.setattr('algorithms.action_sop.snapshot',lambda identity: freeze(dict(
+        id=identity,name='测试动作',version='test',steps=[dict(id='raise',name='抬手',actions=['raised'])])))
     _,app,client=authenticated
     captured={}
     def predict(payload, **kwargs):
@@ -151,3 +155,41 @@ def test_stream_api_passes_identity_and_workflow(authenticated):
     assert captured['frame_time']==.25
     assert captured['workflow']['config']['id']=='generic-actions'
     assert client.post('/api/v1/realtime/frame?workflow_id=generic-actions',content=b'x',headers={'Content-Type':'image/jpeg'}).status_code==422
+
+
+def test_hoi_wrist_touch_roi_boosts_action_confidence():
+    # Test P2 HOI touch weighting: wrist inside ROI gives +0.15 boost
+    workflow = freeze(dict(id='hoi-test', name='hoi-test', version='1', steps=[
+        dict(id='pick', name='pick', actions=['reaching'], min_hold=0.2, max_wait=5, roi=(0.6, 0.4, 0.9, 0.8))
+    ], threshold=0.65))
+    seq = ActionSequence(workflow)
+
+    # Person body center is at (0.4, 0.5) - OUTSIDE the bin ROI (0.6, 0.4, 0.9, 0.8)
+    # But right wrist (index 10) reaches into (0.7, 0.6) - INSIDE the bin ROI!
+    # Base reaching signal is only 0.55 (below 0.65 threshold)
+    kpts = [[0.0, 0.0, 0.0]] * 17
+    kpts[10] = [0.7, 0.6, 0.9]  # Right wrist in bin ROI with high visibility
+
+    worker = dict(
+        trackId=1,
+        bbox=[0.3, 0.3, 0.5, 0.7],  # center is (0.4, 0.5), outside ROI
+        keypoints=kpts,
+        signals={'reaching': 0.55, 'standing': 0.45},
+        tracking=dict(reliable=True)
+    )
+
+    # Without wrist touch, 0.55 < 0.65 would FAIL. With HOI wrist touch, 0.55 + 0.15 = 0.70 >= 0.65 MATCHES!
+    step = seq.spec.steps[0]
+    assert seq.matches(worker, step), "Wrist touching bin ROI should boost confidence and match"
+
+    # If wrist is withdrawn outside ROI (e.g. at 0.45, 0.5), it should NOT match
+    kpts_withdrawn = [[0.0, 0.0, 0.0]] * 17
+    kpts_withdrawn[10] = [0.45, 0.5, 0.9]
+    worker_withdrawn = dict(
+        trackId=1,
+        bbox=[0.3, 0.3, 0.5, 0.7],
+        keypoints=kpts_withdrawn,
+        signals={'reaching': 0.55, 'standing': 0.45},
+        tracking=dict(reliable=True)
+    )
+    assert not seq.matches(worker_withdrawn, step), "Wrist outside ROI without sufficient signal must not match"

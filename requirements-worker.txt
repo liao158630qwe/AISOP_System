@@ -2,6 +2,8 @@
 ultralytics==8.4.155
 psutil==5.9.8
 scipy==1.13.1
+scikit-learn==1.5.1
+joblib==1.4.2
 mediapipe==1.0.1
 # Optional RTMPose/RTMO pose backends for tools/analyze-workers.py (--pose-backend rtmpose|rtmo).
 # Install with `pip install rtmlib --no-deps` plus a CUDA-matching onnxruntime-gpu, e.g.:

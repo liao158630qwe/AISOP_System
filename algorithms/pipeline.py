@@ -13,7 +13,8 @@ import psutil
 
 from .pose import COLORS, LABELS
 from .report import build_report
-from .skeleton import BODY_EDGES, topology, visible_edges
+from .skeleton import (BODY_EDGES, LEFT_JOINTS, RIGHT_JOINTS, VISIBILITY_THRESHOLD,
+                       body_overlay, topology, visible_edges)
 from .tracking import PoseTracker
 from .action_sop import ActionSequence
 from .video import AnalysisError, Cancelled, file_hash, probe, validate_options
@@ -52,11 +53,28 @@ def annotate(img, people):
     h, w = img.shape[:2]
     for p in people:
         box = (np.array(p["bbox"]) * [w, h, w, h]).astype(int)
-        cv2.rectangle(img, tuple(box[:2]), tuple(box[2:]), (235, 225, 45), 2)
-        cv2.putText(img, f'P{p["trackId"]:02}', (box[0], max(18, box[1] - 6)), cv2.FONT_HERSHEY_SIMPLEX, .6, (235, 225, 45), 2)
+        color = (160, 217, 57) if p.get('primary') else (239, 215, 51)
+        cv2.rectangle(img, tuple(box[:2]), tuple(box[2:]), color, 2)
+        label = ('PRIMARY ' if p.get('primary') else '') + f'P{p["trackId"]:02}'
+        cv2.putText(img, label, (box[0], max(18, box[1] - 6)), cv2.FONT_HERSHEY_SIMPLEX, .6, color, 2)
         k = np.array(p["keypoints"]) * [w, h, 1]
+        overlay = p.get('skeletonOverlay') or body_overlay(p["keypoints"], w, h)
+        head = overlay.get('head')
+        if head:
+            center = tuple(np.round(np.array(head['center']) * [w, h]).astype(int))
+            axes = tuple(np.maximum(1, np.round(np.array(head['axes']) * h)).astype(int))
+            cv2.ellipse(img, center, axes, np.degrees(head['rotation']), 0, 360, (245, 235, 205), 1, cv2.LINE_AA)
+        if overlay.get('neck'):
+            neck = np.round(np.array(overlay['neck']) * [w, h]).astype(int)
+            cv2.line(img, tuple(neck[0]), tuple(neck[1]), (189, 242, 159), 2, cv2.LINE_AA)
         for a, b in visible_edges(k, BODY_EDGES):
-            cv2.line(img, tuple(k[a, :2].astype(int)), tuple(k[b, :2].astype(int)), (235, 225, 45), 2)
+            color = (255, 232, 83) if a in LEFT_JOINTS and b in LEFT_JOINTS else (
+                (99, 190, 255) if a in RIGHT_JOINTS and b in RIGHT_JOINTS else (189, 242, 159))
+            cv2.line(img, tuple(k[a, :2].astype(int)), tuple(k[b, :2].astype(int)), color, 2, cv2.LINE_AA)
+        for index, point in enumerate(k):
+            if point[2] >= VISIBILITY_THRESHOLD and np.isfinite(point).all():
+                color = (255, 232, 83) if index in LEFT_JOINTS else (99, 190, 255) if index in RIGHT_JOINTS else (255, 247, 236)
+                cv2.circle(img, tuple(point[:2].astype(int)), 2, color, -1, cv2.LINE_AA)
     return img
 
 
@@ -148,7 +166,7 @@ def analyze(video, model_path, out, *, run_id, options=None, progress=None, dete
             if t + 1e-7 < next_sample:
                 continue
             next_sample += 1 / sample_fps
-            result = detector.predict(image, imgsz=imgsz, conf=.35, iou=.5, max_det=50, device=device, verbose=False)[0]
+            result = detector.predict(image, classes=[0], imgsz=imgsz, conf=.35, iou=.5, max_det=50, device=device, verbose=False)[0]
             people = tracker.update(result, w, h, t)
             detections += len(people)
             if detections > 50000:
@@ -193,7 +211,8 @@ def analyze(video, model_path, out, *, run_id, options=None, progress=None, dete
     if not events:
         events.append(dict(id=1, trackId=None, start=0, end=duration, title="SOP完成证据待补充", severity="low",
                            description="未接入工具、工件和设备状态，不能判定工序合格。"))
-    data = dict(version=2, id=run_id, generatedAt=datetime.now(timezone.utc).isoformat(), verdict="REVIEW",
+    data = dict(version=2, analysisType="pose", detectionClasses=["person"],
+        id=run_id, generatedAt=datetime.now(timezone.utc).isoformat(), verdict="REVIEW",
         source=dict(title=options.get("title", Path(video).name), description="用户上传视频的服务器离线分析；姿态规则不等于工艺动作。",
             file=Path(video).name, sha256=file_hash(video), start=origin, end=origin + duration, duration=duration,
             fps=fps, width=w, height=h, crop=crop, video="video.webm", hasBurnedAnnotations=None),

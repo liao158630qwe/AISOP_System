@@ -18,15 +18,10 @@ def clip_profile(**kwargs):
     return {'config':config,'assets':{},'sha256':'test-only'}
 
 
-def test_catalog_matches_document():
-    catalog=profiles()
-    assert len(catalog)==6
-    assert sum(len(s.checks) for s in catalog)==11
-    assert catalog[4].checks[1].expected=={'screw':8}
-    for s in catalog:
-        result=Inspector(snapshot(s.id)).inspect(np.zeros((50,50,3),np.uint8))
-        assert result['verdict']=='REVIEW'
-        assert all(c['state']=='REVIEW' for c in result['checks'])
+def test_previous_sop_catalog_is_retired():
+    assert profiles()==[]
+    with pytest.raises(ValueError,match='未知工位'):
+        snapshot('s5')
 
 
 def test_color_candidate_is_not_completion_and_no_detection_is_unknown():
@@ -84,14 +79,19 @@ def test_overlapping_slots_rejected():
     with pytest.raises(ValueError):Station.model_validate(config)
 
 
-def test_station_task_freezes_config_and_rejects_unknown(authenticated,video_bytes):
+def test_station_task_freezes_config_and_rejects_unknown(authenticated,video_bytes,monkeypatch,tmp_path):
+    import json
+    import algorithms.stations as stations
+    config_path=tmp_path/'test-stations.json'
+    config_path.write_text(json.dumps([clip_profile()['config']]),encoding='utf-8')
+    monkeypatch.setattr(stations,'CONFIG',config_path)
     _,app,client=authenticated
     from backend.db import runs
     from sqlalchemy import select
-    job=new_run(client,video_bytes,options={'station_id':'s5'})
+    job=new_run(client,video_bytes,options={'station_id':'test'})
     with app.state.engine.connect() as c:
         options=c.execute(select(runs.c.options).where(runs.c.id==job['id'])).scalar_one()
-    assert options['inspection_config']['config']['id']=='s5'
+    assert options['inspection_config']['config']['id']=='test'
     assert len(options['inspection_config']['sha256'])==64
     response=client.post('/api/v1/analysis-runs',json={'media_id':job['media_id'],'options':{'station_id':'missing'}},headers={'Idempotency-Key':'invalid-station'})
     assert response.status_code==422

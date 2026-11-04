@@ -114,6 +114,7 @@ class _Boxes:
     def __init__(self, xyxy, conf):
         self.xyxy = torch.as_tensor(xyxy, dtype=torch.float32)
         self.conf = torch.as_tensor(conf, dtype=torch.float32)
+        self.cls = torch.zeros(len(self.conf), dtype=torch.float32)
 
 
 class _Keypoints:
@@ -206,7 +207,9 @@ class RTMLibDetector:
         labels = {role: _label(path) for role, path in self._files}
         return labels['pose'] if self.variant == 'rtmo' else f"{labels['pose']} + {labels['det']}"
 
-    def predict(self, image, imgsz=None, conf=.35, iou=None, max_det=50, device=None, verbose=False):
+    def predict(self, image, imgsz=None, conf=.35, iou=None, max_det=50, device=None, verbose=False, classes=None):
+        if classes is not None and 0 not in classes:
+            return [_Result.empty()]
         image = np.ascontiguousarray(image)
         started = time.perf_counter()
         if self.variant == 'rtmo':
