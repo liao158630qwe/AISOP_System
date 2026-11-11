@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0c1014"><title>集中大屏 · AI-SOP</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="board.css">
+  <link rel="stylesheet" href="board-history.css">
+  <link rel="stylesheet" href="board-advanced.css">
+</head>
+<body>
+  <div class="board" data-view="overview">
+    <header class="masthead">
+      <a class="brand" href="/" title="返回检测平台"><span class="brand-symbol" aria-hidden="true"><i></i><i></i><i></i></span><span><strong>AI<span>·</span>SOP</strong><small>INTELLIGENT PRODUCTION</small></span></a>
+      <div class="page-title"><h1>集中大屏看板</h1><p>全流程可视 · 全工位协同</p></div>
+      <div class="header-right"><div class="clock"><time id="clock">--:--:--</time><span id="calendar">---- / -- / --</span></div><span class="channel">大屏通道 <b>01</b></span><button class="icon-button" id="fullscreen" aria-label="进入全屏" title="进入全屏"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></div>
+    </header>
+
+    <div class="command-bar">
+      <div class="line-identity"><span class="line-icon" aria-hidden="true">▥</span><strong>装配产线</strong><span class="divider"></span><span>六工位协同监测</span><span class="connection" id="connection" data-state="idle"><i></i><span>等待连接</span></span></div>
+      <div class="board-range" role="group" aria-label="统计范围"><span>统计范围</span><div class="segment"><button data-range="all" aria-pressed="true">总体</button><button data-range="today" aria-pressed="false">当日</button><button data-range="date" aria-pressed="false">指定日期</button></div><input id="board-date" type="date" aria-label="统计日期" required hidden></div>
+      <div class="controls">
+        <button id="advanced-open" class="advanced-entry" title="测试数据清理与高级管理">高级功能</button>
+        <button id="history-open" class="history-entry" title="按日查看合规、不合规与待复核记录">每日历史 <span aria-hidden="true">↗</span></button>
+        <div class="segment source-switch" aria-label="数据来源"><button id="live-mode" aria-pressed="true">实时数据</button><button id="demo-mode" aria-pressed="false">演示模式</button></div>
+        <button id="auto-alert" aria-pressed="true" title="新违规事件在页面底部提示">告警提示 <span class="toggle-dot"></span></button>
+        <button id="account">登录看板</button>
+      </div>
+    </div>
+
+    <div class="notice" id="notice" role="status">正在连接数据服务…</div>
+
+    <section class="metrics" aria-label="总体检测统计">
+      <article class="metric"><div class="metric-label"><span id="total-label">总体检测轮次</span><span class="metric-code" id="total-code">DETECTIONS / ALL</span></div><div class="metric-value"><strong id="total">—</strong><span>轮</span><svg class="metric-glyph" viewBox="0 0 64 50" aria-hidden="true"><path d="M8 19 30 7l23 12-23 13Zm0 0v24l22 12 23-12V19M30 32v23M19 13l23 13"/></svg></div><p><span class="metric-dot amber"></span>每次开始检测计一轮 <span class="metric-tail">含视频 / 图片联调</span></p></article>
+      <article class="metric"><div class="metric-label"><span>合规轮次</span><span class="metric-code">PASS</span></div><div class="metric-value green"><strong id="passed">—</strong><span>轮</span><svg class="metric-glyph" viewBox="0 0 64 50" aria-hidden="true"><path d="M32 5 51 13v14c0 11-19 20-19 20S13 38 13 27V13Z M23 25l7 7 12-14"/></svg></div><p><span class="metric-dot green"></span><span id="verdict-note">含本轮实时判定</span> <span class="metric-tail" id="pass-share">—</span></p></article>
+      <article class="metric"><div class="metric-label"><span>异常轮次</span><span class="metric-code">FAIL</span></div><div class="metric-value red"><strong id="failed">—</strong><span>轮</span><svg class="metric-glyph" viewBox="0 0 64 50" aria-hidden="true"><path d="m32 5 25 40H7ZM32 19v12m0 5v2"/></svg></div><p><span class="metric-dot red"></span>算法判定异常 <span class="metric-tail" id="pending">待判定 — 轮</span></p></article>
+      <article class="metric metric-accent"><div class="metric-label"><span>检测合规率</span><span class="metric-code">COMPLIANCE</span></div><div class="metric-value amber"><strong id="rate">—</strong><span>%</span><svg class="metric-glyph" viewBox="0 0 64 50" aria-hidden="true"><path d="M9 42a25 25 0 1 1 46 0M32 32 45 15M17 30h-4m38 0h-4M32 8v5"/><circle cx="32" cy="32" r="4"/></svg></div><p><span class="metric-dot amber"></span>合规 ÷ 已判定轮次 <span class="metric-tail">待判定不计入</span></p></article>
+    </section>
+
+    <main class="main-grid">
+      <section class="panel station-panel" aria-labelledby="station-heading">
+        <div class="panel-heading"><div><span class="section-index">01</span><h2 id="station-heading">产线全局总览</h2><span class="panel-caption">STATION OVERVIEW</span></div><div class="legend"><span><i class="green"></i>运行</span><span><i class="red"></i>告警</span><span><i class="amber"></i>待复核</span><span><i class="gray"></i>离线</span></div></div>
+        <div class="station-summary"><span><b id="running-count">—</b><span id="station-count-label"> / 6 工位采样在线</span></span><div class="production-track" id="production-track" aria-label="工位连接状态"></div><span id="station-note">直接接收检测结果 · 无需工件</span></div>
+        <div class="stations" id="stations"></div>
+      </section>
+      <section class="panel alerts-panel" aria-labelledby="alerts-heading">
+        <div class="panel-heading"><div><span class="section-index red">02</span><h2 id="alerts-heading">实时违规告警</h2><span class="count-badge" id="alert-count">0</span></div><button class="text-button" id="scroll-toggle" aria-pressed="true">暂停滚动</button></div>
+        <div class="alert-toolbar"><span><i class="metric-dot red"></i>事件动态</span><button class="text-button" id="test-alert">预览告警提示 ↗</button></div>
+        <div class="alert-viewport" id="alert-viewport" tabindex="0" aria-label="违规事件列表，可滚动；悬停或聚焦暂停自动滚动"><div id="alert-list"></div></div>
+        <div class="panel-bottom"><span id="alert-note">最新 100 条 · 点击查看详情</span><span class="live-label">LIVE FEED <i></i></span></div>
+      </section>
+    </main>
+
+    <div class="analysis-grid">
+      <section class="panel trend-panel" aria-labelledby="trend-heading">
+        <div class="panel-heading"><div><span class="section-index">03</span><h2 id="trend-heading">归档检测合规率趋势</h2><span class="panel-caption">QUALITY TREND</span></div><div class="segment" aria-label="趋势维度"><button data-period="hour" aria-pressed="true">按小时</button><button data-period="shift" aria-pressed="false">按班次</button></div></div>
+        <div class="chart-legend"><span><i class="line-key"></i>归档合规率</span><span><i class="line-key target"></i>参考 98%</span><span id="trend-note">UTC+08:00 · 当日</span></div>
+        <div class="chart" id="trend-chart"></div>
+      </section>
+      <section class="panel ranking-panel" aria-labelledby="ranking-heading">
+        <div class="panel-heading"><div><span class="section-index">04</span><h2 id="ranking-heading">异常类型 TOP</h2></div><span class="panel-caption" id="ranking-scope">归档与当前实时异常</span></div>
+        <div class="ranking" id="ranking"></div>
+        <div class="ranking-foot"><span>按记录原因归类 · 一事件可含多类</span><b id="top-total">— 次</b></div>
+      </section>
+    </div>
+
+    <footer class="board-footer">
+      <div class="footer-status"><span class="crosshair">+</span><span id="scope-label">总体 · 全部日期</span><span id="updated">尚未同步</span><button id="definitions" class="text-button">统计口径 ⓘ</button></div>
+      <nav class="view-switch" aria-label="看板画面"><button data-view="overview" aria-current="page"><i></i>综合总览</button><button data-view="stations"><i></i>工位监测</button><button data-view="quality"><i></i>质量告警</button></nav>
+      <div class="rotation"><label for="rotation-interval">轮播</label><select id="rotation-interval" aria-label="轮播间隔"><option value="15">15 秒</option><option value="30">30 秒</option><option value="60">60 秒</option></select><button id="rotation-toggle" aria-pressed="false">▶ 开始轮播</button><span id="rotation-count">01 / 03</span></div>
+    </footer>
+  </div>
+
+  <aside id="alert-dialog" class="alarm-card" aria-label="违规告警提示" hidden>
+    <div class="alarm-top"><span><i class="metric-dot red"></i>违规提醒</span><span id="alarm-source">实时事件</span><button id="close-alert" class="alarm-close" aria-label="关闭告警提示" title="关闭提示（Esc）">×</button></div>
+    <div class="alarm-content" role="status" aria-live="polite" aria-atomic="true">
+      <div class="alarm-heading"><span class="alarm-symbol" aria-hidden="true">!</span><h2 id="alarm-title">工序违规告警</h2><span id="alarm-station"></span></div>
+      <p class="alarm-reason" id="alarm-reason"></p>
+      <dl class="alarm-details"><div><dt>检测来源</dt><dd id="alarm-part"></dd></div><div><dt>时间</dt><dd id="alarm-time"></dd></div><div><dt>来源</dt><dd id="alarm-kind"></dd></div></dl>
+    </div>
+    <div class="alarm-bottom"><span id="alarm-queue">现场核对后请及时处置</span><button id="dismiss-alert" class="alarm-dismiss" title="仅关闭本屏提示，不修改工件结果">我已知晓</button></div>
+  </aside>
+  <dialog id="definitions-dialog" class="info-dialog" aria-labelledby="definitions-heading"><div class="dialog-heading"><h2 id="definitions-heading">统计口径</h2><button id="close-definitions" aria-label="关闭统计口径">×</button></div><div class="definition-body"><p>检测联动：直接统计工位检测流，无需建立或关联工件。日期按 UTC+08:00 划分，每约 1 秒同步。</p><dl>
+    <dt>总体 / 当日 / 指定日期</dt><dd>总体统计所有日期的有效检测记录。当日随零点切换到新一天；指定日期固定显示所选日。切换范围不会删除数据，回收站记录不计入统计。页面默认总体，并记住本浏览器的选择。</dd>
+    <dt>检测轮次</dt><dd>每条检测流计一轮，多帧推理和结束归档不重复计数。已结束轮次按结束日期归档，缺少结束时间时使用开始时间；当日另含当天开始的未结束轮次和仍在采集的跨日轮次。总体包含所有未结束轮次。</dd>
+    <dt>合规 / 异常 / 待判定</dt><dd>已归档轮次使用最终判定；经人工复核的轮次按人工结论统计，原始算法结果及确认记录保留；采样在线的本轮使用当前算法判定。本轮结果过期或未完成时记待判定；连续动作检测的采样缺口阻止自动通过；螺丝逐位置视觉检测在全部操作位置和预装件确认后可合规，缺口仍保留记录。已检出的明确异常仍保留。实时合规不代表最终归档通过。</dd>
+    <dt>检测合规率与趋势</dt><dd>合规轮次 ÷（合规轮次 + 异常轮次），待判定不计入分母。趋势仅使用所选范围内的归档记录，按结束时间（缺失时按开始时间）归入小时和班次；总体将全部日期的相同小时或班次汇总。无已判定数据时显示“—”。</dd>
+    <dt>工位状态与确认进度</dt><dd>总体和当日展示当前采样状态及范围内最后一轮结果，采样在线独立于合规结论。选择过去日期时显示该日最后归档结果及有记录的工位数，不代表目前连接状态。</dd>
+    <dt>异常告警</dt><dd>展示所选范围内的归档异常，总体和当日另含当前实时异常；同一检测轮次去重，按原因归类，一个事件可含多类。首次加载、切换范围及查看过去日期时，历史事件不自动弹出。</dd>
+  </dl></div></dialog>
+  <div id="board-toast" role="status" hidden></div>
+  <dialog id="history-dialog" class="history-dialog" aria-labelledby="history-heading" aria-describedby="history-scope">
+    <div class="dialog-heading history-heading"><div><span class="eyebrow">DAILY INSPECTION HISTORY</span><h2 id="history-heading">每日检测历史</h2><p id="history-scope">按检测结束日期归档 · UTC+08:00 · 进行中的轮次归档后可查</p></div><button id="history-close" aria-label="关闭每日历史">×</button></div>
+    <div class="history-content">
+      <div class="history-filters">
+        <div class="history-date-group"><label for="history-date">归档日期</label><div class="history-date-controls"><button id="history-prev-day" aria-label="前一天" title="前一天">‹</button><input id="history-date" type="date" required aria-label="归档日期"><button id="history-next-day" aria-label="后一天" title="后一天">›</button><button id="history-today">今天</button></div></div>
+        <label class="history-station-label" for="history-station">工位<select id="history-station"><option value="">全部工位</option><option value="station-1">工位1</option><option value="station-2">工位2</option><option value="station-3">工位3</option><option value="station-4">工位4</option><option value="station-5">工位5</option><option value="station-6">工位6</option></select></label>
+        <button id="history-refresh">刷新记录</button>
+      </div>
+      <div class="history-summary" id="history-summary" aria-label="所选日期与工位的有效归档统计">
+        <article data-verdict="FAIL"><span>不合规</span><strong data-history-count="failed">—</strong><small>优先核对异常</small></article>
+        <article data-verdict="PASS"><span>合规</span><strong data-history-count="passed">—</strong><small>已确认通过</small></article>
+        <article data-verdict="REVIEW"><span>待复核</span><strong data-history-count="pending">—</strong><small>结论待确认</small></article>
+        <article><span>归档总轮次</span><strong data-history-count="total">—</strong><small>不含回收站记录</small></article>
+      </div>
+      <div class="history-toolbar"><div class="history-verdicts" role="group" aria-label="筛选检测结论"><button data-history-verdict="FAIL" aria-pressed="true">不合规</button><button data-history-verdict="PASS" aria-pressed="false">合规</button><button data-history-verdict="REVIEW" aria-pressed="false">待复核</button><button data-history-verdict="ALL" aria-pressed="false">全部</button></div><button id="history-trash" aria-pressed="false">回收站 <span id="history-trash-count">0</span></button></div>
+      <div class="history-list-caption"><span id="history-list-title">不合规记录 · 最近归档优先</span><span id="history-summary-note">所选日期全部结论汇总</span></div>
+      <p id="history-message" class="history-message" role="status" hidden></p>
+      <div id="history-list" class="history-list" aria-label="检测历史记录" aria-busy="false"></div>
+    </div>
+    <div class="history-footer"><p id="history-page-label" role="status">正在读取…</p><span class="history-resize-hint">拖动右下角调整大小</span><div><button id="history-prev-page" disabled>上一页</button><button id="history-next-page" disabled>下一页</button></div></div>
+  </dialog>
+  <dialog id="history-detail-dialog" class="history-detail-dialog" aria-labelledby="history-detail-heading"><div class="dialog-heading"><div><span class="eyebrow">INSPECTION RECORD</span><h2 id="history-detail-heading">检测记录详情</h2></div><button id="history-close-detail" aria-label="关闭记录详情">×</button></div><div id="history-detail" class="history-detail" aria-busy="false"></div></dialog>
+  <dialog id="history-confirm-dialog" class="history-confirm-dialog" aria-labelledby="history-confirm-heading" aria-describedby="history-confirm-description"><div class="dialog-heading"><h2 id="history-confirm-heading">删除这条检测记录？</h2><button id="history-close-confirm" aria-label="取消删除">×</button></div><div class="history-confirm-body"><p id="history-confirm-record"></p><p id="history-confirm-description">记录将移入回收站，并从历史与看板统计中移除。可在回收站恢复；告警录像按独立规则保留。</p><p id="history-confirm-error" class="history-message" role="alert" hidden></p><div class="history-confirm-actions"><button id="history-confirm-cancel" autofocus>取消</button><button id="history-confirm-delete" class="history-danger">移入回收站</button></div></div></dialog>
+  <dialog id="advanced-dialog" class="advanced-dialog" aria-labelledby="advanced-heading" data-mode="records">
+    <div class="dialog-heading"><div><span class="eyebrow">ADVANCED / TESTING</span><h2 id="advanced-heading">高级功能</h2></div><button id="advanced-close" aria-label="关闭高级功能">×</button></div>
+    <div class="advanced-modes" role="group" aria-label="数据清理方式"><button id="advanced-mode-records" aria-pressed="true" aria-controls="advanced-records-panel">选择记录删除</button><button id="advanced-mode-all" aria-pressed="false" aria-controls="advanced-all-panel">清空全部数据</button></div>
+    <div class="advanced-body" id="advanced-records-panel">
+      <div class="advanced-title"><span aria-hidden="true">☷</span><div><h3>选择记录删除</h3><p>勾选需要删除的检测记录，保留其他测试结果</p></div><span class="advanced-tag">管理员操作</span></div>
+      <p class="advanced-record-scope">仅列出已结束的检测，日期按 UTC+08:00 归档。可跨页勾选，切换筛选或刷新列表会清除已选项；每次最多选择 200 条。</p>
+      <div class="advanced-filters">
+        <label for="advanced-date">归档日期<input id="advanced-date" type="date" required></label>
+        <label for="advanced-station">工位<select id="advanced-station"><option value="">全部工位</option><option value="station-1">工位1</option><option value="station-2">工位2</option><option value="station-3">工位3</option><option value="station-4">工位4</option><option value="station-5">工位5</option><option value="station-6">工位6</option></select></label>
+        <label for="advanced-verdict">检测结论<select id="advanced-verdict"><option value="ALL">全部结论</option><option value="FAIL">不合规</option><option value="PASS">合规</option><option value="REVIEW">待复核</option></select></label>
+        <label for="advanced-record-scope">记录位置<select id="advanced-record-scope"><option value="active">检测历史</option><option value="deleted">回收站</option></select></label>
+        <button id="advanced-record-refresh">刷新列表</button>
+      </div>
+      <p id="advanced-record-message" class="advanced-message" role="status" hidden></p>
+      <div class="advanced-selection-bar"><label><input id="advanced-select-page" type="checkbox">全选本页</label><span id="advanced-selected-count" role="status">已选择 0 条</span><button id="advanced-selection-clear" class="text-button" disabled>清除选择</button></div>
+      <div id="advanced-record-list" class="advanced-record-list" aria-label="可选检测记录" aria-busy="false"></div>
+      <div class="advanced-pagination"><span id="advanced-record-page" role="status">正在读取…</span><button id="advanced-record-prev" disabled>上一页</button><button id="advanced-record-next" disabled>下一页</button></div>
+      <div id="advanced-selection-actions" class="advanced-actions"><span>独立保存的告警录像、配置和模型保留。</span><button id="advanced-delete-selected" class="advanced-danger" disabled>删除所选记录</button></div>
+      <form id="advanced-selected-form" class="advanced-selected-confirm" hidden>
+        <h3 id="advanced-selected-heading">确认删除所选记录</h3><p class="advanced-warning">所选检测记录和其中的人工确认将永久删除，无法从回收站恢复；对应统计与违规告警同步更新。</p>
+        <ul id="advanced-selected-preview"></ul>
+        <label class="advanced-attest"><input id="advanced-selected-attest" type="checkbox" required>我已核对所选记录，确认永久删除。</label>
+        <label for="advanced-selected-password">当前管理员密码<input id="advanced-selected-password" type="password" autocomplete="current-password" required maxlength="200" placeholder="验证当前账号身份"></label>
+        <div class="advanced-actions"><button id="advanced-selected-cancel" type="button">取消</button><button id="advanced-selected-submit" type="submit" disabled>确认删除</button></div>
+      </form>
+    </div>
+    <div class="advanced-body" id="advanced-all-panel" hidden>
+      <div class="advanced-title"><span aria-hidden="true">↺</span><div><h3>清空全部检测数据</h3><p>让六个工位从零开始新一轮测试</p></div><span class="advanced-tag">管理员操作</span></div>
+      <p id="advanced-scope">清空当前账号下六个工位、所有日期的检测记录，包括人工确认和回收站；看板统计、趋势和违规告警同步清零。</p>
+      <div class="advanced-counts" aria-live="polite"><div><span>全部检测记录</span><strong id="advanced-total">—</strong></div><div><span>其中回收站</span><strong id="advanced-recycled">—</strong></div><div><span>运行中工位</span><strong id="advanced-active">—</strong></div></div>
+      <p class="advanced-kept">保留账号、工位与相机配置、模型、训练数据，以及独立保存的告警录像。</p>
+      <p id="advanced-message" class="advanced-message" role="status" hidden></p>
+      <form id="advanced-form">
+        <p class="advanced-warning">此操作永久删除检测记录，无法从回收站恢复。请先结束所有工位的检测。</p>
+        <label for="advanced-confirmation">输入 <strong>清空全部检测数据</strong> 以确认范围<input id="advanced-confirmation" autocomplete="off" required placeholder="清空全部检测数据"></label>
+        <label for="advanced-password">当前管理员密码<input id="advanced-password" type="password" autocomplete="current-password" required maxlength="200" placeholder="验证当前账号身份"></label>
+        <div class="advanced-actions"><button type="button" id="advanced-refresh">刷新清空范围</button><button type="submit" id="advanced-submit" disabled>确认清空全部检测数据</button></div>
+      </form>
+    </div>
+  </dialog>
+  <script src="workspace-api.js"></script><script src="review-outbox.js"></script><script src="board-history.js"></script><script src="board-advanced.js"></script><script src="board.js"></script>
+</body>
+</html>

@@ -32,6 +32,12 @@ def authenticated(context):
 
 
 @pytest.fixture
+def pilot_registration_enabled(context, monkeypatch):
+    """Explicit opt-in for regression tests of the paused manual workflow."""
+    monkeypatch.setattr(context[1].state.pilot, 'registration_enabled', True)
+
+
+@pytest.fixture
 def video_bytes(tmp_path):
     path = tmp_path / "sample.avi"
     writer = cv2.VideoWriter(str(path), cv2.VideoWriter_fourcc(*"MJPG"), 10, (64, 48))

@@ -11,11 +11,12 @@ class MultiViewScrewDetector:
         self.config=frozen['config']
         self.views=[]
         self.schema=self.config['targets']
-        model=None
+        model=None;registration=None
         for profile in [dict(id='original')]+self.config.get('calibrations',[]):
             local=copy.deepcopy(frozen)
             local['config'].update(profile)
-            detector=RefinedScrewDetector(local,model=model)
+            detector=RefinedScrewDetector(local,model=model,registration=registration)
+            registration=detector.registration
             model=detector.model
             self.views.append((profile['id'],detector))
         self.model=model
@@ -25,8 +26,7 @@ class MultiViewScrewDetector:
     def inspect(self,image):
         started=time.perf_counter()
         first=self.views[0][1]
-        small=cv2.resize(image,first.registration_size,interpolation=cv2.INTER_AREA)
-        key,desc=first.sift.detectAndCompute(cv2.cvtColor(small,cv2.COLOR_BGR2GRAY),None)
+        key,desc=first.extract(image)
         candidates=[]
         for identity,detector in self.views:
             registration=detector.localize(key,desc)

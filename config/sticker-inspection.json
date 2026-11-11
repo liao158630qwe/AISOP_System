@@ -1,8 +1,9 @@
 {
-  "version": "sticker-action-v1",
+  "version": "sticker-appearance-v6-visual",
+  "verification_mode": "visual-cumulative",
   "name": "贴条工序检测",
-  "model_name": "贴条动作模型 v1 · 位置动作与顺序",
-  "model": "models/sticker-actions-v1.joblib",
+  "model_name": "YOLO26m 贴片外观检测 v6",
+  "model": "models/sticker-patches-v6.pt",
   "reference": "models/sticker-reference-v1.jpg",
   "reference_size": [
     1080,
@@ -172,7 +173,7 @@
     "1": "rectangle",
     "2": "bare"
   },
-  "scope": "观察到对应位置的贴放/按压动作即计完成；先两处三角后六处方形；不核验贴片外观、粘附或实际存在",
+  "scope": "本轮全部标定位置取得多帧正确形状贴条证据即合规；不核验操作顺序或胶粘强度",
   "sequence": {
     "triangles": [
       "T01",
@@ -191,7 +192,6 @@
   "source_video": "lv_0_20261017162449.mp4",
   "source_sha256": "06104b7e2081121418d777d7bfa0931edecc30870a176a6f173af51c90183e6e",
   "cycle_start": "explicit",
-  "training_result": "outputs/sticker-inspection-2026-10-17/action-training-result.json",
   "component_anchors": [
     [
       465,
@@ -215,14 +215,5 @@
   "required_anchor": 0,
   "component_threshold": 0.5,
   "anchor_search_radius": 12,
-  "mode": "action",
-  "action": {
-    "contact_threshold": 0.6,
-    "single_contact_threshold": 0.85,
-    "min_contact_seconds": 0.2,
-    "contact_frames": 2,
-    "clear_frames": 2,
-    "max_gap": 1.5,
-    "min_motion": 2.5
-  }
+  "mode": "appearance"
 }

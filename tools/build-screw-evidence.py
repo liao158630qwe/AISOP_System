@@ -51,7 +51,7 @@ def main():
 
 任务编号：`{result['id']}`。源视频SHA256：`{result['source']['sha256']}`。模型SHA256：`{result['model']['sha256']}`。
 
-详细来源、协议、边界与复现命令见 `docs/screw-inspection-2026-10-17.md`。螺丝头可见不代表扭矩合格，需独立合格与漏打视频继续验证。
+详细来源、协议、边界与复现命令见 `docs/history/screw-inspection-2026-10-17.md`。螺丝头可见不代表扭矩合格，需独立合格与漏打视频继续验证。
 '''
     (OUT/'results.md').write_text(report,encoding='utf-8')
     print('Evidence sheet and results.md saved')

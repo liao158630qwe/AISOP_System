@@ -3,35 +3,41 @@ import json
 import logging
 import threading
 import time
+import uuid
 from pathlib import Path
 
 from sqlalchemy import select
+from sqlalchemy.exc import SQLAlchemyError
 
 from .config import Settings
 from .db import claim, finish, heartbeat, make_engine, media
 from .cleanup import cleanup_data
+from .health import pulse_worker, remove_worker
 
 log = logging.getLogger("worker")
 _model_cache = {}
 
 
-def execute_one(engine, settings, analyzer=None):
+def load_analyzer(analysis_type):
+    if analysis_type == 'screw':
+        from algorithms.screws import analyze
+    elif analysis_type == 'sticker':
+        from algorithms.stickers import analyze
+    elif analysis_type == 'scene':
+        from algorithms.scene_runtime import analyze
+    else:
+        from algorithms.pipeline import analyze
+    return analyze
+
+
+def execute_one(engine, settings, analyzer=None, *, worker_id=None):
     real_inference = analyzer is None
     job = claim(engine, settings.lease_seconds)
     if job is None:
         return False
     from algorithms.video import AnalysisError, Cancelled, file_hash
-    if analyzer is None:
-        if job['options'].get('analysis_type') == 'screw':
-            from algorithms.screws import analyze
-        elif job['options'].get('analysis_type') == 'sticker':
-            from algorithms.stickers import analyze
-        elif job['options'].get('analysis_type') == 'scene':
-            from algorithms.scene_runtime import analyze
-        else:
-            from algorithms.pipeline import analyze
-        analyzer = analyze
     stop, lost = threading.Event(), threading.Event()
+    lease_uncertain = threading.Event()
     progress_value = [0.0]
 
     def renew():
@@ -40,8 +46,11 @@ def execute_one(engine, settings, analyzer=None):
                 if not heartbeat(engine, job["id"], job["token"], settings.lease_seconds, progress_value[0]):
                     lost.set()
                     return
+                if worker_id:
+                    pulse_worker(engine, worker_id)
             except Exception:
                 log.exception("Heartbeat failed: %s", job["id"])
+                lease_uncertain.set()
                 lost.set()
                 return
 
@@ -56,6 +65,10 @@ def execute_one(engine, settings, analyzer=None):
     relative = f'{job["id"]}-{job["token"]}'
     folder = settings.data_dir / "runs" / relative
     try:
+        if analyzer is None:
+            # Optional dependency failures must terminate this job, not strand it
+            # RUNNING outside the heartbeat/error handling boundary.
+            analyzer = load_analyzer(job['options'].get('analysis_type'))
         with engine.connect() as c:
             source = c.execute(select(media).where(media.c.id == job["media_id"])).mappings().one()
         video = settings.data_dir / "uploads" / (source["id"] + source["suffix"])
@@ -140,13 +153,22 @@ def execute_one(engine, settings, analyzer=None):
             "peak_gpu_memory_mb": summary.get("peakGpuMemoryMB"),
             "analyzed_frames": summary.get("analyzedFrames"),
         }
-        if not finish(engine, job["id"], job["token"], "SUCCEEDED", relative, metrics=metrics):
+        from .evidence import offline_record
+        evidence = offline_record(job, folder, result if isinstance(result, dict) else {}, settings.evidence_retention_seconds)
+        if not finish(engine, job["id"], job["token"], "SUCCEEDED", relative, metrics=metrics, evidence=evidence):
             finish(engine, job["id"], job["token"], "CANCELLED")
     except Cancelled:
-        finish(engine, job["id"], job["token"], "CANCELLED")
+        if not lease_uncertain.is_set():
+            finish(engine, job["id"], job["token"], "CANCELLED")
+        # An unavailable DB does not mean the user cancelled. Leave the lease
+        # for recovery instead of turning a transient outage into data loss.
     except AnalysisError as exc:
         if not finish(engine, job["id"], job["token"], "FAILED", error=(exc.code, str(exc))):
             finish(engine, job["id"], job["token"], "CANCELLED")
+    except SQLAlchemyError:
+        # Infrastructure failure is recoverable through the lease; a committed
+        # success also stays terminal if only its acknowledgement was lost.
+        log.exception('Database interrupted job %s; preserving state for recovery', job['id'])
     except Exception:
         log.exception("Analysis failed: %s", job["id"])
         if not finish(engine, job["id"], job["token"], "FAILED", error=("ANALYSIS_FAILED", "分析失败，请查看服务器日志与任务编号")):
@@ -157,30 +179,81 @@ def execute_one(engine, settings, analyzer=None):
     return True
 
 
+def poll_once(engine, settings, *, cleanup_due=False, worker_id=None):
+    if cleanup_due:
+        try:
+            from .evidence import expire_evidence
+            expire_evidence(engine, settings.data_dir, retention=settings.evidence_retention_seconds)
+            result = cleanup_data(engine, settings.data_dir,
+                                  run_retention_seconds=settings.run_retention_seconds,
+                                  upload_retention_seconds=settings.upload_retention_seconds)
+            log.info('Retention cleanup: %s', result)
+        except Exception:
+            log.exception('Retention cleanup failed; task polling will continue')
+    try:
+        if worker_id:
+            pulse_worker(engine, worker_id)
+        if not settings.worker_analysis_enabled:
+            return False
+        if worker_id:
+            return execute_one(engine, settings, worker_id=worker_id)
+        return execute_one(engine, settings)
+    except Exception:
+        log.exception('Task polling failed')
+        return False
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--once", action="store_true")
     args = parser.parse_args()
     logging.basicConfig(level=logging.INFO)
     settings = Settings.from_env()
+    from .inference_runtime import configure_inference_runtime, configure_torch_runtime
+    configure_inference_runtime(settings.opencv_threads)
+    configure_torch_runtime(settings.torch_threads)
+    from algorithms.gpu import check_cuda
+    log.info("GPU runtime: %s", check_cuda())
     engine = make_engine(settings.database_url)
-    last_cleanup = 0.0
-    while True:
+    from .migrations import require_current
+    with engine.connect() as c:
+        require_current(c)
+    from .training_service import poll as poll_training
+    from .dataset_service import poll as poll_datasets
+    training_stop = threading.Event()
+    supervisors = []
+    if not args.once:
+        jobs = [('datasets', poll_datasets)]
+        if settings.worker_training_enabled:
+            jobs.append(('training', poll_training))
+        for name, target in jobs:
+            thread = threading.Thread(target=target, args=(engine, settings, training_stop),
+                                      name=name + '-supervisor', daemon=True)
+            supervisors.append(thread)
+            thread.start()
+    log.info('Worker workloads: offline-analysis=%s, training=%s',
+             settings.worker_analysis_enabled, settings.worker_training_enabled)
+    next_cleanup, worker_id = 0.0, str(uuid.uuid4())
+    try:
+        while True:
+            cleanup_due = time.monotonic() >= next_cleanup
+            if cleanup_due:
+                # Failed maintenance must not hammer the disk/database every 2s.
+                next_cleanup = time.monotonic() + settings.cleanup_interval_seconds
+            worked = poll_once(engine, settings, cleanup_due=cleanup_due, worker_id=worker_id)
+            if args.once:
+                break
+            if not worked:
+                time.sleep(2)
+    finally:
+        training_stop.set()
+        for thread in supervisors:
+            thread.join(timeout=15)
         try:
-            if time.time() - last_cleanup >= settings.cleanup_interval_seconds:
-                result = cleanup_data(engine, settings.data_dir,
-                                      run_retention_seconds=settings.run_retention_seconds,
-                                      upload_retention_seconds=settings.upload_retention_seconds)
-                log.info("Retention cleanup: %s", result)
-                last_cleanup = time.time()
-            worked = execute_one(engine, settings)
+            remove_worker(engine, worker_id)
         except Exception:
-            log.exception("Task polling failed")
-            worked = False
-        if args.once:
-            break
-        if not worked:
-            time.sleep(2)
+            log.warning('Worker presence will expire automatically')
+        engine.dispose()
 
 
 if __name__ == "__main__":

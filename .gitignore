@@ -21,3 +21,10 @@ node_modules/
 # 本地 Python 环境与下载缓存
 .venv/
 .wheels/
+
+# 自动生成的训练/评估产物（已跟踪的历史资料仍保留）
+/outputs/*
+!/outputs/README.md
+
+# Python bytecode
+*.py[cod]

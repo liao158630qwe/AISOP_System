@@ -1,0 +1,23 @@
+/* The archive table scrolls independently of the modal title and controls. */
+#modal:has(#evidence-history),#modal:has(.evidence-playback){width:min(1120px,calc(100vw - 32px));max-width:calc(100vw - 32px);max-height:calc(100dvh - 32px);overflow:hidden}
+#evidence-history{font-size:13px;line-height:1.6}
+#evidence-history .evidence-toolbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:12px}
+#evidence-history .evidence-toolbar label{display:flex;align-items:center;gap:10px;white-space:nowrap}
+#evidence-station{min-width:150px;padding:8px 12px;color:#e4e8ed;background:#222930;border:1px solid #59636e;border-radius:4px;font:inherit}
+#evidence-scope{color:#f1c76b;margin:0}
+#evidence-history>.hint{margin-bottom:16px;font-size:12px;line-height:1.8}
+#evidence-history .table-wrap{max-height:calc(100dvh - 370px);min-height:120px;overflow:auto;border:1px solid #3b424a;border-radius:4px}
+#evidence-history table{width:100%;min-width:1010px;border-collapse:collapse;font-size:12px}
+#evidence-history th,#evidence-history td{padding:12px 10px;line-height:1.6;text-align:left;vertical-align:top;border-bottom:1px solid #333a42}
+#evidence-history th{position:sticky;top:0;background:#222930;color:#e4e8ed;z-index:1;white-space:nowrap}
+#evidence-history .evidence-date{width:155px;white-space:nowrap;color:#bac5d0}
+#evidence-history .evidence-station-name{white-space:nowrap;color:#f1c76b}
+#evidence-history .evidence-reason{min-width:190px;max-width:280px;overflow-wrap:anywhere}
+#evidence-history td:last-child{min-width:100px}
+#evidence-history .modal-actions{margin-top:16px}
+#evidence-error{color:#ffaaa2;min-height:1.6em}
+.evidence-playback{font-size:13px;line-height:1.8;overflow:auto;max-height:calc(100dvh - 180px)}
+.evidence-playback video{display:block;width:100%;max-height:60vh;margin-bottom:14px;background:#050607}
+.evidence-playback .hint{margin-top:8px;overflow-wrap:anywhere}
+.evidence-playback #evidence-back{margin-bottom:12px}
+@media(max-width:600px){#evidence-history .table-wrap{max-height:calc(100dvh - 440px)}#modal:has(#evidence-history) #modal-body{padding:16px}#evidence-history .evidence-toolbar{gap:8px}#evidence-scope{width:100%}}

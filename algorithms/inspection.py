@@ -46,7 +46,8 @@ class Inspector:
             return score >= target.threshold, score, '归一化模板相关分数'
         if target.class_name not in resource.names.values():
             raise ValueError('专用权重不包含指定训练类别')
-        result = resource.predict(crop, imgsz=640, conf=target.threshold, max_det=30, verbose=False)[0]
+        from .gpu import require_cuda
+        result = resource.predict(crop, imgsz=640, conf=target.threshold, max_det=30, device=require_cuda(), verbose=False)[0]
         scores = [float(conf) for cls,conf in zip(result.boxes.cls.tolist(), result.boxes.conf.tolist())
                   if resource.names[int(cls)] == target.class_name]
         return bool(scores), max(scores, default=0), '专用目标检测分数'
@@ -75,8 +76,9 @@ class Inspector:
             for start in range(0, len(group), self.YOLO_BATCH_SIZE):
                 batch = group[start:start+self.YOLO_BATCH_SIZE]
                 try:
+                    from .gpu import require_cuda
                     predictions = resource.predict([item[0] for item in batch], imgsz=640,
-                        conf=batch[0][1].threshold, max_det=30, rect=True, verbose=False)
+                        conf=batch[0][1].threshold, max_det=30, rect=True, device=require_cuda(), verbose=False)
                     if len(predictions) != len(batch):
                         raise ValueError('目标检测返回数量与ROI数量不一致')
                     for (_, target, observation), prediction in zip(batch, predictions):

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101317">
+  <title>工业模型训练 · 视觉检测平台</title>
+  <link rel="icon" href="assets/favicon.svg"><link rel="stylesheet" href="workspace.css"><link rel="stylesheet" href="training.css">
+  <script defer src="workspace-api.js"></script><script defer src="training.js"></script>
+</head>
+<body class="training-page">
+<div class="training-shell">
+  <header class="site-header">
+    <a class="brand-link" href="/"><span class="brand-mark">SOP</span><span><strong>视觉检测平台</strong><small>工业模型训练 · 数据审计与候选验证</small></span></a>
+    <nav class="header-nav" aria-label="工作区导航"><a href="/">检测工作台</a><a href="/admin">模型与任务管理</a><a href="/datasets">视频训练数据</a><a href="/training" aria-current="page">工业训练</a></nav>
+    <button id="account-button" class="quiet">登录</button>
+  </header>
+  <main class="workspace">
+    <div class="page-heading"><div><h1>工业模型训练 <span class="heading-tag">TRAINING</span></h1><p>以工位为单位准备数据、验证模型，再接入现场检测。</p></div><div class="heading-actions"><span id="training-connection" class="connection" data-status="idle"><i></i><span>等待登录</span></span><button id="refresh-training">↻ 刷新</button></div></div>
+    <p id="training-error" class="notice error" role="alert" hidden></p>
+    <section id="training-locked" class="empty locked-training"><span class="locked-symbol" aria-hidden="true">SOP</span><h2>登录训练工作区</h2><p>使用检测工作台的管理员账户，管理训练任务和模型版本。</p><button id="training-login" class="primary">登录管理后台</button><div class="locked-steps"><span>01 数据审计</span><span>02 模型训练</span><span>03 独立测试</span><span>04 现场验收</span></div></section>
+    <div id="training-content" hidden>
+      <div class="notice"><strong>只有视频？</strong> <a href="/datasets">准备训练数据 →</a> 上传视频、抽帧标注并审核，完成后自动带入训练配置。</div>
+      <section class="training-overview" aria-label="全部训练概况">
+        <button data-overview="queued"><span>等待执行</span><strong id="count-queued">0</strong><small>按提交顺序处理</small></button>
+        <button data-overview="running"><span>正在执行</span><strong id="count-running">0</strong><small>审计 / 训练 / 测试</small></button>
+        <button data-overview="candidate"><span>测试通过</span><strong id="count-candidate">0</strong><small>现场验收仍需完成</small></button>
+        <button data-overview="attention"><span>需要处理</span><strong id="count-attention">0</strong><small>失败或测试未达标</small></button>
+      </section>
+      <div class="training-layout">
+        <section class="panel training-create" aria-labelledby="create-title">
+          <div class="panel-heading"><h2 id="create-title">创建训练任务</h2><span class="panel-tag">提交后冻结配置</span></div>
+          <form id="training-form" novalidate>
+            <div id="draft-notice" class="notice" role="status" hidden></div>
+            <div class="form-section first-section"><h3><b>01</b> 工位与训练数据</h3><div class="form-grid">
+              <label>任务名称 <em>*</em><input id="training-name" maxlength="100" required placeholder="例如：工位1 孔位与螺丝 v1"></label>
+              <label>采集工位<select id="training-station"><option value="station1">工位 1</option><option value="station2">工位 2</option><option value="station3">工位 3</option><option value="station4">工位 4</option><option value="station5">工位 5</option><option value="station6">工位 6</option></select></label>
+              <label>训练类型<select id="training-task"><option value="detect">目标检测</option><option value="obb">旋转框检测</option><option value="classify">图像分类</option><option value="feature-classify">特征分类</option></select></label>
+              <label id="weights-field">初始模型 <em>*</em><select id="training-pretrained" required><option value="">正在读取服务器权重…</option></select><small id="weights-help">选择与训练类型一致的服务器权重。</small><small><a href="/admin">前往模型库上传模型 ↗</a></small></label>
+              <label class="full">数据版本 / 高级清单路径 <em>*</em><input id="training-dataset" required maxlength="500" placeholder="runtime-data/datasets/station1/manifest.json" aria-describedby="dataset-help"><small id="dataset-help">视频数据请从“视频训练数据”页面生成版本并进入训练；已有标注数据也可填写服务器 JSON 清单路径。</small></label>
+              <label id="feature-field" class="full" hidden>特征提取器与顺序版本 <em>*</em><input id="training-feature-schema" maxlength="200" placeholder="例如：extractor-v1: roi,hog,motion"><small>训练与现场推理必须使用相同的特征定义。</small></label>
+            </div><p id="training-task-help" class="task-help"></p></div>
+            <div id="visual-parameters" class="form-section"><h3><b>02</b> 训练参数</h3><div class="training-grid">
+              <label>训练轮数<input id="training-epochs" type="number" value="100" min="1" max="1000" step="1" required></label>
+              <label>输入尺寸<select id="training-imgsz"><option value="320">320 px</option><option value="640" selected>640 px</option><option value="960">960 px</option><option value="1280">1280 px</option></select></label>
+              <label>批大小<input id="training-batch" type="number" value="8" min="1" max="32" step="1" required></label>
+              <label id="confidence-field">测试置信阈值<input id="training-confidence" type="number" value="0.6" min="0.05" max="0.99" step="0.01" required></label>
+            </div></div>
+            <details class="training-policy"><summary>数据要求与测试门槛 <span>每类精确率 / 召回率 <b id="policy-preview">95% / 95%</b></span></summary><p class="hint">训练、验证和测试必须按来源、批次及工件周期隔离。验证/测试仅接受独立原始样本；默认阈值是模型准入要求，不能代替现场验收。</p>
+              <div class="training-grid policy-grid"><label>每集合独立批次<input id="policy-batches" type="number" min="2" max="1000" step="1" value="3" required></label><label>每集合每类样本<input id="policy-classes" type="number" min="5" max="100000" step="1" value="20" required></label><label id="negatives-field">每集合真实负样本<input id="policy-negatives" type="number" min="5" max="100000" step="1" value="20" required></label><label>每类最低精确率<input id="policy-precision" type="number" min="0.5" max="1" step="0.01" value="0.95" required></label><label>每类最低召回率<input id="policy-recall" type="number" min="0.5" max="1" step="0.01" value="0.95" required></label><label>随机种子<input id="training-seed" type="number" value="42" min="0" max="2147483647" step="1" required></label></div>
+              <details class="data-guide"><summary>查看清单字段与标注说明</summary><p>每条样本需填写 id、split、source、group、station、product、camera、batch、cycle、lighting、occlusion、file 和 label。工位值使用 station1–station6。</p><p>检测类标签使用 YOLO 格式，真实负样本要有空标签文件。分类标签为类别索引；特征文件为一维 .npy。完整清单需要 schema_version: 1、names 和 samples。</p></details>
+            </details>
+            <div class="form-actions"><p id="training-submit-status" role="status" aria-live="polite"></p><button id="training-reset" type="button" class="quiet">重置表单</button><button id="training-submit" class="primary" type="submit">提交并开始审计</button></div>
+          </form>
+        </section>
+        <aside class="training-aside">
+          <section class="panel"><div class="panel-heading"><h2>本次训练</h2><span class="panel-tag">配置预览</span></div><div class="aside-body"><dl id="training-summary" class="summary-list"></dl><div id="training-readiness" class="readiness" role="status"></div><p class="hint">配置将在提交时冻结。需要调整时，创建新的训练任务。</p></div></section>
+          <section class="panel"><div class="panel-heading"><h2>训练与现场接入</h2></div><ol class="training-process"><li><b>1</b><div><strong>审计并冻结数据</strong><p>校验集合隔离、批次和类别覆盖。</p></div></li><li><b>2</b><div><strong>训练并独立测试</strong><p>验证集选优，测试集逐类验收。</p></div></li><li><b>3</b><div><strong>登记候选模型</strong><p>视觉模型通过后默认停用登记。</p></div></li><li><b>4</b><div><strong>现场验收后发布</strong><p>启用模型、配置场景规则，再进入检测工作台。</p></div></li></ol><p class="aside-note">工位1–6的人工检查流程独立运行。训练通过不会自动改变现场判定。</p></section>
+          <div class="resource-note"><span class="status-led"></span><div><strong>训练由独立进程执行</strong><p>CUDA GPU训练 · 单任务队列<br>与现场检测共用GPU时会竞争算力；建议使用独立训练GPU。</p></div></div>
+        </aside>
+      </div>
+      <section class="panel training-history" id="training-history" aria-labelledby="history-title">
+        <div class="panel-heading"><h2 id="history-title">训练记录 <span id="training-count"></span></h2><p id="training-sync" role="status">正在同步…</p></div>
+        <div class="history-tools"><input id="training-search" type="search" placeholder="搜索任务名称或编号" aria-label="搜索训练记录"><select id="training-filter-station" aria-label="筛选采集工位"><option value="all">全部工位</option><option value="station1">工位 1</option><option value="station2">工位 2</option><option value="station3">工位 3</option><option value="station4">工位 4</option><option value="station5">工位 5</option><option value="station6">工位 6</option></select><select id="training-filter-status" aria-label="筛选训练状态"><option value="all">全部状态</option><option value="queued">等待执行</option><option value="running">正在执行</option><option value="candidate">测试通过</option><option value="attention">失败 / 未达标</option><option value="cancelled">已取消</option></select><span class="hint">全部历史 · 每页25项</span></div>
+        <div id="training-empty" class="empty" hidden><h3>还没有训练任务</h3><p>准备独立的训练、验证和测试集，从上方创建首个任务。</p></div>
+        <div id="training-no-results" class="empty" hidden><h3>没有匹配的训练记录</h3><p>调整工位、状态或关键词后重试。</p><button id="training-clear-filters">清除筛选</button></div>
+        <div id="training-runs" class="training-runs"></div>
+        <div id="training-pagination" class="form-actions" hidden><button id="training-previous" type="button">上一页</button><span id="training-page" class="hint"></span><button id="training-next" type="button">下一页</button></div>
+      </section>
+    </div>
+    <footer class="training-footer"><span>AI-SOP · 工业模型训练</span><span>数据可追溯 · 版本独立管理 · 场景显式发布</span></footer>
+  </main>
+</div>
+<dialog id="training-detail" aria-labelledby="training-detail-title"><div class="dialog-heading"><h2 id="training-detail-title">训练详情</h2><button id="training-close" class="close-button" aria-label="关闭训练详情">×</button></div><div id="training-detail-body" class="dialog-body"></div></dialog>
+<dialog id="training-confirm" class="narrow" aria-labelledby="confirm-title"><div class="dialog-heading"><h2 id="confirm-title"></h2><button id="confirm-close" class="close-button" aria-label="关闭操作确认">×</button></div><div class="dialog-body"><p id="confirm-description"></p><div class="form-actions"><button id="confirm-dismiss">返回</button><button id="confirm-accept" class="primary">确认</button></div></div></dialog>
+</body>
+</html>

@@ -4,8 +4,12 @@ import time
 from pathlib import Path
 import cv2
 import numpy as np
+import torch
+from . import cuda_vision as vision
+from . import cuda_actions
 from .video import AnalysisError
 from .evidence import event_precedence
+from .timing import StageTimer
 
 ROOT=Path(__file__).resolve().parents[1]
 
@@ -13,77 +17,106 @@ ROOT=Path(__file__).resolve().parents[1]
 class StickerActionDetector:
     def __init__(self,frozen):
         import joblib
-        self.frozen=frozen;self.config=frozen['config'];self.device='cpu'
+        from .gpu import require_cuda
+        from .gpu_classifier import CudaSVC
+        self.frozen=frozen;self.config=frozen['config'];self.device=f'cuda:{require_cuda()}'
         self.reference=cv2.imread(str(ROOT/self.config['reference']))
         self.height,self.width=self.reference.shape[:2]
-        self.reference_gray=cv2.cvtColor(self.reference,cv2.COLOR_BGR2GRAY)
-        self.reference_crops={t['id']:action_crop(self.reference,t) for t in self.config['targets']}
-        self.hog=cv2.HOGDescriptor((48,48),(16,16),(8,8),(8,8),9)
+        self.reference_gpu=vision.rgb(self.reference)
+        self.reference_gray_gpu=vision.gray(self.reference_gpu)
+        self.reference_crops={t['id']:cuda_actions.crop(self.reference_gpu,t) for t in self.config['targets']}
         self.scale=min(1.,960/max(self.width,self.height))
         self.size=(round(self.width*self.scale),round(self.height*self.scale))
-        self.sift=cv2.SIFT_create(nfeatures=3000,contrastThreshold=.015)
+        self.registration=vision.CudaRegistration(count=3000)
         self.registrations={}
         for scale in sorted({self.scale,1.}):
             size=(round(self.width*scale),round(self.height*scale))
-            small=cv2.resize(self.reference,size);mask=np.zeros(small.shape[:2],np.uint8)
-            cv2.fillPoly(mask,[np.round(np.array(p)*scale).astype(np.int32) for p in self.config['registration_regions']],255)
-            keys,descriptors=self.sift.detectAndCompute(cv2.cvtColor(small,cv2.COLOR_BGR2GRAY),mask)
-            self.registrations[scale]=dict(size=size,keys=keys,descriptors=descriptors)
-        self.matcher=cv2.BFMatcher();self.estimator=None
-        if self.config.get('mode')=='action':self.estimator=joblib.load(ROOT/self.config['model'])
+            regions=[np.round(np.array(p)*scale).tolist() for p in self.config['registration_regions']]
+            self.registrations[scale]=dict(size=size,features=self.registration.extract(self.reference_gpu,size,regions))
+        self.estimator=None
+        if self.config.get('mode')=='action':
+            self.estimator=joblib.load(ROOT/self.config['model'])
+            self.estimator['sites']={key:CudaSVC(model) for key,model in self.estimator['sites'].items()}
 
-    def locate(self,image):
-        # Native-resolution live frames keep more detail for short contacts;
-        # larger camera frames use the lower scale to bound SIFT cost.
+    @torch.inference_mode()
+    def locate(self,image,*,local_crops=False):
         scale=1. if max(image.shape[:2])<=1920 else self.scale
-        registration=self.registrations[scale];size=registration['size'];descriptors=registration['descriptors']
-        key,desc=self.sift.detectAndCompute(cv2.cvtColor(cv2.resize(image,size),cv2.COLOR_BGR2GRAY),None)
-        if desc is None or descriptors is None:return None
-        matches=[p[0] for p in self.matcher.knnMatch(descriptors,desc,k=2) if len(p)==2 and p[0].distance<.72*p[1].distance]
-        if len(matches)<14:return None
-        src=np.float32([registration['keys'][m.queryIdx].pt for m in matches]);dst=np.float32([key[m.trainIdx].pt for m in matches])
-        matrix,keep=cv2.findHomography(src,dst,cv2.RANSAC,2)
-        if matrix is None or keep.sum()<12 or keep.mean()<.3:return None
-        scaling=np.diag([scale,scale,1.]);H=np.linalg.inv(scaling)@matrix@scaling
-        a,b,c,d=self.config['product_bbox'];quad=cv2.perspectiveTransform(np.float32([[[a,b],[c,b],[c,d],[a,d]]]),H)[0]
-        if not np.isfinite(quad).all() or not .45*(c-a)*(d-b)<abs(cv2.contourArea(quad))<2*(c-a)*(d-b):return None
-        x1,y1,x2,y2=self.config['station_roi'];x,y=quad.mean(axis=0)/[self.width,self.height]
+        registration=self.registrations[scale]
+        frame=vision.rgb(image)
+        current=self.registration.extract(frame,registration['size'])
+        fit=self.registration.match(registration['features'],current)
+        if fit is None:return None
+        matrix=fit['matrix']
+        scaling=matrix.new_tensor([[scale,0,0],[0,scale,0],[0,0,1.]])
+        H=torch.linalg.inv(scaling)@matrix@scaling
+        a,b,c,d=self.config['product_bbox'];quad=vision.transform([[a,b],[c,b],[c,d],[a,d]],H)
+        if not bool(torch.isfinite(quad).all()) or not .45*(c-a)*(d-b)<float(vision.polygon_area(quad))<2*(c-a)*(d-b):return None
+        x1,y1,x2,y2=self.config['station_roi'];x,y=(quad.mean(0)/quad.new_tensor([self.width,self.height])).cpu().tolist()
         if not(x1<=x<=x2 and y1<=y<=y2):return None
-        aligned=cv2.warpPerspective(cv2.resize(image,(self.width,self.height)),np.linalg.inv(H),(self.width,self.height))
-        gray=cv2.cvtColor(aligned,cv2.COLOR_BGR2GRAY);reference=self.reference_gray
-        scores=[];m=self.config.get('anchor_search_radius',12)
-        for a,b,c,d in self.config['component_anchors']:
-            scores.append(float(cv2.minMaxLoc(cv2.matchTemplate(gray[b-m:d+m,a-m:c+m],reference[b:d,a:c],cv2.TM_CCOEFF_NORMED))[1]))
+        frame=vision.resize(frame,(self.width,self.height));inverse=torch.linalg.inv(H)
+        anchors=self.config['component_anchors'];m=self.config.get('anchor_search_radius',12)
+        if local_crops:
+            # Preserve absolute destination pixels and the original Python slice
+            # bounds, while only materializing the anchor searches and targets.
+            regions=[(a-m,b-m,c+m,d+m) for a,b,c,d in anchors]
+            for target in self.config['targets']:
+                x,y=map(round,target['point']);half=90
+                regions.append((max(0,round(x-half)),max(0,round(y-half)),round(x+half),round(y+half)))
+            patches=vision.warp_regions(frame,inverse,(self.width,self.height),regions)
+            searches=[vision.gray(patch) for patch in patches[:len(anchors)]]
+            aligned=patches[len(anchors):]
+        else:
+            # Training and other locate() callers still receive the full image.
+            aligned=vision.warp(frame,inverse,(self.width,self.height))[0]
+            gray=vision.gray(aligned)
+            searches=[gray[b-m:d+m,a-m:c+m] for a,b,c,d in anchors]
+        reference=self.reference_gray_gpu;scores=[]
+        for search,(a,b,c,d) in zip(searches,anchors):
+            scores.append(vision.correlation(search,reference[b:d,a:c]))
+        scores=torch.stack(scores).cpu().tolist()
         threshold=self.config.get('component_threshold',.5)
         if scores[self.config.get('required_anchor',0)]<threshold or sum(s>=threshold for s in scores)<2:return None
-        return aligned,H,int(keep.sum())
+        return aligned,H.cpu().numpy(),int(fit['inliers'].sum())
 
+    @torch.inference_mode()
     def inspect(self,image):
+        timer=StageTimer()
         started=time.perf_counter();targets=[dict(**t,state='UNKNOWN',score=None,bbox=None) for t in self.config['targets']]
         result=dict(mode='action',registered=False,targets=targets,displayTargets=[],inliers=0,reason='当前帧未可靠定位工件与贴条模板')
-        located=self.locate(image)
+        located=self.locate(image,local_crops=True)
+        timer.mark('registration')
         if located:
-            aligned,H,inliers=located;result.update(registered=True,inliers=inliers,reason='当前帧按位置识别贴放/按压动作')
-            for target in targets:
-                crop=action_crop(aligned,target);ref=self.reference_crops[target['id']]
-                mask=foreground_mask(crop,ref)
-                values=action_features(crop,ref,mask=mask,hog=self.hog);model=self.estimator['sites'][target['id']]
-                scores=dict(zip(model.classes_,map(float,model.predict_proba([values])[0])))
+            crops,H,inliers=located;result.update(registered=True,inliers=inliers,reason='当前帧按位置识别贴放/按压动作')
+            references=[self.reference_crops[target['id']] for target in targets]
+            values,masks=cuda_actions.features(crops,references)
+            # Batch small observation metadata before the classifier's host wait.
+            observations=cuda_actions.observation_metadata(crops,masks)
+            models=[self.estimator['sites'][target['id']] for target in targets]
+            features=[row[None] for row in values]
+            timer.mark('features')
+            from .gpu_classifier import CudaSVC
+            probabilities=CudaSVC.predict_many(models,features)
+            timer.mark('classification')
+            observations=observations.cpu().tolist()
+            for target,model,probabilities_for_site,observation in zip(targets,models,probabilities,observations):
+                scores=dict(zip(model.classes_,map(float,probabilities_for_site[0])))
                 category=max(scores,key=scores.get);prob=scores[category]
                 state='CONTACT' if category=='contact' and prob>=self.config['action']['contact_threshold'] else 'CLEAR' if category=='clear' and prob>=.7 else 'UNKNOWN'
                 # A static black-on-black patch can never constitute a hand action.
-                foreground=float(mask.mean())
+                foreground=observation[0]
                 if state=='CONTACT' and foreground<.025:state='UNKNOWN'
                 x,y=target['point'];side=180
                 quad=cv2.perspectiveTransform(np.float32([[[x-side/2,y-side/2],[x+side/2,y-side/2],[x+side/2,y+side/2],[x-side/2,y+side/2]]]),H)[0]
                 roi=[float(quad[:,0].min()/self.width),float(quad[:,1].min()/self.height),float(quad[:,0].max()/self.width),float(quad[:,1].max()/self.height)]
                 target.update(state=state,score=round(prob,4) if state!='UNKNOWN' else None,actionCategory=category,
                     actionScores={k:round(v,4) for k,v in scores.items()},
-                    foreground=round(foreground,4),searchRoi=roi,actionSignature=cv2.resize(cv2.cvtColor(crop,cv2.COLOR_BGR2GRAY),(16,16)).flatten().tolist(),
+                    foreground=round(foreground,4),searchRoi=roi,actionSignature=[int(value) for value in observation[1:]],
                     reason='当前帧贴放/按压候选' if state=='CONTACT' else '当前帧手部离开贴合位' if state=='CLEAR' else '其他手部动作、遮挡或证据不足')
                 if state=='CONTACT':
                     target.update(bbox=roi,positionMode='DETECTED');result['displayTargets'].append({k:v for k,v in target.items() if k!='actionSignature'})
         result['inferenceMs']=round((time.perf_counter()-started)*1000,2)
+        timer.mark('localActions')
+        result['timingsMs']=timer.result()['timingsMs']
         return result
 
 

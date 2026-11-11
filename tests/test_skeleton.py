@@ -116,7 +116,7 @@ def test_analysis_payload_carries_skeleton_topology(tmp_path, video_bytes):
 
 def test_frontend_fallback_matches_server_topology():
     """app.js 的兜底骨架只允许是 topology() 的副本，防止前后端定义漂移。"""
-    source = (Path(__file__).resolve().parents[1] / 'app.js').read_text(encoding='utf-8')
+    source = (Path(__file__).resolve().parents[1] / 'frontend' / 'app.js').read_text(encoding='utf-8')
     match = re.search(r'const fallbackSkeleton=(\{.*?\});', source, re.S)
     assert match, 'app.js 中未找到 fallbackSkeleton 常量'
     fallback = json.loads(match.group(1))

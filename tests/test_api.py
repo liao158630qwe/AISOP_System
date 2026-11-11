@@ -47,7 +47,8 @@ def test_idempotency_cancel_and_private_artifacts(authenticated, video_bytes):
     assert client.post(f'/api/v1/analysis-runs/{rid}/cancel').json()['status'] == 'CANCELLED'
     assert client.post(f'/api/v1/analysis-runs/{rid}/cancel').json()['status'] == 'CANCELLED'
     with app.state.engine.begin() as c:
-        c.execute(update(runs).where(runs.c.id == rid).values(owner='someone-else'))
+        # Read as another account without creating a cross-owner media link.
+        c.execute(update(sessions).values(owner='someone-else'))
     assert client.get(f'/api/v1/analysis-runs/{rid}').status_code == 404
     assert not client.get('/api/v1/analysis-runs').json()['items']
 
@@ -75,6 +76,22 @@ def test_standalone_screw_page_is_served(context):
     assert 'screw-inspection.js?v=' in page.text
     assert page.headers['cache-control'] == 'no-store, max-age=0'
     assert client.get('/screw-inspection.js').status_code == 200
+
+
+def test_inspection_trigger_assets_are_served(context):
+    _, _, client = context
+    page = client.get('/')
+    assert 'href="/settings"' in page.text
+    assert 'inspection-trigger.js?v=' in page.text
+    assert 'inspection-trigger.css' not in page.text
+    settings = client.get('/settings')
+    assert settings.status_code == 200
+    assert 'trigger-settings' in settings.text
+    for asset in ('inspection-trigger.js', 'inspection-trigger.css', 'settings.js'):
+        assert asset + '?v=' in settings.text
+        response = client.get('/' + asset)
+        assert response.status_code == 200
+        assert response.headers['cache-control'] == 'no-store, max-age=0'
 
 
 def test_result_range_requests_and_fenced_file_access(authenticated, video_bytes):

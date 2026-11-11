@@ -4,3 +4,4 @@ SQLAlchemy==2.0.34
 psycopg[binary]==3.2.9
 opencv-python==4.11.0.86
 numpy==1.26.4
+imageio-ffmpeg==0.6.0

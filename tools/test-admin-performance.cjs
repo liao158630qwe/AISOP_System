@@ -1,0 +1,62 @@
+/* Large catalog fixtures exercise real management DOM with bounded rendering. */
+const assert=require('node:assert/strict'),path=require('node:path'),fs=require('node:fs');
+const {chromium}=require(path.join(process.env.USERPROFILE,'.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright'));
+const base=process.env.MODEL_IMPORT_BASE||'http://127.0.0.1:8000';
+const output=path.resolve('test-results/admin-performance');fs.mkdirSync(output,{recursive:true});
+(async()=>{
+  const browser=await chromium.launch({channel:'msedge',headless:true});
+  const page=await browser.newPage({viewport:{width:1440,height:1050}}),errors=[],requests=[];
+  page.on('pageerror',error=>errors.push(error.message));
+  const models=Array.from({length:45},(_,i)=>({id:'model-'+i,name:'模型 '+i,version:'1',task:'detect',classes:{0:'person'},size:1024,sha256:'a'.repeat(64),enabled:true,created_at:100-i,notes:''}));
+  const scenes=Array.from({length:65},(_,i)=>({id:'scene-'+i,name:'场景 '+i,description:'分页回归',model_id:models[i%45].id,status:i%2?'draft':'published',revision:1,ready:true,readiness_reason:'',updated_at:100-i,device:'cuda',sample_fps:4,imgsz:640,confirmation_frames:2,min_sharpness:20,rules:[{id:'one',name:'组件',class_id:0,kind:'required',min_count:1,max_count:null,threshold:.6,roi:[0,0,1,1]}]}));
+  await page.route('**/api/v1/**',async route=>{
+    const p=new URL(route.request().url()).pathname;requests.push(p);
+    let value;
+    if(p==='/api/v1/session')value={username:'fixture',csrf:'fixture'};
+    else if(p==='/api/v1/logout')value={ok:true};
+    else if(p==='/api/v1/admin/catalog')value={models,scenes};
+    else throw new Error('Unexpected endpoint '+p);
+    await route.fulfill({contentType:'application/json',body:JSON.stringify(value)});
+  });
+  try{
+    await page.goto(base+'/admin');await page.locator('#admin-content').waitFor({state:'visible'});
+    assert.equal(await page.locator('#scene-cards .task-card').count(),20);
+    assert.equal(await page.locator('#model-rows tr').count(),20);
+    assert.equal(await page.locator('#published-count').innerText(),'33');
+    assert.equal(await page.locator('#draft-count').innerText(),'32');
+    assert.equal(requests.filter(p=>p.includes('/admin/')).length,1,'one catalog request replaces two separate lists');
+    await page.locator('#task-next').click();
+    assert.ok((await page.locator('#scene-cards .task-card').first().innerText()).includes('场景 20'));
+    await page.locator('#task-search').fill('场景 64');
+    await page.waitForFunction(()=>document.querySelectorAll('#scene-cards .task-card').length===1);
+    assert.equal(await page.locator('#scene-cards .task-card').count(),1);
+    await page.locator('[data-scene-edit="scene-64"]').click();
+    assert.equal(await page.locator('#scene-model').inputValue(),'model-19');
+    assert.equal(await page.locator('#scene-model option').count(),45,'all models available to the editor');
+    assert.equal(await page.locator('#person-rule-note').isVisible(),true);
+    await page.locator('#scene-dialog .close-button').click();
+    await page.locator('#task-search').fill('');
+    await page.waitForFunction(()=>document.querySelectorAll('#scene-cards .task-card').length===20);
+    await page.screenshot({path:path.join(output,'scenes.png'),fullPage:true});
+    await page.locator('#models-tab').click();await page.locator('#model-next').click();await page.locator('#model-next').click();
+    assert.equal(await page.locator('#model-rows tr').count(),5);
+    await page.locator('#model-search').fill('model-44');
+    await page.waitForFunction(()=>document.querySelectorAll('#model-rows tr').length===1);
+    assert.equal(await page.locator('#model-rows tr').count(),1);
+    await page.locator('[data-model-details="model-44"]').click();
+    assert.ok((await page.locator('#model-details-content').innerText()).includes('场景 44'));
+    await page.locator('#model-details-dialog .close-button').click();
+    await page.locator('#model-search').fill('');
+    await page.waitForFunction(()=>document.querySelectorAll('#model-rows tr').length===20);
+    await page.setViewportSize({width:390,height:844});
+    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+    await page.screenshot({path:path.join(output,'models-mobile.png'),fullPage:true});
+    await page.evaluate(()=>window.Workspace.logout());
+    await page.locator('#locked-panel').waitFor({state:'visible'});
+    assert.equal(await page.locator('#scene-cards .task-card').count(),0);
+    assert.equal(await page.locator('#model-rows tr').count(),0);
+    assert.equal(await page.locator('#model-details-content').innerText(),'');
+    assert.deepEqual(errors,[]);
+    console.log('Large admin catalog: paging, global search, complete editor options, linked counts and mobile passed.');
+  }finally{await browser.close();}
+})().catch(error=>{console.error(error);process.exit(1);});

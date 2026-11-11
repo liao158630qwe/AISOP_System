@@ -32,6 +32,8 @@ def _asset_names(config):
     names += [p['reference'] for p in config.get('calibrations',[])]
     names += list(config.get('target_models',{}).values())
     names += [path for p in config.get('calibrations',[]) for path in p.get('target_models',{}).values()]
+    if config.get('algorithm') in ('local-roi-v2','multi-view-local-v1'):
+        names.append('models/disk-depth-v1.pth')
     return names
 
 
@@ -70,10 +72,14 @@ class ScrewDetector:
         self.keypoints,self.descriptors = self.sift.detectAndCompute(cv2.cvtColor(self.reference,cv2.COLOR_BGR2GRAY),mask)
         self.matcher = cv2.BFMatcher()
         self.model = YOLO(str(ROOT/self.config['model']))
-        self.device = 0 if __import__('torch').cuda.is_available() else 'cpu'
+        from .gpu import require_cuda
+        self.device = require_cuda()
 
     def inspect(self, image):
         if self.refined is not None:return self.refined.inspect(image)
+        from .cuda_vision import CudaFrame
+        if isinstance(image,CudaFrame):
+            image=image.rgb.flip(0).permute(1,2,0).cpu().numpy()
         started = time.perf_counter()
         frame = cv2.resize(image, tuple(self.config['reference_size']), interpolation=cv2.INTER_AREA)
         targets = [dict(**target, state='UNKNOWN', score=None, bbox=None) for target in self.config['targets']]

@@ -132,8 +132,10 @@ def test_stream_identity_owner_isolation_expiry_and_bounds():
     assert registry.get(('alice','a'),.2,(),clock=.2) is a
     assert registry.get(('bob','a'),0,(),clock=.3) is not a
     with pytest.raises(HTTPException): registry.get(('alice','a'),.2,(),clock=.4)
-    registry.get(('alice','b'),0,(),clock=.5)
-    assert ('alice','a') not in registry.items
+    with pytest.raises(HTTPException) as error:
+        registry.get(('alice','b'),0,(),clock=.5)
+    assert error.value.status_code == 429
+    assert registry.items[('alice','a')] is a
     registry.get(('carol','a'),0,(),clock=3)
     assert len(registry.items)==1
     with pytest.raises(HTTPException): registry.get(('x','x'),float('nan'),(),clock=3)

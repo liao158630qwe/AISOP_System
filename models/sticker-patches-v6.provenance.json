@@ -1,0 +1,10 @@
+{
+  "source_video": "C:/Users/Administrator/Downloads/贴条.mp4",
+  "source_sha256": "332732c3ea67ffa58b04f91e545a75b693e582b74e043b241c9834c5764ad1ad",
+  "initial_model": "models/sticker-patches-v5.pt",
+  "model_sha256": "4c90afb63dfeed7ef4c8ccb83b4ed8babb61312575b5329391f998c99c52380c",
+  "training_run": "D:\\Project\\AISOP\\outputs\\sticker-strengthening-20261109\\training-v6b",
+  "split_policy": "cycles 2/3 train; cycle 4 validation; cycle 5 final test; cycle 1 legacy regression",
+  "report": "D:\\Project\\AISOP\\outputs\\sticker-strengthening-20261109\\REPORT.md",
+  "limitations": "Cycle 4 is a false FAIL on a correct procedure (R05 false EMPTY and brief visibility). R03 early false placement events remain. Assisted labels, same recording, no defect-recall claim."
+}

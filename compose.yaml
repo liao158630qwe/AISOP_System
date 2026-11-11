@@ -6,9 +6,48 @@ x-app-env: &app-env
   APP_PASSWORD: ${APP_PASSWORD:?Set a password of at least 12 characters}
   DATA_DIR: /data
   MODEL_PATH: /app/models/yolo11s-pose.pt
+  # The base image installs YOLO; RTMO/RTMPose require extra packages and weights.
+  POSE_BACKEND: ${POSE_BACKEND:-yolo}
+  REALTIME_BACKEND: ${REALTIME_BACKEND:-yolo}
+  REALTIME_POOL_SIZE: ${REALTIME_POOL_SIZE:-1}
+  REALTIME_WARMUP: ${REALTIME_WARMUP:-true}
+  REALTIME_MAX_DURATION_SECONDS: ${REALTIME_MAX_DURATION_SECONDS:-600}
+  REALTIME_NO_TARGET_SECONDS: ${REALTIME_NO_TARGET_SECONDS:-60}
+  STATION_QUEUE_WAIT_MS: ${STATION_QUEUE_WAIT_MS:-500}
+  STATION_INFERENCE_CONCURRENCY: ${STATION_INFERENCE_CONCURRENCY:-1}
+  SPECIALIST_POOL_SIZE: ${SPECIALIST_POOL_SIZE:-1}
+  SCENE_MODEL_CACHE_SIZE: ${SCENE_MODEL_CACHE_SIZE:-1}
+  INFERENCE_DEVICE: ${INFERENCE_DEVICE:-cuda:0}
+  TRAINING_DEVICE: ${TRAINING_DEVICE:-cuda:0}
+  TRAINING_GPU_MEMORY_FRACTION: ${TRAINING_GPU_MEMORY_FRACTION:-0.25}
+  WORKER_ANALYSIS_ENABLED: ${WORKER_ANALYSIS_ENABLED:-true}
+  WORKER_TRAINING_ENABLED: ${WORKER_TRAINING_ENABLED:-true}
+  PILOT_REGISTRATION_ENABLED: ${PILOT_REGISTRATION_ENABLED:-false}
+  OPENCV_THREADS: ${OPENCV_THREADS:-4}
+  TORCH_THREADS: ${TORCH_THREADS:-4}
+  OMP_NUM_THREADS: ${TORCH_THREADS:-4}
+  MKL_NUM_THREADS: ${TORCH_THREADS:-4}
+  OPENBLAS_NUM_THREADS: ${TORCH_THREADS:-4}
+  NUMEXPR_NUM_THREADS: ${TORCH_THREADS:-4}
+  CLEANUP_INTERVAL_SECONDS: ${CLEANUP_INTERVAL_SECONDS:-3600}
+  RUN_RETENTION_SECONDS: ${RUN_RETENTION_SECONDS:-2592000}
+  UPLOAD_RETENTION_SECONDS: ${UPLOAD_RETENTION_SECONDS:-604800}
+  EVIDENCE_RETENTION_SECONDS: ${EVIDENCE_RETENTION_SECONDS:-2592000}
+  DB_POOL_SIZE: ${DB_POOL_SIZE:-5}
+  DB_MAX_OVERFLOW: ${DB_MAX_OVERFLOW:-5}
+  DB_POOL_TIMEOUT_SECONDS: ${DB_POOL_TIMEOUT_SECONDS:-5}
+  DB_POOL_RECYCLE_SECONDS: ${DB_POOL_RECYCLE_SECONDS:-1800}
+  DB_MIGRATION_LOCK_TIMEOUT_SECONDS: ${DB_MIGRATION_LOCK_TIMEOUT_SECONDS:-60}
   COOKIE_SECURE: "true"
+  MAX_UPLOAD_BYTES: ${MAX_UPLOAD_BYTES:-524288000}
+x-log-config: &log-config
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
 services:
   db:
+    logging: *log-config
     image: postgres:16.6
     environment:
       POSTGRES_DB: aisop
@@ -22,6 +61,7 @@ services:
       retries: 15
     restart: unless-stopped
   init:
+    logging: *log-config
     build: {context: ., dockerfile: deploy/Dockerfile.api}
     environment: *app-env
     command: ["python", "-m", "backend.init_db"]
@@ -29,10 +69,14 @@ services:
     depends_on:
       db: {condition: service_healthy}
   api:
+    logging: *log-config
     build: {context: ., dockerfile: deploy/Dockerfile.api}
     environment:
       <<: *app-env
       ARTIFACT_ACCEL_REDIRECT: "true"
+      # Only the web container may supply the client address used by login limits.
+      FORWARDED_ALLOW_IPS: ${AISOP_PROXY_ADDRESS:-172.30.240.10}
+    networks: [default, proxy]
     deploy:
       resources:
         reservations:
@@ -44,12 +88,13 @@ services:
     depends_on:
       init: {condition: service_completed_successfully}
     healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health', timeout=3)"]
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/ready', timeout=3)"]
       interval: 5s
       timeout: 4s
       retries: 12
     restart: unless-stopped
   worker:
+    logging: *log-config
     build: {context: ., dockerfile: deploy/Dockerfile.worker}
     environment: *app-env
     volumes: ["analysis-data:/data", "./models:/app/models:ro"]
@@ -65,8 +110,12 @@ services:
     restart: unless-stopped
     stop_grace_period: 70s
   web:
+    logging: *log-config
     image: nginx:1.28-alpine
     ports: ["80:80", "443:443"]
+    networks:
+      proxy:
+        ipv4_address: ${AISOP_PROXY_ADDRESS:-172.30.240.10}
     volumes:
       - ./deploy/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./deploy/certs:/etc/nginx/certs:ro
@@ -74,6 +123,12 @@ services:
     depends_on:
       api: {condition: service_healthy}
     restart: unless-stopped
+networks:
+  default: {}
+  proxy:
+    ipam:
+      config:
+        - subnet: ${AISOP_PROXY_SUBNET:-172.30.240.0/24}
 volumes:
   postgres-data:
   analysis-data:

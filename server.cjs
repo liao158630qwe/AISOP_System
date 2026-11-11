@@ -9,7 +9,8 @@ const server = http.createServer((req,res) => {
   try { url = decodeURIComponent(new URL(req.url,'http://localhost').pathname); } catch { res.writeHead(400).end();return; }
   if(url==='/') url='/index.html';
   const relative=url.slice(1);
-  const target=path.resolve(root,relative);
+  const publicRoot=relative.startsWith('assets/')?root:path.join(root,'frontend');
+  const target=path.resolve(publicRoot,relative);
   const assetAllowed=relative.startsWith('assets/')&&target.startsWith(path.join(root,'assets')+path.sep);
   if(!target.startsWith(root+path.sep)||(!allowed.has(relative)&&!assetAllowed)) {res.writeHead(404).end('Not found');return;}
   fs.stat(target,(error,stat)=>{

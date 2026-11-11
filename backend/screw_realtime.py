@@ -12,21 +12,29 @@ from fastapi import HTTPException
 from algorithms.screws import (ScrewDetector, ScrewObservationHistory, compliance, current_display,
                                sequence_profiles, snapshot, create_history)
 from .streams import StreamRegistry
+from .person_overlap import PersonWorker
+from .specialist_lifecycle import SpecialistLifecycle, specialist_request
 from algorithms.timing import StageTimer
+from algorithms.cuda_lane import cuda_request
 
 
 class RealtimeScrews:
     def __init__(self, pose_detector=None):
         self.lock=threading.Lock()
-        self.registry=StreamRegistry(ttl=300,maximum=16,per_owner=4)
+        self.registry=StreamRegistry()
         self.detector=None
         self.signature=None
+        self._owns_pose_detector = pose_detector is None
         if pose_detector is None:
             from .config import ROOT
             from .realtime import RealtimeDetector
             pose_detector = RealtimeDetector(ROOT/'models/yolo11s-pose.pt')
         self.pose_detector = pose_detector
+        self._person_worker = PersonWorker()
+        self._lifecycle = SpecialistLifecycle()
 
+    @specialist_request
+    @cuda_request
     def predict(self,payload,*,stream_key,frame_time):
         timer=StageTimer()
         if not self.lock.acquire(blocking=False):
@@ -36,7 +44,8 @@ class RealtimeScrews:
                 with Image.open(BytesIO(payload)) as image:
                     if image.format!='JPEG' or image.width>1920 or image.height>1080:
                         raise ValueError()
-                frame=cv2.imdecode(np.frombuffer(payload,np.uint8),cv2.IMREAD_COLOR)
+                from algorithms.cuda_vision import decode
+                frame=decode(payload)
                 if frame is None:raise ValueError()
             except Exception as exc:
                 raise HTTPException(422,'需要不超过1920×1080的有效JPEG画面') from exc
@@ -61,10 +70,14 @@ class RealtimeScrews:
                     stream['frames'].clear()
                 started=time.perf_counter()
                 timer.mark('stream')
-                person_result=self.pose_detector.detect_people(frame,stream['tracker'],frame_time)
-                timer.mark('person')
-                inspection=current_display(self.detector.inspect(frame))
-                timer.mark('inspection')
+                with self._person_worker.run(lambda: self.pose_detector.detect_people(
+                        frame,stream['tracker'],frame_time)) as person:
+                    inspection=current_display(self.detector.inspect(frame))
+                    timer.mark('inspection')
+                    person_result=person.result()
+                    # This stage is remaining wait after the overlapping
+                    # inspection. personProcessingMs retains full person cost.
+                    timer.mark('person')
                 targets=stream['history'].update(frame_time,inspection)
                 sequence=stream['history'].sequence()
                 inspection['sequence']=sequence
@@ -81,6 +94,7 @@ class RealtimeScrews:
                         'processingMs':round((time.perf_counter()-started)*1000,1),
                         **timer.result(),
                         'model':self.detector.config.get('model_name','YOLO11n 螺丝专项'),'device':str(self.detector.device),
+                        'visionBackend':'cuda-disk-v1' if frozen['config'].get('algorithm') in ('local-roi-v2','multi-view-local-v1') else 'legacy-opencv',
                         'sampleCount':stream['sampleCount'],'width':frame.shape[1],'height':frame.shape[0]}
         finally:
             self.lock.release()
@@ -112,3 +126,10 @@ class RealtimeScrews:
 
     def release(self,key):
         self.registry.drop(key)
+
+    def close(self):
+        # The lifecycle also closes a pose pool created by this instance.
+        self._lifecycle.close(self)
+
+    def stop_accepting(self):
+        self._lifecycle.stop_accepting()

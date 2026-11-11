@@ -265,3 +265,26 @@ def test_material_model_is_frozen_together_with_detector_and_reference(tmp_path,
     frozen=module.snapshot();assert set(frozen['assets'])=={'patch.pt','reference.jpg','material.joblib'}
     (tmp_path/'material.joblib').write_bytes(b'changed')
     with pytest.raises(AnalysisError,match='改变'):module.verify(frozen)
+
+
+def test_live_appearance_bare_sites_wait_until_finalization():
+    from algorithms.stickers import compliance as station_compliance
+    sequence=StickerSequence(TARGETS)
+    pair(sequence,0,['EMPTY']*3)
+    pair(sequence,.5,['PRESENT','EMPTY','EMPTY'])
+    targets=observation(['PRESENT','EMPTY','EMPTY'])['targets']
+    live=station_compliance(targets,sequence.snapshot())
+    assert live['status']=='REVIEW'
+    assert live['empty']==['T2','R1']
+    assert station_compliance(targets,sequence.snapshot(),final=True)['status']=='FAIL'
+
+
+def test_live_appearance_keeps_shape_and_order_failures():
+    from algorithms.stickers import compliance as station_compliance
+    sequence=StickerSequence(TARGETS)
+    pair(sequence,0,['EMPTY']*3)
+    pair(sequence,.5,['EMPTY','EMPTY','PRESENT'])
+    assert sequence.snapshot()['status']=='FAIL'
+    assert station_compliance(observation(['EMPTY','EMPTY','PRESENT'])['targets'],sequence.snapshot())['status']=='FAIL'
+    fresh=StickerSequence(TARGETS)
+    assert station_compliance(observation(['PRESENT','PRESENT','WRONG'])['targets'],fresh.snapshot())['status']=='FAIL'

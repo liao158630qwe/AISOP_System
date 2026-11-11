@@ -1,0 +1,8 @@
+{
+  "source": "https://raw.githubusercontent.com/cvlab-epfl/disk/master/depth-save.pth",
+  "license": "Apache-2.0",
+  "sha256": "9c2ee4ded238892dfa51569941372601e35e4a74aa6f84ea80053d2ab1c07abe",
+  "architecture": "DISK depth pretrained",
+  "runtime": "kornia 0.8.3",
+  "usage": "CUDA geometric registration; not task classification"
+}

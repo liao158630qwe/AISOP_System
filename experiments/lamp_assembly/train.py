@@ -314,15 +314,15 @@ def train(
     weight_decay: float = 1e-4,
     seed: int = 17,
     width: int = 32,
-    device: str = "cpu",
+    device: str = "cuda",
     evaluate_test: bool = False,
 ) -> dict[str, Any]:
     if kind not in MODEL_TYPES:
         raise ValueError("kind must be concat or relation")
     if epochs < 1 or patience < 1 or batch_size < 1:
         raise ValueError("epochs, patience and batch_size must be positive")
-    if device != "cpu" and not (device.startswith("cuda") and torch.cuda.is_available()):
-        raise ValueError(f"requested device {device!r} is unavailable")
+    from algorithms.gpu import require_cuda
+    device = f'cuda:{require_cuda(device)}'
     torch.manual_seed(seed)
     np.random.seed(seed)
     random.seed(seed)
@@ -426,7 +426,7 @@ def make_parser() -> argparse.ArgumentParser:
     parser.add_argument("--weight-decay", type=float, default=1e-4)
     parser.add_argument("--seed", type=int, default=17)
     parser.add_argument("--width", type=int, default=32)
-    parser.add_argument("--device", default="cpu", help="cpu by default; use cuda explicitly if desired")
+    parser.add_argument("--device", default="cuda", help="CUDA GPU only; CPU fallback is forbidden")
     parser.add_argument("--evaluate-test", action="store_true", help="after val selection, explicitly open and evaluate the sealed test split")
     return parser
 

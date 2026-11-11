@@ -11,7 +11,7 @@ const {chromium}=require('C:/Users/Administrator/.cache/codex-runtimes/codex-pri
     assert.ok(meta.playing&&meta.loop);assert.ok(meta.duration>0);
     await page.locator('#video-seek').evaluate(el=>{el.value=2;el.dispatchEvent(new Event('input',{bubbles:true}));});
     await page.waitForFunction(()=>document.querySelector('#source-video').currentTime>=2);
-    await page.screenshot({path:'reference/factory-test.png'});
+    await page.screenshot({path:'docs/reference/factory-test.png'});
     assert.equal(await page.locator('#detection-results tr').count(),0);
     await page.reload();
     await page.waitForFunction(()=>document.querySelector('#source-video').currentSrc.includes('factory-test.mp4')&&document.querySelector('#source-video').readyState>=2);

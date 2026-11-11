@@ -94,7 +94,7 @@ def _model_descriptor(model_path, model_meta, device, torch, sample_fps, imgsz):
             info["components"] = model_meta["components"]
         return info
     return dict(name=Path(model_path).stem.replace("yolo", "YOLO"), sha256=file_hash(model_path),
-                device=torch.cuda.get_device_name(0) if device == 0 else platform.processor() + " / CPU",
+                device=torch.cuda.get_device_name(device),
                 inputSize=imgsz, **common)
 
 
@@ -126,7 +126,8 @@ def analyze(video, model_path, out, *, run_id, options=None, progress=None, dete
     if detector is None:
         from ultralytics import YOLO
         detector = YOLO(str(model_path))
-    device = 0 if torch.cuda.is_available() else "cpu"
+    from .gpu import require_cuda
+    device = require_cuda()
     fps = meta["fps"]
     first, last = round(start * fps), min(meta["frame_count"], int(end * fps))
     if first >= last:

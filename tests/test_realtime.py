@@ -70,7 +70,7 @@ class _FakeModel:
 
 def test_realtime_backend_defaults_and_validation(monkeypatch, tmp_path):
     monkeypatch.delenv('REALTIME_BACKEND', raising=False)
-    assert RealtimeDetector(tmp_path/'model.pt').backend == 'rtmo'
+    assert RealtimeDetector(tmp_path/'model.pt').backend == 'yolo'
     monkeypatch.setenv('REALTIME_BACKEND', 'YOLO')
     assert RealtimeDetector(tmp_path/'model.pt').backend == 'yolo'
     assert RealtimeDetector(tmp_path/'model.pt', backend='rtmpose').backend == 'rtmpose'
@@ -84,7 +84,7 @@ def test_realtime_predict_reports_rtmo_backend(tmp_path):
     buffer = BytesIO()
     Image.new('RGB', (640, 360)).save(buffer, format='JPEG')
     data = detector.predict(buffer.getvalue())
-    assert (data['backend'], data['model'], data['device']) == ('rtmlib', 'RTMO-m', 'cuda')
+    assert (data['backend'], data['model'], data['device']) == ('rtmlib', 'RTMO-m', 'cuda:0')
     assert (data['width'], data['height']) == (640, 360)
     assert data['skeleton']['jointCount'] == 17 and data['skeleton']['handChains']
     assert len(data['people']) == 1 and data['people'][0]['trackId'] == 1
@@ -114,6 +114,8 @@ def test_realtime_hands_are_opt_in_and_cached_per_slot(tmp_path, monkeypatch):
     payload = _jpeg()
     assert detector.predict(payload)['hands'] is None
     created = []
+    for slot in detector._slots:
+        slot.model, slot.model_kind = _FakeModel(), 'rtmlib'
 
     class _FakeHands:
         def __init__(self, model_path):
@@ -130,6 +132,17 @@ def test_realtime_hands_are_opt_in_and_cached_per_slot(tmp_path, monkeypatch):
     assert data['hands'][0]['points'][0] == [.1, .1, .0]
     for _ in range(2 * detector.pool_size):
         detector.predict(payload, hands=True)
+    assert len(created) == 1, '单路检测应复用已加载槽位'
+    reserved = []
+    try:
+        # Reserve busy replicas to exercise the otherwise lazy pool slots.
+        for _ in range(detector.pool_size - 1):
+            reserved.append(detector._available.get_nowait())
+            detector.predict(payload, hands=True)
+            detector.predict(payload, hands=True)
+    finally:
+        for slot in reversed(reserved):
+            detector._available.put_nowait(slot)
     assert len(created) == detector.pool_size, '手部模型应按推理槽位缓存复用'
 
 

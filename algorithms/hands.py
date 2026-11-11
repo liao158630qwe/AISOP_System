@@ -40,9 +40,19 @@ class HandLandmarker:
         import cv2
         import mediapipe as mp
         if self._landmarker is None:
-            self._landmarker = mp.tasks.vision.HandLandmarker.create_from_options(mp.tasks.vision.HandLandmarkerOptions(
-                base_options=mp.tasks.BaseOptions(model_asset_path=str(self.model_path)), num_hands=2,
-                min_hand_detection_confidence=.5, min_hand_presence_confidence=.5))
+            from .gpu import require_cuda
+            from .video import AnalysisError
+            require_cuda()
+            if not hasattr(mp.tasks.BaseOptions, 'Delegate'):
+                raise AnalysisError('GPU_MODEL_UNSUPPORTED', '当前 MediaPipe 不支持 GPU delegate，禁止 CPU 手部推理')
+            try:
+                self._landmarker = mp.tasks.vision.HandLandmarker.create_from_options(mp.tasks.vision.HandLandmarkerOptions(
+                    base_options=mp.tasks.BaseOptions(model_asset_path=str(self.model_path),
+                        delegate=mp.tasks.BaseOptions.Delegate.GPU), num_hands=2,
+                    min_hand_detection_confidence=.5, min_hand_presence_confidence=.5))
+            except Exception as exc:
+                raise AnalysisError('GPU_MODEL_UNSUPPORTED',
+                    f'MediaPipe GPU 手部模型初始化失败，禁止 CPU 回退: {exc}') from exc
         result = self._landmarker.detect(mp.Image(image_format=mp.ImageFormat.SRGB, data=cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)))
         hands = []
         for i, landmarks in enumerate(result.hand_landmarks):

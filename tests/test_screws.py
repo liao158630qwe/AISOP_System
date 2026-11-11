@@ -291,11 +291,12 @@ def test_multiview_uses_current_features_and_clears_every_old_detection(monkeypa
     from algorithms.screws import current_display
     created=[]
     class FakeRefined:
-        def __init__(self,frozen,model=None):
+        def __init__(self,frozen,model=None,registration=None):
             self.config=frozen['config'];self.model=model if model is not None else object()
             self.reference=None;self.device='cpu';self.registration_size=(2,2)
-            self.sift=SimpleNamespace(detectAndCompute=lambda gray,mask:(None,int(gray[0,0])))
+            self.registration=registration or object()
             created.append(self)
+        def extract(self,image):return None,int(image[0,0,0])
         def localize(self,key,desc):
             expected=22 if self.config.get('id')=='overhead' else 11
             return {'componentInliers':[10],'inliers':20} if desc==expected else None
@@ -316,9 +317,11 @@ def test_multiview_uses_current_features_and_clears_every_old_detection(monkeypa
     assert all('point' not in t and 'detectedBbox' not in t for t in lost['targets'])
 
 
-def test_target_threshold_retries_only_configured_position():
+def test_target_threshold_retries_only_configured_position(monkeypatch):
     import cv2
     from algorithms.screw_refined import RefinedScrewDetector
+    from algorithms import cuda_vision as vision
+    monkeypatch.setattr('algorithms.screw_refined.predict_cuda',lambda model,images,**kwargs:model.predict(images,**kwargs))
 
     class Values:
         def __init__(self,values): self.values=np.asarray(values)
@@ -327,7 +330,9 @@ def test_target_threshold_retries_only_configured_position():
 
     class Prediction:
         def __init__(self,rows):
+            import torch
             self.boxes=type('Boxes',(),{
+                'data':torch.tensor([row[:4]+[row[5],row[4]] for row in rows],device='cuda').reshape(-1,6),
                 'xyxy':Values([row[:4] for row in rows]),
                 'cls':Values([row[4] for row in rows]),
                 'conf':Values([row[5] for row in rows])})()
@@ -344,6 +349,9 @@ def test_target_threshold_retries_only_configured_position():
         'component_anchors':[[100,100,110,110]],'component_threshold':.6,'minimum_visible_components':1}
     detector.registration_size=(960,540)
     detector.reference_gray=np.zeros((1080,1920),np.uint8)
+    import torch
+    detector.reference_gray_gpu=torch.zeros((1080,1920),device='cuda',dtype=torch.uint8)
+    detector.reference_small=vision.resize(detector.reference_gray_gpu,(960,540))
     detector.model=Model();detector.target_models={};detector.device='cpu'
     registration={'matrix':np.eye(3),'H':np.eye(3),'inliers':20,'componentInliers':[10]}
     result=detector.inspect(np.zeros((200,200,3),np.uint8),registration)
@@ -380,7 +388,7 @@ def test_frontend_assets_revalidate_as_one_version(context):
     response=client.get('/')
     assert response.headers['cache-control']=='no-cache'
     for name in ['app.js','styles.css','screw-dashboard.js','screw-dashboard.css']:
-        revision=hashlib.sha256((ROOT/name).read_bytes()).hexdigest()[:12]
+        revision=hashlib.sha256((ROOT/'frontend'/name).read_bytes()).hexdigest()[:12]
         assert f'{name}?v={revision}' in response.text
         assert client.get(f'/{name}?v={revision}').headers['cache-control']=='no-cache'
 

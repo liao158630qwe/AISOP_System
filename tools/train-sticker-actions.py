@@ -13,6 +13,10 @@ from sklearn.metrics import classification_report
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
 from algorithms.sticker_actions import StickerActionDetector,action_crop,action_features,foreground_fraction
 from algorithms.video import file_hash
+
+if __name__ == '__main__':
+    raise SystemExit('Legacy sklearn SVC training is disabled by the CUDA-only policy. Use tools/train-model.py with a torch feature-classify recipe or a GPU visual detector; validate the candidate before publishing.')
+
 OUT=ROOT/'outputs/sticker-inspection-2026-10-17';SOURCE=Path('C:/Users/Administrator/Downloads/lv_0_20261017162449.mp4')
 CONTACT={'T01':[(22.75,23.75)],'T02':[(19.75,20.75)],'R01':[(33.5,34.75)],'R02':[(34.5,35.25)],
     'R03':[(25.75,26.25),(39.5,40)],'R04':[(30,30.75),(40,41.25)],'R05':[(46,47)],'R06':[(43.875,44.5)]}
@@ -33,6 +37,7 @@ def prepare(cfg):
     cap.release();(OUT/'action-samples.json').write_text(json.dumps(rows,indent=2));print('prepared',len(rows),flush=True)
 
 def train(cfg):
+    raise RuntimeError('Legacy CPU SVC training is disabled; use the CUDA training pipeline')
     rng=np.random.default_rng(17);ref=cv2.imread(str(ROOT/cfg['reference']));data={t['id']:[] for t in cfg['targets']};audit=[]
     for index,record in enumerate(json.loads((OUT/'action-samples.json').read_text())):
         im=cv2.imread(str(OUT/'action-frames'/record['file']));t=record['time'];split='test' if index%4==1 else 'train'

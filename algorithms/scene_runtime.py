@@ -30,21 +30,24 @@ class SceneDetector:
         self.model = model
         if model.task != frozen['model']['task']:
             raise AnalysisError('MODEL_TASK_MISMATCH', '模型任务类型与注册信息不一致')
-        import torch
-        requested = self.config['device']
-        if requested == 'cuda' and not torch.cuda.is_available():
-            raise AnalysisError('DEVICE_UNAVAILABLE', '当前服务器不可用 CUDA，请修改任务的运行设备')
-        self.device = 0 if requested != 'cpu' and torch.cuda.is_available() else 'cpu'
+        from .gpu import require_cuda
+        self.device = require_cuda(self.config['device'])
+        from ultralytics.cfg import DEFAULT_CFG_DICT
+        # Retain FP32 on older and newer runtimes without a deprecation warning per frame.
+        self.precision = {'quantize':32} if 'quantize' in DEFAULT_CFG_DICT else {'half':False}
 
     def inspect(self, frame):
         started = time.perf_counter()
         height, width = frame.shape[:2]
-        groups, regions, observations = defaultdict(list), {}, []
+        groups, regions, rule_regions, observations = defaultdict(list), {}, {}, []
+        observation_boxes = defaultdict(list)
+        truncated = False
         for rule in self.config['rules']:
-            key = tuple(rule['roi'])
+            key = tuple(round(v*s) for v, s in zip(rule['roi'], (width, height, width, height)))
+            rule_regions[rule['id']] = key
             if key in regions:
                 continue
-            x1, y1, x2, y2 = [round(v*s) for v, s in zip(key, (width, height, width, height))]
+            x1, y1, x2, y2 = key
             crop = frame[y1:y2, x1:x2]
             sharpness = float(cv2.Laplacian(cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY), cv2.CV_64F).var()) if crop.size else 0
             valid = min(crop.shape[:2], default=0) >= 8 and sharpness >= self.config['min_sharpness']
@@ -56,19 +59,26 @@ class SceneDetector:
             for start in range(0, len(group), 8):
                 batch = group[start:start+8]
                 predictions = self.model.predict([item[1] for item in batch], imgsz=self.config['imgsz'],
-                    conf=confidence, iou=.45, max_det=300, device=self.device, half=False, verbose=False)
+                    conf=confidence, iou=.45, max_det=300, device=self.device, verbose=False, **self.precision)
                 if len(predictions) != len(batch):
                     raise AnalysisError('PREDICTION_INVALID', '模型返回数量与检测区域不一致')
                 for prediction, (key, crop, rect) in zip(predictions, batch):
                     items = self._objects(prediction, rect, width, height)
-                    regions[key]['objects'] = items
+                    regions[key]['saturated'] = len(items) >= 300
+                    by_class = defaultdict(list)
                     for item in items:
-                        if not any(item['class_id'] == old['class_id'] and _iou(item['bbox'], old['bbox']) > .8 for old in observations):
+                        by_class[item['class_id']].append(item)
+                        if len(observations) >= 300:
+                            truncated = True
+                            continue
+                        if not _overlaps(item['bbox'], observation_boxes[item['class_id']]):
                             observations.append(item)
+                            observation_boxes[item['class_id']].append(item['bbox'])
+                    regions[key]['objects'] = by_class
         checks = []
         for rule in self.config['rules']:
-            region = regions[tuple(rule['roi'])]
-            matched = [o for o in region['objects'] if o['class_id'] == rule['class_id'] and o['score'] >= rule['threshold']]
+            region = regions[rule_regions[rule['id']]]
+            matched = [o for o in region['objects'].get(rule['class_id'], []) if o['score'] >= rule['threshold']] if region['valid'] else []
             count = len(matched)
             value = 'REVIEW'
             if not region['valid']:
@@ -80,48 +90,95 @@ class SceneDetector:
                 reason = f'可靠检出 {count} 个，至少需要 {rule["min_count"]} 个；遮挡与缺件待核实'
             elif rule['max_count'] is not None and count > rule['max_count']:
                 value, reason = 'FAIL', f'检出 {count} 个，超过允许数量 {rule["max_count"]}'
+            elif rule['max_count'] is not None and region.get('saturated'):
+                reason = '检测结果达到数量上限，不能确认实际数量未超限'
             else:
                 value, reason = 'PASS', f'可靠检出 {count} 个，满足配置数量'
+            if region.get('saturated') and value in ('PASS', 'CLEAR'):
+                value, reason = 'REVIEW', '检测结果达到数量上限，需复核是否存在被截断的目标'
             checks.append(dict(id=rule['id'], name=rule['name'], kind=rule['kind'],
                 class_id=rule['class_id'], class_name=self.frozen['model']['classes'][str(rule['class_id'])],
                 state=value, count=count, score=min((o['score'] for o in matched), default=None),
                 reason=reason, roi=rule['roi'], sharpness=region['sharpness']))
-        return dict(observations=observations, checks=checks,
+        return dict(observations=observations, observationsTruncated=truncated, checks=checks,
                     inferenceMs=round((time.perf_counter()-started)*1000, 2))
 
     def _objects(self, prediction, rect, width, height):
         x1, y1, x2, y2 = rect
         def points(values):
-            return [[float(np.clip((x1+p[0])/width, 0, 1)), float(np.clip((y1+p[1])/height, 0, 1))] for p in values]
+            if any(len(p)<2 or not all(math.isfinite(float(v)) for v in p[:2]) for p in values):
+                raise AnalysisError('PREDICTION_INVALID', '模型返回非有限坐标，无法判定')
+            return [[max(0., min((x1+float(p[0]))/width, 1.)), max(0., min((y1+float(p[1]))/height, 1.))] for p in values]
         task = self.frozen['model']['task']
         if task == 'classify':
             probs = prediction.probs
-            categories = [(int(probs.top1), float(probs.top1conf), [0, 0, x2-x1, y2-y1])]
-        elif task == 'obb':
-            boxes = prediction.obb
-            categories = zip(boxes.cls.cpu().tolist(), boxes.conf.cpu().tolist(), boxes.xyxy.cpu().tolist()) if boxes is not None else []
+            if probs is None:
+                raise AnalysisError('PREDICTION_INVALID', '模型未返回分类结果，无法判定')
+            values = probs.data.detach().cpu().flatten().tolist() if getattr(probs, 'data', None) is not None else None
+            if (values is None or not values or len(values) != len(self.frozen['model']['classes'])
+                    or any(not math.isfinite(float(value)) or not 0 <= float(value) <= 1 for value in values)):
+                raise AnalysisError('PREDICTION_INVALID', '模型未返回完整分类概率，无法判定')
+            # Top-1 alone can hide a configured forbidden class above its own
+            # threshold. Inspect every rule's probability; bound display output
+            # to relevant classes plus the highest-probability class.
+            relevant = {rule['class_id'] for rule in self.config['rules']}
+            relevant.add(max(range(len(values)), key=values.__getitem__))
+            threshold = min((rule['threshold'] for rule in self.config['rules']), default=.6)
+            categories = [(index, float(values[index]), [0, 0, x2-x1, y2-y1])
+                          for index in sorted(relevant) if 0 <= index < len(values) and values[index] >= threshold]
         else:
-            boxes = prediction.boxes
-            categories = zip(boxes.cls.cpu().tolist(), boxes.conf.cpu().tolist(), boxes.xyxy.cpu().tolist()) if boxes is not None else []
+            boxes = prediction.obb if task == 'obb' else prediction.boxes
+            if boxes is None:
+                raise AnalysisError('PREDICTION_INVALID', '模型未返回目标框结果，无法判定')
+            if callable(getattr(boxes, 'cpu', None)):
+                boxes = boxes.cpu()
+            classes, scores, coordinates = boxes.cls.cpu().tolist(), boxes.conf.cpu().tolist(), boxes.xyxy.cpu().tolist()
+            if len(classes) != len(scores) or len(classes) != len(coordinates):
+                raise AnalysisError('PREDICTION_INVALID', '模型目标框、类别和置信度数量不一致')
+            categories = list(zip(classes, scores, coordinates))
+        # Keep dense masks on their existing device; only extract polygons.
+        polygons = prediction.masks.xy if task == 'segment' and prediction.masks is not None else None
+        corners = boxes.xyxyxyxy.cpu().tolist() if task == 'obb' and boxes is not None else None
+        keypoint_rows = prediction.keypoints.data.cpu().tolist() if task == 'pose' and prediction.keypoints is not None else None
+        for extra in (polygons, corners, keypoint_rows):
+            if extra is not None and len(extra) != len(categories):
+                raise AnalysisError('PREDICTION_INVALID', '模型目标框与轮廓或关键点数量不一致')
         result = []
         for index, (cls, score, box) in enumerate(categories):
+            if not math.isfinite(cls) or int(cls) != cls or not math.isfinite(score) or not 0 <= score <= 1:
+                raise AnalysisError('PREDICTION_INVALID', '模型返回无效类别或置信度，无法判定')
             cls = int(cls)
-            if str(cls) not in self.frozen['model']['classes'] or not math.isfinite(score):
-                continue
+            if str(cls) not in self.frozen['model']['classes']:
+                raise AnalysisError('PREDICTION_INVALID', '模型返回未注册的类别，无法判定')
+            if len(box) != 4:
+                raise AnalysisError('PREDICTION_INVALID', '模型返回无效目标框，无法判定')
             a, b = points([[box[0], box[1]], [box[2], box[3]]])
+            if not a[0] < b[0] or not a[1] < b[1]:
+                raise AnalysisError('PREDICTION_INVALID', '模型返回空目标框，无法判定')
             item = dict(class_id=cls, name=self.frozen['model']['classes'][str(cls)],
-                        score=round(float(score), 5), bbox=[*a, *b])
-            if task == 'segment' and prediction.masks is not None:
-                polygon = prediction.masks.xy[index]
+                        score=float(score), bbox=[*a, *b])
+            if polygons is not None:
+                polygon = polygons[index]
                 # Bound response payload while retaining contour geometry.
                 item['polygon'] = points(polygon[::max(1, math.ceil(len(polygon)/160))])
             elif task == 'obb':
-                item['polygon'] = points(prediction.obb.xyxyxyxy[index].cpu().tolist())
-            elif task == 'pose' and prediction.keypoints is not None:
-                keypoints = prediction.keypoints.data[index].cpu().tolist()
+                item['polygon'] = points(corners[index])
+            elif keypoint_rows is not None:
+                keypoints = keypoint_rows[index]
+                if any(len(p)>2 and (not math.isfinite(p[2]) or not 0<=p[2]<=1) for p in keypoints):
+                    raise AnalysisError('PREDICTION_INVALID', '模型返回无效关键点置信度，无法判定')
                 item['keypoints'] = [[*points([p])[0], float(p[2]) if len(p)>2 else 1.] for p in keypoints]
             result.append(item)
         return result
+
+
+def _overlaps(box, previous):
+    if not previous:
+        return False
+    prior = np.asarray(previous)
+    intersection = np.maximum(0, np.minimum(prior[:, 2:], box[2:]) - np.maximum(prior[:, :2], box[:2])).prod(axis=1)
+    union = (prior[:, 2:] - prior[:, :2]).prod(axis=1) + (box[2]-box[0])*(box[3]-box[1]) - intersection
+    return bool(np.any(intersection > .8 * union))
 
 
 def _iou(a, b):
@@ -133,7 +190,7 @@ def _iou(a, b):
 class SceneEvidence:
     """A current-frame decision; confirmed observations never certify a later blank frame."""
     def __init__(self, config):
-        self.config = config
+        self.config = dict(config, rules=[dict(rule, kind=rule.get('kind', 'required')) for rule in config['rules']])
         self.gap = max(1., 3/config['sample_fps'])
         self.votes = {r['id']: EvidenceWindow(config['confirmation_frames'], self.gap,
             max(4., self.gap*config['confirmation_frames'])) for r in config['rules']}
@@ -148,11 +205,29 @@ class SceneEvidence:
                 votes.reset()
         self.last = timestamp
         checks = []
-        for raw in inspection['checks']:
+        expected = {rule['id']: rule for rule in self.config['rules']}
+        received = inspection.get('checks', [])
+        if not isinstance(received, list) or any(not isinstance(raw, dict) or not isinstance(raw.get('id'), str) for raw in received):
+            received = []
+        by_id = {raw.get('id'): raw for raw in received}
+        complete = len(by_id) == len(received) and set(by_id) == set(expected)
+        # A partial/duplicate result must never certify the remaining subset.
+        if not complete:
+            self.confirmed.clear()
+        for rule in self.config['rules']:
+            raw = by_id.get(rule['id'], {})
+            valid = complete and raw.get('kind') == rule['kind'] and raw.get('state') in (
+                ('PASS', 'FAIL', 'REVIEW') if rule['kind'] == 'required' else ('CLEAR', 'FAIL', 'REVIEW'))
+            score = raw.get('score')
+            valid_score = type(score) in (int, float) and math.isfinite(score) and 0 <= score <= 1
+            valid = valid and (valid_score or (score is None and raw.get('state') in ('CLEAR', 'REVIEW')))
+            if not valid:
+                raw = dict(id=rule['id'], name=rule['name'], kind=rule['kind'], state='REVIEW', score=None,
+                           count=0, reason='规则检测结果不完整或无效，需重新采样')
             item = dict(raw)
             identity, value = raw['id'], raw['state']
             votes = self.votes[identity]
-            if value in ('PASS', 'FAIL'):
+            if value in ('PASS', 'FAIL', 'CLEAR'):
                 if self.confirmed.get(identity) != value:
                     self.confirmed.pop(identity, None)
                     if votes.observe(timestamp, value, raw['score']) is not None:

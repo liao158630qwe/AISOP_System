@@ -6,8 +6,7 @@ RUN pip install --no-cache-dir -r requirements-worker.txt
 COPY backend backend
 COPY algorithms algorithms
 COPY config config
-COPY index.html app.js server-ui.js styles.css screw-dashboard.js screw-dashboard.css ./
-COPY admin.html admin.js scene-console.html scene-console.js workspace-api.js workspace.css ./
+COPY frontend frontend
 COPY assets assets
 ENV PYTHONUNBUFFERED=1
 CMD ["uvicorn", "backend.app:create_app", "--factory", "--host", "0.0.0.0", "--port", "8000"]

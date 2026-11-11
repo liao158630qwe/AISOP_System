@@ -15,7 +15,7 @@ const fs = require('fs');
       const c=document.createElement('canvas');c.width=v.videoWidth;c.height=v.videoHeight;c.getContext('2d').drawImage(v,0,0);
       return true;
     },t+.01);
-    await page.locator('video').screenshot({path:`reference/frame-${t.toFixed(1)}.jpg`});
+    await page.locator('video').screenshot({path:`docs/reference/frame-${t.toFixed(1)}.jpg`});
   }
   await browser.close();
 })();

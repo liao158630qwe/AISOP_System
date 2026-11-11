@@ -22,6 +22,10 @@ sys.path.insert(0,str(ROOT))
 from algorithms.sticker_actions import StickerActionDetector,action_crop,action_features,foreground_fraction
 from algorithms.video import file_hash
 
+if __name__ == '__main__':
+    raise SystemExit('Legacy sklearn SVC training is disabled by the CUDA-only policy. Use tools/train-model.py with a torch feature-classify recipe or a GPU visual detector; validate the candidate before publishing.')
+
+
 OUT=ROOT/'outputs/sticker-inspection-2026-10-17'
 MODEL=ROOT/'models/sticker-actions-v2.joblib'
 CANDIDATE=ROOT/'config/sticker-action-candidate.json'
@@ -107,6 +111,7 @@ def build(cfg,records):
 
 
 def fit(rows,all_data=False):
+    raise RuntimeError('Legacy CPU SVC training is disabled; use the CUDA training pipeline')
     selected=[r for r in rows if all_data or r['split']=='train']
     model=make_pipeline(StandardScaler(),SVC(C=6,kernel='rbf',class_weight='balanced',probability=True,random_state=23))
     model.fit([r['features'] for r in selected],[r['label'] for r in selected]);return model

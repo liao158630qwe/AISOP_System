@@ -32,7 +32,15 @@ def test_screw_realtime_same_frame_people_independent_of_registration(monkeypatc
     import backend.screw_realtime as module
     from backend.realtime import RealtimeDetector
     from pathlib import Path
-    received=[]
+    import algorithms.cuda_lane
+    import algorithms.cuda_vision
+    import algorithms.gpu
+    import backend.person_overlap
+    monkeypatch.setattr(algorithms.cuda_lane, 'run_in_lane', lambda owner, fn, ready=None: fn())
+    monkeypatch.setattr(algorithms.cuda_vision, 'decode', lambda payload: cv2.imdecode(np.frombuffer(payload,np.uint8),cv2.IMREAD_COLOR))
+    monkeypatch.setattr(algorithms.gpu, 'require_cuda', lambda *args: 0)
+    monkeypatch.setattr(torch.cuda, 'Event', lambda *args, **kwargs: SimpleNamespace(record=lambda:None,synchronize=lambda:None))
+    received,inspected=[],[]
     class Pose:
         def predict(self, frame, **kwargs):
             assert kwargs['classes']==[0]
@@ -44,14 +52,17 @@ def test_screw_realtime_same_frame_people_independent_of_registration(monkeypatc
         def __init__(self,frozen):
             self.config=frozen['config'];self.device='cpu'
         def inspect(self,frame):
-            assert frame is received[-1], 'Both models must see the same decoded array'
+            inspected.append(frame)
             return inspection(False)
     monkeypatch.setattr(module,'ScrewDetector',Screw)
     monkeypatch.setattr(module,'snapshot',lambda:{'config':{'targets':inspection()['targets']},'config_hash':'unit','assets':{}})
     service=module.RealtimeScrews(pose);key=('owner','stream')
     def send(value,t,key=key):
         ok,jpeg=cv2.imencode('.jpg',np.full((64,96,3),value,np.uint8));assert ok
-        return service.predict(jpeg.tobytes(),stream_key=key,frame_time=t)
+        before=len(received)
+        result=service.predict(jpeg.tobytes(),stream_key=key,frame_time=t)
+        assert len(received)==before+1 and inspected[-1] is received[-1]
+        return result
     first=send(100,0);second=send(100,.25)
     assert first['totalProcessingMs'] >= sum(first['timingsMs'].values()) - .01
     assert {'decode','snapshot','modelLoad','stream','person','inspection','rules'} == set(first['timingsMs'])
@@ -64,6 +75,7 @@ def test_screw_realtime_same_frame_people_independent_of_registration(monkeypatc
     assert service.finish(key)['compliance']['status']=='REVIEW'
     service.release(key)
     assert key not in service.registry.items
+    service.close()
 
 
 def test_screw_upload_worker_people_and_model_integrity(authenticated,video_bytes,monkeypatch):

@@ -9,21 +9,24 @@ import asyncio
 import base64
 import binascii
 import json
+import math
+import logging
 from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Literal
 
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, Response
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, RedirectResponse, Response
 from pydantic import BaseModel, ConfigDict, Field
 from sqlalchemy import delete, func, select, update, or_, and_
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError, DBAPIError, TimeoutError as DatabaseTimeout
 from starlette.concurrency import run_in_threadpool
 
 from .config import ROOT, Settings
-from .db import digest, make_engine, media, now, request_hash, run_metrics, runs, sessions
-from .scenes import SceneRegistry, SceneDefinition, ModelImport, ModelToggle
+from .login_limits import LoginLimiter
+from .db import digest, make_engine, media, now, option_field, request_hash, run_metrics, runs, sessions, serialized_write
+from .scenes import SceneRegistry, SceneDefinition, ModelImport, ModelToggle, import_identity
 
 
 class Login(BaseModel):
@@ -49,6 +52,18 @@ class RunRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
     media_id: uuid.UUID
     options: Options = Field(default_factory=Options)
+
+
+class EvidenceGap(BaseModel):
+    model_config = ConfigDict(extra='forbid', allow_inf_nan=False)
+    start: float = Field(ge=0, le=86400)
+    end: float = Field(ge=0, le=86400)
+    reason: str = Field(min_length=1, max_length=160)
+
+
+class FinishRealtimeRequest(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    evidenceGaps: list[EvidenceGap] = Field(default_factory=list, max_length=100)
 
 
 def public_run(row):
@@ -77,50 +92,152 @@ def create_app(settings=None):
     engine = make_engine(settings.database_url)
     @asynccontextmanager
     async def lifespan(app):
-        yield
-        engine.dispose()
+        warmup_thread = None
+        warmup_stop = threading.Event()
+        try:
+            from .inference_runtime import configure_inference_runtime, configure_torch_runtime
+            opencv_threads = configure_inference_runtime(settings.opencv_threads)
+            torch_runtime = configure_torch_runtime(settings.torch_threads)
+            from algorithms.gpu import check_cuda
+            gpu = check_cuda()
+            from .migrations import require_current
+            with engine.connect() as c:
+                require_current(c)
+            app.state.inference_runtime = {**gpu, 'opencvThreads': opencv_threads, **torch_runtime}
+            if settings.environment != "test" and settings.realtime_warmup:
+                # Global CPU settings must precede warmup and incoming requests.
+                def warmup():
+                    for name, service in (('sticker', app.state.sticker_realtime), ('person', app.state.realtime)):
+                        if warmup_stop.is_set():
+                            break
+                        try:
+                            if not service.warmup():
+                                logging.getLogger(__name__).warning('%s model preparation deferred', name)
+                        except Exception:
+                            logging.getLogger(__name__).exception('%s model preparation failed', name)
+                warmup_thread = threading.Thread(target=warmup, name="realtime-warmup", daemon=True)
+                warmup_thread.start()
+            if settings.environment != 'test':
+                app.state.evidence.start()
+            yield
+        finally:
+            warmup_stop.set()
+            from .shutdown import close_in_order
+            await close_in_order([
+                ('station-scheduler', app.state.terminals.scheduler.close),
+                ('realtime-transport', app.state.realtime_transport.close),
+                ('model-preparation', lambda: run_in_threadpool(warmup_thread.join) if warmup_thread else asyncio.sleep(0)),
+                ('screw-models', lambda: run_in_threadpool(close_specialist, app.state.screw_realtime)),
+                ('sticker-models', lambda: run_in_threadpool(close_specialist, app.state.sticker_realtime)),
+                ('scene-models', lambda: run_in_threadpool(app.state.scene_realtime.close)),
+                ('person-models', lambda: run_in_threadpool(app.state.realtime.close)),
+                ('evidence-store', lambda: run_in_threadpool(app.state.evidence.close)),
+                ('database', lambda: run_in_threadpool(engine.dispose)),
+            ])
     app = FastAPI(title="AI-SOP Server", version="0.1.0", lifespan=lifespan,
                   docs_url=None if settings.environment == "production" else "/docs")
     app.state.engine, app.state.settings = engine, settings
+    from .gpu_telemetry import GpuTelemetry
+    app.state.gpu_telemetry = GpuTelemetry()
+    from .evidence import EvidenceStore, register as register_evidence
+    app.state.evidence = EvidenceStore(engine, settings)
+    app.state.inference_runtime = {"opencvThreads": None}
     from .realtime import RealtimeDetector
     app.state.realtime = RealtimeDetector(settings.model_path, settings.realtime_backend, settings.realtime_pool_size)
     from .screw_realtime import RealtimeScrews
-    app.state.screw_realtime = RealtimeScrews(app.state.realtime)
+    from .specialist_pool import create_specialist, specialist_snapshot, close_specialist
+    app.state.screw_realtime = create_specialist(lambda: RealtimeScrews(app.state.realtime), settings.specialist_pool_size)
     from .sticker_realtime import RealtimeStickers
-    app.state.sticker_realtime = RealtimeStickers(app.state.realtime)
+    app.state.sticker_realtime = create_specialist(lambda: RealtimeStickers(app.state.realtime), settings.specialist_pool_size)
     app.state.scenes = SceneRegistry(engine, settings)
     from .scene_realtime import RealtimeScenes
-    app.state.scene_realtime = RealtimeScenes(app.state.scenes)
-    if settings.environment != "test" and settings.realtime_warmup:
-        # 后台预热：避免摄像头首帧等待数秒的 ONNX CUDA 图编译。
-        threading.Thread(target=app.state.realtime.warmup, name="realtime-warmup", daemon=True).start()
+    inference_capacity = min(settings.station_inference_concurrency, settings.realtime_pool_size)
+    scene_capacity = min(inference_capacity, settings.scene_model_cache_size)
+    app.state.scene_realtime = RealtimeScenes(app.state.scenes, settings.scene_model_cache_size,
+                                             concurrency=scene_capacity)
+    for registry in (app.state.realtime.streams, app.state.screw_realtime.registry,
+                     app.state.sticker_realtime.registry, app.state.scene_realtime.streams):
+        registry.limit_seconds = (settings.realtime_max_duration_seconds, settings.realtime_no_target_seconds)
+    from .transport import RealtimeTransport, RealtimeTransportMiddleware, TextCompressionMiddleware
+    app.state.realtime_transport = RealtimeTransport(settings.realtime_pool_size, settings.specialist_pool_size,
+        scene_capacity=scene_capacity, total_capacity=inference_capacity)
+    app.add_middleware(TextCompressionMiddleware)
+    app.add_middleware(RealtimeTransportMiddleware, transport=app.state.realtime_transport)
+    from .terminals import Terminals, register as register_terminals
+    app.state.terminals = Terminals(app)
+    from .collector_control import CollectorControl, register as register_collector_control
+    app.state.collector_control = CollectorControl(app.state.terminals)
+    asset_revisions = {}
+    asset_revision_lock = threading.Lock()
+
+    def asset_revision(path):
+        stat = path.stat()
+        signature = (stat.st_mtime_ns, stat.st_size)
+        with asset_revision_lock:
+            cached = asset_revisions.get(path)
+            if cached is None or cached[0] != signature:
+                cached = (signature, hashlib.sha256(path.read_bytes()).hexdigest()[:12])
+                asset_revisions[path] = cached
+            return cached[1]
     for directory in ["uploads", "runs"]:
         (settings.data_dir / directory).mkdir(parents=True, exist_ok=True)
     # Derive once; compare derived keys to avoid storing passwords in sessions.
     salt = secrets.token_bytes(32)
     password_key = hashlib.pbkdf2_hmac("sha256", settings.password.encode(), salt, 200000)
-    failures = {}
+    login_limiter = LoginLimiter()
 
     def auth(request):
+        terminal = app.state.terminals.authenticate(request)
+        if terminal is not None:
+            return terminal
         token = request.cookies.get("aisop_session", "")
         with engine.connect() as c:
             session = c.execute(select(sessions).where(sessions.c.token_hash == digest(token), sessions.c.expires_at > now(c))).mappings().first()
         if not session:
             raise HTTPException(401, "请先登录")
         if request.method not in ["GET", "HEAD", "OPTIONS"] and not hmac.compare_digest(request.headers.get("x-csrf-token", ""), session["csrf"]):
-            raise HTTPException(403, "会话校验失败，请重新登录")
+            raise HTTPException(403, {'code': 'SESSION_CSRF_INVALID', 'message': '会话已更新，请同步登录状态后重试'})
         return session
 
     def owned_run(run_id, owner):
         with engine.connect() as c:
-            row = c.execute(select(runs).where(runs.c.id == run_id, runs.c.owner == owner)).mappings().first()
+            columns = [runs.c[name] for name in ('id', 'media_id', 'status', 'progress', 'attempts',
+                'error_code', 'error_message', 'created_at', 'updated_at', 'result_dir')]
+            row = c.execute(select(*columns).where(runs.c.id == run_id, runs.c.owner == owner)).mappings().first()
         if not row:
             raise HTTPException(404, "任务不存在")
         return row
 
+    def verify_manual(request, password):
+        peer = 'manual:' + (request.client.host if request.client else 'unknown')
+        with login_limiter.attempt(peer) as attempt:
+            candidate = hashlib.pbkdf2_hmac('sha256', password.encode(), salt, 200000)
+            attempt.success = hmac.compare_digest(candidate, password_key)
+            if not attempt.success:
+                raise HTTPException(403, '确认密码不正确，操作未保存')
+
+    from .pilot import register as register_pilot
+    register_evidence(app, auth)
+    register_pilot(app, auth, verify_manual)
+    register_terminals(app, auth)
+    register_collector_control(app, auth)
+    from .board import register as register_board
+    register_board(app, auth)
+    from .inspection_history import register as register_inspection_history
+    register_inspection_history(app, auth)
+    from .board_reset import register as register_board_reset
+    register_board_reset(app, auth, verify_manual)
+    from .training_service import register as register_training
+    register_training(app, auth)
+    from .dataset_service import register as register_datasets
+    register_datasets(app, auth)
+    from .deployment_settings import register as register_deployment_settings
+    register_deployment_settings(app, auth)
+
     @app.exception_handler(HTTPException)
     async def http_error(request, exc):
-        return JSONResponse({"message": str(exc.detail)}, status_code=exc.status_code, headers=exc.headers)
+        detail = exc.detail if isinstance(exc.detail, dict) else {"message": str(exc.detail)}
+        return JSONResponse(detail, status_code=exc.status_code, headers=exc.headers)
 
     @app.exception_handler(RequestValidationError)
     async def validation_error(request, exc):
@@ -128,16 +245,63 @@ def create_app(settings=None):
         fields = [".".join(str(part) for part in error["loc"][1:]) or "请求内容" for error in exc.errors()]
         return JSONResponse({"message": "请求参数无效，请检查：" + "、".join(dict.fromkeys(fields))}, status_code=422)
 
+    @app.exception_handler(DBAPIError)
+    @app.exception_handler(DatabaseTimeout)
+    async def database_error(request, exc):
+        # Do not disclose credentials/SQL. Writes may have committed before a
+        # connection was lost; clients must retry with the original request key.
+        logging.getLogger(__name__).error('Database unavailable: %s', type(exc).__name__)
+        return JSONResponse({'code': 'DATABASE_UNAVAILABLE',
+            'message': '数据库暂不可用；如正在保存，请保留原请求编号，稍后重试确认结果'},
+            status_code=503, headers={'Retry-After': '2', 'Cache-Control': 'no-store'})
+
+    from algorithms.video import AnalysisError
+
+    @app.exception_handler(AnalysisError)
+    async def analysis_error(request, exc):
+        return JSONResponse({'code': exc.code, 'message': str(exc)},
+            status_code=503 if exc.code.startswith('GPU_') else 422)
+
     @app.middleware("http")
     async def no_cache_private(request, call_next):
         response = await call_next(request)
         if request.url.path.startswith("/api/"):
             response.headers["Cache-Control"] = "no-store"
-        elif request.url.path in ('/','/index.html','/app.js','/styles.css','/screw-dashboard.js','/screw-dashboard.css'):
-            response.headers['Cache-Control']='no-cache'
+        elif request.url.path in ('/', '/index.html', '/app.js', '/styles.css', '/screw-dashboard.js', '/screw-dashboard.css'):
+            response.headers['Cache-Control'] = 'no-cache'
+        elif request.url.path in ('/admin', *(f'/station-{number}' for number in range(1, 7))) or request.url.path.endswith(('.html', '.js', '.css')):
+            response.headers.setdefault('Cache-Control', 'no-cache')
         response.headers["X-Content-Type-Options"] = "nosniff"
         response.headers["Referrer-Policy"] = "same-origin"
         return response
+
+    @app.get('/api/v1/live')
+    def live():
+        return {'status': 'alive'}
+
+    @app.get('/api/v1/ready')
+    def ready():
+        from .health import worker_snapshot
+        from .migrations import SchemaError, require_current
+        try:
+            with engine.connect() as c:
+                require_current(c)
+                c.execute(select(sessions.c.owner).limit(1)).first()
+            workers = worker_snapshot(engine)
+        except SchemaError:
+            return JSONResponse({'status': 'unavailable', 'database': 'migration_required'},
+                status_code=503, headers={'Retry-After': '2'})
+        except SQLAlchemyError:
+            return JSONResponse({'status': 'unavailable', 'database': 'unavailable'},
+                status_code=503, headers={'Retry-After': '2'})
+        return JSONResponse({'status': workers['status'], 'database': 'ready', 'workers': workers},
+            status_code=200 if workers['active'] else 503,
+            headers={} if workers['active'] else {'Retry-After': '2'})
+
+    @app.get('/api/v1/system/gpu')
+    def gpu_metrics(request: Request):
+        auth(request)
+        return app.state.gpu_telemetry.snapshot()
 
     @app.get("/api/v1/health")
     def health():
@@ -151,38 +315,57 @@ def create_app(settings=None):
                 "capabilities": {"personDetection": True, "poseEstimation": True,
                                  "actionSequence": False, "productionSop": False, "screwInspection": True,
                                  "stickerInspection": True, "selectableInspectionTasks": True,
-                                 "sceneTasks": True, "modelManagement": True},
+                                 "sceneTasks": True, "modelManagement": True, "industrialTraining": True, "station1AssistedWorkflow": True,
+                                 "assistedStations": list(range(1, 7))},
                 "limits": {"max_upload_bytes": settings.max_upload_bytes, "max_video_seconds": settings.max_video_seconds}}
 
     @app.post("/api/v1/login")
-    async def login(body: Login, request: Request):
+    def login(body: Login, request: Request):
+        # FastAPI runs this synchronous route in its worker pool, including the
+        # entire transaction. The limiter's reservation lasts until hashing ends.
         peer = request.client.host if request.client else "unknown"
-        recent = [t for t in failures.get(peer, []) if t > time.monotonic() - 300]
-        if len(recent) >= 10:
-            raise HTTPException(429, "尝试次数过多，请稍后重试")
-        candidate = await run_in_threadpool(hashlib.pbkdf2_hmac, "sha256", body.password.encode(), salt, 200000)
-        if not hmac.compare_digest(candidate, password_key) or not hmac.compare_digest(body.username.encode(), settings.username.encode()):
-            failures[peer] = recent + [time.monotonic()]
-            raise HTTPException(401, "用户名或密码错误")
-        failures.pop(peer, None)
+        with login_limiter.attempt(peer) as attempt:
+            candidate = hashlib.pbkdf2_hmac("sha256", body.password.encode(), salt, 200000)
+            attempt.success = (hmac.compare_digest(candidate, password_key) &
+                               hmac.compare_digest(body.username.encode(), settings.username.encode()))
+            if not attempt.success:
+                raise HTTPException(401, "用户名或密码错误")
         token, csrf = secrets.token_urlsafe(32), secrets.token_urlsafe(32)
         with engine.begin() as c:
-            c.execute(delete(sessions).where(sessions.c.expires_at <= now(c)))
+            expired = select(sessions.c.token_hash).where(sessions.c.expires_at <= now(c)).order_by(sessions.c.expires_at).limit(100)
+            c.execute(delete(sessions).where(sessions.c.token_hash.in_(expired)))
             c.execute(sessions.insert().values(token_hash=digest(token), owner=settings.username, csrf=csrf, expires_at=now(c) + settings.session_seconds))
         response = JSONResponse({"username": settings.username, "csrf": csrf})
         response.set_cookie("aisop_session", token, httponly=True, secure=settings.secure_cookie, samesite="strict", max_age=settings.session_seconds, path="/")
+        response.delete_cookie('aisop_terminal', path='/')
         return response
 
     @app.get("/api/v1/session")
     def session(request: Request):
         user = auth(request)
-        return {"username": user["owner"], "csrf": user["csrf"]}
+        return {"username": user["owner"], "csrf": user["csrf"],
+                **({'role': 'terminal', 'binding': user['binding']} if user.get('role') == 'terminal' else {})}
 
     @app.post("/api/v1/logout")
     def logout(request: Request):
-        user = auth(request)
+        needs_check = False
+        try:
+            auth(request)
+        except HTTPException as exc:
+            # Expired cookies can be removed; live sessions still require CSRF.
+            if exc.status_code != 401:
+                raise
+            needs_check = True
         with engine.begin() as c:
-            c.execute(delete(sessions).where(sessions.c.token_hash == user["token_hash"]))
+            token_hash = digest(request.cookies.get('aisop_session', ''))
+            if needs_check:
+                # An invalid terminal cookie must not bypass CSRF for a still
+                # valid admin cookie supplied alongside it.
+                current = c.execute(select(sessions).where(sessions.c.token_hash == token_hash,
+                    sessions.c.expires_at > now(c))).mappings().first()
+                if current and not hmac.compare_digest(request.headers.get('x-csrf-token', ''), current['csrf']):
+                    raise HTTPException(403, {'code': 'SESSION_CSRF_INVALID', 'message': '会话已更新，请同步登录状态后重试'})
+            c.execute(delete(sessions).where(sessions.c.token_hash == token_hash))
         response = JSONResponse({"ok": True})
         response.delete_cookie("aisop_session", path="/")
         return response
@@ -201,6 +384,35 @@ def create_app(settings=None):
         tmp = settings.data_dir / "uploads" / (mid + ".part")
         final = tmp.with_suffix(suffix)
         length, sha = 0, hashlib.sha256()
+
+        def publish_upload():
+            # Keep publication, the transaction and lost-ack reconciliation in
+            # one worker. Once it owns the files, a disconnected HTTP request
+            # must not delete a file while its database commit is in flight.
+            try:
+                tmp.replace(final)
+                with engine.begin() as c:
+                    c.execute(media.insert().values(id=mid, owner=user["owner"], name=name, suffix=suffix,
+                        size=length, sha256=sha.hexdigest(), metadata=info, created_at=now(c)))
+                return {"id": mid, "name": name, "metadata": info, "status": "READY"}
+            except SQLAlchemyError:
+                # A COMMIT acknowledgement may be lost after persistence.
+                # Retain the final upload for reconciliation/retention cleanup.
+                tmp.unlink(missing_ok=True)
+                try:
+                    with engine.connect() as c:
+                        saved = c.execute(select(media.c.id).where(media.c.id == mid)).first()
+                    if saved:
+                        return {"id": mid, "name": name, "metadata": info, "status": "READY"}
+                except SQLAlchemyError:
+                    pass
+                raise
+            except BaseException:
+                tmp.unlink(missing_ok=True)
+                final.unlink(missing_ok=True)
+                raise
+
+        publishing = False
         try:
             with tmp.open("xb") as f:
                 async for chunk in request.stream():
@@ -218,34 +430,54 @@ def create_app(settings=None):
                 info = await run_in_threadpool(probe, tmp, settings.max_video_seconds)
             except AnalysisError as exc:
                 raise HTTPException(422, str(exc)) from exc
-            tmp.replace(final)
-            with engine.begin() as c:
-                c.execute(media.insert().values(id=mid, owner=user["owner"], name=name, suffix=suffix,
-                    size=length, sha256=sha.hexdigest(), metadata=info, created_at=now(c)))
-            return {"id": mid, "name": name, "metadata": info, "status": "READY"}
+            publishing = True
+            return await run_in_threadpool(publish_upload)
         except BaseException:
-            tmp.unlink(missing_ok=True)
-            final.unlink(missing_ok=True)
+            if not publishing:
+                tmp.unlink(missing_ok=True)
+                final.unlink(missing_ok=True)
             raise
 
     @app.get('/api/v1/admin/model-candidates')
     def model_candidates(request: Request):
-        auth(request)
-        return {'items': app.state.scenes.candidates()}
+        owner = auth(request)['owner']
+        return {'items': app.state.scenes.candidates(owner),
+                'limits': {'max_upload_bytes': settings.max_upload_bytes},
+                'locations': ['服务器 models/', '服务器 outputs/', 'DATA_DIR/model-imports/']}
 
     @app.get('/api/v1/admin/models')
     def list_models(request: Request):
         return {'items': app.state.scenes.models(auth(request)['owner'])}
 
+    @app.get('/api/v1/admin/catalog')
+    def management_catalog(request: Request):
+        return app.state.scenes.catalog(auth(request)['owner'])
+
     @app.post('/api/v1/admin/models/import', status_code=201)
     def import_model(body: ModelImport, request: Request):
-        return app.state.scenes.import_model(body, auth(request)['owner'])
+        return app.state.scenes.import_model(body, auth(request)['owner'], request.headers.get('Idempotency-Key'))
+
+    @app.get('/api/v1/admin/model-imports/{key}')
+    def model_import_result(key: uuid.UUID, request: Request):
+        owner = auth(request)['owner']
+        return app.state.scenes.public_model(app.state.scenes._model(import_identity(owner, str(key)), owner))
 
     @app.post('/api/v1/admin/models/upload', status_code=201)
     async def upload_model(request: Request, name: str = Query(min_length=1, max_length=100),
                            version: str = Query('1.0', min_length=1, max_length=60),
-                           filename: str = Query(min_length=1, max_length=255)):
+                           filename: str = Query(min_length=1, max_length=255),
+                           notes: str = Query('', max_length=1000)):
         user = await run_in_threadpool(auth, request)
+        if 'X-Model-Notes' in request.headers:
+            try:
+                encoded = request.headers['X-Model-Notes']
+                if len(encoded) > 6000:
+                    raise ValueError()
+                notes = base64.b64decode(encoded, validate=True).decode('utf-8')
+                if len(notes) > 1000:
+                    raise ValueError()
+            except (ValueError, UnicodeDecodeError, binascii.Error) as exc:
+                raise HTTPException(422, '模型说明编码无效或超过1000字符') from exc
         if Path(filename.replace('\\', '/')).suffix.lower() != '.pt':
             raise HTTPException(415, '当前支持可信来源的 Ultralytics .pt 模型')
         if not name.strip() or not version.strip():
@@ -253,8 +485,8 @@ def create_app(settings=None):
         length = request.headers.get('content-length', '')
         if length.isdecimal() and int(length) > settings.max_upload_bytes:
             raise HTTPException(413, '模型文件超过上传限制')
-        identity = str(uuid.uuid4())
-        destination = app.state.scenes.directory / (identity + '.pt')
+        identity = import_identity(user['owner'], request.headers.get('Idempotency-Key'))
+        destination = app.state.scenes.directory / ((str(uuid.uuid4()) if request.headers.get('Idempotency-Key') else identity) + '.pt')
         temporary = destination.with_suffix('.part')
         size = 0
         try:
@@ -267,8 +499,14 @@ def create_app(settings=None):
             if not size:
                 raise HTTPException(422, '模型文件为空')
             temporary.replace(destination)
-            return await run_in_threadpool(app.state.scenes.register, identity, destination,
-                user['owner'], name.strip(), version.strip())
+            result = await run_in_threadpool(app.state.scenes.register, identity, destination,
+                user['owner'], name.strip(), version.strip(), notes.strip())
+            if result.get('reused'):
+                destination.unlink(missing_ok=True)
+            return result
+        except SQLAlchemyError:
+            temporary.unlink(missing_ok=True)
+            raise
         except BaseException:
             temporary.unlink(missing_ok=True)
             destination.unlink(missing_ok=True)
@@ -284,7 +522,7 @@ def create_app(settings=None):
 
     @app.post('/api/v1/admin/scenes', status_code=201)
     def create_scene(body: SceneDefinition, request: Request):
-        return app.state.scenes.save(body, auth(request)['owner'])
+        return app.state.scenes.save(body, auth(request)['owner'], request_key=request.headers.get('Idempotency-Key'))
 
     @app.put('/api/v1/admin/scenes/{scene_id}')
     def update_scene(scene_id: uuid.UUID, body: SceneDefinition, request: Request):
@@ -342,7 +580,7 @@ def create_app(settings=None):
         elif options.get('analysis_type') in ('screw','sticker'):
             task=options['analysis_type']
             if task=='sticker' and options['sample_fps']<2:
-                raise HTTPException(422,'贴条工序顺序检测至少需要2FPS采样')
+                raise HTTPException(422,'贴条连续视觉确认至少需要2FPS采样')
             if options.get('crop') or options.get('workflow_id') or options.get('station_id'):
                 raise HTTPException(422, '专项检测使用独立工件标定，请勿选择旧工位、动作流程或裁切')
             if task=='screw':
@@ -390,7 +628,12 @@ def create_app(settings=None):
                 raise HTTPException(422, str(exc)) from exc
         rid = str(uuid.uuid4())
         try:
-            with engine.begin() as c:
+            with serialized_write(engine) as c:
+                # Retention may expire media during model/options validation.
+                available = c.execute(select(media.c.id).where(media.c.id == mid,
+                    media.c.owner == user['owner']).with_for_update()).first()
+                if not available:
+                    raise HTTPException(404, '媒体已过期或被清理，请重新上传')
                 c.execute(runs.insert().values(id=rid, owner=user["owner"], media_id=mid, status="QUEUED", request_key=key,
                     request_hash=rhash, options=options, model_hash=model_hash, progress=0,
                     attempts=0, token=0, created_at=now(c), updated_at=now(c)))
@@ -408,10 +651,50 @@ def create_app(settings=None):
                              hands: bool = False, analysis_type: Literal['pose','screw','sticker','scene'] = 'pose',
                              scene_id: uuid.UUID | None = None):
         user = await run_in_threadpool(auth, request)
+        frame_id = request.headers.get('x-frame-id')
+        captured_at = request.headers.get('x-captured-at')
+        if frame_id is not None and (not frame_id or len(frame_id) > 128 or any(ord(c) < 32 for c in frame_id)):
+            raise HTTPException(422, '采样编号需要为1–128字符')
+        if captured_at is not None:
+            try:
+                captured_at = float(captured_at)
+                if not math.isfinite(captured_at) or captured_at < 0:
+                    raise ValueError()
+            except (ValueError, TypeError) as exc:
+                raise HTTPException(422, '采集时间需要为有效毫秒时间戳') from exc
+
+        async def predict(function, *args, **kwargs):
+            if stream_id:
+                service = {'pose': app.state.realtime, 'screw': app.state.screw_realtime,
+                           'sticker': app.state.sticker_realtime, 'scene': app.state.scene_realtime}[analysis_type]
+                registry = service.registry if analysis_type in ('screw', 'sticker') else service.streams
+                key = (user['token_hash'], stream_id)
+                registry.check_limits(key)
+            result = await run_in_threadpool(function, *args, **kwargs)
+            # Epoch values are diagnostic only: clients measure their own capture-to-display
+            # latency with a monotonic clock, without assuming synchronized device clocks.
+            result = dict(result)
+            if stream_id:
+                service = {'pose': app.state.realtime, 'screw': app.state.screw_realtime,
+                           'sticker': app.state.sticker_realtime, 'scene': app.state.scene_realtime}[analysis_type]
+                registry = service.registry if analysis_type in ('screw', 'sticker') else service.streams
+                key = (user['token_hash'], stream_id)
+                registry.record_sample(key, timestamp)
+                registry.observe_limits(key, analysis_type, result)
+                result = registry.protect_result(key, result)
+                proof = await run_in_threadpool(save_evidence, user, stream_id, analysis_type,
+                    timestamp, bytes(payload), result)
+                if proof:
+                    result['evidence'] = proof
+            result.update(frameId=frame_id, capturedAt=captured_at,
+                serverReceivedAt=request.state.realtime_received_at,
+                serverRespondedAt=time.time()*1000,
+                serverProcessingMs=round((time.perf_counter()-request.state.realtime_started)*1000, 2))
+            return result
+
         stream_id, timestamp = request.headers.get('x-stream-id'), request.headers.get('x-frame-time')
         extra = {}
         if stream_id is not None or timestamp is not None:
-            import math
             try:
                 stream_id = str(uuid.UUID(stream_id))
                 timestamp = float(timestamp)
@@ -438,45 +721,89 @@ def create_app(settings=None):
                 raise HTTPException(422, '请选择有效测试算法，且不能与生产工位混用')
         if request.headers.get("content-type", "").split(";")[0] != "image/jpeg":
             raise HTTPException(415, "仅支持JPEG采样画面")
+        length = request.headers.get('content-length')
+        if length is not None:
+            try:
+                if int(length) < 0:
+                    raise ValueError()
+                if int(length) > 1024 * 1024:
+                    raise HTTPException(413, '实时画面不能超过1 MiB')
+            except ValueError as exc:
+                raise HTTPException(422, '画面长度无效') from exc
         payload = bytearray()
-        async for chunk in request.stream():
-            if len(payload) + len(chunk) > 1024 * 1024:
-                raise HTTPException(413, "实时画面不能超过1 MiB")
-            payload.extend(chunk)
+
+        async def read_frame():
+            async for chunk in request.stream():
+                if len(payload) + len(chunk) > 1024 * 1024:
+                    raise HTTPException(413, "实时画面不能超过1 MiB")
+                payload.extend(chunk)
+        try:
+            await asyncio.wait_for(read_frame(), timeout=5)
+        except asyncio.TimeoutError as exc:
+            raise HTTPException(408, '实时画面传输超时，请发送最新采样') from exc
         if analysis_type=='scene':
-            return await run_in_threadpool(app.state.scene_realtime.predict, bytes(payload),
+            return await predict(app.state.scene_realtime.predict, bytes(payload),
                 scene_id=str(scene_id), stream_key=(user['token_hash'],stream_id), frame_time=timestamp, owner=user['owner'])
         if analysis_type=='screw':
-            return await run_in_threadpool(app.state.screw_realtime.predict,bytes(payload),
+            return await predict(app.state.screw_realtime.predict,bytes(payload),
                 stream_key=(user['token_hash'],stream_id),frame_time=timestamp)
         if analysis_type=='sticker':
-            return await run_in_threadpool(app.state.sticker_realtime.predict,bytes(payload),
+            return await predict(app.state.sticker_realtime.predict,bytes(payload),
                 stream_key=(user['token_hash'],stream_id),frame_time=timestamp)
         if test_algorithms:
-            return await run_in_threadpool(app.state.realtime.predict,bytes(payload),None,names,**extra)
+            return await predict(app.state.realtime.predict,bytes(payload),None,names,**extra)
         if station_id:
             from algorithms.stations import snapshot
             try:
                 frozen = await run_in_threadpool(snapshot, station_id)
             except ValueError as exc:
                 raise HTTPException(422, str(exc)) from exc
-            return await run_in_threadpool(app.state.realtime.predict, bytes(payload), frozen, hands=hands, **extra)
-        return await run_in_threadpool(app.state.realtime.predict, bytes(payload), hands=hands, **extra)
+            return await predict(app.state.realtime.predict, bytes(payload), frozen, hands=hands, **extra)
+        return await predict(app.state.realtime.predict, bytes(payload), hands=hands, **extra)
+
+    def save_evidence(user, stream, kind, stamp, image, result, final=False):
+        try:
+            return app.state.evidence.observe(user['owner'], user['token_hash'], str(stream),
+                kind, stamp, image, result, final=final)
+        except (OSError, SQLAlchemyError, ValueError) as exc:
+            logging.getLogger(__name__).exception('Alert evidence could not be acknowledged')
+            app.state.evidence.last_error = type(exc).__name__
+            return {'status': 'UNAVAILABLE', 'message': '取证存储暂不可用，请检查告警归档状态'}
 
     @app.delete('/api/v1/realtime/streams/{stream_id}')
     def release_stream(stream_id: uuid.UUID, request: Request):
         user = auth(request)
-        app.state.realtime.release((user['token_hash'], str(stream_id)))
-        app.state.screw_realtime.release((user['token_hash'], str(stream_id)))
-        app.state.sticker_realtime.release((user['token_hash'], str(stream_id)))
-        app.state.scene_realtime.release((user['token_hash'], str(stream_id)))
+        with app.state.realtime_transport.control(user['token_hash'], str(stream_id)):
+            app.state.realtime.release((user['token_hash'], str(stream_id)))
+            app.state.screw_realtime.release((user['token_hash'], str(stream_id)))
+            app.state.sticker_realtime.release((user['token_hash'], str(stream_id)))
+            app.state.scene_realtime.release((user['token_hash'], str(stream_id)))
+            app.state.evidence.release(user['token_hash'], str(stream_id))
+            app.state.realtime_transport.forget(user['token_hash'], str(stream_id))
         return {'ok': True}
 
     @app.post('/api/v1/realtime/streams/{stream_id}/finish')
-    def finish_screw_stream(stream_id: uuid.UUID,request: Request,analysis_type: Literal['screw','sticker','scene']='screw'):
+    def finish_screw_stream(stream_id: uuid.UUID,request: Request,
+                            body: FinishRealtimeRequest | None = None,
+                            analysis_type: Literal['screw','sticker','scene']='screw'):
         user=auth(request)
+        gaps = [gap.model_dump() for gap in body.evidenceGaps] if body else []
+        if any(gap['end'] < gap['start'] for gap in gaps):
+            raise HTTPException(422, '证据缺口结束时间不能早于开始时间')
         service=app.state.scene_realtime if analysis_type=='scene' else app.state.sticker_realtime if analysis_type=='sticker' else app.state.screw_realtime
-        return service.finish((user['token_hash'],str(stream_id)))
+        key = (user['token_hash'], str(stream_id))
+        with app.state.realtime_transport.control(*key, kinds=(analysis_type,)):
+            registry = service.streams if analysis_type == 'scene' else service.registry
+            try:
+                registry.check_limits(key)
+            except HTTPException as exc:
+                if exc.status_code != 410:
+                    raise
+                # Preserve the last evidence, while the expired round is REVIEW.
+            result = service.finish(key)
+            result = registry.protect_result(key, result, client_gaps=gaps, final=True)
+            proof = save_evidence(user, stream_id, analysis_type, 0, None, result, final=True)
+            return dict(result, evidence=proof) if proof else result
 
     @app.get('/api/v1/stations')
     def station_catalog():
@@ -523,6 +850,7 @@ def create_app(settings=None):
         return {'name':config['name'],'version':config['version'],'targets':config['targets'],
                 'scope':config['scope'],'ready':all((ROOT/config[k]).is_file() for k in ('model','reference')+ (('material_model',) if config.get('material_model') else ())),
                 'modelName':config['model_name'],'mode':config.get('mode','appearance'),'sequence':config.get('sequence',{}),
+                'verificationMode':config.get('verification_mode','temporal-actions' if config.get('mode')=='action' else 'placement-order'),
                 'detectionClasses':['sticker','person'],'skeleton':topology(),
                 'personModelName':app.state.realtime.status_snapshot()['model']}
 
@@ -560,9 +888,9 @@ def create_app(settings=None):
         if status:
             conditions.append(runs.c.status == status)
         if analysis_type:
-            conditions.append(runs.c.options['analysis_type'].as_string() == analysis_type)
+            conditions.append(option_field('analysis_type') == analysis_type)
         if scene_id:
-            conditions.append(runs.c.options['scene_id'].as_string() == str(scene_id))
+            conditions.append(option_field('scene_id') == str(scene_id))
         if q.strip():
             conditions.append(media.c.name.icontains(q.strip(), autoescape=True) | runs.c.id.icontains(q.strip(), autoescape=True))
         if cursor:
@@ -572,18 +900,28 @@ def create_app(settings=None):
         source = runs.outerjoin(media, (media.c.id == runs.c.media_id) & (media.c.owner == runs.c.owner))
         with engine.connect() as c:
             total = None if cursor else c.execute(select(func.count()).select_from(source).where(*conditions)).scalar_one()
-            query = select(runs, media.c.name.label("media_name")).select_from(source).where(*conditions)
+            # Project only the short fields shown by history. Frozen model/ROI
+            # configurations remain available on the detail/worker path.
+            columns = [runs.c[name] for name in ('id', 'media_id', 'status', 'progress', 'attempts',
+                'error_code', 'error_message', 'created_at', 'updated_at')]
+            options = runs.c.options
+            kind = option_field('analysis_type')
+            model_name = func.coalesce(options['scene_config']['model']['name'].as_string(),
+                options['screw_config']['config']['model_name'].as_string(),
+                options['sticker_config']['config']['model_name'].as_string())
+            query = select(*columns, media.c.name.label('media_name'), kind.label('analysis_type'),
+                options['scene_id'].as_string().label('scene_id'),
+                options['scene_config']['config']['name'].as_string().label('scene_name'),
+                model_name.label('model_name')).select_from(source).where(*conditions)
             rows = list(c.execute(query.order_by(runs.c.created_at.desc(), runs.c.id.desc())
                                   .limit(limit + 1).offset(0 if cursor else offset)).mappings())
             has_more = len(rows) > limit
             rows = rows[:limit]
             next_cursor = _encode_cursor(rows[-1]["created_at"], rows[-1]["id"]) if has_more and rows else None
             return {"items": [{**public_run(row), "media_name": row["media_name"],
-                    'analysis_type':row['options'].get('analysis_type','pose'),
-                    'scene_id':row['options'].get('scene_id'),
-                    'scene_name':row['options'].get('scene_config',{}).get('config',{}).get('name'),
-                    'model_name':row['options'].get('scene_config',{}).get('model',{}).get('name') or row['options'].get(row['options'].get('analysis_type','pose')+'_config',{}).get('config',{}).get('model_name',
-                        'YOLO11n 螺丝专项 v1' if row['options'].get('analysis_type')=='screw' else '历史分析模型')}
+                    'analysis_type':row['analysis_type'] or 'pose',
+                    'scene_id':row['scene_id'], 'scene_name':row['scene_name'],
+                    'model_name':row['model_name'] or ('YOLO11n 螺丝专项 v1' if row['analysis_type']=='screw' else '历史分析模型')}
                     for row in rows],
                     "total": total, "limit": limit, "offset": offset, "next_cursor": next_cursor}
 
@@ -603,6 +941,8 @@ def create_app(settings=None):
             remaining = deadline - time.monotonic()
             if remaining <= 0:
                 return public_run(row)
+            if await request.is_disconnected():
+                return Response(status_code=204)
             await asyncio.sleep(min(.5, remaining))
 
     @app.get("/api/v1/metrics")
@@ -630,7 +970,19 @@ def create_app(settings=None):
                 "inferenceP95Ms": p95([r["inference_p95_ms"] for r in metric_rows]),
                 "peakMemoryMB": p95([r["peak_memory_mb"] for r in metric_rows]),
                 "peakGpuMemoryMB": p95([r["peak_gpu_memory_mb"] for r in metric_rows]),
-                "realtime": app.state.realtime.metrics_snapshot()}
+                "inferenceRuntime": app.state.inference_runtime,
+                "realtimeLimits": {"maxDurationSeconds": settings.realtime_max_duration_seconds,
+                                   "noTargetTimeoutSeconds": settings.realtime_no_target_seconds},
+                "board": app.state.board.metrics(),
+                "evidenceStorage": app.state.evidence.snapshot(owner),
+                "streamStates": {kind: registry.snapshot() for kind, registry in (
+                    ('pose', app.state.realtime.streams), ('screw', app.state.screw_realtime.registry),
+                    ('sticker', app.state.sticker_realtime.registry), ('scene', app.state.scene_realtime.streams))},
+                "realtime": app.state.realtime.metrics_snapshot(),
+                "sceneModelCache": app.state.scene_realtime.cache_metrics(),
+                "specialistPools": {kind: specialist_snapshot(service) for kind, service in (
+                    ('screw', app.state.screw_realtime), ('sticker', app.state.sticker_realtime))},
+                "realtimeTransport": app.state.realtime_transport.snapshot()}
 
     @app.post("/api/v1/analysis-runs/{run_id}/cancel")
     def cancel(run_id: uuid.UUID, request: Request):
@@ -663,20 +1015,46 @@ def create_app(settings=None):
     @app.api_route("/{path:path}", methods=["GET", "HEAD"])
     def static(path: str, request: Request):
         path = 'index.html' if path in ('', 'index.html') else path
-        if path == 'index.html' and request.query_params.get('scene'):
-            path = 'scene-console.html'
+        if path in {f'station-{number}' for number in range(1, 7)}:
+            return RedirectResponse('/?task=station' + path[-1], status_code=307)
+        if path == 'station-one.html' and request.query_params.get('embed') != '1':
+            return RedirectResponse('/?task=station1', status_code=307)
+        if path == 'training':
+            path = 'training.html'
+        if path == 'datasets':
+            path = 'datasets.html'
         if path == 'admin':
             path = 'admin.html'
+        if path == 'settings':
+            path = 'settings.html'
+        if path == 'terminal':
+            path = 'terminal.html'
+        if path == 'terminals':
+            path = 'terminals.html'
+        if path == 'board':
+            path = 'board.html'
+        if path == 'station-1':
+            path = 'station-one.html'
         static_files = {
             'index.html', 'styles.css', 'app.js', 'screw-dashboard.js', 'screw-dashboard.css',
             'screw-inspection.html', 'screw-inspection.js', 'screw-inspection.css',
-            'admin.html', 'admin.js', 'workspace.css', 'workspace-api.js',
+            'admin.html', 'admin.js', 'workspace.css', 'workspace-api.js', 'review-outbox.js', 'gpu-metrics.js',
+            'training.html', 'training.js', 'training.css',
+            'datasets.html', 'datasets.js', 'datasets.css',
             'scene-console.html', 'scene-console.js',
+            'station-one.html', 'station-one.js', 'station-one.css',
+            'pilot-dashboard.js', 'pilot-dashboard.css', 'scene-dashboard.js', 'station-detection.js', 'station-frame-worker.js', 'station-collector-control.js',
+            'inspection-trigger.js', 'inspection-trigger.css',
+            'evidence-history.js', 'evidence-history.css',
+            'settings.html', 'settings.js', 'equipment-settings.js', 'equipment-settings.css',
+            'terminal.html', 'terminal.js', 'terminal.css', 'terminals.html', 'terminals.js',
+            'board.html', 'board.js', 'board.css', 'board-history.js', 'board-history.css', 'board-advanced.js', 'board-advanced.css',
         }
         if path not in static_files and not path.startswith("assets/"):
             raise HTTPException(404, "Not found")
-        target = (ROOT / path).resolve()
-        boundary = (ROOT / "assets").resolve() if path.startswith("assets/") else ROOT
+        public_root = ROOT if path.startswith("assets/") else ROOT / "frontend"
+        target = (public_root / path).resolve()
+        boundary = (ROOT / "assets").resolve() if path.startswith("assets/") else public_root.resolve()
         if not target.is_relative_to(boundary) or not target.is_file():
             raise HTTPException(404, "Not found")
         no_store = {'Cache-Control': 'no-store, max-age=0'}
@@ -685,13 +1063,28 @@ def create_app(settings=None):
             if path == 'index.html':
                 text = text.replace('src="assets/reference.mp4"', '')
                 text = text.replace('<script src="app.js">', '<script>window.AISOP_SERVER=true;</script><script src="app.js">')
+                if request.cookies.get('aisop_terminal'):
+                    try:
+                        terminal = app.state.terminals.authenticate(request, restrict=False)
+                    except HTTPException as exc:
+                        if exc.status_code != 401:
+                            raise
+                        response = RedirectResponse('/terminal', status_code=303)
+                        response.delete_cookie('aisop_terminal', path='/')
+                        return response
+                    fixed = json.dumps(terminal['binding'], ensure_ascii=True).replace('<', '\\u003c')
+                    text = text.replace('<script src="app.js">', f'<script>window.AISOP_TERMINAL={fixed};</script><script src="app.js">')
             for asset in ('app.js', 'styles.css', 'screw-dashboard.js', 'screw-dashboard.css',
                           'screw-inspection.js', 'screw-inspection.css', 'admin.js', 'workspace.css',
-                          'workspace-api.js', 'scene-console.js'):
-                asset_path = ROOT / asset
+                          'workspace-api.js', 'review-outbox.js', 'gpu-metrics.js', 'training.js', 'training.css', 'scene-console.js', 'station-one.js', 'station-one.css',
+                          'pilot-dashboard.js', 'pilot-dashboard.css', 'scene-dashboard.js', 'station-detection.js', 'station-collector-control.js',
+                          'inspection-trigger.js', 'inspection-trigger.css', 'settings.js', 'equipment-settings.js', 'equipment-settings.css',
+                          'evidence-history.js', 'evidence-history.css', 'terminal.js', 'terminal.css', 'terminals.js',
+                          'board.js', 'board.css', 'board-history.js', 'board-history.css', 'board-advanced.js', 'board-advanced.css'):
+                asset_path = ROOT / 'frontend' / asset
                 if not asset_path.is_file():
                     continue
-                revision = hashlib.sha256(asset_path.read_bytes()).hexdigest()[:12]
+                revision = asset_revision(asset_path)
                 for attribute in ('src', 'href'):
                     text = text.replace(f'{attribute}="{asset}"', f'{attribute}="{asset}?v={revision}"')
             return HTMLResponse(text, headers=no_store)

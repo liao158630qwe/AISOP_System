@@ -38,7 +38,14 @@ def inspection():
 def test_sticker_realtime_people_use_same_frame_even_without_workpiece(monkeypatch,size):
     import backend.sticker_realtime as module
     from backend.realtime import RealtimeDetector
-    received=[]
+    import algorithms.cuda_lane
+    import algorithms.cuda_vision
+    import algorithms.gpu
+    monkeypatch.setattr(algorithms.cuda_lane, 'run_in_lane', lambda owner, fn, ready=None: fn())
+    monkeypatch.setattr(algorithms.cuda_vision, 'decode', lambda payload: cv2.imdecode(np.frombuffer(payload,np.uint8),cv2.IMREAD_COLOR))
+    monkeypatch.setattr(algorithms.gpu, 'require_cuda', lambda *args: 0)
+    monkeypatch.setattr(torch.cuda, 'Event', lambda *args, **kwargs: SimpleNamespace(record=lambda:None,synchronize=lambda:None))
+    received,inspected=[],[]
     class Pose:
         def predict(self,frame,**kwargs):
             assert kwargs['classes']==[0]
@@ -49,7 +56,7 @@ def test_sticker_realtime_people_use_same_frame_even_without_workpiece(monkeypat
     class Sticker:
         def __init__(self,frozen):self.config=frozen['config']
         def inspect(self,frame):
-            assert frame is received[-1]
+            inspected.append(frame)
             return inspection()
     monkeypatch.setattr(module,'StickerDetector',Sticker)
     monkeypatch.setattr(module,'snapshot',lambda:{'config':{'targets':TARGETS,'model_name':'unit'},
@@ -58,7 +65,10 @@ def test_sticker_realtime_people_use_same_frame_even_without_workpiece(monkeypat
     def send(value,t,key=key):
         w,h=size
         ok,jpeg=cv2.imencode('.jpg',np.full((h,w,3),value,np.uint8));assert ok
-        return service.predict(jpeg.tobytes(),stream_key=key,frame_time=t)
+        before=len(received)
+        result=service.predict(jpeg.tobytes(),stream_key=key,frame_time=t)
+        assert len(received)==before+1 and inspected[-1] is received[-1]
+        return result
     first=send(100,0);second=send(100,.25)
     assert first['totalProcessingMs'] >= sum(first['timingsMs'].values()) - .01
     assert {'decode','snapshot','modelLoad','stream','person','inspection','rules'} == set(first['timingsMs'])
@@ -72,6 +82,7 @@ def test_sticker_realtime_people_use_same_frame_even_without_workpiece(monkeypat
     assert service.finish(key)['compliance']['status']=='REVIEW'
     service.release(key)
     assert key not in service.registry.items
+    service.close()
 
 
 @pytest.mark.parametrize('present',[True,False])

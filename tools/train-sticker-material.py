@@ -12,6 +12,10 @@ from sklearn.svm import SVC
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
 from algorithms.sticker_material import features
 from algorithms.video import file_hash
+
+# This legacy script executes training at import time as well.
+raise SystemExit('Legacy sklearn SVC training is disabled by the CUDA-only policy. Use tools/train-model.py with a torch feature-classify recipe or a GPU visual detector; validate the candidate before publishing.')
+
 OUT=ROOT/'outputs/sticker-inspection-2026-10-17'
 config=json.loads((ROOT/'config/sticker-inspection-candidate.json').read_text(encoding='utf-8'))
 provenance=json.loads((OUT/'dataset-provenance.json').read_text(encoding='utf-8'))

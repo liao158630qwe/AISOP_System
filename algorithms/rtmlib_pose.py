@@ -154,12 +154,14 @@ class RTMLibDetector:
     def __init__(self, variant='rtmpose', mode='balanced', device='cuda'):
         if variant not in ('rtmpose', 'rtmo'):
             raise ValueError(f"未知姿态后端 {variant}")
+        from .gpu import require_cuda
+        device = f'cuda:{require_cuda(device)}'
         _enable_ort_cuda_dlls()
         from rtmlib import Body, RTMPose
         from rtmlib.tools.file import download_checkpoint
 
         self.variant, self.mode = variant, mode
-        self._device = 'cpu'
+        self._device = device
         self._files = []
         if variant == 'rtmo':
             spec = Body.RTMO_MODE[mode]
@@ -178,20 +180,47 @@ class RTMLibDetector:
         self._input = self._input_label(spec, variant)
 
     def _build(self, cls, path, size, device):
+        from .gpu import require_cuda
+        from .video import AnalysisError
+        import onnxruntime as ort
+        index = require_cuda(device)
+        if 'CUDAExecutionProvider' not in ort.get_available_providers():
+            raise AnalysisError('GPU_UNAVAILABLE', 'ONNX Runtime 缺少 CUDAExecutionProvider，禁止 CPU 回退')
+        # Build a strict session before rtmlib can create its default session.
+        options = ort.SessionOptions()
+        options.add_session_config_entry('session.disable_cpu_ep_fallback', '1')
         try:
-            return cls(path, model_input_size=size, backend='onnxruntime', device=device)
-        except Exception:
-            if device == 'cpu':
-                raise
-            return cls(path, model_input_size=size, backend='onnxruntime', device='cpu')
+            session = ort.InferenceSession(str(path), sess_options=options,
+                providers=[('CUDAExecutionProvider', {'device_id': index})])
+        except Exception as exc:
+            raise AnalysisError('GPU_MODEL_UNSUPPORTED',
+                f'该 ONNX 模型无法在禁止 CPU 节点的条件下运行；请配置已验证的 YOLO GPU 后端: {exc}') from exc
+        session.disable_fallback()
+        if session.get_providers() != ['CUDAExecutionProvider']:
+            raise AnalysisError('GPU_UNAVAILABLE', 'ONNX 模型未完整分配到 CUDA，禁止 CPU 回退')
+        # Insert a local base class in the MRO so rtmlib's subclass initializers
+        # still run without ever constructing their permissive default session.
+        # No process-wide monkeypatch: concurrent model loads stay independent.
+        from rtmlib.tools.base import BaseTool
+
+        class StrictSession(BaseTool):
+            def __init__(self, onnx_model=None, model_input_size=None, mean=None,
+                         std=None, backend='onnxruntime', device=device):
+                self.session = session
+                self.onnx_model, self.model_input_size = onnx_model, model_input_size
+                self.mean, self.std, self.backend, self.device = mean, std, backend, device
+
+        class StrictModel(cls, StrictSession):
+            pass
+
+        return StrictModel(path, model_input_size=size, backend='onnxruntime', device=device)
 
     def _resolve_device(self):
         models = [model for model in (self._det, self._pose) if model is not None]
-        try:
-            providers = [p for model in models for p in model.session.get_providers()]
-        except AttributeError:
-            return 'cuda'
-        return 'cuda' if 'CUDAExecutionProvider' in providers else 'cpu'
+        from .video import AnalysisError
+        if not models or any(model.session.get_providers() != ['CUDAExecutionProvider'] for model in models):
+            raise AnalysisError('GPU_UNAVAILABLE', '姿态模型未全部使用 CUDA，禁止 CPU 回退')
+        return self._device
 
     @staticmethod
     def _input_label(spec, variant):
@@ -250,7 +279,6 @@ class RTMLibDetector:
             name = f"{self.label}（rtmlib 单阶段多人姿态）"
         else:
             name = f"{self.label}（rtmlib 两阶段）"
-        device = (f"ONNX Runtime CUDA / {torch.cuda.get_device_name(0)}" if self._device == 'cuda'
-                  else platform.processor() + " / CPU (ONNX Runtime)")
+        device = f"ONNX Runtime {self._device} / {torch.cuda.get_device_name(self._device)}"
         return dict(name=name, sha256=files[-1]['sha256'], device=device, backend='rtmlib',
                     inputSize=self._input, components=files)

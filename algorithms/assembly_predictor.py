@@ -62,7 +62,9 @@ class AssemblyPredictor:
             raise ValueError("max_observation_age_s must be finite and positive")
         if not math.isfinite(boundary_threshold) or not 0 <= boundary_threshold <= 1:
             raise ValueError("boundary_threshold must be in [0, 1]")
-        self.model = model.eval()
+        from .gpu import require_cuda
+        self.device = torch.device(f'cuda:{require_cuda()}')
+        self.model = model.to(self.device).eval()
         self.max_streams = max_streams
         self.ttl_s = float(ttl_s)
         self.max_gap_s = float(max_gap_s)
@@ -113,7 +115,7 @@ class AssemblyPredictor:
         quality: Tensor,
     ) -> tuple[dict[str, Tensor], Tensor]:
         clean = self.model._canonicalize_push_inputs(
-            features, targets, masks, ages, quality
+            *(value.to(self.device) for value in (features, targets, masks, ages, quality))
         )
         features, targets, masks, ages, quality = clean
         if features.shape[0] != 1 or features.shape[1] != 1:

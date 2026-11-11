@@ -50,7 +50,8 @@ def test_additive_indexes_upgrade_preserves_existing_data(authenticated):
     initialize(app.state.engine)
     initialize(app.state.engine)
     names = {item['name'] for item in inspect(app.state.engine).get_indexes('analysis_runs')}
-    assert {'ix_runs_owner_created', 'ix_runs_status_created'} <= names
+    assert {'ix_runs_owner_created', 'ix_runs_status_created', 'ix_runs_media', 'ix_runs_retention'} <= names
+    assert 'ix_media_created' in {item['name'] for item in inspect(app.state.engine).get_indexes('media')}
     with app.state.engine.connect() as connection:
         assert len(connection.execute(select(runs.c.id)).all()) == 122
         assert connection.execute(text('PRAGMA journal_mode')).scalar_one() == 'wal'

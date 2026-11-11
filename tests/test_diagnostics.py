@@ -10,7 +10,7 @@ def test_health_describes_configured_service_without_loading_model(context, monk
     data = client.get('/api/v1/health').json()
     assert data['status'] == 'ready'
     assert data['realtime']['state'] == 'not_loaded'
-    assert data['realtime']['model'] == 'RTMO-m'
+    assert data['realtime']['model'] == app.state.settings.model_path.stem
     assert data['realtime']['device'] is None
     assert data['capabilities']['personDetection'] is True
     assert data['capabilities']['poseEstimation'] is True

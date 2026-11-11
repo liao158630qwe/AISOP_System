@@ -1,9 +1,9 @@
 {
-  "version": "screw-video-v4.1-multiview",
+  "version": "screw-video-v4b-yolo26m",
   "name": "视频螺丝安装检测",
   "verification_mode": "visual-cumulative",
   "source_video": "VID_20261017_103101.mp4",
-  "model": "models/screw-head-v4-yolo26m.pt",
+  "model": "models/screw-head-v4b-yolo26m.pt",
   "reference": "models/screw-reference.jpg",
   "reference_size": [
     1920,
@@ -146,7 +146,7 @@
     "S09"
   ],
   "scope": "按当前帧匹配的标定视角逐位置累计视觉确认：原视角12处，新俯视视角11处。每个操作位置和预装件至少取得两帧一致证据；不要求安装先后顺序，不包含扭矩验证。",
-  "model_name": "YOLO26m 螺丝安装检测 v4.1 · S02专用",
+  "model_name": "YOLO26m 螺丝安装检测 v4b",
   "algorithm": "multi-view-local-v1",
   "detector_input": 320,
   "empty_threshold": 0.65,

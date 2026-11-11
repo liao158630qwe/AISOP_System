@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101317">
+<title>视频训练数据 · AI-SOP</title><link rel="icon" href="assets/favicon.svg"><link rel="stylesheet" href="workspace.css"><link rel="stylesheet" href="datasets.css">
+<script defer src="workspace-api.js"></script><script defer src="datasets.js"></script></head>
+<body>
+<header class="site-header"><a class="brand-link" href="/"><span class="brand-mark">SOP</span><span><strong>视觉检测平台</strong><small>视频采集 · 人工复核 · 冻结版本</small></span></a><nav class="header-nav" aria-label="工作区导航"><a href="/admin">模型与场景</a><a href="/datasets" aria-current="page">视频训练数据</a><a href="/training">工业训练</a></nav><button id="account-button" class="quiet">登录</button></header>
+<main class="workspace">
+<div class="page-heading"><div><div class="eyebrow">VIDEO TO TRAINING DATA</div><h1>从现场视频准备训练数据</h1><p>上传视频 → 后台抽帧 → 人工标注 → 审核并生成版本 → 进入训练</p></div><button id="refresh">↻ 刷新</button></div>
+<p id="error" class="notice error" role="alert" hidden></p>
+<section id="locked" class="empty"><h2>登录后准备视频数据</h2><p>与检测工作台共用管理账户。</p><button id="login" class="primary">登录管理后台</button></section>
+<div id="content" hidden>
+<div class="dataset-layout">
+<aside class="panel dataset-sidebar"><div class="section-title"><h2>数据集</h2><button id="new-dataset">＋ 新建</button></div><div id="dataset-list"></div><div class="pager"><button id="dataset-prev">上一页</button><span id="dataset-page"></span><button id="dataset-next">下一页</button></div><p class="hint">类别与采集工位在创建后固定。每个数据集最多 100 段视频、3000 张抽帧预算。</p></aside>
+<div id="empty" class="panel empty"><h2>先创建一个数据集</h2><p>目标检测用于定位孔位、螺丝等目标；图像分类用于判断整张图片的类别。动作时序需要单独的片段标注流程。</p></div>
+<div id="detail" hidden>
+<section class="panel"><div class="section-title"><div><h2 id="dataset-title"></h2><p id="dataset-meta" class="hint"></p></div><span id="sync" class="hint" role="status"></span></div><p id="freeze-notice" class="notice" hidden>正在冻结数据并审核，完成后可继续编辑。</p>
+<details id="upload-section" open><summary>01 上传采集视频</summary>
+<p class="hint">同一原视频、批次、工件周期必须留在同一集合。填写真实采集信息；只有一段视频时可以先标注，需补齐独立采集数据后才能进入训练。</p>
+<form id="upload-form"><fieldset id="upload-fields"><div class="form-grid">
+<label class="wide">视频文件<input id="video-file" type="file" accept=".mp4,.webm,.mov,.avi,.m4v" required><small id="upload-limits"></small></label>
+<label>所属集合<select id="split"><option value="train">训练集 · 用于学习</option><option value="val">验证集 · 用于选优</option><option value="test">测试集 · 独立验收</option></select></label>
+<label>最多抽取张数<input id="frame-budget" type="number" min="1" max="300" step="1" value="60" required></label>
+<label>真实生产批次<input id="batch" required maxlength="64" placeholder="例如：2026-11-06-A"></label><label>工件周期 / 连续采集段编号<input id="cycle" required maxlength="64" placeholder="同一工件或连续段使用同一编号"></label>
+<label>产品型号<input id="product" required maxlength="64"></label><label>摄像机位<input id="camera" required maxlength="64"></label>
+<label>实际光照<input id="lighting" required maxlength="32" placeholder="例如：正常顶光 / 逆光"></label><label>实际遮挡<input id="occlusion" required maxlength="32" placeholder="例如：无遮挡 / 手部局部遮挡"></label>
+</div><div class="actions"><button id="upload-button" class="primary">上传并后台抽帧</button><span id="upload-status" role="status"></span></div></fieldset></form>
+<div id="video-list" class="video-list"></div></details></section>
+<section class="panel"><div class="section-title"><div><h2>02 标注与复核</h2><p id="review-counts" class="hint"></p></div></div>
+<div class="filters"><label>复核状态<select id="review-filter"><option value="all">全部图片</option><option value="pending">待标注</option><option value="labelled">已标注</option><option value="negative">已确认空背景</option><option value="excluded">已排除</option></select></label><label>视频<select id="video-filter"><option value="">全部视频</option></select></label><p class="hint">点击图片标注。漏标目标会影响训练；模糊或无效图片请排除。</p></div>
+<div id="frames" class="frame-grid"></div><div class="pager"><button id="frame-prev">上一页</button><span id="frame-page"></span><button id="frame-next">下一页</button></div></section>
+<section class="panel"><div class="section-title"><h2>03 覆盖检查与训练版本</h2></div><form id="export-form"><fieldset id="export-fields"><div class="form-grid policy-grid"><label>每集合独立批次<input id="min-batches" type="number" min="2" max="1000" step="1" value="3" required></label><label>每集合每类图片<input id="min-classes" type="number" min="5" max="100000" step="1" value="20" required></label><label id="negative-policy">每集合真实空背景<input id="min-negatives" type="number" min="5" max="100000" step="1" value="20" required></label></div>
+<div id="coverage" class="table-scroll"></div><p id="coverage-gaps" class="hint"></p><p class="hint">抽帧数量不等于独立样本量。完全重复帧会跳过，近似帧仍需人工复核。审核还会检查集合间重复图片。默认每类精确率与召回率门槛为 95%，现场效果需另行验收。</p><div class="actions"><button id="export-button" class="primary">审核并生成训练版本</button><span id="export-status" role="status"></span></div></fieldset></form><div id="export-list"></div></section>
+</div></div></div>
+</main>
+<dialog id="create-dialog" class="narrow" aria-labelledby="create-title"><div class="dialog-heading"><h2 id="create-title">新建数据集</h2><button id="create-close" class="close-button" aria-label="关闭新建">×</button></div><form id="create-form" class="dialog-body"><label>数据集名称<input id="new-name" maxlength="100" required placeholder="例如：工位 1 孔位与螺丝"></label><label>采集工位<select id="new-station"><option value="station1">工位 1</option><option value="station2">工位 2</option><option value="station3">工位 3</option><option value="station4">工位 4</option><option value="station5">工位 5</option><option value="station6">工位 6</option></select></label><label>训练类型<select id="new-task"><option value="detect">目标检测 · 矩形框</option><option value="classify">图像分类 · 整图类别</option></select></label><label>类别名称 · 每行一个<textarea id="new-classes" required maxlength="4800" placeholder="孔位&#10;螺丝"></textarea></label><p class="hint">类别应具有明确可见的定义，创建后固定顺序。</p><p id="create-error" class="danger" role="alert"></p><div class="actions"><button class="primary" id="create-submit">创建数据集</button></div></form></dialog>
+<dialog id="annotator" aria-labelledby="annotation-title"><div class="dialog-heading"><div><h2 id="annotation-title">图片标注</h2><p id="annotation-meta" class="hint"></p></div><button id="annotation-close" class="close-button" aria-label="关闭标注">×</button></div><div class="annotation-body"><div class="canvas-wrap"><canvas id="canvas" aria-label="目标标注画布"></canvas><p id="image-status" role="status"></p></div><aside><label>目标类别<select id="annotation-class"></select></label><p id="annotation-help" class="hint"></p><ol id="box-list"></ol><p id="annotation-error" class="danger" role="alert"></p><div class="annotation-actions"><button id="save-label" class="primary">保存标注</button><button id="save-negative">确认没有任何目标</button><button id="save-excluded">排除此图片</button><button id="save-pending">重新设为待标注</button></div><p class="hint">图片属于固定集合。修改当前标注不会改变已生成的训练版本。</p></aside></div></dialog>
+</body></html>

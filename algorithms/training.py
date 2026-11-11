@@ -145,17 +145,17 @@ def audit_dataset(manifest_path, task):
                 class_samples={s: dict(counts[s]) for s in SPLITS}, isolation_keys=isolation)
 
 
-def load_recipe(path):
-    path = Path(path).resolve()
-    recipe = json.loads(path.read_text(encoding='utf-8'))
+def validate_recipe(recipe, base):
+    recipe = copy.deepcopy(recipe)
+    base = Path(base).resolve()
     if not isinstance(recipe.get('train', {}), dict):
         raise ValueError('train must be an object of hyperparameters')
     adapter = ADAPTERS.get(recipe.get('backend'))
     if adapter is None or recipe.get('task') not in adapter.tasks:
         raise ValueError('Unsupported backend/task; register an explicit training adapter')
-    recipe['dataset'] = str(_path(path.parent, recipe['dataset']))
+    recipe['dataset'] = str(_path(base, recipe['dataset']))
     if recipe.get('pretrained'):
-        recipe['pretrained'] = str(_path(path.parent, recipe['pretrained']))
+        recipe['pretrained'] = str(_path(base, recipe['pretrained']))
         if not Path(recipe['pretrained']).is_file():
             raise ValueError('pretrained must be an existing local model; no implicit downloads')
     recipe.setdefault('seed', 42)
@@ -163,6 +163,11 @@ def load_recipe(path):
         raise ValueError('seed must be a nonnegative integer')
     adapter.validate(recipe)
     return recipe, adapter
+
+
+def load_recipe(path):
+    path = Path(path).resolve()
+    return validate_recipe(json.loads(path.read_text(encoding='utf-8')), path.parent)
 
 
 def _checked_copy(source, destination, expected):
@@ -219,6 +224,8 @@ class UltralyticsAdapter:
                'auto_augment', 'erasing'}
 
     def validate(self, recipe):
+        from .gpu import cuda_index
+        cuda_index(recipe.get('train', {}).get('device'))
         if not recipe.get('pretrained'):
             raise ValueError('ultralytics requires pretrained local weights or a local model YAML')
         if Path(recipe['pretrained']).suffix.lower() not in ('.pt', '.yaml', '.yml'):
@@ -226,11 +233,20 @@ class UltralyticsAdapter:
         unknown = set(recipe.get('train', {})) - self.allowed
         if unknown:
             raise ValueError(f'Unsupported or runner-owned training parameters: {sorted(unknown)}')
+        evaluation = recipe.get('evaluation', {})
+        if not isinstance(evaluation, dict) or set(evaluation) - {'confidence'}:
+            raise ValueError('evaluation only supports confidence')
+        confidence = evaluation.get('confidence', .6)
+        if isinstance(confidence, bool) or not isinstance(confidence, (int, float)) or not .05 <= confidence <= .99:
+            raise ValueError('evaluation confidence must be in [0.05, 0.99]')
 
-    def train(self, recipe, audit, output):
+    def train(self, recipe, audit, output, progress=None):
         from ultralytics import YOLO
         data = prepare_yolo(audit, output / 'dataset', recipe['task'], ('train', 'val'))
         model = YOLO(recipe['pretrained'], task=recipe['task'])
+        if progress:
+            model.add_callback('on_train_epoch_end', lambda trainer: progress(
+                (trainer.epoch + 1) / trainer.epochs, f'已完成 {trainer.epoch + 1}/{trainer.epochs} 轮'))
         if model.task != recipe['task']:
             raise ValueError('pretrained model task does not match recipe')
         parameters = dict(epochs=100, imgsz=640, batch=8, workers=0, patience=20, amp=False,
@@ -238,6 +254,8 @@ class UltralyticsAdapter:
         if recipe['task'] == 'classify':
             parameters.update(auto_augment=None, erasing=0.0)
         parameters.update(recipe.get('train', {}))
+        from .gpu import training_device
+        parameters['device'] = training_device(parameters.get('device'))
         model.train(data=data, project=str(output), name='fit', exist_ok=False,
                     seed=recipe['seed'], deterministic=True, val=True, plots=False, **parameters)
         best = Path(model.trainer.best)
@@ -268,12 +286,34 @@ class UltralyticsAdapter:
             # this process never calls fit/train and never sees training images.
             shutil.copytree(Path(data) / 'test', Path(data) / 'train')
         parameters = recipe.get('train', {})
+        from .gpu import training_device
+        confidence = recipe.get('evaluation', {}).get('confidence', .6)
         result = YOLO(str(model_path)).val(data=data, split='test',
             imgsz=parameters.get('imgsz', 640), batch=parameters.get('batch', 8),
-            device=parameters.get('device'), workers=0, project=str(output), name='metrics',
-            plots=False, verbose=False)
+            device=training_device(parameters.get('device')), workers=0, project=str(output), name='metrics',
+            plots=True, verbose=False, conf=confidence)
         return dict(metrics=_metrics(result), speed_ms_per_image=dict(result.speed),
+                    per_class=confusion_metrics(result.confusion_matrix.matrix, audit['dataset']['names']),
+                    operating_point=dict(confidence=confidence if recipe['task'] != 'classify' else None,
+                                         match_iou=.45 if recipe['task'] != 'classify' else None,
+                                         scope='top1' if recipe['task'] == 'classify' else 'bounding-box'),
                     timing_scope='library validation throughput; not batch=1 p95 or end-to-end latency')
+
+
+def confusion_metrics(matrix, names):
+    """Rows are predictions, columns are truth; last detection row/column is background."""
+    import numpy as np
+    matrix = np.asarray(matrix)
+    n = len(names)
+    if matrix.shape not in ((n, n), (n + 1, n + 1)) or not np.isfinite(matrix).all() or (matrix < 0).any():
+        raise ValueError('Invalid confusion matrix')
+    rows = []
+    for i, name in enumerate(names):
+        tp, predicted, support = float(matrix[i, i]), float(matrix[i, :].sum()), float(matrix[:, i].sum())
+        rows.append(dict(id=i, name=name, precision=tp / predicted if predicted else 0.0,
+                         recall=tp / support if support else 0.0, support=int(support),
+                         tp=int(tp), fp=int(predicted - tp), fn=int(support - tp)))
+    return rows
 
 
 def _features(audit, split):
@@ -307,8 +347,10 @@ class FeatureClassifierAdapter:
 
     def validate(self, recipe):
         parameters = recipe.get('train', {})
-        if set(parameters) - {'C', 'max_iter'}:
-            raise ValueError('feature-classify supports C and max_iter')
+        if set(parameters) - {'C', 'max_iter', 'device'}:
+            raise ValueError('feature-classify supports C, max_iter and CUDA device')
+        from .gpu import cuda_index
+        cuda_index(parameters.get('device'))
         if not math.isfinite(parameters.get('C', 1.0)) or parameters.get('C', 1.0) <= 0:
             raise ValueError('C must be finite and positive')
         if not _integer(parameters.get('max_iter', 1000), 1):
@@ -316,22 +358,22 @@ class FeatureClassifierAdapter:
         if not recipe.get('feature_schema'):
             raise ValueError('feature_schema must identify the extractor version and feature order')
 
-    def train(self, recipe, audit, output):
+    def train(self, recipe, audit, output, progress=None):
         import joblib
-        from sklearn.pipeline import make_pipeline
-        from sklearn.preprocessing import StandardScaler
-        from sklearn.linear_model import LogisticRegression
+        from .gpu import training_device
+        from .gpu_classifier import CudaLogisticClassifier
         x, y = _features(audit, 'train')
         vx, vy = _features(audit, 'val')
         # No hidden random inner CV or SVC probability calibration across videos.
-        model = make_pipeline(StandardScaler(), LogisticRegression(class_weight='balanced',
-            random_state=recipe['seed'], C=recipe.get('train', {}).get('C', 1.0),
-            max_iter=recipe.get('train', {}).get('max_iter', 1000)))
+        model = CudaLogisticClassifier(C=recipe.get('train', {}).get('C', 1.0),
+            max_iter=recipe.get('train', {}).get('max_iter', 1000),
+            device=training_device(recipe.get('train', {}).get('device')))
         model.fit(x, y)
         path = output / 'model.joblib'
         joblib.dump(dict(model=model, names=audit['dataset']['names'],
                          feature_schema=recipe['feature_schema'], feature_dim=x.shape[1]), path)
-        return dict(model=str(path), validation=_classification_metrics(model, vx, vy, audit['dataset']['names']),
+        return dict(model=str(path), execution=dict(device=model.device, backend='torch', cpuFallback=False),
+                    validation=_classification_metrics(model, vx, vy, audit['dataset']['names']),
                     feature_dim=x.shape[1], feature_schema=recipe['feature_schema'])
 
     def evaluate(self, recipe, audit, output, model_path):
@@ -340,6 +382,9 @@ class FeatureClassifierAdapter:
         bundle = joblib.load(model_path)
         x, y = _features(audit, 'test')
         model = bundle['model']
+        from .gpu_classifier import CudaLogisticClassifier
+        if not isinstance(model, CudaLogisticClassifier):
+            raise ValueError('Legacy CPU feature model requires GPU retraining; CPU evaluation is forbidden')
         if bundle['feature_schema'] != recipe['feature_schema'] or x.shape[1] != bundle['feature_dim']:
             raise ValueError('Feature contract mismatch')
         for _ in range(5):
@@ -352,13 +397,14 @@ class FeatureClassifierAdapter:
         return dict(metrics=_classification_metrics(model, x, y, audit['dataset']['names']),
             latency=dict(p50_ms=float(np.percentile(timings, 50)), p95_ms=float(np.percentile(timings, 95)),
                          samples=len(timings), batch=1, warmup=5),
-            timing_scope='CPU feature classifier only; excludes feature extraction, capture and network')
+            timing_scope='CUDA feature classifier including result transfer; excludes feature extraction, capture and network')
 
 
-ADAPTERS = {'ultralytics': UltralyticsAdapter(), 'sklearn': FeatureClassifierAdapter()}
+# The legacy recipe key is retained for stored jobs; both aliases run CUDA.
+ADAPTERS = {'ultralytics': UltralyticsAdapter(), 'torch': FeatureClassifierAdapter(), 'sklearn': FeatureClassifierAdapter()}
 
 
-def train_model(recipe_path, output):
+def train_model(recipe_path, output, progress=None):
     recipe, adapter = load_recipe(recipe_path)
     audit = audit_dataset(recipe['dataset'], recipe['task'])
     output = Path(output).resolve()
@@ -367,7 +413,7 @@ def train_model(recipe_path, output):
     write_json(output / 'dataset-audit.json', audit)
     started = time.perf_counter()
     initial_hash = file_hash(recipe['pretrained']) if recipe.get('pretrained') else None
-    result = adapter.train(recipe, audit, output)
+    result = adapter.train(recipe, audit, output, **({'progress': progress} if progress else {}))
     if initial_hash is not None and file_hash(recipe['pretrained']) != initial_hash:
         raise ValueError('Pretrained weights changed during training')
     dependencies = {}
@@ -398,7 +444,8 @@ def evaluate_model(run, output):
         raise ValueError('Frozen dataset or trained model changed; create a new run')
     output.mkdir(parents=True, exist_ok=False)
     result = ADAPTERS[recipe['backend']].evaluate(recipe, audit, output, card['model'])
-    result.update(split='test', model_sha256=card['model_sha256'], dataset_sha256=audit['sha256'])
+    result.update(split='test', class_names=audit['dataset']['names'],
+                  model_sha256=card['model_sha256'], dataset_sha256=audit['sha256'])
     write_json(output / 'test-evaluation.json', result)
     return result
 

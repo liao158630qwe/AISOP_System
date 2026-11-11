@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101317">
+  <title>设置 · 视觉检测平台</title>
+  <link rel="icon" href="assets/favicon.svg"><link rel="stylesheet" href="workspace.css"><link rel="stylesheet" href="inspection-trigger.css">
+  <link rel="stylesheet" href="equipment-settings.css">
+  <script defer src="inspection-trigger.js"></script><script defer src="settings.js"></script>
+  <script defer src="workspace-api.js"></script><script defer src="equipment-settings.js"></script>
+</head>
+<body class="settings-page">
+  <header class="site-header">
+    <a class="brand-link" href="/"><span class="brand-mark">SOP</span><span><strong>视觉检测平台</strong><small>检测工作台设置</small></span></a>
+    <nav class="header-nav" aria-label="工作区导航"><a href="/">检测工作台</a><a href="/admin">模型与任务管理</a><a href="/settings" aria-current="page">设置</a></nav>
+  </header>
+  <main class="workspace settings-workspace">
+    <div class="page-heading"><div><div class="eyebrow">WORKSTATION SETTINGS</div><h1>设置</h1><p>配置检测按键、声光报警与六工位设备部署。</p></div><span class="settings-save-note"><i aria-hidden="true"></i>按键与点位存本机 · 设备配置存服务器</span></div>
+    <section class="panel settings-card settings-section" aria-labelledby="trigger-title" data-collapsed="true">
+      <div class="settings-card-heading"><span class="settings-number">01</span><div class="settings-heading-copy"><h2 id="trigger-title">检测触发</h2><p>通过实体按键开始检测，按 F9 停止当前任务。</p></div><span class="settings-scope">本机浏览器</span><button type="button" class="settings-collapse-toggle" aria-expanded="false" aria-controls="trigger-section-content" aria-label="展开检测触发"><span>展开</span><i aria-hidden="true"></i></button></div>
+      <div id="trigger-section-content" hidden>
+      <div class="settings-layout">
+        <div class="settings-trigger-content">
+        <div id="trigger-settings"></div>
+        <div class="settings-footnote">设置会同步到此浏览器已打开的检测工作台。此页面仅配置按键，按键录入不会启动检测。</div>
+        </div>
+      <aside class="panel settings-guide" aria-labelledby="guide-title">
+        <h2 id="guide-title">现场使用</h2>
+        <ol><li><strong>连接按钮或脚踏开关</strong><p>设备需发送单个键盘按键的按下和松开信号。</p></li><li><strong>设置开始键</strong><p>键盘与 USB 设备使用同一个键位，松开后才能再次触发。</p></li><li><strong>返回检测工作台</strong><p>登录并准备好当前任务，保持检测页面在前台，按键即可开始。</p></li></ol>
+        <div class="settings-note"><strong>避免误触发</strong><p>长按、连续按动和检测中的重复启动会被拦截。输入文字时仅功能键生效；弹窗打开时暂停开始键，F9 仍可停止当前任务。</p></div>
+      </aside>
+      </div>
+      </div>
+    </section>
+    <section class="panel settings-card settings-section modbus-settings" id="modbus-settings" aria-labelledby="modbus-title" data-collapsed="true">
+      <div class="settings-card-heading"><span class="settings-number">02</span><div class="settings-heading-copy"><h2 id="modbus-title">Modbus 按键与三色报警灯</h2><p>为六个工位分别准备设备连接、输入点位和声光输出规则。</p></div><span class="settings-pending">配置草稿 · 未接入设备</span><button type="button" class="settings-collapse-toggle" aria-expanded="false" aria-controls="modbus-section-content" aria-label="展开Modbus 按键与三色报警灯"><span>展开</span><i aria-hidden="true"></i></button></div>
+      <div id="modbus-section-content" hidden>
+      <div class="modbus-content">
+        <div class="modbus-station-bar"><label for="modbus-station">配置工位<select id="modbus-station"><option value="station-1">工位1</option><option value="station-2">工位2</option><option value="station-3">工位3</option><option value="station-4">工位4</option><option value="station-5">工位5</option><option value="station-6">工位6</option></select></label><p>模块和点位尚未确定，可先留空。草稿仅保存配置，尚未连接或读写现场设备。</p></div>
+        <form id="modbus-form">
+          <div class="modbus-columns">
+            <section class="modbus-group" aria-labelledby="modbus-connection-title">
+              <h3 id="modbus-connection-title">连接与控制模块</h3><p class="modbus-hint">填写连接按键和报警灯的 I/O 模块或 PLC 信息。</p>
+              <div class="modbus-fields">
+                <label class="modbus-wide">模块 / PLC 型号<input name="moduleModel" maxlength="120" placeholder="尚未确定"></label>
+                <label>通信方式<select name="transport" id="modbus-transport"><option value="">待确定</option><option value="tcp">Modbus TCP</option><option value="rtu">Modbus RTU / RS-485</option></select></label>
+                <label>设备站号<input name="unitId" type="number" min="1" max="247" step="1" placeholder="待确定"></label>
+              </div>
+              <fieldset class="modbus-fields" id="modbus-tcp" hidden disabled><legend>TCP 连接</legend><label>IP 地址 / 主机名<input name="host" maxlength="253" placeholder="设备或网关地址"></label><label>端口<input name="port" type="number" min="1" max="65535" step="1" placeholder="按模块说明填写"></label></fieldset>
+              <fieldset class="modbus-fields" id="modbus-rtu" hidden disabled><legend>串口连接</legend><label>串口<input name="serialPort" maxlength="120" placeholder="例如 COM3"></label><label>波特率<select name="baudRate"><option value="">待确定</option><option>4800</option><option>9600</option><option>19200</option><option>38400</option><option>57600</option><option>115200</option></select></label><label>校验位<select name="parity"><option value="">待确定</option><option value="N">无校验</option><option value="E">偶校验</option><option value="O">奇校验</option></select></label><label>数据位<select name="dataBits"><option value="">待确定</option><option>8</option><option>7</option></select></label><label>停止位<select name="stopBits"><option value="">待确定</option><option>1</option><option>2</option></select></label></fieldset>
+            </section>
+            <section class="modbus-group" aria-labelledby="modbus-lamp-title">
+              <h3 id="modbus-lamp-title">三色声光报警指示灯</h3><p class="modbus-hint">设备信息按提供的规格预填，完整型号和接线待现场确认。</p>
+              <div class="modbus-fields">
+                <label>品牌<input name="lampBrand" maxlength="60"></label><label>型号<input name="lampModel" maxlength="120"></label>
+                <label>标称电压<input name="lampVoltage" maxlength="40"></label><label>供电类型<select name="supplyType"><option value="">待核对铭牌</option><option value="dc">DC 直流</option><option value="ac">AC 交流</option></select></label>
+                <label class="modbus-wide">蜂鸣器控制<select name="buzzerControl"><option value="">待确认能否独立控制</option><option value="independent">独立输出控制</option><option value="linked">随灯光联动</option></select></label>
+              </div>
+              <p class="modbus-equipment-note">红 / 黄 / 绿三色灯 + 声音报警。Modbus 接口、输出方式和蜂鸣器是否独立，需按实际模块及灯具资料确认。</p>
+            </section>
+          </div>
+          <section class="modbus-group modbus-mapping" aria-labelledby="modbus-input-title"><div class="modbus-group-heading"><h3 id="modbus-input-title">按键输入点位</h3><span>开始 / 停止两个动作</span></div><p class="modbus-hint">按下边沿触发一次，松开后可再次触发；语义对应 F8 开始和 F9 停止。连接后不补发旧按键事件。</p><div id="modbus-inputs"></div></section>
+          <section class="modbus-group modbus-mapping" aria-labelledby="modbus-output-title"><div class="modbus-group-heading"><h3 id="modbus-output-title">灯光与蜂鸣器输出点位</h3><span>各通道分别配置</span></div><p class="modbus-hint">填写模块点位表中的协议地址；寄存器按位控制时补充位号。空白表示待确定，蜂鸣器点位仅适用于独立控制。</p><div id="modbus-outputs"></div><p class="modbus-hint">地址使用 0 起始偏移；厂商编号需先按点位表换算。有效电平和输出接线应在接入前核对。</p></section>
+          <div class="modbus-columns modbus-rule-columns">
+            <section class="modbus-group" aria-labelledby="modbus-rules-title"><h3 id="modbus-rules-title">灯光联动规则</h3><p class="modbus-hint">以下为可修改的初始草稿规则。</p><div id="modbus-rules"></div></section>
+            <section class="modbus-group modbus-preview" aria-labelledby="modbus-preview-title">
+              <div class="modbus-group-heading"><h3 id="modbus-preview-title">灯态预览</h3><span>仅页面演示</span></div>
+              <label>预览检测状态<select id="modbus-preview-state"><option value="idle">待检测 / 已停止</option><option value="running">检测中</option><option value="pass">检测合格</option><option value="fail">检测不合格</option><option value="review">待复核 / 检测异常</option></select></label>
+              <div class="modbus-preview-display"><div class="signal-tower" aria-hidden="true"><span data-lamp="red"></span><span data-lamp="yellow"></span><span data-lamp="green"></span><i></i></div><div><strong id="modbus-preview-label"></strong><p id="modbus-preview-summary" role="status" aria-live="polite"></p><span class="modbus-buzzer" id="modbus-preview-buzzer"></span></div></div>
+              <div class="modbus-preview-actions"><button type="button" data-modbus-preview="running">预览按下开始</button><button type="button" data-modbus-preview="idle">预览按下停止</button></div>
+              <p class="modbus-hint">预览不启动检测、不点亮实物、不播放声音。实际通信状态与断线后的灯态，待 I/O 模块确定后配置并联调。</p>
+            </section>
+          </div>
+          <div class="modbus-actions"><p id="modbus-save-status" role="status" aria-live="polite"></p><button type="submit">保存本工位草稿</button><button type="button" id="modbus-export">导出六工位配置草稿</button></div>
+        </form>
+      </div>
+      <div class="settings-footnote">后续接入需补齐：I/O 模块或 PLC 型号、通信参数、按键与灯光点位表、灯具完整型号及接线方式。当前草稿保存在此浏览器，可导出供现场核对。</div>
+      </div>
+    </section>
+    <section class="panel settings-card settings-section equipment-settings" id="equipment-settings" aria-labelledby="equipment-title" data-collapsed="true">
+      <div class="settings-card-heading"><span class="settings-number">03</span><div class="settings-heading-copy"><h2 id="equipment-title">设备与部署配置</h2><p>6 个工位 · 6 路视频 · 6 台终端，集中式 AI 推理与大屏看板。</p></div><span class="settings-pending">服务器保存 · 待现场联调</span><button type="button" class="settings-collapse-toggle" aria-expanded="false" aria-controls="equipment-section-content" aria-label="展开设备与部署配置"><span>展开</span><i aria-hidden="true"></i></button></div>
+      <div id="equipment-section-content" hidden>
+        <div class="equipment-content">
+          <div class="equipment-toolbar"><p id="equipment-status" role="status" aria-live="polite">展开后读取服务器配置。</p><button type="button" id="equipment-load">登录 / 读取配置</button></div>
+          <form id="equipment-form" hidden novalidate>
+            <div class="equipment-overview"><div><strong>6</strong><span>生产工位</span></div><div><strong>6</strong><span>视频通道</span></div><div><strong>6</strong><span>工位终端</span></div><div><strong>1</strong><span>集中大屏</span></div></div>
+            <p class="equipment-hint">按设备清单预填。“录像存储与大屏”中可查看当前录像位置，填写独立 NVR 的硬盘与 30 天存证配置。空白项待现场补齐；保存后，同一管理账户可在其他终端读取。设备接入状态以实际联调为准。</p>
+            <div class="equipment-tabs" role="tablist" aria-label="部署配置类别"></div>
+            <fieldset id="equipment-fields"><legend class="equipment-sr-only">设备部署参数</legend><div id="equipment-panels"></div></fieldset>
+            <div class="equipment-actions"><p id="equipment-save-status" role="status" aria-live="polite"></p><button type="button" id="equipment-export">导出当前配置</button><button type="submit" id="equipment-save">保存到服务器</button></div>
+          </form>
+        </div>
+        <div class="settings-footnote">终端授权与检测任务请在 <a href="/terminals">工位终端管理</a> 配置；灯光与按键控制点位在本页「Modbus 按键与三色报警灯」中填写。</div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

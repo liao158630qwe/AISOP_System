@@ -1,4 +1,4 @@
-"""Independent, calibrated sticker inspection and observed installation order."""
+"""Calibrated sticker appearance coverage, with frozen legacy order support."""
 from collections import Counter
 from datetime import datetime,timezone
 import csv
@@ -10,7 +10,7 @@ import cv2
 import numpy as np
 from .video import AnalysisError,file_hash,probe,validate_options
 from .asset_snapshot import AssetSnapshotCache
-from .screws import final_observations
+from .screws import ScrewObservationHistory,final_observations
 from .sticker_sequence import StickerSequence,compliance as appearance_compliance
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -19,17 +19,77 @@ LABELS={'PRESENT':'已贴','EMPTY':'明确未贴','WRONG':'形状不符','UNKNOW
         'ACTION_DONE':'动作已确认','NOT_OBSERVED':'未观察到动作','CONTACT':'贴放/按压候选','CLEAR':'当前无动作'}
 
 
+class StickerVisualCoverage:
+    """Confirm every configured site in one cycle without requiring placement order."""
+
+    def __init__(self,config):
+        self.targets=config['targets']
+        settings=config.get('confirmation',{})
+        self.history=ScrewObservationHistory(self.targets,
+            confirmation_frames=settings.get('frames',config.get('sequence',{}).get('confirmation_frames',3)),
+            max_gap=settings.get('max_gap_seconds',2.0),max_window=settings.get('window_seconds',4.0))
+
+    def update(self,time,inspection):
+        observed={t['id']:t for t in inspection.get('targets',[])}
+        # A partial frame must never reduce the configured number of sites.
+        targets=[dict(t,**{key:observed.get(t['id'],{}).get(key,default)
+            for key,default in (('state','UNKNOWN'),('score',None),('bbox',None))}) for t in self.targets]
+        self.history.update(time,dict(inspection,targets=targets))
+        return self.snapshot()
+
+    def snapshot(self):
+        targets=self.history.aggregate()
+        completed=[t['id'] for t in targets if t['state']=='PRESENT']
+        pending=[t['id'] for t in targets if t['state']!='PRESENT']
+        wrong=[t['id'] for t in targets if t['state']=='WRONG']
+        empty=[t['id'] for t in targets if t['state']=='EMPTY']
+        status='FAIL' if wrong else 'PASS' if targets and not pending else 'PENDING'
+        reason=('贴条形状不符：'+', '.join(wrong)) if wrong else (
+            f'全部 {len(targets)} 处贴条位置均已取得累计视觉确认' if status=='PASS' else
+            f'已确认 {len(completed)}/{len(targets)} 处贴条位置；待确认：'+', '.join(pending))
+        events=[dict(id=t['id'],type='CONFIRMED',state=t['state'],time=t['confirmedAt'],
+            confirmedAt=t['confirmedAt'],score=t['score']) for t in targets if t['historyConfirmed']]
+        events.sort(key=lambda event:(event['time'],event['id']))
+        return dict(verificationMode='visual-cumulative',configured=bool(targets),status=status,
+            reason=reason,stage='位置确认齐全' if status=='PASS' else '逐位置外观确认',
+            order=[t['id'] for t in targets],completed=completed,pending=pending,
+            current=pending[0] if pending else None,empty=empty,wrong=wrong,events=events,violations=[],
+            positionsExpected=len(targets),positionsConfirmed=len(completed),
+            operationsExpected=len(targets),operationsCompleted=len(completed),
+            preassembled={},preassembledExpected=0,preassembledConfirmed=0,
+            trianglesExpected=sum(t.get('expected')=='triangle' for t in targets),
+            trianglesObserved=sum(t.get('expected')=='triangle' and t['state']=='PRESENT' for t in targets),
+            rectanglesExpected=sum(t.get('expected')=='rectangle' for t in targets),
+            rectanglesObserved=sum(t.get('expected')=='rectangle' and t['state']=='PRESENT' for t in targets))
+
+
 def create_sequence(config):
     if config.get('mode')=='action':
         from .sticker_actions import StickerActionSequence
         return StickerActionSequence(config['targets'],config['action'])
+    if config.get('verification_mode')=='visual-cumulative':
+        return StickerVisualCoverage(config)
     return StickerSequence(config['targets'],confirmation_frames=config.get('sequence',{}).get('confirmation_frames',2))
 
 
-def summarize(frames,config,sequence,final=False):
+def create_history(config):
+    """Retain confirmed appearance for one cycle, independently of frame caches."""
+    return None if config.get('mode')=='action' or config.get('verification_mode')=='visual-cumulative' else ScrewObservationHistory(config['targets'])
+
+
+def summarize(frames,config,sequence,final=False,*,history=None):
     if config.get('mode')=='action':
         events=sequence.snapshot()['events']
         return sequence.aggregate(final),max((e['confirmedAt'] for e in events),default=None)
+    if isinstance(sequence,StickerVisualCoverage):
+        targets=sequence.history.aggregate(final=final)
+        reason=sequence.snapshot()['reason']
+        for target in targets:
+            target.update(sequenceReason=reason,sequenceObserved=target['state'],
+                sequenceState='COMPLETED' if target['state']=='PRESENT' else 'PENDING' if target['state']=='UNKNOWN' else target['state'])
+        return targets,sequence.history.assessment_time
+    if history is not None:
+        return history.aggregate(final=final),history.assessment_time
     return final_observations(frames,config['targets'])
 
 
@@ -37,7 +97,26 @@ def compliance(targets,sequence,final=False):
     if sequence.get('mode')=='action':
         from .sticker_actions import action_compliance
         return action_compliance(targets,sequence,final)
-    return appearance_compliance(targets,sequence)
+    if sequence.get('verificationMode')=='visual-cumulative':
+        empty=[t['id'] for t in targets if t['state']=='EMPTY']
+        wrong=[t['id'] for t in targets if t['state']=='WRONG']
+        unknown=[t['id'] for t in targets if t['state'] not in ('PRESENT','EMPTY','WRONG')]
+        complete=(bool(targets) and not (empty or wrong or unknown)
+            and sequence.get('configured') is True and sequence.get('status')=='PASS'
+            and len(targets)==sequence.get('positionsExpected')==sequence.get('positionsConfirmed'))
+        status='FAIL' if wrong or (final and empty) else 'PASS' if complete else 'REVIEW'
+        reason=('贴条形状不符：'+', '.join(wrong)) if wrong else (
+            '检测结束时仍有明确未贴位置：'+', '.join(empty)) if final and empty else sequence['reason']
+        return dict(status=status,label={'PASS':'合规','FAIL':'不合规','REVIEW':'无法判定' if final else '检测中'}[status],
+            reason=reason,scope=f'{len(targets)}处标定位置贴条形状与存在状态的累计视觉确认；不核验顺序或胶粘强度',
+            verificationMode='visual-cumulative',empty=empty,wrong=wrong,unknown=unknown)
+    decision=appearance_compliance(targets,sequence)
+    # Bare sites are expected while placement is in progress. The browser ends
+    # a cycle on FAIL, so missing patches become a defect only at finalization.
+    if not final and decision['empty'] and not decision['wrong'] and sequence['status']!='FAIL':
+        decision.update(status='REVIEW',label='检测中',
+            reason='当前仍有未贴位置，继续采集贴前至贴后证据；结束检测时再判定是否漏贴')
+    return decision
 
 
 def StickerDetector(frozen=None):
@@ -54,6 +133,7 @@ _snapshot_cache=AssetSnapshotCache()
 def _asset_names(config):
     names=[config['model'],config['reference']]
     if config.get('material_model'):names.append(config['material_model'])
+    if config.get('mode')=='action':names.append('models/disk-depth-v1.pth')
     return names
 
 
@@ -93,12 +173,15 @@ class AppearanceStickerDetector:
             a,b,c,d=[round(v*self.scale) for v in roi];mask[b:d,a:c]=255
         self.keys,self.descriptors=self.sift.detectAndCompute(cv2.cvtColor(small,cv2.COLOR_BGR2GRAY),mask)
         self.matcher=cv2.BFMatcher();self.model=YOLO(str(ROOT/self.config['model']))
-        self.device=0 if torch.cuda.is_available() else 'cpu'
+        from .gpu import require_cuda
+        self.device=require_cuda()
         self.material_models={}
         if self.config.get('material_model'):
             import joblib
-            self.material_models=joblib.load(ROOT/self.config['material_model'])['sites']
+            from .gpu_classifier import CudaSVC
+            self.material_models={key:CudaSVC(model) for key,model in joblib.load(ROOT/self.config['material_model'])['sites'].items()}
         gray=cv2.cvtColor(self.reference,cv2.COLOR_BGR2GRAY)
+        self.reference_gray=gray
         self.site_masks={}
         for target in self.config['targets']:
             box=target.get('reference_bbox')
@@ -107,7 +190,13 @@ class AppearanceStickerDetector:
                 self.site_masks[target['id']]=cv2.erode(np.uint8(gray[b:d,a:c]<70),np.ones((5,5),np.uint8)).astype(bool)
 
     def inspect(self,image):
+        from .cuda_vision import CudaFrame
         started=time.perf_counter()
+        if isinstance(image,CudaFrame):
+            # OpenCV expects interleaved HWC. A planar NumPy view triggers a
+            # full-frame copy inside every resize/warp/color conversion.
+            image=image.rgb.flip(0).permute(1,2,0).contiguous().cpu().numpy()
+        image=np.ascontiguousarray(image)
         targets=[dict(**t,state='UNKNOWN',score=None,bbox=None) for t in self.config['targets']]
         result=dict(registered=False,targets=targets,inliers=0,reason='当前帧未可靠定位贴条工件')
         def finish():
@@ -140,12 +229,20 @@ class AppearanceStickerDetector:
         # first avoids a half-pixel/aliasing difference on dark foam textures.
         normalized=cv2.resize(image,(self.width,self.height))
         if self.config.get('component_anchors'):
-            aligned=cv2.warpPerspective(normalized,inv,(self.width,self.height))
-            gray=cv2.cvtColor(aligned,cv2.COLOR_BGR2GRAY);reference_gray=cv2.cvtColor(self.reference,cv2.COLOR_BGR2GRAY)
             scores=[]
             margin=self.config.get('anchor_search_radius',5)
             for a,b,c,d in self.config['component_anchors']:
-                score=cv2.minMaxLoc(cv2.matchTemplate(gray[b-margin:d+margin,a-margin:c+margin],reference_gray[b:d,a:c],cv2.TM_CCOEFF_NORMED))[1]
+                # Warp only the searched anchor, preserving the existing
+                # resize -> color warp -> grayscale preprocessing order.
+                x0,x1,_=slice(a-margin,c+margin).indices(self.width)
+                y0,y1,_=slice(b-margin,d+margin).indices(self.height)
+                move=np.array([[1.,0.,-x0],[0.,1.,-y0],[0.,0.,1.]])
+                if x1-x0<c-a or y1-y0<d-b:
+                    scores.append(-1.)
+                    continue
+                patch=cv2.warpPerspective(normalized,move@inv,(x1-x0,y1-y0))
+                gray=cv2.cvtColor(patch,cv2.COLOR_BGR2GRAY)
+                score=cv2.minMaxLoc(cv2.matchTemplate(gray,self.reference_gray[b:d,a:c],cv2.TM_CCOEFF_NORMED))[1]
                 scores.append(float(score))
             result['componentScores']=[round(s,4) for s in scores]
             threshold=self.config.get('component_threshold',.5)
@@ -176,11 +273,22 @@ class AppearanceStickerDetector:
             quad=cv2.perspectiveTransform(np.float32([[[left,top],[left+side,top],[left+side,top+side],[left,top+side]]]),H)[0]
             target['searchRoi']=[float(quad[:,0].min()/self.width),float(quad[:,1].min()/self.height),
                                  float(quad[:,0].max()/self.width),float(quad[:,1].max()/self.height)]
-        predictions=self.model.predict(crops,imgsz=self.config.get('detector_input',320),
-            conf=self.config.get('threshold',.55),device=self.device,verbose=False,max_det=16)
+        # Occluded sites cannot contribute evidence below. Avoid spending GPU
+        # inference on those crops, retaining each result's original owner.
+        visible=[i for i,valid in enumerate(observable) if valid]
+        predictions=self.model.predict([crops[i] for i in visible],imgsz=self.config.get('detector_input',320),
+            conf=self.config.get('threshold',.55),device=self.device,verbose=False,max_det=16) if visible else []
+        if len(predictions)!=len(visible):
+            raise ValueError('贴条模型返回数量与采样区域不一致')
         candidates=[]
-        for owner,(pred,(left,top,side)) in enumerate(zip(predictions,regions)):
-            for raw,cls,score in zip(pred.boxes.xyxy.cpu().tolist(),pred.boxes.cls.cpu().tolist(),pred.boxes.conf.cpu().tolist()):
+        if predictions:
+            import torch
+            lengths=[len(p.boxes.data) for p in predictions]
+            rows=torch.cat([p.boxes.data for p in predictions]).cpu().split(lengths)
+        else:rows=[]
+        for owner,detections in zip(visible,rows):
+            left,top,side=regions[owner]
+            for *raw,score,cls in detections.tolist():
                 box=[raw[0]+left,raw[1]+top,raw[2]+left,raw[3]+top]
                 center=[(box[0]+box[2])/2,(box[1]+box[3])/2]
                 candidates.append((int(cls),float(score),box,center,owner))
@@ -226,7 +334,7 @@ def analyze(video,model_path,out,*,run_id,options=None,progress=None,max_seconds
     detector=StickerDetector(frozen);sequence=create_sequence(frozen['config'])
     meta=probe(video,max_seconds)
     start,end,sample_fps,_,_=validate_options(meta,options.get('start',0),options.get('end'),options.get('sample_fps',4),None,640)
-    if sample_fps<2:raise AnalysisError('INVALID_SAMPLE_FPS','贴条工序顺序检测至少需要2FPS采样')
+    if sample_fps<2:raise AnalysisError('INVALID_SAMPLE_FPS','贴条连续视觉确认至少需要2FPS采样')
     if options.get('crop'):raise AnalysisError('INVALID_STATION_CROP','贴条检测需要完整工位画面进行定位')
     from .person_detection import load_detector,predict_people,snapshot as person_snapshot,verify as verify_person
     from .tracking import PoseTracker
@@ -282,7 +390,12 @@ def analyze(video,model_path,out,*,run_id,options=None,progress=None,max_seconds
         limitations=['正确视频开发训练；真实漏贴/错序成品检出率尚未独立验证。','遮挡和未检出保留未知，不等同未贴。',
             '每处需要真实裸位→已贴视觉证据，按观察时间核对先两个三角后方形；不使用视频时间脚本。',
             '从成品开始或遮挡期间贴好时不能证明工序顺序；不测量胶粘强度。'])
-    if frozen['config'].get('mode')=='action':
+    if isinstance(sequence,StickerVisualCoverage):
+        data['limitations']=['同机位正确示范视频开发训练；真实漏贴、错形成品检出率尚未独立验证。',
+            '按本轮所有标定位置的多帧外观确认判定；不要求贴前基线或三角、方形的操作先后。',
+            '遮挡、未检出和定位失败保留未知或已有确认；新轮次清空历史。',
+            '确认贴片存在及形状，不测量胶粘强度；明确相反证据会更新位置状态。']
+    elif frozen['config'].get('mode')=='action':
         data['limitations']=['按用户要求以贴放/按压动作计完成，不核验贴片实际存在、形状、外观或粘附。',
             '动作模型在当前单条视频上开发训练；同源帧核对不代表独立工位准确率。',
             '需要同工位定位模板及明确新轮次；离开、接触和运动证据不足时不计动作。',
@@ -296,6 +409,7 @@ def analyze(video,model_path,out,*,run_id,options=None,progress=None,max_seconds
     if evidence is not None:cv2.imwrite(str(out/'evidence-1.jpg'),evidence)
     rows=''.join(f'<tr><td>{html.escape(t["id"])}</td><td>{html.escape(t["name"])}</td><td>{LABELS[t["state"]]}</td><td>{t["lastSeen"]}</td></tr>' for t in targets)
     order_title='先完成两处三角动作，再完成方形动作' if action_mode else '先贴两处三角，再贴后续方形贴'
+    if isinstance(sequence,StickerVisualCoverage):order_title='全部标定位置累计外观确认'
     report=f'<!doctype html><meta charset="utf-8"><title>贴条工序检测报告</title><style>body{{font:16px/1.8 system-ui;max-width:1000px;margin:30px auto;padding:20px}}td{{padding:10px;border-bottom:1px solid #ddd}}img{{max-width:100%}}</style><h1>贴条工序检测：{decision["label"]}</h1><p>{html.escape(decision["reason"])}</p><p>{html.escape(data["source"]["title"])}</p><p>人体检测：峰值 {summary["maxPeople"]} 人 · {summary["trackCount"]} 条轨迹 · 17点骨骼随视频回放显示</p><h2>{order_title}</h2><p>{html.escape(process["reason"])}</p><table>{rows}</table><h2>验证边界</h2><ul>'+''.join('<li>'+html.escape(v)+'</li>' for v in data['limitations'])+'</ul><img src="evidence-1.jpg">'
     (out/'report.html').write_text(report,encoding='utf-8')
     manifest=dict(schema_version=1,run_id=run_id,model_hash=model_hash,person_model_hash=person_config['sha256'],source_hash=data['source']['sha256'],options=options,

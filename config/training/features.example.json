@@ -1,5 +1,5 @@
 {
-  "backend": "sklearn",
+  "backend": "torch",
   "task": "feature-classify",
   "dataset": "../../datasets/your-scene/manifest.json",
   "feature_schema": "your-extractor-v1: feature names, order, normalization and ROI definition",

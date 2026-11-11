@@ -35,7 +35,8 @@ class AlgorithmLab:
                 if self.detector is None:
                     from ultralytics import YOLO
                     self.detector=YOLO(str(path))
-                result=self.detector.predict(frame,imgsz=640,conf=.4,max_det=30,verbose=False)[0]
+                from .gpu import require_cuda
+                result=self.detector.predict(frame,imgsz=640,conf=.4,max_det=30,device=require_cuda(),verbose=False)[0]
                 h,w=frame.shape[:2]
                 for box,cls,score in zip(result.boxes.xyxy.tolist(),result.boxes.cls.tolist(),result.boxes.conf.tolist()):
                     objects.append({'label':self.detector.names[int(cls)],'confidence':round(score,3),

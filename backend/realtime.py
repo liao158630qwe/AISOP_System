@@ -3,11 +3,22 @@ import os
 import queue
 import threading
 import time
+import logging
 from collections import deque
+from contextlib import contextmanager
+from functools import wraps
 
 from fastapi import HTTPException
 
 BACKENDS = ("rtmo", "rtmpose", "yolo")
+
+
+def _realtime_request(function):
+    @wraps(function)
+    def request(self, *args, **kwargs):
+        with self._request():
+            return function(self, *args, **kwargs)
+    return request
 
 
 class _InferenceSlot:
@@ -18,6 +29,8 @@ class _InferenceSlot:
         self.inspector = None
         self.lab = None
         self.hands = None
+        self.warmed_model = None
+        self.warmed_shapes = deque(maxlen=4)
 
 
 class RealtimeDetector:
@@ -25,16 +38,18 @@ class RealtimeDetector:
 
     def __init__(self, model_path, backend=None, pool_size=None):
         self.model_path = model_path
-        self.backend = (backend or os.getenv("REALTIME_BACKEND", "rtmo")).strip().lower() or "rtmo"
+        self.backend = (backend or os.getenv("REALTIME_BACKEND", "yolo")).strip().lower() or "yolo"
         if self.backend not in BACKENDS:
             raise ValueError(f"未知实时姿态后端 {self.backend}")
         configured = pool_size if pool_size is not None else int(os.getenv("REALTIME_POOL_SIZE", "2"))
-        if not 1 <= configured <= 4:
-            raise ValueError("实时推理池大小必须在 1–4 之间")
+        if not 1 <= configured <= 6:
+            raise ValueError("实时推理池大小必须在 1–6 之间")
         self.pool_size = configured
         self._slots = [_InferenceSlot() for _ in range(configured)]
-        self._available = queue.Queue(maxsize=configured)
-        for slot in self._slots:
+        # Reuse the warmest available slot. FIFO rotates a single camera onto
+        # a cold replica immediately after startup has warmed the primary one.
+        self._available = queue.LifoQueue(maxsize=configured)
+        for slot in reversed(self._slots):
             self._available.put_nowait(slot)
         # Compatibility probe for callers/tests that force a busy response.
         # It is not held during inference and therefore does not serialize work.
@@ -45,8 +60,77 @@ class RealtimeDetector:
         self._completed = self._failed = 0
         self._started_at = time.monotonic()
         self._peak_gpu_memory = 0.0
+        self._condition = threading.Condition()
+        self._accepting = True
+        self._active_requests = 0
+        self._closing = self._closed = False
         from .streams import StreamRegistry
         self.streams = StreamRegistry()
+
+    @contextmanager
+    def _request(self):
+        with self._condition:
+            if not self._accepting:
+                raise HTTPException(503, '人体姿态检测服务正在停止')
+            self._active_requests += 1
+        try:
+            yield
+        finally:
+            with self._condition:
+                self._active_requests -= 1
+                self._condition.notify_all()
+
+    def stop_accepting(self):
+        with self._condition:
+            self._accepting = False
+
+    def close(self):
+        """Drain callers and warmup before retiring each fixed CUDA worker."""
+        with self._condition:
+            if self._closing:
+                self._condition.wait_for(lambda: self._closed)
+                return
+            self._accepting = False
+            self._closing = True
+            self._condition.wait_for(lambda: self._active_requests == 0)
+        try:
+            for slot in self._slots:
+                executor = getattr(slot, '_cuda_executor', None)
+                cleared = False
+                def clear():
+                    nonlocal cleared
+                    try:
+                        stream = getattr(slot, '_cuda_stream', None)
+                        if stream is not None:
+                            stream.synchronize()
+                    finally:
+                        slot.model = slot.model_kind = None
+                        slot.inspector = slot.lab = slot.hands = None
+                        slot.warmed_model = None
+                        slot.warmed_shapes.clear()
+                        slot._cuda_stream = None
+                        cleared = True
+                try:
+                    try:
+                        if executor is None:
+                            clear()
+                        else:
+                            executor.submit(clear).result()
+                    finally:
+                        if executor is not None:
+                            try:
+                                executor.shutdown(wait=True)
+                            finally:
+                                # A previously stopped/broken executor may reject
+                                # submit. Its model still needs to be released.
+                                if not cleared:
+                                    clear()
+                except Exception:
+                    logging.getLogger(__name__).exception('Realtime model worker cleanup failed')
+        finally:
+            with self._condition:
+                self._closed = True
+                self._condition.notify_all()
 
     @property
     def model(self):
@@ -90,7 +174,8 @@ class RealtimeDetector:
         with slot.load_lock:
             if slot.model is not None:
                 return
-            failure = None
+            from algorithms.gpu import require_cuda
+            require_cuda()
             if self.backend in ("rtmo", "rtmpose"):
                 try:
                     from algorithms.rtmlib_pose import RTMLibDetector
@@ -98,10 +183,9 @@ class RealtimeDetector:
                     slot.model_kind = "rtmlib"
                     return
                 except Exception as exc:
-                    failure = exc
+                    raise HTTPException(503, f"{self.backend} GPU 模型初始化失败，禁止回退: {exc}") from exc
             if not self.model_path.is_file():
-                raise HTTPException(503, f"实时模型不可用（{self.backend}: {failure}）" if failure
-                                    else "服务器模型文件尚未配置")
+                raise HTTPException(503, "服务器模型文件尚未配置")
             from ultralytics import YOLO
             slot.model = YOLO(str(self.model_path))
             slot.model_kind = "yolo"
@@ -111,28 +195,63 @@ class RealtimeDetector:
 
     def device(self, slot=None):
         slot = slot or self._slots[0]
+        from algorithms.gpu import require_cuda
         if slot.model_kind == "rtmlib":
-            return slot.model._device
-        import torch
-        return 0 if torch.cuda.is_available() else "cpu"
+            return f'cuda:{require_cuda(slot.model._device)}'
+        return require_cuda()
 
     def model_label(self, slot=None):
         slot = slot or self._slots[0]
         return slot.model.label if slot.model_kind == "rtmlib" else self.model_path.stem
 
-    def warmup(self):
-        """Warm the primary slot; additional slots load on first use."""
+    def warmup(self, frame=None):
+        # Warmup is a real model borrower, including when started by the
+        # background startup thread before the first HTTP request arrives.
         try:
-            import numpy as np
-            self._ensure_model()
-            frame = np.zeros((360, 640, 3), dtype=np.uint8)
-            device = self.device()
-            for _ in range(2):
-                self.model.predict(frame, classes=[0], imgsz=640, conf=.35, iou=.5, max_det=50,
-                                    device=device, verbose=False)
-            return True
+            with self._request():
+                return self._warmup(frame)
         except Exception:
             return False
+
+    def _warmup(self, frame=None):
+        """Prepare one available lane without adding synthetic stream evidence."""
+        slot = None
+        try:
+            # Reserve the slot just like a real frame. Background warmup must not
+            # run predict() on a model which is serving a camera at the same time.
+            slot = self._available.get_nowait()
+            import numpy as np
+            from algorithms.cuda_lane import run_in_lane
+            from algorithms.cuda_vision import CudaFrame
+            from algorithms.person_detection import predict_people
+            from algorithms.tracking import PoseTracker
+            if frame is None:
+                frame = np.zeros((1080, 1920, 3), dtype=np.uint8)
+            shape = tuple(frame.shape[:2])
+            ready = None
+            if isinstance(frame, CudaFrame):
+                import torch
+                ready = torch.cuda.Event(); ready.record()
+            def prepare():
+                self._ensure_slot_model(slot)
+                if slot.warmed_model is not slot.model:
+                    slot.warmed_model = slot.model
+                    slot.warmed_shapes.clear()
+                if shape in slot.warmed_shapes:
+                    return True
+                # Use the same CUDA predictor and thread-local kernel caches as
+                # detect_people(), rather than a separate NumPy predictor.
+                tracker = PoseTracker()
+                for timestamp in (0., .25):
+                    predict_people(slot.model, frame, tracker, timestamp)
+                slot.warmed_shapes.append(shape)
+                return True
+            return run_in_lane(slot, prepare, ready)
+        except Exception:
+            return False
+        finally:
+            if slot is not None:
+                self._available.put_nowait(slot)
 
     def _record(self, latency_ms, queue_wait_ms, failed=False):
         with self._metrics_lock:
@@ -153,8 +272,11 @@ class RealtimeDetector:
         """Describe existing model state without loading weights or running inference."""
         slot = next((slot for slot in self._slots if slot.model is not None), None)
         if slot is not None:
+            predictor = getattr(slot.model, 'predictor', None)
             device = (getattr(slot.model, '_device', None) if slot.model_kind == 'rtmlib'
-                      else getattr(slot.model, 'device', None))
+                      else getattr(predictor, 'device', None))
+            if device is None and slot.model_kind != 'rtmlib':
+                device = getattr(slot.model, 'device', None)
             return {'state': 'loaded', 'model': self.model_label(slot),
                     'backend': slot.model_kind, 'device': str(device) if device is not None else None}
         loading = any(slot.load_lock.locked() for slot in self._slots)
@@ -178,6 +300,7 @@ class RealtimeDetector:
             "peakGpuMemoryMB": round(self._peak_gpu_memory, 1) if self._peak_gpu_memory else None,
         }
 
+    @_realtime_request
     def predict(self, payload, inspection_config=None, test_algorithms=None, *, stream_key=None,
                 frame_time=None, workflow=None, sequential=True, hands=False):
         if not self.lock.acquire(blocking=False):
@@ -196,11 +319,16 @@ class RealtimeDetector:
             import numpy as np
             from PIL import Image
             from io import BytesIO
+            cuda_images = self.backend == 'yolo' and not (inspection_config or test_algorithms or hands)
             try:
                 with Image.open(BytesIO(payload)) as header:
                     if header.format != "JPEG" or not (1 <= header.width <= 1280 and 1 <= header.height <= 720):
                         raise ValueError()
-                frame = cv2.imdecode(np.frombuffer(payload, dtype=np.uint8), cv2.IMREAD_COLOR)
+                if cuda_images:
+                    from algorithms.cuda_vision import decode
+                    frame = decode(payload)
+                else:
+                    frame = cv2.imdecode(np.frombuffer(payload, dtype=np.uint8), cv2.IMREAD_COLOR)
                 if frame is None:
                     raise ValueError()
             except Exception as exc:
@@ -221,8 +349,16 @@ class RealtimeDetector:
             started = time.perf_counter()
             from algorithms.tracking import PoseTracker
             device = self.device(slot)
-            result = slot.model.predict(frame, classes=[0], imgsz=640, conf=.35, iou=.5,
-                                        max_det=50, device=device, verbose=False)[0]
+            if cuda_images:
+                from algorithms.cuda_yolo import predict
+                from algorithms.cuda_lane import run_in_lane
+                import torch
+                ready=torch.cuda.Event();ready.record()
+                result = run_in_lane(slot,lambda:predict(slot.model,frame,classes=[0],imgsz=640,conf=.35,iou=.5,
+                                                        max_det=50,device=device,verbose=False),ready)[0]
+            else:
+                result = slot.model.predict(frame, classes=[0], imgsz=640, conf=.35, iou=.5,
+                                            max_det=50, device=device, verbose=False)[0]
             h, w = frame.shape[:2]
             if stream:
                 with stream['lock']:
@@ -286,6 +422,7 @@ class RealtimeDetector:
             if slot is not None:
                 self._available.put_nowait(slot)
 
+    @_realtime_request
     def detect_people(self, frame, tracker, frame_time):
         """Use a bounded pose slot on the same decoded frame as inspection inference."""
         try:
@@ -297,7 +434,10 @@ class RealtimeDetector:
             self._ensure_slot_model(slot)
             from algorithms.person_detection import predict_people
             from algorithms.skeleton import topology
-            people = predict_people(slot.model, frame, tracker, frame_time)
+            from algorithms.cuda_lane import run_in_lane
+            import torch
+            ready=torch.cuda.Event();ready.record()
+            people = run_in_lane(slot,lambda:predict_people(slot.model,frame,tracker,frame_time),ready)
             latency = (time.perf_counter()-started)*1000
             self._record(latency, 0)
             return {'people': people, 'skeleton': topology(),
