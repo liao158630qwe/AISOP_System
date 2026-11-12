@@ -1,6 +1,7 @@
 /* Shared, same-origin session and request handling for management and scene consoles. */
 window.Workspace=(()=>{
   let session=null,sessionKnown=false,version=0,connecting=null,signingIn=null,loggingOut=null,loginPromise=null,resolveLogin=null;
+  const loginRequired=document.body.hasAttribute('data-require-login');
   const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const taskLabels={detect:'目标检测',segment:'实例分割',pose:'关键点检测',obb:'旋转框检测',classify:'图像分类'};
   function changed(){document.dispatchEvent(new CustomEvent('workspace-session',{detail:session}));}
@@ -13,6 +14,7 @@ window.Workspace=(()=>{
     const different=!sessionKnown||JSON.stringify(value)!==JSON.stringify(session);
     session=value;sessionKnown=true;version++;
     if(different)changed();
+    updateLoginGate();
     if(broadcast)publish();
     return session;
   }
@@ -99,8 +101,8 @@ window.Workspace=(()=>{
       const button=form.querySelector('button[type=submit]'),errorLine=form.querySelector('[role=alert]');
       const closeButtons=[...dialog.querySelectorAll('.close-button,[data-action="close-modal"]'),...form.querySelectorAll('button[type=button]')];
       const label=button.textContent;
-      const unlock=()=>{submitting=false;button.disabled=false;closeButtons.forEach(close=>close.disabled=false);button.textContent=label;};
-      submitting=true;button.disabled=true;closeButtons.forEach(close=>close.disabled=true);button.textContent='登录中…';errorLine.textContent='';
+      const unlock=()=>{submitting=false;form.setAttribute('aria-busy','false');button.disabled=false;closeButtons.forEach(close=>close.disabled=false);button.textContent=label;updateLoginGate();};
+      submitting=true;form.setAttribute('aria-busy','true');button.disabled=true;closeButtons.forEach(close=>close.disabled=true);button.textContent='登录中…';errorLine.textContent='';
       let value;
       try{
         value=await signIn(form.querySelector('[autocomplete=username]').value,form.querySelector('[type=password]').value);
@@ -110,19 +112,37 @@ window.Workspace=(()=>{
       try{await onSuccess(value);}catch(error){toast(error.message);}
     };
   }
+  function finishLogin(value){
+    resolveLogin?.(value);resolveLogin=null;loginPromise=null;
+    const dialog=document.querySelector('#workspace-login');
+    if(dialog){dialog.querySelector('[name=password]').value='';if(dialog.open)dialog.close();}
+  }
+  function updateLoginGate(){
+    if(loginRequired)document.body.inert=!session;
+    if(session){
+      // A local submit must unlock its controls before resolving follow-up work.
+      // An existing session or a login in another tab can unlock immediately.
+      if(document.querySelector('#workspace-login-form')?.getAttribute('aria-busy')!=='true')finishLogin(session);
+    }else if(loginRequired)void login();
+  }
   function login(){
     if(session)return Promise.resolve(session);
     if(loginPromise)return loginPromise;
     let dialog=document.querySelector('#workspace-login');
     if(!dialog){
       dialog=document.createElement('dialog');dialog.id='workspace-login';dialog.className='narrow pilot-ui';
-      dialog.innerHTML='<div class="dialog-heading"><div><div class="eyebrow">AI-SOP ACCOUNT</div><h2>登录检测平台</h2></div><button class="close-button" aria-label="关闭登录">×</button></div><form id="workspace-login-form" class="dialog-body login-form"><label>用户名<input name="username" autocomplete="username" required maxlength="100"></label><label>密码<input name="password" type="password" autocomplete="current-password" required maxlength="200"></label><p class="status-line danger" id="workspace-login-error" role="alert"></p><button class="primary" type="submit">登录</button><p class="hint">与检测首页共用账户和会话。</p></form>';
+      dialog.setAttribute('aria-labelledby','workspace-login-title');dialog.setAttribute('aria-describedby','workspace-login-hint');
+      dialog.innerHTML='<div class="dialog-heading"><div><div class="eyebrow">AI-SOP ACCOUNT</div><h2 id="workspace-login-title">登录检测平台</h2></div><button class="close-button" aria-label="关闭登录">×</button></div><form id="workspace-login-form" class="dialog-body login-form"><label>用户名<input name="username" autocomplete="username" autofocus required maxlength="100"></label><label>密码<input name="password" type="password" autocomplete="current-password" required maxlength="200"></label><p class="status-line danger" id="workspace-login-error" role="alert"></p><button class="primary" type="submit">登录</button><p class="hint" id="workspace-login-hint">与检测首页共用账户和会话。</p></form>';
+      dialog.querySelector('.close-button').hidden=loginRequired;
+      if(loginRequired)dialog.querySelector('.hint').textContent='请先登录，登录成功后才能继续使用检测平台。';
       document.body.append(dialog);
       dialog.querySelector('.close-button').onclick=()=>dialog.close();
-      bindLoginForm(dialog,dialog.querySelector('form'),value=>{resolveLogin?.(value);resolveLogin=null;},{reusable:true});
+      dialog.addEventListener('cancel',event=>{if(loginRequired&&!session)event.preventDefault();});
+      bindLoginForm(dialog,dialog.querySelector('form'),finishLogin,{reusable:true});
       dialog.addEventListener('close',()=>{
         if(dialog.open)return;
-        resolveLogin?.(null);resolveLogin=null;loginPromise=null;dialog.querySelector('[name=password]').value='';
+        if(loginRequired&&!session){dialog.showModal();return;}
+        finishLogin(session);
       });
     }
     dialog.querySelector('#workspace-login-error').textContent='';
@@ -186,5 +206,14 @@ window.Workspace=(()=>{
   else window.addEventListener('storage',event=>{if(event.key==='aisop-session-changed')synchronize();});
   window.addEventListener('focus',synchronize);
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)synchronize();});
+  if(loginRequired){
+    document.body.inert=true;
+    const start=()=>connect().catch(error=>{
+      if(session)return;
+      void login();document.querySelector('#workspace-login-error').textContent='无法确认登录状态：'+error.message+'。请登录后重试。';
+    });
+    // Deferred page scripts must register session listeners before the first read.
+    if(document.readyState!=='complete')document.addEventListener('DOMContentLoaded',start,{once:true});else queueMicrotask(start);
+  }
   return {request,fetchJSON,json,connect,signIn,bindLoginForm,login,logout,upload,escape,toast,taskLabels,get session(){return session;}};
 })();

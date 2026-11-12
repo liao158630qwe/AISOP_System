@@ -854,14 +854,12 @@ window.ScrewApp=(()=>{
     }catch(e){state.cancelling=false;tell('取消失败：'+e.message);toast('取消失败：'+e.message);render();}
   }
   async function loadResult(id){const generation=state.generation;await stopCurrent();if(generation!==state.generation)return;const result=await request(`/analysis-runs/${id}/artifacts/analysis.json`);if(generation!==state.generation)return;if(result.analysisType!==taskType()||isScene()&&result.sceneId!==sceneId())throw new Error('请选择当前检测类型的独立任务');state.result=result;applyTaskText();state.run=id;state.runStatus='SUCCEEDED';state.cancelling=false;state.mode='replay';state.finishing=false;state.final=null;state.finalShown=false;state.frame=null;state.frames=[];state.aggregateTargets=[];state.liveCompliance=null;state.timelyDecision=null;state.timelyShown=false;state.timelyModalKey=null;get('#video-mode').value='replay';get('#play-button').disabled=false;get('#video-seek').disabled=false;if(isScene())result.frames=result.frames.map(SceneDashboard.normalize);else prepareFrames(result);video.loop=false;video.src=`/api/v1/analysis-runs/${id}/artifacts/video.webm`;get('.camera-name').textContent=result.source.title;get('.stream-info').textContent=isScene()?`${result.sceneName} · ${result.model.name} v${result.model.version}`:isPose()?`离线人体检测 · ${result.summary.trackCount} 条轨迹 · 17点骨骼`:`离线分析 · ${result.summary.expected}处${objectName()}`;get('#mode-text').textContent=isScene()?'任务视频回放 · 目标与规则按当前采样同步':isPose()?'人体检测回放 · 人体框与骨骼按采样同步':'视频检测回放 · 画面框仅标注当前采样检出 · 全部确认后即时显示结果';tell(isScene()?'分析已完成 · 可回放当前任务的目标、规则和判定':isPose()?'人体分析已完成 · 可回放人体框、骨骼和姿态':'分析已完成 · 全部确认后即时显示结果，检测继续，也可手动结束');timeline();render();}
-  function login(then){
-    if(get('#screw-login')&&get('#modal').open)return;
+  async function login(then){
     const task=state.task;
-    showModal('登录服务器',`<form id="screw-login"><label class="form-label">用户名<input id="login-user" class="field" autocomplete="username" value="admin" maxlength="100" required></label><label class="form-label">密码<input id="login-password" class="field" type="password" autocomplete="current-password" maxlength="200" required></label><p id="login-error" role="alert"></p><div class="modal-actions"><button class="btn btn-primary" type="submit">登录</button></div></form>`);
-    Workspace.bindLoginForm(get('#modal'),get('#screw-login'),async()=>{
-      if(task!==state.task)return;
+    try{
+      if(!await Workspace.login()||task!==state.task)return;
       if(then)await then();else{tell('已登录 · 请选择视频、开启摄像头或从检测记录手动打开');render();renderAlerts();}
-    });
+    }catch(error){toast(error.message);}
   }
   async function startLive(){
     if(state.busy||state.running||state.switching||state.finishing)return;if(!state.session){login(startLive);return;}if(!state.model?.ready){tell(taskName()+'模型未就绪');return;}state.busy=true;render();await stopCurrent();state.generation++;const generation=state.generation;state.run=null;state.runStatus=null;state.cancelling=false;state.finishing=false;state.final=null;state.finalShown=false;state.mode='realtime';state.result=null;applyTaskText();state.frames=[];state.frame=null;state.frozen=null;state.samplePicture=null;state.actualFps=null;state.lastResponse=null;state.aggregateTargets=[];state.liveCompliance=null;state.timelyDecision=null;state.timelyShown=false;state.timelyModalKey=null;render();

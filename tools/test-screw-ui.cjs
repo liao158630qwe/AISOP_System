@@ -20,10 +20,10 @@ const root=path.resolve(__dirname,'..'),out=path.join(root,'outputs/screw-inspec
     assert.equal(await page.locator('.dashboard #monitor').count(),1);
     assert.equal(await page.locator('.screw-focus-strip,#screw-focus-canvas').count(),0,'Homepage target close-up has been removed');
     assert.equal(await page.locator('.sidebar .workflow-panel').count(),1);
-    await page.locator('#server-account').click();
+    await page.locator('#workspace-login').waitFor({state:'visible'});
     const credentials=JSON.parse(fs.readFileSync(path.join(root,'.runtime/local-settings.json'),'utf8'));
-    await page.locator('#login-user').fill(credentials.username);await page.locator('#login-password').fill(credentials.password);
-    await page.locator('#screw-login button[type=submit]').click();
+    await page.locator('#workspace-login [name=username]').fill(credentials.username);await page.locator('#workspace-login [name=password]').fill(credentials.password);
+    await page.locator('#workspace-login button[type=submit]').click();
     await page.waitForFunction(()=>window.ScrewApp?.state.session&&window.ScrewApp.state.model);
     const blank=()=>page.evaluate(()=>window.ScrewApp.state.result===null&&window.ScrewApp.state.run===null&&
       !document.querySelector('#source-video').getAttribute('src')&&window.ScrewApp.state.final===null&&

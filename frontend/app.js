@@ -620,6 +620,7 @@ document.addEventListener('click',e=>{
   const remove=e.target.closest('[data-remove-step]');if(remove&&!remove.disabled){syncDraft();workflowDraft.steps.splice(Number(remove.dataset.removeStep),1);renderStepEditors();}
 });
 document.addEventListener('keydown',e=>{
+  if(document.body.inert)return;
   if(e.ctrlKey&&e.shiftKey&&e.key.toLowerCase()==='g'){e.preventDefault();showSystem();}
   const thumb=e.target.closest('[data-alert]');if(thumb&&e.key==='Enter'){e.preventDefault();showAlert(Number(thumb.dataset.alert));}
 });

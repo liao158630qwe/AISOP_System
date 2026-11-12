@@ -34,12 +34,10 @@ if (!base || !output) throw new Error('Run node tools/python.cjs tools/test-pilo
     await page.locator('#confirm-stage').click(); await submit('人工核对本阶段全部指定位置，保存测试截图');
   };
   try {
-    await page.goto(base + '/');
+    await page.goto(base + '/?task=station1');
     await page.locator('#inspection-task option[value=station1]').waitFor({state: 'attached'});
-    await page.waitForFunction(() => window.ScrewApp?.state.model);
-    await page.locator('#inspection-task').selectOption('station1');
-    await visible('#login-gate'); await screenshot('01-login');
-    await page.locator('#login-start').click();
+    await page.waitForFunction(() => window.ScrewApp?.state.task === 'station1' && !window.ScrewApp.state.switching);
+    await visible('#workspace-login'); await screenshot('01-login');
     await page.locator('#workspace-login [name=username]').fill(process.env.APP_USERNAME);
     await page.locator('#workspace-login [name=password]').fill(process.env.APP_PASSWORD);
     await page.locator('#workspace-login button[type=submit]').click();
@@ -155,6 +153,11 @@ if (!base || !output) throw new Error('Run node tools/python.cjs tools/test-pilo
     const proof = original.checks.HOLES.evidence.url;
     await page.locator('#server-account').click(); await visible('#login-gate');
     assert.equal((await context.request.get(base + proof)).status(), 401);
+    await visible('#workspace-login');
+    await page.locator('#workspace-login [name=username]').fill(process.env.APP_USERNAME);
+    await page.locator('#workspace-login [name=password]').fill(process.env.APP_PASSWORD);
+    await page.locator('#workspace-login button[type=submit]').click();
+    await hidden('#workspace-login');
     await page.evaluate(() => window.__sameDashboard = document.querySelector('.main-grid'));
     for (const task of ['screw', 'sticker', 'pose', 'station1']) {
       await page.locator('#inspection-task').selectOption(task);
@@ -167,7 +170,8 @@ if (!base || !output) throw new Error('Run node tools/python.cjs tools/test-pilo
         assert.ok(await page.locator('#current-cycle').isHidden());
       }
     }
-    await visible('#login-gate');
+    await page.locator('#server-account').click();
+    await visible('#workspace-login');
     await require('./test-pilot-stations-ui.cjs')({page, context, base, output});
     assert.equal(errors.length, 0, errors.join('\n'));
     fs.writeFileSync(path.join(output, 'result.json'), JSON.stringify({passed: true, cycles: history.total, errors,

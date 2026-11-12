@@ -66,10 +66,10 @@ const save=(name,value)=>fs.writeFileSync(path.join(out,name),JSON.stringify(val
    });
    try{
     await page.goto(base+'/?task=screw');
-    await page.locator('#server-account').click();
-    await page.locator('#login-user').fill(process.env.APP_USERNAME);
-    await page.locator('#login-password').fill(process.env.APP_PASSWORD);
-    await page.locator('#screw-login button[type=submit]').click();
+    await page.locator('#workspace-login').waitFor({state:'visible'});
+    await page.locator('#workspace-login [name=username]').fill(process.env.APP_USERNAME);
+    await page.locator('#workspace-login [name=password]').fill(process.env.APP_PASSWORD);
+    await page.locator('#workspace-login button[type=submit]').click();
     await page.waitForFunction(()=>window.ScrewApp?.state.session&&window.ScrewApp.state.model?.ready);
     await page.locator('#live-rate').selectOption(String(rate));
     await page.locator('#start-live').click();

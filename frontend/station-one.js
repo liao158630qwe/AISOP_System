@@ -377,7 +377,7 @@ window.StationOne = (() => {
         storage: null, occupied: false, connected: false, lastSynced: null, offset: 0, total: 0, error: null});
       $('#part-number').value = ''; $('#product').value = ''; $('#history-query').value = ''; $('#history-rows').textContent = ''; $('#detail-content').textContent = '';
       $('#source-placeholder span').textContent = config.name;
-      enabled = true; await W.connect(); render();
+      enabled = true; await W.connect(); await sync(true); render();
     },
     deactivate: () => {enabled = false; stopMonitor(); clearMedia(); for (const id of ['manual-dialog', 'detail-dialog', 'pilot-history-dialog']) $('#' + id)?.close();},
     account: () => handle(async () => {if (W.session) {clearMedia(); await W.logout();} else await W.login();}),

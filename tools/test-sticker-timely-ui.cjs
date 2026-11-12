@@ -12,11 +12,11 @@ const root=path.resolve(__dirname,'..'),out=path.join(root,'outputs/sticker-insp
     page.on('pageerror',error=>errors.push(error.message));
     await page.goto('http://127.0.0.1:8000/');
     await page.locator('#server-account').waitFor();
-    await page.locator('#server-account').click();
+    await page.locator('#workspace-login').waitFor({state:'visible'});
     const credentials=JSON.parse(fs.readFileSync(path.join(root,'.runtime/local-settings.json'),'utf8'));
-    await page.locator('#login-user').fill(credentials.username);
-    await page.locator('#login-password').fill(credentials.password);
-    await page.locator('#screw-login button[type=submit]').click();
+    await page.locator('#workspace-login [name=username]').fill(credentials.username);
+    await page.locator('#workspace-login [name=password]').fill(credentials.password);
+    await page.locator('#workspace-login button[type=submit]').click();
     await page.waitForFunction(()=>window.ScrewApp?.state.session&&window.ScrewApp.state.model);
 
     const replay=await page.evaluate(async()=>{

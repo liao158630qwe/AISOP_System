@@ -12,11 +12,10 @@ if(!base||!output)throw new Error('Run with tools/test-training-ui.py');
   const screenshot=name=>page.screenshot({path:path.join(output,name+'.png'),fullPage:true});
   try{
     await page.goto(base+'/admin');
-    await page.getByRole('link',{name:'工业模型训练 ↗'}).click();
-    await page.locator('#training-login').click();
     await page.locator('#workspace-login [name=username]').fill(process.env.APP_USERNAME);
     await page.locator('#workspace-login [name=password]').fill(process.env.APP_PASSWORD);
     await page.locator('#workspace-login button[type=submit]').click();
+    await page.getByRole('link',{name:'工业模型训练 ↗'}).click();
     await page.locator('#training-content').waitFor({state:'visible'});
     await page.locator('#training-task').selectOption('feature-classify');
     await page.locator('#training-name').fill('接口验证夹具 · 非现场精度');

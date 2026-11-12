@@ -48,7 +48,7 @@ async function instrument(page,kind){
   terminal.on('request',r=>{if(/\/api\/v1\/(pilot\/|stations\/[^/]+\/context)/.test(r.url()))workpieceRequests.push(r.url());});
   await instrument(board,'board');await instrument(terminal,'terminal');
   await board.goto(base+'/board');
-  await board.locator('#account').click();
+  await board.locator('#workspace-login').waitFor({state:'visible'});
   await board.locator('#workspace-login [name=username]').fill(process.env.APP_USERNAME);
   await board.locator('#workspace-login [name=password]').fill(process.env.APP_PASSWORD);
   await board.locator('#workspace-login button[type=submit]').click();

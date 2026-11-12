@@ -52,6 +52,10 @@ const server = http.createServer((req, res) => {
   try {
     await page.clock.install();
     await page.goto(base + '/board?demo=1');
+    await page.locator('[name=username]').fill('board-test');
+    await page.locator('[name=password]').fill('fixture-password');
+    await page.locator('#workspace-login button[type=submit]').click();
+    await page.locator('#workspace-login').waitFor({state:'hidden'});
     await page.waitForFunction(() => document.querySelector('#connection').dataset.state === 'demo');
     assert.equal(await page.locator('.station').count(),6);
     await screenshot('overview-1920'); await noOverflow();
@@ -88,11 +92,6 @@ const server = http.createServer((req, res) => {
     }
     await page.setViewportSize({width:1440,height:900});
     await page.locator('#live-mode').click();
-    assert.equal(await page.locator('#total').textContent(),'—');
-    await page.locator('#account').click();
-    await page.locator('[name=username]').fill('board-test');
-    await page.locator('[name=password]').fill('fixture-password');
-    await page.locator('#workspace-login button[type=submit]').click();
     await page.waitForFunction(() => document.querySelector('#connection').dataset.state === 'live');
     assert.equal(await page.locator('#total').textContent(),'3');
     assert.equal(await page.locator('#alert-dialog').isHidden(),true, 'history does not pop up on initial load');

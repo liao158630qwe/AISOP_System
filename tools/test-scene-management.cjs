@@ -19,7 +19,7 @@ if(!base||!output)throw new Error('Run node tools/python.cjs tools/test-scene-ma
   let modelId,sceneId,runId;
   try{
     await page.goto(base+'/admin');
-    await page.locator('#locked-login').click();
+    await page.locator('#workspace-login').waitFor({state:'visible'});
     await page.locator('#workspace-login [name=username]').fill(process.env.APP_USERNAME);
     await page.locator('#workspace-login [name=password]').fill(process.env.APP_PASSWORD);
     await page.locator('#workspace-login button[type=submit]').click();

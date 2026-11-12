@@ -27,10 +27,10 @@ const credentials={username:process.env.APP_USERNAME,password:process.env.APP_PA
     await page.waitForFunction(()=>window.ScrewApp?.state.model?.ready&&!window.ScrewApp.state.busy);
     const targetCount=await page.evaluate(()=>window.ScrewApp.state.model.targets.length);
     assert.ok(targetCount>=5,'The fixture must have enough targets to exercise row repair');
+    await page.locator('#workspace-login').waitFor({state:'visible'});
+    await page.locator('#workspace-login [name=username]').fill(credentials.username);await page.locator('#workspace-login [name=password]').fill(credentials.password);
+    await page.locator('#workspace-login button[type=submit]').click();
     await page.locator('.toolbar [data-action=upload]').click();
-    await page.locator('#modal-title').filter({hasText:'登录服务器'}).waitFor();
-    await page.locator('#login-user').fill(credentials.username);await page.locator('#login-password').fill(credentials.password);
-    await page.locator('#screw-login button[type=submit]').click();
     await page.locator('#modal-title').filter({hasText:'上传视频检测'}).waitFor();
     assert.ok(await page.locator('#screw-upload-file').isVisible());
     assert.ok(await page.locator('#screw-upload-start').isDisabled());

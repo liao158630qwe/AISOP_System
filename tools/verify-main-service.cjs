@@ -28,10 +28,10 @@ const percentile = (values, p) => [...values].sort((a, b) => a - b)[Math.ceil(va
   try {
     await page.goto(base);
     await page.waitForFunction(() => window.ScrewApp?.state.model);
-    await page.locator('#server-account').click();
-    await page.locator('#login-user').fill(credentials.username);
-    await page.locator('#login-password').fill(credentials.password);
-    await page.locator('#screw-login button[type=submit]').click();
+    await page.locator('#workspace-login').waitFor({state:'visible'});
+    await page.locator('#workspace-login [name=username]').fill(credentials.username);
+    await page.locator('#workspace-login [name=password]').fill(credentials.password);
+    await page.locator('#workspace-login button[type=submit]').click();
     await page.waitForFunction(() => window.ScrewApp.state.session);
     for (const task of ['pose', 'screw', 'sticker']) {
       await page.locator('#inspection-task').selectOption(task);

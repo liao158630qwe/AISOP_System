@@ -31,7 +31,7 @@ module.exports = async ({page, context, base, output}) => {
     await page.locator('#start-cycle').click();
     await page.waitForFunction(() => !!StationOne.state.cycle && !StationOne.state.busy);
   };
-  await page.locator('#login-start').click();
+  await page.locator('#workspace-login').waitFor({state:'visible'});
   await page.locator('#workspace-login [name=username]').fill(process.env.APP_USERNAME);
   await page.locator('#workspace-login [name=password]').fill(process.env.APP_PASSWORD);
   await page.locator('#workspace-login button[type=submit]').click();

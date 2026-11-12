@@ -10,7 +10,8 @@
   function save(key,value){try{localStorage.setItem(key,value);}catch{}}
   function read(key){try{return localStorage.getItem(key);}catch{return null;}}
   const api=(path,options={})=>Workspace.request(path,options);
-  function requireLogin(){if(state.session)return true;$('#login-dialog').showModal();return false;}
+  let initialized=false;
+  function requireLogin(){if(state.session)return true;void Workspace.login();return false;}
   function renderTargets(targets){
     const root=$('#targets');root.replaceChildren();
     for(const target of targets){
@@ -119,21 +120,17 @@
   $('#analyze').onclick=async()=>{if(!requireLogin()||!state.file)return;setBusy(true);state.run=null;state.runStatus=null;state.cancelling=false;$('#cancel').textContent='取消上传';$('#cancel').disabled=false;try{const media=await upload(state.file);status('上传完成，正在创建检测任务…');$('#cancel').textContent='取消任务';const job=await api('/analysis-runs',{method:'POST',headers:{'Content-Type':'application/json','Idempotency-Key':crypto.randomUUID()},body:JSON.stringify({media_id:media.id,options:{analysis_type:'screw',sample_fps:4}})});await poll(job.id);}catch(e){status(e.message,true);setBusy(false);}};
   $('#cancel').onclick=async()=>{if(uploadXHR){status('正在取消上传…');uploadXHR.abort();return;}if(!state.run){status(state.busy?'任务正在创建，请稍候…':'当前没有可取消的任务');return;}if(state.cancelling){status('正在取消任务，请稍候…');return;}if(!['QUEUED','RUNNING'].includes(state.runStatus)){status('当前任务已结束，无需取消');return;}const button=$('#cancel');state.cancelling=true;button.disabled=true;button.textContent='正在取消…';status('正在取消任务…');try{const job=await api(`/analysis-runs/${state.run}/cancel`,{method:'POST'});state.runStatus=job.status;if(job.status==='CANCELLED'){state.cancelling=false;status('任务已取消');button.disabled=false;button.textContent='取消任务';}else if(job.status==='CANCELLING'){state.cancelling=true;status('正在取消任务…');}else{state.cancelling=false;status('任务已结束 · '+job.status);button.disabled=false;button.textContent='取消任务';}}catch(e){state.cancelling=false;status(e.message,true);button.disabled=false;button.textContent='取消任务';}};
   $('#account').onclick=async()=>{
-    if(!state.session){$('#login-dialog').showModal();return;}
+    if(!state.session){void Workspace.login();return;}
     const button=$('#account');button.disabled=true;
     try{await Workspace.logout();status('已退出登录');}catch(error){status(error.message,true);}
     finally{button.disabled=false;}
   };
   document.addEventListener('workspace-session',event=>{
     $('#account').textContent=event.detail?event.detail.username+' · 退出':'登录';
-    if(event.detail)return;
+    if(event.detail){status('已登录，可以上传检测。');if(initialized&&!state.file)void restore();return;}
     uploadXHR?.abort();state.runStatus=null;state.cancelling=false;state.pollToken++;setBusy(false);
     video.pause();video.removeAttribute('src');video.load();state.result=null;$('#placeholder').hidden=false;$('#downloads').hidden=true;
   });
-  $('#close-login').onclick=()=>$('#login-dialog').close();
-  Workspace.bindLoginForm($('#login-dialog'),$('#login-form'),async()=>{
-    $('#login-error').textContent='';status('已登录，可以上传检测。');if(!state.file)await restore();
-  },{reusable:true});
   $('#history').onclick=async()=>{if(!requireLogin())return;$('#history-dialog').showModal();const root=$('#history-items');root.textContent='正在加载…';try{const response=await api('/analysis-runs?limit=50&analysis_type=screw');root.replaceChildren();for(const job of response.items){const row=document.createElement('div');row.className='history-item';const title=document.createElement('span');title.textContent=job.media_name||job.id;const small=document.createElement('small');small.textContent=`${job.status} · ${new Date(job.created_at*1000).toLocaleString()}`;title.append(small);const button=document.createElement('button');button.textContent=job.status==='SUCCEEDED'?'查看':'查看进度';button.onclick=async()=>{$('#history-dialog').close();if(job.status==='SUCCEEDED'){try{await loadResult(job.id);}catch(e){status(e.message,true);}}else await poll(job.id);};row.append(title,button);root.append(row);}if(!response.items.length)root.textContent='暂无检测记录';}catch(e){root.textContent=e.message;}};
   $('#close-history').onclick=()=>$('#history-dialog').close();
   async function restore(){const id=read('aisop-screw-run')||state.model?.referenceRun;if(!id)return;try{const job=await api(`/analysis-runs/${id}`);if(job.status==='SUCCEEDED')await loadResult(id);else if(['RUNNING','QUEUED','CANCELLING'].includes(job.status))await poll(id);}catch(e){status(e.message,true);}}
@@ -142,7 +139,7 @@
       api('/health').then(h=>{$('#health').textContent=h.status==='ready'?'● 服务在线':'服务启动中';}).catch(()=>{$('#health').textContent='服务器连接失败';}),
       api('/screw-model').then(m=>{state.model=m;$('#model-state').textContent=m.ready?'螺丝专用模型已就绪 · '+m.targets.length+' 处参考位置':'专用模型正在训练';renderTargets(m.targets);const root=$('#training');root.replaceChildren();if(m.training){const metrics=document.createElement('div');metrics.className='train-metrics';for(const [value,label] of [[(m.training.results['metrics/mAP50(B)']*100).toFixed(1)+'%','内部裁剪测试 mAP@50'],[String(m.targets.length),'成品可见参考位置'],['未验证','真实漏打检出率']]){const item=document.createElement('div');const strong=document.createElement('strong');strong.textContent=value;const span=document.createElement('span');span.textContent=label;item.append(strong,span);metrics.append(item);}root.append(metrics);const p=document.createElement('p');p.textContent='YOLO11n 已用原视频实际微调；训练、验证、测试使用分开的时间段。标签由参考点与图像匹配辅助生成，仅有单视频，内部指标不能代表独立现场效果。';root.append(p);}else root.textContent='训练进行中，完成后显示实测记录。';}),
       Workspace.connect().catch(()=>{})
-    ]);if(state.session)await restore();
+    ]);initialized=true;if(state.session&&!state.file)await restore();
   }
   init();
 })();

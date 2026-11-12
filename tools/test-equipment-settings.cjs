@@ -20,13 +20,13 @@ const base = process.env.PILOT_TEST_BASE, output = process.env.PILOT_TEST_OUTPUT
     };
     await page.goto(base + '/settings');
     await page.locator('#equipment-load').waitFor({state:'attached'});
-    assert.equal(requests.length,0,'local settings must not initiate API requests');
-    await expand();
-    await page.waitForFunction(()=>document.querySelector('#equipment-status').textContent.includes('请登录'));
-    await page.locator('#equipment-load').click();
+    await page.locator('#workspace-login').waitFor({state:'visible'});
+    assert.ok(requests.every(url=>url.endsWith('/session')),'Only authentication is checked before login');
     await page.locator('#workspace-login-form [name=username]').fill(process.env.APP_USERNAME);
     await page.locator('#workspace-login-form [name=password]').fill(process.env.APP_PASSWORD);
     await page.locator('#workspace-login-form button[type=submit]').click();
+    await page.locator('#workspace-login').waitFor({state:'hidden'});
+    await expand();
     await page.locator('#equipment-form').waitFor();
     assert.equal(await page.locator('#equipment-panel-inventory .equipment-group').count(),9);
     assert.equal(await field('equipment.1.quantity').inputValue(),'6');

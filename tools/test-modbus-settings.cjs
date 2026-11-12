@@ -5,7 +5,7 @@ const fs = require('node:fs'), path = require('node:path');
 module.exports = async ({page, context, base, output}) => {
   const field = name => page.locator(`#modbus-form [name="${name}"]`);
   const requests = [];
-  const observe = request => {if (request.url().includes('/api/')) requests.push(request.url());};
+  const observe = request => {if (request.url().includes('/api/') && new URL(request.url()).pathname !== '/api/v1/session') requests.push(request.url());};
   page.on('request', observe);
   await page.locator('[aria-controls="modbus-section-content"]').click();
   await page.locator('#modbus-form').waitFor();

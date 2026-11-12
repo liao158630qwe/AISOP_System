@@ -33,12 +33,10 @@ if(!base||!output)throw new Error('Run tools/test-pilot-ui.py --registration-pau
   page.on('request',r=>{if(r.method()==='POST'&&r.url().endsWith('/api/v1/pilot/cycles'))manualPosts.push(r.url());if(r.method()==='POST'&&r.url().includes('/api/v1/station-streams?'))streams.push(r.url());});
   try {
     await page.goto(base+'/?task=station1');
-    await page.locator('#sd-config-open').click();
-    await page.locator('#sd-login').click();
     await page.locator('#workspace-login [name=username]').fill(process.env.APP_USERNAME);
     await page.locator('#workspace-login [name=password]').fill(process.env.APP_PASSWORD);
     await page.locator('#workspace-login button[type=submit]').click();
-    await page.locator('#sd-config-close').click();
+    await page.locator('#workspace-login').waitFor({state:'hidden'});
     await board.goto(base+'/board');
     await board.waitForFunction(()=>document.querySelector('#connection').dataset.state==='live');
     assert.equal(await board.locator('#total').textContent(),'0');

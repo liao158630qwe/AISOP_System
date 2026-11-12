@@ -22,7 +22,7 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
   let count = 0, frameTimes = [], starts = 0, finalFixture = null, finishAttempts = 0;
   try {
     await page.goto(base + '/terminals');
-    await page.locator('#account').click();
+    await page.locator('#workspace-login').waitFor({state:'visible'});
     await page.locator('#workspace-login [name=username]').fill(process.env.APP_USERNAME);
     await page.locator('#workspace-login [name=password]').fill(process.env.APP_PASSWORD);
     await page.locator('#workspace-login button[type=submit]').click();

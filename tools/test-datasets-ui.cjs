@@ -12,7 +12,7 @@ if(!base||!output)throw Error('Run tools/test-datasets-ui.py');
   const api=async(method,url,body)=>json(await page.request.fetch(base+'/api/v1'+url,{method,headers:{'X-CSRF-Token':csrf,'Idempotency-Key':crypto.randomUUID()},...(body===undefined?{}:{data:body})}));
   const wait=async(fn,timeout=60000)=>{const until=Date.now()+timeout;while(Date.now()<until){const value=await fn();if(value)return value;await new Promise(r=>setTimeout(r,300));}throw Error('Timed out waiting for dataset job');};
   try{
-    await page.goto(base+'/datasets');await page.locator('#login').click();
+    await page.goto(base+'/datasets');await page.locator('#workspace-login').waitFor({state:'visible'});
     await page.locator('#workspace-login [name=username]').fill(process.env.APP_USERNAME);await page.locator('#workspace-login [name=password]').fill(process.env.APP_PASSWORD);
     await page.locator('#workspace-login button[type=submit]').click();await page.locator('#content').waitFor({state:'visible'});
     csrf=await page.evaluate(()=>Workspace.session.csrf);

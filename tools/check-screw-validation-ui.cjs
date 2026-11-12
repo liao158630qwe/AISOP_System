@@ -13,11 +13,11 @@ if(!runId||!output)throw new Error('Usage: node tools/check-screw-validation-ui.
     const page=await browser.newPage({viewport:{width:1512,height:1100}});
     page.on('pageerror',e=>errors.push(e.message));
     await page.goto('http://127.0.0.1:8000/');
-    await page.locator('#server-account').click();
+    await page.locator('#workspace-login').waitFor({state:'visible'});
     const credentials=JSON.parse(fs.readFileSync(path.join(root,'.runtime/local-settings.json'),'utf8'));
-    await page.locator('#login-user').fill(credentials.username);
-    await page.locator('#login-password').fill(credentials.password);
-    await page.locator('#screw-login button[type=submit]').click();
+    await page.locator('#workspace-login [name=username]').fill(credentials.username);
+    await page.locator('#workspace-login [name=password]').fill(credentials.password);
+    await page.locator('#workspace-login button[type=submit]').click();
     await page.waitForFunction(()=>window.ScrewApp?.state.session);
     assert.ok(await page.evaluate(()=>window.ScrewApp.state.result===null));
     await page.locator('[data-action=screw-history]').click();

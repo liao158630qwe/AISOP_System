@@ -165,7 +165,7 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
     await settingsPage.keyboard.press('Escape'); await page.bringToFront();
 
     // State gates are evaluated at the moment of the press, including background and task switches.
-    for (const patch of [{busy: true}, {switching: true}, {finishing: true}, {session: null}, {model: {ready: false}}]) {
+    for (const patch of [{busy: true}, {switching: true}, {finishing: true}, {model: {ready: false}}]) {
       await page.evaluate(patch => {window.__beforeGate = {}; for (const key of Object.keys(patch)) window.__beforeGate[key] = ScrewApp.state[key]; Object.assign(ScrewApp.state, patch); ScrewApp.render();}, patch);
       await unchanged(() => page.keyboard.press('F7'));
       await page.evaluate(() => {Object.assign(ScrewApp.state, window.__beforeGate); ScrewApp.render();});
@@ -251,8 +251,10 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
     await page.screenshot({path: path.join(output, 'dashboard-mobile.png'), fullPage: true});
     await settingsPage.screenshot({path: path.join(output, 'settings-mobile.png'), fullPage: true});
     loggedIn = false; await page.reload(); await ready();
+    await page.locator('#workspace-login').waitFor({state: 'visible'});
     await unchanged(() => page.keyboard.press('F8'));
-    assert.match(await page.locator('#toast').textContent(), /登录/);
+    assert.equal(await page.locator('body').evaluate(node => node.inert), true);
+    assert.equal(await page.locator('#workspace-login').evaluate(node => node.open), true);
     assert.deepEqual(errors, []);
     const report = {passed: true, checks: ['separate settings page and toolbar link', 'no settings panel on dashboard', 'settings cannot start inspection', 'keyboard and USB-style press/release', 'hold/repeat rejection', 'mouse and key concurrency',
       'independent start and F9 stop', 'stop from dialogs and inputs', 'six station stop and camera cleanup', 'offline cancellation', 'F9 binding migration', 'dialog and input protection', 'IME and modifiers', 'configuration and persistence', 'disabled switch', 'reserved keys',

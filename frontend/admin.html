@@ -5,7 +5,7 @@
 <title>模型与场景管理 · AI-SOP</title><link rel="icon" href="assets/favicon.svg"><link rel="stylesheet" href="workspace.css">
 <script defer src="workspace-api.js"></script><script defer src="admin.js"></script>
 </head>
-<body class="admin-page">
+<body data-require-login inert class="admin-page">
 <header class="site-header"><a class="brand-link" href="/"><span class="brand-mark">SOP</span><span><strong>视觉检测平台</strong><small>MODEL & SCENE WORKSPACE</small></span></a><nav class="header-nav" aria-label="工作区导航"><a href="/">检测工作台 ↗</a><a href="/terminals">六工位设备管理</a><a href="/admin" aria-current="page">模型与场景管理</a></nav><button id="account-button" class="quiet">登录</button></header>
 <main class="workspace">
 <div class="page-heading"><div><div class="eyebrow">MODEL & SCENE MANAGEMENT</div><h1>模型与场景管理<span class="heading-dot" aria-hidden="true"></span></h1><p>从一个模型，到一个可执行的检测场景。</p></div><div class="heading-actions"><a class="button" href="/datasets">视频训练数据 ↗</a><a class="button" href="/training">工业模型训练 ↗</a><button id="refresh-button" class="quiet" aria-label="刷新模型与场景">↻ 刷新</button><button id="heading-import" disabled>↓ 导入模型</button><button id="new-scene-button" class="primary" disabled>＋ 新建检测任务</button></div></div>

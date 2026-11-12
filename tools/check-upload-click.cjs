@@ -6,11 +6,11 @@ const p=require(path.join(process.env.USERPROFILE,'.cache/codex-runtimes/codex-p
   const page=await browser.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
   let count=0;page.on('filechooser',async chooser=>{count++;await chooser.setFiles([]);});
   await page.goto('http://127.0.0.1:8000');await page.locator('#server-account').waitFor();
-  await page.locator('.toolbar [data-action=upload]').click();
-  const title=await page.locator('#modal-title').textContent();
+  await page.locator('#workspace-login').waitFor({state:'visible'});
+  const title=await page.locator('#workspace-login-title').textContent();
   const c=JSON.parse(fs.readFileSync(path.join(__dirname,'../.runtime/local-settings.json'),'utf8'));
-  await page.locator('#login-user').fill(c.username);await page.locator('#login-password').fill(c.password);
-  await page.locator('#screw-login button[type=submit]').click();
+  await page.locator('#workspace-login [name=username]').fill(c.username);await page.locator('#workspace-login [name=password]').fill(c.password);
+  await page.locator('#workspace-login button[type=submit]').click();
   await page.waitForFunction(()=>window.ScrewApp.state.session);await page.waitForTimeout(300);
   const afterLogin=count;await page.locator('.toolbar [data-action=upload]').click();await page.waitForTimeout(300);
   console.log(JSON.stringify({initialDialog:title,fileChooserAfterLogin:afterLogin,fileChooserAfterSecondClick:count,errors}));

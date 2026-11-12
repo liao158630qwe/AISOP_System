@@ -8,9 +8,9 @@ const existingRun=process.argv[2];
   try{
     const page=await browser.newPage({viewport:{width:1512,height:1100}});page.on('pageerror',e=>errors.push(e.message));
     await page.goto('http://127.0.0.1:8000/');await page.locator('#inspection-task').waitFor();
-    await page.locator('#server-account').click();const login=JSON.parse(fs.readFileSync(path.join(root,'.runtime/local-settings.json'),'utf8'));
-    await page.locator('#login-user').fill(login.username);await page.locator('#login-password').fill(login.password);
-    await page.locator('#screw-login button[type=submit]').click();await page.waitForFunction(()=>window.ScrewApp.state.session);
+    await page.locator('#workspace-login').waitFor({state:'visible'});const login=JSON.parse(fs.readFileSync(path.join(root,'.runtime/local-settings.json'),'utf8'));
+    await page.locator('#workspace-login [name=username]').fill(login.username);await page.locator('#workspace-login [name=password]').fill(login.password);
+    await page.locator('#workspace-login button[type=submit]').click();await page.waitForFunction(()=>window.ScrewApp.state.session);
     await page.locator('#inspection-task').selectOption('sticker');
     await page.waitForFunction(()=>window.ScrewApp.state.task==='sticker'&&window.ScrewApp.state.model?.ready&&!window.ScrewApp.state.busy);
     const blank=()=>page.evaluate(()=>!window.ScrewApp.state.result&&!window.ScrewApp.state.run&&!document.querySelector('#source-video').getAttribute('src'));
